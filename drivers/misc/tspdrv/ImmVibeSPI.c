@@ -98,7 +98,7 @@ static int mmss_cc_d_half;
 #define PRE_FORCE_DEF	128
 static int previous_nForce = PRE_FORCE_DEF;
 
-static VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex);
+VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex);
 
 struct timed_vibrator_data {
 	atomic_t gp1_clk_flag;
@@ -294,7 +294,7 @@ static struct platform_driver sm100_driver = {
 /*
 ** Called to disable amp (disable output force)
 */
-static VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex)
+VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex)
 {
 	printk("%s : g_bAmpEnabled:%d\n", __func__, g_bAmpEnabled);
 	if (g_bAmpEnabled)
@@ -305,8 +305,8 @@ static VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex)
 			sm100_power_set(0, &vib);
 
 			if (atomic_read(&vib.gp1_clk_flag) == 1) {
-				clk_disable_unprepare(cam_gp1_clk);
 				atomic_set(&vib.gp1_clk_flag, 0);
+				clk_disable_unprepare(cam_gp1_clk);
 			}
 		}
 		g_bAmpEnabled = false;
@@ -315,19 +315,20 @@ static VibeStatus ImmVibeSPI_ForceOut_AmpDisable(VibeUInt8 nActuatorIndex)
 
 	return VIBE_S_SUCCESS;
 }
+EXPORT_SYMBOL(ImmVibeSPI_ForceOut_AmpDisable);
 
 /*
 ** Called to enable amp (enable output force)
 */
-static VibeStatus ImmVibeSPI_ForceOut_AmpEnable(VibeUInt8 nActuatorIndex, VibeInt8 nForce)
+VibeStatus ImmVibeSPI_ForceOut_AmpEnable(VibeUInt8 nActuatorIndex, VibeInt8 nForce)
 {
 	printk("%s : g_bAmpEnabled:%d\n", __func__, g_bAmpEnabled);
 	if (!g_bAmpEnabled)
 	{
 		if(sm100_flag) {
 			if (atomic_read(&vib.gp1_clk_flag) == 0) {
-				clk_prepare_enable(cam_gp1_clk);
 				atomic_set(&vib.gp1_clk_flag, 1);
+				clk_prepare_enable(cam_gp1_clk);
 			}
 
 			sm100_power_set(1, &vib);
@@ -340,6 +341,7 @@ static VibeStatus ImmVibeSPI_ForceOut_AmpEnable(VibeUInt8 nActuatorIndex, VibeIn
 
 	return VIBE_S_SUCCESS;
 }
+EXPORT_SYMBOL(ImmVibeSPI_ForceOut_AmpEnable);
 
 /*
 ** Called at initialization time to set PWM freq, disable amp, etc...
@@ -429,6 +431,14 @@ static VibeStatus ImmVibeSPI_ForceOut_SetSamples(VibeUInt8 nActuatorIndex, VibeU
 			sm100_pwm_set(1, nForce); //MSM GP CLK update bit issue.
 	}
 	return VIBE_S_SUCCESS;
+}
+
+/* For tuning of the timed interface strength */
+#define DEFAULT_TIMED_STRENGTH 65
+VibeInt8 timedForce = DEFAULT_TIMED_STRENGTH;
+
+VibeStatus ImmVibeSPI_SetTimedSample(void) {
+	return ImmVibeSPI_ForceOut_SetSamples(0, 8, 1, &timedForce);
 }
 
 /*
