@@ -57,8 +57,8 @@ typedef struct sPalTimer
 {   
     palTimerCallback timerCallback;
     void *pContext;
-    tHddHandle hHdd;         // not really needed when mapping to vos timers   
-    tANI_U32 uTimerInterval; //meaningful only is fRestart is true
+    tHddHandle hHdd;         //                                                
+    tANI_U32 uTimerInterval; //                                   
     tANI_BOOLEAN fRestart;
     
     vos_timer_t vosTimer;
@@ -95,26 +95,26 @@ eHalStatus palTimerAlloc_debug( tHddHandle hHdd, tPalTimerHandle *phPalTimer,
     
    do
    {
-      // allocate the internal timer structure.
+      //                                       
       pPalTimer = vos_mem_malloc( sizeof( tPalTimer ) );
       if ( NULL == pPalTimer ) break;
        
-      // initialize the vos Timer that underlies the pal Timer.
+      //                                                       
       vosStatus = vos_timer_init_debug( &pPalTimer->vosTimer, VOS_TIMER_TYPE_SW, 
                                    internalTimerCallback, pPalTimer, fileName, lineNum );
       if ( !VOS_IS_STATUS_SUCCESS( vosStatus ) )
       {
-         // if fail to init the vos timer, free the memory and bail out.
+         //                                                             
          vos_mem_free( pPalTimer );
          break;
       }
       
-      // initialize the info in the internal palTimer struct so we can 
+      //                                                               
       pPalTimer->timerCallback = pCallback;
       pPalTimer->pContext      = pContext;
       pPalTimer->hHdd          = hHdd;
       
-      // return a 'handle' to the caller.
+      //                                 
       *phPalTimer = pPalTimer;
       
       halStatus = eHAL_STATUS_SUCCESS;
@@ -133,26 +133,26 @@ eHalStatus palTimerAlloc( tHddHandle hHdd, tPalTimerHandle *phPalTimer,
     
    do
    {
-      // allocate the internal timer structure.
+      //                                       
       pPalTimer = vos_mem_malloc( sizeof( tPalTimer ) );
       if ( NULL == pPalTimer ) break;
        
-      // initialize the vos Timer that underlies the pal Timer.
+      //                                                       
       vosStatus = vos_timer_init( &pPalTimer->vosTimer, VOS_TIMER_TYPE_SW, 
                                    internalTimerCallback, pPalTimer );
       if ( !VOS_IS_STATUS_SUCCESS( vosStatus ) )
       {
-         // if fail to init the vos timer, free the memory and bail out.
+         //                                                             
          vos_mem_free( pPalTimer );
          break;
       }
       
-      // initialize the info in the internal palTimer struct so we can 
+      //                                                               
       pPalTimer->timerCallback = pCallback;
       pPalTimer->pContext      = pContext;
       pPalTimer->hHdd          = hHdd;
       
-      // return a 'handle' to the caller.
+      //                                 
       *phPalTimer = pPalTimer;
       
       halStatus = eHAL_STATUS_SUCCESS;
@@ -174,11 +174,11 @@ eHalStatus palTimerFree( tHddHandle hHdd, tPalTimerHandle hPalTimer )
    {
       if ( NULL == pPalTimer ) break;
    
-      // Destroy the vos timer...      
+      //                               
       vosStatus = vos_timer_destroy( &pPalTimer->vosTimer );
       if ( !VOS_IS_STATUS_SUCCESS( vosStatus ) ) break;
       
-      // Free the memory for the intrnal timer struct...
+      //                                                
       vos_mem_free( pPalTimer );
       
       status = eHAL_STATUS_SUCCESS;
@@ -204,10 +204,10 @@ eHalStatus palTimerStart(tHddHandle hHdd, tPalTimerHandle hPalTimer, tANI_U32 uE
       pPalTimer->fRestart = fRestart;
       pPalTimer->uTimerInterval = uExpireTime;
       
-      // vos Timer takes expiration time in milliseconds.  palTimerStart and 
-      // the uTimerIntervl in tPalTimer struct have expiration tiem in
-      // microseconds.  Make and adjustment from microseconds to milliseconds
-      // before calling the vos_timer_start().
+      //                                                                     
+      //                                                              
+      //                                                                     
+      //                                      
       expireTimeInMS = uExpireTime / 1000;
       vosStatus = vos_timer_start( &pPalTimer->vosTimer, expireTimeInMS );
       if ( !VOS_IS_STATUS_SUCCESS( vosStatus ) ) 
@@ -236,7 +236,7 @@ eHalStatus palTimerStop(tHddHandle hHdd, tPalTimerHandle hPalTimer)
 
       vos_timer_stop( &pPalTimer->vosTimer );
      
-      // make sure the timer is not re-started.
+      //                                       
       pPalTimer->fRestart = eANI_BOOLEAN_FALSE;
 
       status = eHAL_STATUS_SUCCESS;

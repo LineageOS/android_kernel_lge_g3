@@ -56,24 +56,24 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include "vos_types.h"
 #include "i_vos_diag_core_log.h"
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                          */
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /*             */
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                          */
 #define VOS_LOG_MAX_NUM_SSID                                21
 #define VOS_LOG_MAX_NUM_BSSID                               21
 #define VOS_LOG_MAX_SSID_SIZE                               32
@@ -83,10 +83,10 @@ extern "C" {
 #define VOS_LOG_MAX_WOW_PTRN_SIZE                           128
 #define VOS_LOG_MAX_WOW_PTRN_MASK_SIZE                      16
 
-/*---------------------------------------------------------------------------
-   This packet contains the scan results of the recent scan operation 
-   LOG_WLAN_SCAN_C                                 0x1496 
----------------------------------------------------------------------------*/   
+/*                                                                           
+                                                                      
+                                                          
+                                                                           */   
 typedef struct
 {
    log_hdr_type  hdr;
@@ -104,10 +104,10 @@ typedef struct
    v_U16_t status;
 } vos_log_scan_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the information related to IBSS connection setup  
-   LOG_WLAN_IBSS_C                                 0x1497 
----------------------------------------------------------------------------*/   
+/*                                                                           
+                                                                          
+                                                          
+                                                                           */   
 typedef struct 
 {
    log_hdr_type  hdr;
@@ -121,10 +121,10 @@ typedef struct
    v_U8_t status;
 } vos_log_ibss_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the information related to 802.11D   
-   LOG_WLAN_80211D_C                               0x1498 
----------------------------------------------------------------------------*/   
+/*                                                                           
+                                                             
+                                                          
+                                                                           */   
 typedef struct
 {
    log_hdr_type  hdr;
@@ -136,13 +136,13 @@ typedef struct
    v_U8_t supportMultipleDomain;
 } vos_log_802_11d_pkt_type;
 
-/*---------------------------------------------------------------------------
-This is a log packet which contains below handoff information:
-- Current AP + RSSI (if already associated)
-- Candidate AP + RSSI (before association and when the list is updated)
-- For each BSSID in candidate list, provide RSSI, QoS and security compatibility
-LOG_WLAN_HANDOFF_C                              0x1499
----------------------------------------------------------------------------*/   
+/*                                                                           
+                                                              
+                                           
+                                                                       
+                                                                                
+                                                      
+                                                                           */   
 typedef struct
 {
   v_U8_t        ssid[9];
@@ -152,8 +152,8 @@ typedef struct
   v_U32_t       sec_score;
   v_U32_t       rssi_score;
   v_U32_t       overall_score;
-  v_U32_t       tx_per;     /* represented as a %      */
-  v_U32_t       rx_per;     /* represented as a %      */
+  v_U32_t       tx_per;     /*                         */
+  v_U32_t       rx_per;     /*                         */
 
 } vos_log_ho_ap_info;
 
@@ -165,11 +165,11 @@ typedef struct
   vos_log_ho_ap_info candidate_ap_info[VOS_LOG_MAX_NUM_HO_CANDIDATE_APS];
 } vos_log_ho_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the information related to the EDCA parameters 
-   advertised by the AP
-   LOG_WLAN_QOS_EDCA_C                             0x149A
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                       
+                       
+                                                         
+                                                                           */
 typedef struct
 {
   log_hdr_type       hdr;
@@ -187,20 +187,20 @@ typedef struct
   v_U16_t            txoplimit_vo;
 } vos_log_qos_edca_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the total number of beacon received value    
-   LOG_WLAN_BEACON_UPDATE_C                        0x149B
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                     
+                                                         
+                                                                           */
 typedef struct
 {
   log_hdr_type       hdr;
   v_U32_t            bcn_rx_cnt;
 } vos_log_beacon_update_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the information related to a WoW patern value when set
-   LOG_WLAN_POWERSAVE_WOW_ADD_PTRN_C               0x149C 
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                              
+                                                          
+                                                                           */
 typedef struct
 {
   log_hdr_type       hdr;
@@ -212,10 +212,10 @@ typedef struct
   v_U8_t             pattern_mask[VOS_LOG_MAX_WOW_PTRN_MASK_SIZE];
 } vos_log_powersave_wow_add_ptrn_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the PHY & MAC layer statistics sent by lower layer
-   _WLAN_LINKLAYER_STAT_C                       0x14A1
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                          
+                                                      
+                                                                           */
 typedef struct
 {
    v_U32_t retry_cnt[4];
@@ -321,11 +321,11 @@ typedef struct
   perStaStatsInfo          perStaStats;
 } vos_log_statistics_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the Tspec info negotiated with the AP for the 
-   specific AC 
-   LOG_WLAN_QOS_TSPEC_C                            0x14A2 
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                      
+               
+                                                          
+                                                                           */
 typedef struct
 {
   log_hdr_type    hdr;
@@ -347,10 +347,10 @@ typedef struct
   v_U16_t         medium_time;
 } vos_log_qos_tspec_pkt_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains data information when stall detected
-   LOG_TRSP_DATA_STALL_C                           0x1801
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                            
+                                                         
+                                                                           */
 
 typedef struct
 {
@@ -374,23 +374,23 @@ typedef struct
    vos_log_data_stall_channel_type  dxeChannelInfo[4];
 } vos_log_data_stall_type;
 
-/*---------------------------------------------------------------------------
-   This packet contains the rssi value from BSS descriptor
-   LOG_WLAN_RSSI_UPDATE_C                          0x1354
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                          
+                                                         
+                                                                           */
 typedef struct
 {
   log_hdr_type       hdr;
   v_S7_t            rssi;
 } vos_log_rssi_pkt_type;
 
-/*------------------------------------------------------------------------- 
-  Function declarations and documenation
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                                        
+                                                                          */
 
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif /*             */
 
-#endif // __VOS_DIAG_CORE_LOG_H
+#endif //                      

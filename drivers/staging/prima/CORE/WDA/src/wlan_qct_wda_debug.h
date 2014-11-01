@@ -74,5 +74,5 @@
 
 void wdaLog(tpAniSirGlobal pMac, tANI_U32 loglevel, const char *pString,...);
 
-#endif // __WDA_DEBUG_H__
+#endif //                
 

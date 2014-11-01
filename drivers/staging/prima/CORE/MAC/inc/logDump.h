@@ -82,4 +82,4 @@ void logDumpRegisterTable( tpAniSirGlobal pMac, tDumpFuncEntry *pEntry,
 
 void logDumpInit(tpAniSirGlobal pMac);
 
-#endif /* __LOGDUMP_H__ */
+#endif /*               */

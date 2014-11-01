@@ -26,18 +26,18 @@
  *OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  *IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*===========================================================================
-                       EDIT HISTORY FOR FILE
+/*                                                                           
+                                            
 
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                                                       
+                                                                
 
-  $Header:$ $DateTime: $ $Author: $
+                                   
 
-  when        who        what, where, why
-  --------    ---        --------------------------------------------------------
-  04/10/13    kumarpra   nv stream layer creation
-===========================================================================*/
+                                         
+                                                                                 
+                                                 
+                                                                           */
 
 #include "wlan_nv_stream.h"
 
@@ -46,13 +46,13 @@ _STREAM_BUF streamBuf;
 static tANI_U32 deCodeData(tANI_U8 *ipdata, tANI_U32 length, tANI_U8 *opdata,
    tANI_U32 *currentIndex);
 
-/*----------------------------------------------------------------------------
-  \brief initReadStream() - stream Initialization
-  This function will initialize stream read
-  \param readBuf, length - ptr to read Buffer, number of bytes
-  \return success on init
-  \sa
---------------------------------------------------------------------------*/
+/*                                                                            
+                                                 
+                                           
+                                                              
+                         
+     
+                                                                          */
 _STREAM_RC initReadStream(tANI_U8 *readBuf, tANI_U32 length)
 {
    _STREAM_RC rc = RC_SUCCESS;
@@ -63,13 +63,13 @@ _STREAM_RC initReadStream(tANI_U8 *readBuf, tANI_U32 length)
    return rc;
 }
 
-/*----------------------------------------------------------------------------
-  \brief nextStream() - get next Stream in buffer
-  This function will provide next stream in the buffere initalized
-  \param readBuf, length - ptr to stream length, stream data
-  \return success when stream length is non-zero else error
-  \sa
---------------------------------------------------------------------------*/
+/*                                                                            
+                                                 
+                                                                  
+                                                            
+                                                           
+     
+                                                                          */
 
 _STREAM_RC nextStream(tANI_U32 *length, tANI_U8 *dataBuf)
 {
@@ -94,14 +94,14 @@ _STREAM_RC nextStream(tANI_U32 *length, tANI_U8 *dataBuf)
    return rc;
 }
 
-/*----------------------------------------------------------------------------
-  \brief decodeData() - decode the input data
-  This function will decode stream read
-  \param readBuf, length - ptr to input stream, length, output stream data,
-  \index pointer
-  \return success when stream length is non-zero else error
-  \sa
---------------------------------------------------------------------------*/
+/*                                                                            
+                                             
+                                       
+                                                                           
+                
+                                                           
+     
+                                                                          */
 
 tANI_U32 deCodeData(tANI_U8 *ipdata, tANI_U32 length, tANI_U8 *opdata,
    tANI_U32 *currentIndex)

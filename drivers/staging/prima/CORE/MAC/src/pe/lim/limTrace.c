@@ -56,11 +56,11 @@
   ========================================================================*/
 
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 
-#include "aniGlobal.h" //for tpAniSirGlobal
+#include "aniGlobal.h" //                  
 
 #include "limTrace.h"
 #include "limTimerUtils.h"
@@ -319,8 +319,8 @@ void macTraceMsgTxNew(tpAniSirGlobal pMac, tANI_U8 module, tANI_U8 session, tANI
 }
 
 /*
-* bit31: Rx message defferred or not
-* bit 0-15: message ID:
+                                    
+                       
 */
 void macTraceMsgRx(tpAniSirGlobal pMac, tANI_U8 session, tANI_U32 data)
 {
@@ -348,8 +348,8 @@ void macTraceMsgRx(tpAniSirGlobal pMac, tANI_U8 session, tANI_U32 data)
 
 
 /*
-* bit31: Rx message defferred or not
-* bit 0-15: message ID:
+                                    
+                       
 */
 void macTraceMsgRxNew(tpAniSirGlobal pMac, tANI_U8 module, tANI_U8 session, tANI_U32 data)
 {

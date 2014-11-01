@@ -19,11 +19,11 @@
   * PERFORMANCE OF THIS SOFTWARE.
 */
 /*
- * DO NOT EDIT - This file is generated automatically
+                                                     
  */
 
 /*
- * IMPORTANT:  This file is for system that supports STA mode ONLY.
+                                                                   
  */
 #include "cfgPriv.h"
 

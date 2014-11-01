@@ -40,15 +40,15 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file utilsParser.h contains the utility function protos
- * used internally by the parser
- * Author:        Chandra Modumudi
- * Date:          02/11/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+                                                               
+                                
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 #ifndef __UTILS_PARSE_H__
 #define __UTILS_PARSE_H__

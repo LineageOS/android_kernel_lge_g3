@@ -61,92 +61,92 @@
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-   $Header: /cygdrive/c/Dropbox/M7201JSDCAAPAD52240B/WM/platform/msm7200/Src/Drivers/SD/ClientDrivers/WLAN/QCT_SAP_PAL/CORE/SAP/src/sapApiLinkCntl.c,v 1.7 2008/12/18 19:44:11 jzmuda Exp jzmuda $$DateTime$$Author: jzmuda $
+                                                                       
+                                                                
 
 
-  when        who     what, where, why
-----------    ---    --------------------------------------------------------
-2010-03-15              Created module
+                                                                                                                                                                                                                             
 
-===========================================================================*/
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+                                      
+                                                                             
+                                      
+
+                                                                           */
+
+/*                                                                            
+                
+                                                                            */
 #include "vos_trace.h"
-// Pick up the CSR callback definition
+//                                    
 #include "csrApi.h"
 #include "sme_Api.h"
-// SAP Internal API header file
+//                             
 #include "sapInternal.h"
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 #define SAP_DEBUG
 
-/*----------------------------------------------------------------------------
- * Type Declarations
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                    
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Global Data Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                          
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Static Variable Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                              
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Static Function Declarations and Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                               
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Externalized Function Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                    
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Function Declarations and Documentation
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                          
+                                                                            */
 
-/*==========================================================================
-  FUNCTION    WLANSAP_ScanCallback()
+/*                                                                          
+                                    
 
-  DESCRIPTION 
-    Callback for Scan (scan results) Events  
+              
+                                             
 
-  DEPENDENCIES 
-    NA. 
+               
+        
 
-  PARAMETERS 
+             
 
-    IN
-    tHalHandle  : tHalHandle passed in with the scan request
-    *pContext   : The second context pass in for the caller (sapContext)
-    scanID      : scanID got after the scan
-    status      : Status of scan -success, failure or abort
+      
+                                                            
+                                                                        
+                                           
+                                                           
    
-  RETURN VALUE
-    The eHalStatus code associated with performing the operation  
+              
+                                                                  
 
-    eHAL_STATUS_SUCCESS: Success
+                                
   
-  SIDE EFFECTS 
-============================================================================*/
+               
+                                                                            */
 eHalStatus
 WLANSAP_ScanCallback
 (
   tHalHandle halHandle, 
-  void *pContext,           /* Opaque SAP handle */
+  void *pContext,           /*                   */
   v_U32_t scanID, 
   eCsrScanStatus scanStatus
 )
@@ -155,14 +155,14 @@ WLANSAP_ScanCallback
     eHalStatus scanGetResultStatus = eHAL_STATUS_FAILURE;
     ptSapContext psapContext = (ptSapContext)pContext;
     void *pTempHddCtx;
-    tWLAN_SAPEvent sapEvent; /* State machine event */
+    tWLAN_SAPEvent sapEvent; /*                     */
     v_U8_t operChannel = 0;
     VOS_STATUS sapstatus;
 #ifdef SOFTAP_CHANNEL_RANGE
     v_U32_t operatingBand;
 #endif
 
-    /*- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+    /*                                                                       */
 
     pTempHddCtx = vos_get_context( VOS_MODULE_ID_HDD,
                                      psapContext->pvosGCtx);
@@ -178,15 +178,15 @@ WLANSAP_ScanCallback
     switch (scanStatus) 
     {
         case eCSR_SCAN_SUCCESS:
-            // sapScanCompleteCallback with eCSR_SCAN_SUCCESS
+            //                                               
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR scanStatus = %s (%d)", __func__, "eCSR_SCAN_SUCCESS", scanStatus);
 
-            // Get scan results, Run channel selection algorithm, select channel and keep in pSapContext->Channel
+            //                                                                                                   
             scanGetResultStatus = sme_ScanGetResult(halHandle, 0, NULL, &pResult);
 
             if ((NULL == pResult) || (scanGetResultStatus != eHAL_STATUS_SUCCESS))
             {
-                // No scan results
+                //                
                 VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_ERROR, "In %s, sme_ScanGetResult = NULL", __func__);
                 break;
             }
@@ -209,9 +209,9 @@ WLANSAP_ScanCallback
        }
        else 
        {
-         /* if the channel list is empty then there is no valid channel in 
-                the selected sub-band so select default channel in the 
-                BAND(2.4GHz/5GHZ) */
+         /*                                                                
+                                                                       
+                                  */
           ccmCfgGetInt( halHandle, WNI_CFG_SAP_CHANNEL_SELECT_OPERATING_BAND, &operatingBand);
           if(RF_SUBBAND_2_4_GHZ == operatingBand )
               psapContext->channel = SAP_DEFAULT_CHANNEL;
@@ -234,8 +234,8 @@ WLANSAP_ScanCallback
 #ifdef SOFTAP_CHANNEL_RANGE
     if(psapContext->channelList != NULL)
     {
-        /* Always free up the memory for channel selection whatever
-         * the result */
+        /*                                                         
+                      */
         vos_mem_free(psapContext->channelList);
         psapContext->channelList = NULL;
     }
@@ -243,57 +243,57 @@ WLANSAP_ScanCallback
 
     VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, Channel selected = %d", __func__, psapContext->channel);
 
-    /* Fill in the event structure */
+    /*                             */
     sapEvent.event = eSAP_MAC_SCAN_COMPLETE;
-    sapEvent.params = 0;        // pCsrRoamInfo;
-    sapEvent.u1 = scanStatus;   // roamstatus
-    sapEvent.u2 = 0;            // roamResult
+    sapEvent.params = 0;        //              
+    sapEvent.u1 = scanStatus;   //           
+    sapEvent.u2 = 0;            //           
 
-    /* Handle event */ 
+    /*              */ 
     sapstatus = sapFsm(psapContext, &sapEvent);
 
     return sapstatus;
-}// WLANSAP_ScanCallback
+}//                     
 
-/*==========================================================================
-  FUNCTION    WLANSAP_RoamCallback()
+/*                                                                          
+                                    
 
-  DESCRIPTION 
-    Callback for Roam (connection status) Events  
+              
+                                                  
 
-  DEPENDENCIES 
-    NA. 
+               
+        
 
-  PARAMETERS 
+             
 
-    IN
-      pContext      : pContext passed in with the roam request
-      pCsrRoamInfo  : Pointer to a tCsrRoamInfo, see definition of eRoamCmdStatus and
-      eRoamCmdResult: For detail valid members. It may be NULL
-      roamId        : To identify the callback related roam request. 0 means unsolicited
-      roamStatus    : Flag indicating the status of the callback
-      roamResult    : Result
+      
+                                                              
+                                                                                     
+                                                              
+                                                                                        
+                                                                
+                            
    
-  RETURN VALUE
-    The eHalStatus code associated with performing the operation  
+              
+                                                                  
 
-    eHAL_STATUS_SUCCESS: Success
+                                
   
-  SIDE EFFECTS 
-============================================================================*/
+               
+                                                                            */
 eHalStatus
 WLANSAP_RoamCallback
 (
-    void *pContext,           /* Opaque SAP handle */ 
+    void *pContext,           /*                   */ 
     tCsrRoamInfo *pCsrRoamInfo,
     v_U32_t roamId, 
     eRoamCmdStatus roamStatus, 
     eCsrRoamResult roamResult
 )
 {
-    /* sapContext value */    
+    /*                  */    
     ptSapContext sapContext = (ptSapContext) pContext; 
-    tWLAN_SAPEvent sapEvent; /* State machine event */
+    tWLAN_SAPEvent sapEvent; /*                     */
     VOS_STATUS  vosStatus = VOS_STATUS_SUCCESS;
     eHalStatus halStatus = eHAL_STATUS_SUCCESS;
 
@@ -302,7 +302,7 @@ WLANSAP_RoamCallback
     {
         case eCSR_ROAM_SESSION_OPENED:
         {
-            /* tHalHandle */
+            /*            */
             tHalHandle hHal = VOS_GET_HAL_CB(sapContext->pvosGCtx);
 
             if (NULL == hHal)
@@ -328,13 +328,13 @@ WLANSAP_RoamCallback
                       __func__, "eCSR_ROAM_INFRA_IND", roamStatus);
             if(roamResult == eCSR_ROAM_RESULT_INFRA_START_FAILED)
             {
-                /* Fill in the event structure */ 
+                /*                             */ 
                 sapEvent.event = eSAP_MAC_START_FAILS; 
                 sapEvent.params = pCsrRoamInfo;
                 sapEvent.u1 = roamStatus;
                 sapEvent.u2 = roamResult; 
                 
-                /* Handle event */ 
+                /*              */ 
                 vosStatus = sapFsm(sapContext, &sapEvent);
                 if(!VOS_IS_STATUS_SUCCESS(vosStatus))
                 {
@@ -358,7 +358,7 @@ WLANSAP_RoamCallback
                 __func__, "eCSR_ROAM_SET_KEY_COMPLETE", roamStatus);
             if (roamResult == eCSR_ROAM_RESULT_FAILURE )
             {
-                /* Format the SET KEY complete information pass to HDD... */
+                /*                                                        */
                 sapSignalHDDevent(sapContext, pCsrRoamInfo, eSAP_STA_SET_KEY_EVENT,(v_PVOID_t) eSAP_STATUS_FAILURE);
             }
             break;
@@ -368,7 +368,7 @@ WLANSAP_RoamCallback
                         __func__, "eCSR_ROAM_REMOVE_KEY_COMPLETE", roamStatus);
             if (roamResult == eCSR_ROAM_RESULT_FAILURE )
             {
-                /* Format the SET KEY complete information pass to HDD... */
+                /*                                                        */
                 sapSignalHDDevent(sapContext, pCsrRoamInfo, eSAP_STA_DEL_KEY_EVENT, (v_PVOID_t)eSAP_STATUS_FAILURE);
             }
             break;
@@ -378,7 +378,7 @@ WLANSAP_RoamCallback
                        __func__, "eCSR_ROAM_ASSOCIATION_COMPLETION", roamStatus);
             if (roamResult == eCSR_ROAM_RESULT_FAILURE )
             {
-                /* Format the SET KEY complete information pass to HDD... */
+                /*                                                        */
                 sapSignalHDDevent(sapContext, pCsrRoamInfo, eSAP_STA_REASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_FAILURE);
             }
             break;
@@ -388,7 +388,7 @@ WLANSAP_RoamCallback
                        __func__, "eCSR_ROAM_DISASSOCIATED", roamStatus);
             if (roamResult == eCSR_ROAM_RESULT_MIC_FAILURE)
             {
-                /* Format the MIC failure event to return... */
+                /*                                           */
                 sapSignalHDDevent(sapContext, pCsrRoamInfo, eSAP_STA_MIC_FAILURE_EVENT,(v_PVOID_t) eSAP_STATUS_FAILURE);
             }
             break;
@@ -456,7 +456,7 @@ WLANSAP_RoamCallback
                         pCsrRoamInfo->paddIE, sapContext->nStaAddIeLength);
 
             sapContext->SapQosCfg.WmmIsEnabled = pCsrRoamInfo->wmmEnabledSta;
-            // MAC filtering
+            //              
             vosStatus = sapIsPeerMacAllowed(sapContext, (v_U8_t *)pCsrRoamInfo->peerMac);
             
             if ( VOS_STATUS_SUCCESS == vosStatus )
@@ -497,7 +497,7 @@ WLANSAP_RoamCallback
                     pCsrRoamInfo->paddIE, sapContext->nStaAddIeLength);
 
             sapContext->SapQosCfg.WmmIsEnabled = pCsrRoamInfo->wmmEnabledSta;
-            /* Fill in the event structure */
+            /*                             */
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_ASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -508,7 +508,7 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_DISASSOC_IND:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                         __func__, "eCSR_ROAM_RESULT_DISASSOC_IND", roamResult);
-            /* Fill in the event structure */
+            /*                             */
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_DISASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -519,8 +519,8 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_DEAUTH_IND:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_DEAUTH_IND", roamResult);
-            /* Fill in the event structure */
-            //TODO: we will use the same event inorder to inform HDD to disassociate the station
+            /*                             */
+            //                                                                                  
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_DISASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -531,8 +531,8 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_MIC_ERROR_GROUP:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                         __func__, "eCSR_ROAM_RESULT_MIC_ERROR_GROUP", roamResult);
-            /* Fill in the event structure */
-            //TODO: support for group key MIC failure event to be handled
+            /*                             */
+            //                                                           
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_MIC_FAILURE_EVENT,(v_PVOID_t) NULL);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -543,8 +543,8 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_MIC_ERROR_UNICAST: 
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_MIC_ERROR_UNICAST", roamResult);
-            /* Fill in the event structure */
-            //TODO: support for unicast key MIC failure event to be handled
+            /*                             */
+            //                                                             
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_MIC_FAILURE_EVENT,(v_PVOID_t) NULL);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -555,7 +555,7 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_AUTHENTICATED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_AUTHENTICATED", roamResult);
-            /* Fill in the event structure */
+            /*                             */
             sapSignalHDDevent( sapContext, pCsrRoamInfo,eSAP_STA_SET_KEY_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -566,20 +566,20 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_ASSOCIATED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_ASSOCIATED", roamResult);
-            /* Fill in the event structure */
+            /*                             */
             sapSignalHDDevent( sapContext, pCsrRoamInfo,eSAP_STA_REASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             break;
 
         case eCSR_ROAM_RESULT_INFRA_STARTED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_INFRA_STARTED", roamResult);
-            /* Fill in the event structure */ 
+            /*                             */ 
             sapEvent.event = eSAP_MAC_START_BSS_SUCCESS;
             sapEvent.params = pCsrRoamInfo;
             sapEvent.u1 = roamStatus;
             sapEvent.u2 = roamResult;
 
-            /* Handle event */ 
+            /*              */ 
             vosStatus = sapFsm(sapContext, &sapEvent);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -590,13 +590,13 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_INFRA_STOPPED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_INFRA_STOPPED", roamResult);
-            /* Fill in the event structure */ 
+            /*                             */ 
             sapEvent.event = eSAP_MAC_READY_FOR_CONNECTIONS;
             sapEvent.params = pCsrRoamInfo;
             sapEvent.u1 = roamStatus;
             sapEvent.u2 = roamResult;
 
-            /* Handle event */ 
+            /*              */ 
             vosStatus = sapFsm(sapContext, &sapEvent);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -607,8 +607,8 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_WPS_PBC_PROBE_REQ_IND:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                         __func__, "eCSR_ROAM_RESULT_WPS_PBC_PROBE_REQ_IND", roamResult);
-            /* Fill in the event structure */
-            //TODO: support for group key MIC failure event to be handled
+            /*                             */
+            //                                                           
             vosStatus = sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_WPS_PBC_PROBE_REQ_EVENT,(v_PVOID_t) NULL);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {
@@ -619,16 +619,16 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_FORCED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                        __func__, "eCSR_ROAM_RESULT_FORCED", roamResult);
-            //This event can be used to inform hdd about user triggered disassoc event
-            /* Fill in the event structure */
+            //                                                                        
+            /*                             */
             sapSignalHDDevent( sapContext, pCsrRoamInfo, eSAP_STA_DISASSOC_EVENT, (v_PVOID_t)eSAP_STATUS_SUCCESS);
             break;
 
         case eCSR_ROAM_RESULT_NONE:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                     __func__, "eCSR_ROAM_RESULT_NONE", roamResult);
-            //This event can be used to inform hdd about user triggered disassoc event
-            /* Fill in the event structure */
+            //                                                                        
+            /*                             */
             if ( roamStatus == eCSR_ROAM_SET_KEY_COMPLETE)
             {
                 sapSignalHDDevent( sapContext, pCsrRoamInfo,eSAP_STA_SET_KEY_EVENT,(v_PVOID_t) eSAP_STATUS_SUCCESS);
@@ -642,7 +642,7 @@ WLANSAP_RoamCallback
         case eCSR_ROAM_RESULT_MAX_ASSOC_EXCEEDED:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH, "In %s, CSR roamResult = %s (%d)\n",
                     __func__, "eCSR_ROAM_RESULT_MAX_ASSOC_EXCEEDED", roamResult);
-            /* Fill in the event structure */
+            /*                             */
             vosStatus = sapSignalHDDevent(sapContext, pCsrRoamInfo, eSAP_MAX_ASSOC_EXCEEDED, (v_PVOID_t)NULL);
             if(!VOS_IS_STATUS_SUCCESS(vosStatus))
             {

@@ -58,8 +58,8 @@ static char *
 dump_csr( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 arg3, tANI_U32 arg4, char *p )
 {
     static tCsrRoamProfile x;
-    static tSirMacSSid ssid;   //To be allocated for array of SSIDs
-    static tANI_U8 sessionId; // Defined for fixed session ID
+    static tSirMacSSid ssid;   //                                  
+    static tANI_U8 sessionId; //                             
     palZeroMemory(pMac->hHdd, (void*)&x, sizeof(x)); 
     x.SSIDs.numOfSSIDs=1 ;
     x.SSIDs.SSIDList[0].SSID = ssid ;
@@ -150,4 +150,4 @@ void csrDumpInit(tHalHandle hHal)
                           sizeof(csrMenuDumpTable)/sizeof(csrMenuDumpTable[0]) );
 }
 
-#endif //#if defined(ANI_LOGDUMP)
+#endif //                        

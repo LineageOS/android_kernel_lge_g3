@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limProcessBeaconFrame.cc contains the code
- * for processing Received Beacon Frame.
- * Author:        Chandra Modumudi
- * Date:          03/01/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                       
+                                        
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 
 #include "wniCfgSta.h"
@@ -63,24 +63,24 @@
 #include "limPropExtsUtils.h"
 #include "limSerDesUtils.h"
 
-/**
- * limProcessBeaconFrame
- *
- *FUNCTION:
- * This function is called by limProcessMessageQueue() upon Beacon
- * frame reception.
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- *
- *NOTE:
- * 1. Beacons received in 'normal' state in IBSS are handled by
- *    Beacon Processing module.
- *
- * @param  pMac - Pointer to Global MAC structure
- * @param  *pRxPacketInfo - A pointer to RX packet info structure
- * @return None
+/* 
+                        
+  
+           
+                                                                  
+                   
+  
+        
+  
+              
+  
+       
+                                                               
+                               
+  
+                                                 
+                                                                 
+               
  */
 
 void
@@ -91,7 +91,7 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
 
     pMac->lim.gLimNumBeaconsRcvd++;
 
-    /* here is it required to increment session specific heartBeat beacon counter */  
+    /*                                                                            */  
 
 
     
@@ -108,12 +108,12 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
             return;
     }
 
-    /**
-     * Expect Beacon only when
-     * 1. STA is in Scan mode waiting for Beacon/Probe response or
-     * 2. STA is waiting for Beacon/Probe Respose Frame
-     *    to announce join success.
-     * 3. STA/AP is in Learn mode
+    /* 
+                              
+                                                                  
+                                                       
+                                   
+                                 
      */
     if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||
         (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE) ||
@@ -129,12 +129,12 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
             return;
         }
 
-        // Parse received Beacon
+        //                      
         if (sirConvertBeaconFrame2Struct(pMac, (tANI_U8 *) pRxPacketInfo,
                                          pBeacon) != eSIR_SUCCESS)
         {
-            // Received wrongly formatted/invalid Beacon.
-            // Ignore it and move on.
+            //                                           
+            //                       
             limLog(pMac, LOGW,
                    FL("Received invalid Beacon in state %X"),
                    psessionEntry->limMlmState);
@@ -143,8 +143,8 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
             return;
         }
 
-        /*during scanning, when any session is active, and beacon/Pr belongs to
-          one of the session, fill up the following, TBD - HB couter */
+        /*                                                                     
+                                                                     */
         if ((!psessionEntry->lastBeaconDtimPeriod) &&
             (sirCompareMacAddr( psessionEntry->bssId, pBeacon->bssid)))
         {
@@ -172,8 +172,8 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
                   ((pMac->lim.gLimHalScanState == eLIM_HAL_SCANNING_STATE) ?
                     eANI_BOOLEAN_TRUE : eANI_BOOLEAN_FALSE),
                     eANI_BOOLEAN_FALSE);
-            /* Calling dfsChannelList which will convert DFS channel
-             * to Active channel for x secs if this channel is DFS channel */
+            /*                                                      
+                                                                           */
              limSetDFSChannelList(pMac, pBeacon->channelNumber,
                                     &pMac->lim.dfschannelList);
         }
@@ -195,20 +195,20 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
               }
               else
               {
-                //Store the Beacon/ProbeRsp. This is sent to csr/hdd in join cnf response. 
+                //                                                                         
                 vos_mem_copy(psessionEntry->beacon, WDA_GET_RX_MPDU_DATA(pRxPacketInfo),
                              psessionEntry->bcnLen);
 
                }
              
-             // STA in WT_JOIN_BEACON_STATE (IBSS)
+             //                                   
             limCheckAndAnnounceJoinSuccess(pMac, pBeacon, pHdr,psessionEntry);
-        } // if (pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE)
+        } //                                                            
         vos_mem_free(pBeacon);
-    } // if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) || ...
+    } //                                                                    
     else
     {
-        // Ignore Beacon frame in all other states
+        //                                        
         if (psessionEntry->limMlmState == eLIM_MLM_JOINED_STATE ||
             psessionEntry->limMlmState  == eLIM_MLM_BSS_STARTED_STATE ||
             psessionEntry->limMlmState  == eLIM_MLM_WT_AUTH_FRAME2_STATE ||
@@ -222,7 +222,7 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
             psessionEntry->limMlmState  == eLIM_MLM_REASSOCIATED_STATE ||
             psessionEntry->limMlmState  == eLIM_MLM_WT_ASSOC_CNF_STATE ||
             limIsReassocInProgress(pMac,psessionEntry)) {
-            // nothing unexpected about beacon in these states
+            //                                                
             pMac->lim.gLimNumBeaconsIgnored++;
         }
         else
@@ -237,18 +237,18 @@ limProcessBeaconFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession ps
     }
 
     return;
-} /*** end limProcessBeaconFrame() ***/
+} /*                                 */
 
 
-/**---------------------------------------------------------------
-\fn     limProcessBeaconFrameNoSession
-\brief  This function is called by limProcessMessageQueue()
-\       upon Beacon reception. 
-\
-\param pMac
-\param *pRxPacketInfo    - A pointer to Rx packet info structure
-\return None
-------------------------------------------------------------------*/
+/*                                                                
+                                      
+                                                           
+                               
+ 
+           
+                                                                
+            
+                                                                  */
 void
 limProcessBeaconFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
 {
@@ -268,10 +268,10 @@ limProcessBeaconFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
             return;
     }
 
-    /**
-     * No session has been established. Expect Beacon only when
-     * 1. STA is in Scan mode waiting for Beacon/Probe response or
-     * 2. STA/AP is in Learn mode
+    /* 
+                                                               
+                                                                  
+                                 
      */
     if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||
         (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE) ||
@@ -286,7 +286,7 @@ limProcessBeaconFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
 
         if (sirConvertBeaconFrame2Struct(pMac, (tANI_U8 *) pRxPacketInfo, pBeacon) != eSIR_SUCCESS)
         {
-            // Received wrongly formatted/invalid Beacon. Ignore and move on. 
+            //                                                                
             limLog(pMac, LOGW, FL("Received invalid Beacon in global MLM state %X"), pMac->lim.gLimMlmState);
             limPrintMlmState(pMac, LOGW,  pMac->lim.gLimMlmState);
             vos_mem_free(pBeacon);
@@ -298,16 +298,16 @@ limProcessBeaconFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
         {
             limCheckAndAddBssDescription(pMac, pBeacon, pRxPacketInfo,
                                          eANI_BOOLEAN_TRUE, eANI_BOOLEAN_FALSE);
-            /* Calling dfsChannelList which will convert DFS channel
-             * to Active channel for x secs if this channel is DFS channel */
+            /*                                                      
+                                                                           */
             limSetDFSChannelList(pMac, pBeacon->channelNumber,
                                     &pMac->lim.dfschannelList);
         }
         else if (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE)
         {
-        }  // end of eLIM_MLM_LEARN_STATE)       
+        }  //                                    
         vos_mem_free(pBeacon);
-    } // end of (eLIM_MLM_WT_PROBE_RESP_STATE) || (eLIM_MLM_PASSIVE_SCAN_STATE)
+    } //                                                                       
     else
     {
         limLog(pMac, LOG1, FL("Rcvd Beacon in unexpected MLM state %d"), pMac->lim.gLimMlmState);
@@ -318,5 +318,5 @@ limProcessBeaconFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
     }
 
     return;
-} /*** end limProcessBeaconFrameNoSession() ***/
+} /*                                          */
 

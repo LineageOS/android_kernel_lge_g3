@@ -47,48 +47,48 @@
    All Rights Reserved.
    Qualcomm Atheros Confidential and Proprietary.
   ==============================================================================*/
-/* $HEADER$ */
-/**-----------------------------------------------------------------------------
-  Include files
-  ----------------------------------------------------------------------------*/
+/*          */
+/*                                                                              
+               
+                                                                              */
 #include <vos_getBin.h>
-#include <linux/fs.h>       // for softmac direct file i/o
+#include <linux/fs.h>       //                            
 #include <vos_api.h>
 #include <vos_sched.h>
 #include <wlan_hdd_misc.h>
 #include <wlan_hdd_main.h>
-/**-----------------------------------------------------------------------------
-  Preprocessor definitions and constants
-  ----------------------------------------------------------------------------*/
-/**-----------------------------------------------------------------------------
-  Type declarations
-  ----------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                              */
+/*                                                                              
+                   
+                                                                              */
 extern tVOS_CONCURRENCY_MODE hdd_get_concurrency_mode ( void );
 
-/**-----------------------------------------------------------------------------
-  Function declarations and documenation
-  ----------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
-  \brief vos_get_binary_blob() - get binary data from platform
-  This API allows components to get binary data from the platform independent
-  of where the data is stored on the device.
-  <ul>
-    <li> Firmware
-    <li> Configuration Data
-  \param binaryId - identifies the binary data to return to the caller.
-         raw binary data and update the *pBufferSize with the exact
-         size of the data that has been retreived.
-         the size of the binary data in *pBufferSize.
-         size of the data buffer available at pBuffer.  Upon success, this
-         retreived and written to the buffer at pBuffer.
-         Input value of 0 is valid and will cause the API to return
-         the size of the binary data in *pBufferSize.
-          retreived and written to the buffer.
-          refer to a valid VOS Binary ID.
-          variable that the API can write to.
-          *pBufferSize is not big enough to contain the binary.
-  \sa
-  --------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                              */
+/*                                                                            
+                                                              
+                                                                             
+                                            
+      
+                 
+                           
+                                                                       
+                                                                   
+                                                  
+                                                     
+                                                                          
+                                                        
+                                                                   
+                                                     
+                                              
+                                         
+                                             
+                                                               
+     
+                                                                            */
 VOS_STATUS vos_get_binary_blob( VOS_BINARY_ID binaryId,
                                 v_VOID_t *pBuffer, v_SIZE_t *pBufferSize )
 {
@@ -97,7 +97,7 @@ VOS_STATUS vos_get_binary_blob( VOS_BINARY_ID binaryId,
 
     v_CONTEXT_t pVosContext = vos_get_global_context(VOS_MODULE_ID_SYS,NULL);
 
-    // get the correct file name from binary Id
+    //                                         
     switch (binaryId)
     {
         case VOS_BINARY_ID_CONFIG:
@@ -118,7 +118,7 @@ VOS_STATUS vos_get_binary_blob( VOS_BINARY_ID binaryId,
     }
     if(0 == *pBufferSize )
     {
-       /*  just a file size request.  set the value and return  VOS_STATUS_E_NOMEM*/
+       /*                                                                         */
        VosSts = hdd_get_cfg_file_size(((VosContextType*)(pVosContext))->pHDDContext,pFileName,pBufferSize);
 
        if ( !VOS_IS_STATUS_SUCCESS( VosSts ))
@@ -133,7 +133,7 @@ VOS_STATUS vos_get_binary_blob( VOS_BINARY_ID binaryId,
     else
     {
        if(NULL != pBuffer) {
-          // read the contents into the buffer
+          //                                  
           VosSts = hdd_read_cfg_file(((VosContextType*)(pVosContext))->pHDDContext,pFileName,pBuffer,pBufferSize);
        }
        else {

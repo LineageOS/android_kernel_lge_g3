@@ -40,23 +40,23 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file wniStat.h contains statistics related definitions
- * exported by Sirius software modules.
- *
- * Author:      Kevin Nguyen 
- * Date:        08/21/2002
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                              
+                                       
+  
+                             
+                          
+            
+                                                          
+                                                                       
  */
 
 #ifndef _WNISTAT_H
 #define _WNISTAT_H
 
 
-// WNI Statistic Parameter ID
+//                           
 #define WNI_STAT_RTS_SUCC_CNT              1 
 #define WNI_STAT_RTS_FAILED_CNT            2
 #define WNI_STAT_PACKET_CNT                3

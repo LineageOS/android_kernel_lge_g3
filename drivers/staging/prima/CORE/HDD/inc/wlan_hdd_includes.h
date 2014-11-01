@@ -54,13 +54,13 @@
   
   ==========================================================================*/
   
-/* $HEADER$ */
+/*          */
   
-/*--------------------------------------------------------------------------- 
-  Include files
-  -------------------------------------------------------------------------*/ 
+/*                                                                            
+               
+                                                                           */ 
 
-// throw all the includes in here f to get the .c files  in the HDD to compile.
+//                                                                             
 
 #include <linux/version.h>
 #include <linux/module.h>
@@ -83,9 +83,9 @@
 #include "wlan_hdd_tx_rx.h"
 
 #ifdef FEATURE_OEM_DATA_SUPPORT
-/*include for oem data req specific structures*/
-/*and function declarations*/
+/*                                            */
+/*                         */
 #include "wlan_hdd_oemdata.h" 
 #endif
 
-#endif    // end #if !defined( HDD_INCLUDES_H__ )
+#endif    //                                     

@@ -62,14 +62,14 @@
 #ifndef WINXP_APPS_BUILD
 #include "vos_types.h"
 #include "vos_api.h"
-#endif /* WINXP_APPS_BUILD */
+#endif /*                  */
 
 #include "halLegacyPalTypes.h"
 
 #ifndef MK_IMAGE_HDR
 
 //
-// Validate the Bus type being built....
+//                                      
 //
 #if defined(ANI_BUS_TYPE_PCI)
 
@@ -97,29 +97,29 @@
 
 
 //
-// Validate the OS Type being built...
+//                                    
 //
 
-#if defined(ANI_OS_TYPE_ANDROID) // ANDROID
+#if defined(ANI_OS_TYPE_ANDROID) //        
 
 #if defined(ANI_OS_TYPE_QNX)
 #error "more than one ANI_OS_TYPE_xxx is defined for this build"
 #endif
 
-#elif defined( ANI_OS_TYPE_QNX )    // QNX
+#elif defined( ANI_OS_TYPE_QNX )    //    
 
 #if defined(ANI_OS_TYPE_ANDROID)
 #error "more than one ANI_OS_TYPE_xxx is defined for this build"
 #endif
 
 
-#elif !defined(ANI_OS_TYPE_ANDROID) && !defined(ANI_OS_TYPE_QNX)  // NONE
+#elif !defined(ANI_OS_TYPE_ANDROID) && !defined(ANI_OS_TYPE_QNX)  //     
 #error "NONE of the ANI_OS_TYPE_xxx are defined for this build"
 #endif
 
 
 //
-// Validate the compiler...
+//                         
 //
 #if ( defined( ANI_COMPILER_TYPE_MSVC ) && defined( ANI_COMPILER_TYPE_GCC ) && defined( ANI_COMPILER_TYPE_RVCT ) ) 
 #error "more than one ANI_COMPILER_TYPE_xxx is defined for this build"
@@ -131,7 +131,7 @@
 
 
 
-// some differences related to the compiler being used...
+//                                                       
 #if defined ( ANI_COMPILER_TYPE_GCC )
 
 #define ANI_INLINE_FUNCTION static __inline__
@@ -154,14 +154,14 @@
 
 
 
-// Common type definitions...
+//                           
 
 
 typedef tANI_U32     tANI_U32_OR_PTR;
 
-// Buffer address; could be virt or phys; could be 32- or 64-bit depending on compile option
+//                                                                                          
 typedef tANI_U32_OR_PTR    tANI_BUFFER_ADDR;
-// which boolean is the most usefule...or both ?
+//                                              
 
 typedef enum tagAniBoolean 
 {
@@ -175,11 +175,11 @@ typedef enum tagAniBoolean
 
 
 //
-// MAC address data type...
+//                         
 //
-// review the usefulness of this type.  I suspect this type is not
-// real useful unless we provide some 'helper' functions to manage 
-// the MAC addresses.
+//                                                                
+//                                                                 
+//                   
 //
 #define ANI_MAC_ADDR_SIZE ( 6 )
 typedef tANI_U8 tAniMacAddr[ ANI_MAC_ADDR_SIZE ];
@@ -188,25 +188,25 @@ typedef tANI_U8 tAniMacAddr[ ANI_MAC_ADDR_SIZE ];
 
 
 
-/** ------------------------------------------------------------------------- * 
+/*                                                                              
 
-    \typedef tHddHandle
+                       
     
-    \brief Handle to the HDD.  The HDD handle is given to the HAL from 
-    the HDD on halOpen.  The HDD handle is an input to all HDD/PAL function
-    calls and represents an opaque handle to the HDD instance that is tied
-    to the HAL instance, opened through halOpen.  
+                                                                       
+                                                                           
+                                                                          
+                                                  
     
-    The HDD must be able to derive it's internal instance structure pointer
-    through this handle.  hint hint...
+                                                                           
+                                      
     
-    -------------------------------------------------------------------------- */
+                                                                               */
 typedef void *tHddHandle;
-// define a value for an invalid HAL handle.....
+//                                              
 #define HDD_INVALID_HDD_HANDLE ( NULL )
 
 
-// For packet classification routines
+//                                   
 #define PAL_BIT_MASK(offset)         (1 << (offset))
 #define PAL_PKT_FLD_DSCP_OFFSET      0
 #define PAL_PKT_FLD_8021P_OFFSET     1
@@ -217,15 +217,15 @@ typedef void *tHddHandle;
 
 
 /*
-This represent an object for a spin lock and it is platform dependant
+                                                                     
 */
-//User of this variable must initialize it to PAL_INVALID_SPINLOCK_HANDLE in order for validation to work.
+//                                                                                                        
 typedef void * tPalSpinLockHandle;
    
 #define PAL_INVALID_SPINLOCK_HANDLE (NULL)
 
 /*
- * This represent an object for a semaphore and it is platform dependant
+                                                                        
  */
 typedef void * tPalSemaphoreHandle;
 

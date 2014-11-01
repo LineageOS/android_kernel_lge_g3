@@ -55,11 +55,11 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include "vos_status.h"
 #include "vos_lock.h"
 #include "vos_trace.h"
@@ -67,17 +67,17 @@
 #include "vos_types.h"
 #include "csrLinkList.h"
 
-/*-------------------------------------------------------------------------- 
-  Type declarations
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                   
+                                                                          */
 
-// Mask can be only have one bit set
+//                                  
 typedef enum eSmeCommandType 
 {
     eSmeNoCommand = 0, 
     eSmeDropCommand,
-    //CSR
-    eSmeCsrCommandMask = 0x10000,   //this is not a command, it is to identify this is a CSR command
+    //   
+    eSmeCsrCommandMask = 0x10000,   //                                                              
     eSmeCommandScan,
     eSmeCommandRoam, 
     eSmeCommandWmStatusChange, 
@@ -86,8 +86,8 @@ typedef enum eSmeCommandType
     eSmeCommandAddStaSession,
     eSmeCommandDelStaSession,
 #ifdef FEATURE_WLAN_TDLS
-    //eSmeTdlsCommandMask = 0x80000,  //To identify TDLS commands <TODO>
-    //These can be considered as csr commands. 
+    //                                                                  
+    //                                         
     eSmeCommandTdlsSendMgmt, 
     eSmeCommandTdlsAddPeer, 
     eSmeCommandTdlsDelPeer, 
@@ -100,8 +100,8 @@ typedef enum eSmeCommandType
     eSmeCommandTdlsExitUapsd,
 #endif
 #endif
-    //PMC
-    eSmePmcCommandMask = 0x20000, //To identify PMC commands
+    //   
+    eSmePmcCommandMask = 0x20000, //                        
     eSmeCommandEnterImps,
     eSmeCommandExitImps,
     eSmeCommandEnterBmps,
@@ -111,12 +111,12 @@ typedef enum eSmeCommandType
     eSmeCommandEnterWowl,
     eSmeCommandExitWowl,
     eSmeCommandEnterStandby,
-    //QOS
-    eSmeQosCommandMask = 0x40000,  //To identify Qos commands
+    //   
+    eSmeQosCommandMask = 0x40000,  //                        
     eSmeCommandAddTs,
     eSmeCommandDelTs,
 #ifdef FEATURE_OEM_DATA_SUPPORT
-    eSmeCommandOemDataReq = 0x80000, //To identify the oem data commands
+    eSmeCommandOemDataReq = 0x80000, //                                 
 #endif
     eSmeCommandRemainOnChannel,
     eSmeCommandNoAUpdate,
@@ -142,21 +142,21 @@ typedef struct tagSmeStruct
     void *pSmeCmdBufAddr;
     tDblLinkList smeCmdActiveList;
     tDblLinkList smeCmdPendingList;
-    tDblLinkList smeCmdFreeList;   //preallocated roam cmd list
-    void (*pTxPerHitCallback) (void *pCallbackContext); /* callback for Tx PER hit to HDD */ 
+    tDblLinkList smeCmdFreeList;   //                          
+    void (*pTxPerHitCallback) (void *pCallbackContext); /*                                */ 
     void *pTxPerHitCbContext;
     tVOS_CON_MODE currDeviceMode;
 #ifdef FEATURE_WLAN_LPHB
     void (*pLphbWaitTimeoutCb) (void *pAdapter, void *indParam);
-#endif /* FEATURE_WLAN_LPHB */
-    //pending scan command list
+#endif /*                   */
+    //                         
     tDblLinkList smeScanCmdPendingList;
-    //active scan command list
+    //                        
     tDblLinkList smeScanCmdActiveList;
 #ifdef FEATURE_WLAN_CH_AVOID
     void (*pChAvoidNotificationCb) (void *pAdapter, void *indParam);
-#endif /* FEATURE_WLAN_CH_AVOID */
+#endif /*                       */
 } tSmeStruct, *tpSmeStruct;
 
 
-#endif //#if !defined( __SMEINTERNAL_H )
+#endif //                               

@@ -40,15 +40,15 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limProcessProbeReqFrame.cc contains the code
- * for processing Probe Request Frame.
- * Author:        Chandra Modumudi
- * Date:          02/28/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+                                                         
+                                      
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 
 #include "wniCfgSta.h"
@@ -75,26 +75,26 @@ limSendSmeProbeReqInd(tpAniSirGlobal pMac,
                       tANI_U32 ProbeReqIELen,
                       tpPESession psessionEntry);
                       
-/**
- * limGetWPSPBCSessions
- *
- *FUNCTION:
- * This function is called to query the WPS PBC overlap
- *
- *LOGIC:
- * This function check WPS PBC probe request link list for PBC overlap 
- *
- *ASSUMPTIONS:
- *
- *
- *NOTE:
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  addr   A pointer to probe request source MAC addresss
- * @param  uuid_e A pointer to UUIDE element of WPS IE in WPS PBC probe request  
- * @param  psessionEntry   A pointer to station PE session
- *
- * @return None
+/* 
+                       
+  
+           
+                                                       
+  
+        
+                                                                       
+  
+              
+  
+  
+       
+  
+                                                 
+                                                                
+                                                                                 
+                                                          
+  
+               
  */
 
 void limGetWPSPBCSessions(tpAniSirGlobal pMac, tANI_U8 *addr, 
@@ -125,14 +125,14 @@ void limGetWPSPBCSessions(tpAniSirGlobal pMac, tANI_U8 *addr,
 
     if (count > 1)
     {
-        *overlap = eSAP_WPSPBC_OVERLAP_IN120S;    // Overlap  
+        *overlap = eSAP_WPSPBC_OVERLAP_IN120S;    //          
     }
     else if(count == 0)
     {
-        *overlap = eSAP_WPSPBC_NO_WPSPBC_PROBE_REQ_IN120S;    // no WPS probe request in 120 second    
+        *overlap = eSAP_WPSPBC_NO_WPSPBC_PROBE_REQ_IN120S;    //                                       
     } else
     {
-         *overlap = eSAP_WPSPBC_ONE_WPSPBC_PROBE_REQ_IN120S;   // One WPS probe request in 120 second
+         *overlap = eSAP_WPSPBC_ONE_WPSPBC_PROBE_REQ_IN120S;   //                                    
     }
 
     PELOGE(limLog(pMac, LOGE, FL("overlap = %d"), *overlap);)
@@ -142,24 +142,24 @@ void limGetWPSPBCSessions(tpAniSirGlobal pMac, tANI_U8 *addr,
     return;
 }
 
-/**
- * limRemoveTimeoutPBCsessions
- *
- *FUNCTION:
- * This function is called to remove the WPS PBC probe request entires from specific entry to end.
- *
- *LOGIC:
- *
- * 
- *ASSUMPTIONS:
- *
- *
- *NOTE:
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  pbc    The beginning entry in WPS PBC probe request link list
- *
- * @return None
+/* 
+                              
+  
+           
+                                                                                                  
+  
+        
+  
+   
+              
+  
+  
+       
+  
+                                                 
+                                                                        
+  
+               
  */
 static void limRemoveTimeoutPBCsessions(tpAniSirGlobal pMac, tSirWPSPBCSession *pbc)
 {
@@ -197,28 +197,28 @@ void limRemovePBCSessions(tpAniSirGlobal pMac, tSirMacAddr pRemoveMac,tpPESessio
 
 }
 
-/**
- * limUpdatePBCSessionEntry
- *
- *FUNCTION:
- * This function is called when probe request with WPS PBC IE is received
- *
- *LOGIC:
- * This function add the WPS PBC probe request in the WPS PBC probe request link list 
- * The link list is in decreased time order of probe request that is received.
- * The entry that is more than 120 second is removed.
- * 
- *ASSUMPTIONS:
- *
- *
- *NOTE:
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  addr   A pointer to probe request source MAC addresss
- * @param  uuid_e A pointer to UUIDE element of WPS IE 
- * @param  psessionEntry   A pointer to station PE session
- *
- * @return None
+/* 
+                           
+  
+           
+                                                                         
+  
+        
+                                                                                      
+                                                                              
+                                                     
+   
+              
+  
+  
+       
+  
+                                                 
+                                                                
+                                                       
+                                                          
+  
+               
  */
 
 static void limUpdatePBCSessionEntry(tpAniSirGlobal pMac,
@@ -267,7 +267,7 @@ static void limUpdatePBCSessionEntry(tpAniSirGlobal pMac,
     psessionEntry->pAPWPSPBCSession = pbc;
     pbc->timestamp = curTime;
     
-    /* remove entries that have timed out */
+    /*                                    */
     prev = pbc;
     pbc = pbc->next;
 
@@ -282,24 +282,24 @@ static void limUpdatePBCSessionEntry(tpAniSirGlobal pMac,
     }
 }
 #if 0
-/**
- * limWPSPBCTimeout
- *
- *FUNCTION:
- * This function is called when WPS PBC enrtries clean up timer is expired
- *
- *LOGIC:
- * This function remove all the entryies that more than 120 second old
- *
- *ASSUMPTIONS:
- *
- *
- *NOTE:
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  psessionEntry   A pointer to station PE session
- *
- * @return None
+/* 
+                   
+  
+           
+                                                                          
+  
+        
+                                                                      
+  
+              
+  
+  
+       
+  
+                                                 
+                                                          
+  
+               
  */
 
 void limWPSPBCTimeout(tpAniSirGlobal pMac, tpPESession psessionEntry)
@@ -337,24 +337,24 @@ void limWPSPBCTimeout(tpAniSirGlobal pMac, tpPESession psessionEntry)
 
 }
 #endif
-/**
- * limWPSPBCClose
- *
- *FUNCTION:
- * This function is called when BSS is closed
- *
- *LOGIC:
- * This function remove all the WPS PBC entries
- *
- *ASSUMPTIONS:
- *
- *
- *NOTE:
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  psessionEntry   A pointer to station PE session
- *
- * @return None
+/* 
+                 
+  
+           
+                                             
+  
+        
+                                               
+  
+              
+  
+  
+       
+  
+                                                 
+                                                          
+  
+               
  */
 
 void limWPSPBCClose(tpAniSirGlobal pMac, tpPESession psessionEntry)
@@ -364,21 +364,21 @@ void limWPSPBCClose(tpAniSirGlobal pMac, tpPESession psessionEntry)
 
 }
 
-/**
- * limCheck11bRates
- *
- *FUNCTION:
- * This function is called by limProcessProbeReqFrame() upon
- * Probe Request frame reception.
- *
- *LOGIC:
- * This function check 11b rates in supportedRates and extendedRates rates
- * 
- *NOTE:
- *
- * @param  rate   
- *
- * @return BOOLEAN
+/* 
+                   
+  
+           
+                                                            
+                                 
+  
+        
+                                                                          
+   
+       
+  
+                  
+  
+                  
  */
 
 tANI_BOOLEAN limCheck11bRates(tANI_U8 rate)
@@ -394,31 +394,31 @@ tANI_BOOLEAN limCheck11bRates(tANI_U8 rate)
     return FALSE;
 }
   
-/**
- * limProcessProbeReqFrame
- *
- *FUNCTION:
- * This function is called by limProcessMessageQueue() upon
- * Probe Request frame reception.
- *
- *LOGIC:
- * This function processes received Probe Request frame and responds
- * with Probe Response.
- * Only AP or STA in IBSS mode that sent last Beacon will respond to
- * Probe Request.
- *
- *ASSUMPTIONS:
- * 1. AP or STA in IBSS mode that sent last Beacon will always respond
- *    to Probe Request received with broadcast SSID.
- *
- *NOTE:
- * 1. Dunno what to do with Rates received in Probe Request frame
- * 2. Frames with out-of-order fields/IEs are dropped.
- *
- * @param  pMac   Pointer to Global MAC structure
- * @param  *pRxPacketInfo   A pointer to Buffer descriptor + associated PDUs
- *
- * @return None
+/* 
+                          
+  
+           
+                                                           
+                                 
+  
+        
+                                                                    
+                       
+                                                                    
+                 
+  
+              
+                                                                      
+                                                    
+  
+       
+                                                                 
+                                                      
+  
+                                                 
+                                                                            
+  
+               
  */
 
 void
@@ -434,11 +434,11 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
     tANI_U32            wpsApEnable=0, tmp;
 
     do{
-        // Don't send probe responses if disabled
+        //                                       
         if (pMac->lim.gLimProbeRespDisableFlag)
             break;
 
-        // Don't send probe response if P2P go is scanning till scan come to idle state. 
+        //                                                                               
         if((psessionEntry->pePersona == VOS_P2P_GO_MODE) && ((pMac->lim.gpLimRemainOnChanReq )
                                   || (pMac->lim.gLimHalScanState != eLIM_HAL_IDLE_SCAN_STATE)))
         {
@@ -460,10 +460,10 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
             PELOG3(limLog(pMac, LOG3, FL("Received Probe Request %d bytes from "), frameLen);
             limPrintMacAddr(pMac, pHdr->sa, LOG3);)
 
-            // Get pointer to Probe Request frame body
+            //                                        
            pBody = WDA_GET_RX_MPDU_DATA(pRxPacketInfo);
 
-            // Parse Probe Request frame
+            //                          
             if (sirConvertProbeReqFrame2Struct(pMac, pBody, frameLen, &probeReq)==eSIR_FAILURE)
             {
                 PELOGW(limLog(pMac, LOGW, FL("Parse error ProbeRequest, length=%d, SA is:"), frameLen);)
@@ -476,7 +476,7 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                 if (psessionEntry->pePersona == VOS_P2P_GO_MODE)
                 {
                     tANI_U8 i = 0, rate_11b = 0, other_rates = 0;
-                    // Check 11b rates in supported rates
+                    //                                   
                     for ( i = 0 ; i < probeReq.supportedRates.numRates;
                                                                   i++ )
                     {
@@ -490,7 +490,7 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                         }
                     }
 
-                    // Check 11b rates in extended rates
+                    //                                  
                     for ( i = 0 ; i < probeReq.extendedRates.numRates; i++ )
                     {
                         if (limCheck11bRates(probeReq.extendedRates.rate[i] & 0x7f))
@@ -545,11 +545,11 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                         (probeReq.wscIePresent ==  1) &&
                         (probeReq.probeReqWscIeInfo.DevicePasswordID.id == WSC_PASSWD_ID_PUSH_BUTTON))
                     {
-                        // send the probe req to WSM when it is from a PBC station 
+                        //                                                         
                         pSirSmeProbeReq = vos_mem_malloc(sizeof(tSirSmeProbeReq));
                         if ( NULL == pSirSmeProbeReq )
                         {
-                            // Log error
+                            //          
                             limLog(pMac, LOGP,
                                FL("call to AllocateMemory failed for eWNI_SME_PROBE_REQ"));
                             return;
@@ -572,13 +572,13 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
             }
 
             ssId.length = psessionEntry->ssId.length;
-             /* Copy the SSID from sessio entry to local variable */
+             /*                                                   */
             vos_mem_copy(ssId.ssId,
                          psessionEntry->ssId.ssId,
                          psessionEntry->ssId.length);
 
-            // Compare received SSID with current SSID. If they
-            // match, reply with Probe Response.
+            //                                                 
+            //                                  
             if (probeReq.ssId.length)
             {
                 if (!ssId.length)
@@ -616,13 +616,13 @@ limProcessProbeReqFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
             else
             {
                 {
-                    // Broadcast SSID in the Probe Request.
-                    // Reply with SSID we're configured with.
-                    //Turn off the SSID length to 0 if hidden SSID feature is present
+                    //                                     
+                    //                                       
+                    //                                                               
                     if(psessionEntry->ssidHidden)
-                      /*We are returning from here as probe request contains the broadcast SSID.
-                        So no need to send the probe resp*/
-                        //ssId.length = 0;
+                      /*                                                                        
+                                                         */
+                        //                
                            return;
                     limSendProbeRspMgmtFrame(pMac, pHdr->sa, &ssId, DPH_USE_MGMT_STAID,
                                              DPH_NON_KEEPALIVE_FRAME, psessionEntry,
@@ -640,7 +640,7 @@ multipleSSIDcheck:
         }
         else
         {
-            // Ignore received Probe Request frame
+            //                                    
             PELOG3(limLog(pMac, LOG3, FL("Ignoring Probe Request frame received from "));
             limPrintMacAddr(pMac, pHdr->sa, LOG3);)
             pMac->sys.probeIgnore++;
@@ -649,24 +649,24 @@ multipleSSIDcheck:
     }while(0);
 
     return;
-} /*** end limProcessProbeReqFrame() ***/
+} /*                                   */
 
-/**
- * limIndicateProbeReqToHDD
- *
- *FUNCTION:
- * This function is called by limProcessProbeReqFrame_multiple_BSS() upon
- * Probe Request frame reception.
- *
- *LOGIC:
- * This function processes received Probe Request frame and Pass 
- * Probe Request Frame to HDD.
- *
- * @param  pMac              Pointer to Global MAC structure
- * @param  *pBd              A pointer to Buffer descriptor + associated PDUs
- * @param  psessionEntry     A pointer to PE session
- *
- * @return None
+/* 
+                           
+  
+           
+                                                                         
+                                 
+  
+        
+                                                                 
+                              
+  
+                                                            
+                                                                             
+                                                    
+  
+               
  */
 
 static void
@@ -681,7 +681,7 @@ limIndicateProbeReqToHDD(tpAniSirGlobal pMac, tANI_U8 *pBd,
     pHdr = WDA_GET_RX_MAC_HEADER(pBd);
     frameLen = WDA_GET_RX_PAYLOAD_LEN(pBd);
 
-    //send the probe req to SME.
+    //                          
     limSendSmeMgmtFrameInd( pMac, pHdr->fc.subType,
                (tANI_U8*)pHdr, (frameLen + sizeof(tSirMacMgmtHdr)), 
                psessionEntry->smeSessionId, WDA_GET_RX_CH(pBd),
@@ -689,26 +689,26 @@ limIndicateProbeReqToHDD(tpAniSirGlobal pMac, tANI_U8 *pBd,
 #ifdef WLAN_FEATURE_P2P_INTERNAL
     limSendP2PProbeResponse(pMac, pBd, psessionEntry);
 #endif
-} /*** end limIndicateProbeReqToHDD() ***/
+} /*                                    */
 
-/**
- * limProcessProbeReqFrame_multiple_BSS
- *
- *FUNCTION:
- * This function is called by limProcessMessageQueue() upon
- * Probe Request frame reception.
- *
- *LOGIC:
- * This function call limIndicateProbeReqToHDD function to indicate 
- * Probe Request frame to HDD. It also call limProcessProbeReqFrame 
- * function which process received Probe Request frame and responds
- * with Probe Response.
- *
- * @param  pMac              Pointer to Global MAC structure
- * @param  *pBd              A pointer to Buffer descriptor + associated PDUs
- * @param  psessionEntry     A pointer to PE session
- *
- * @return None
+/* 
+                                       
+  
+           
+                                                           
+                                 
+  
+        
+                                                                    
+                                                                    
+                                                                   
+                       
+  
+                                                            
+                                                                             
+                                                    
+  
+               
  */
 
 void
@@ -754,33 +754,33 @@ limProcessProbeReqFrame_multiple_BSS(tpAniSirGlobal pMac, tANI_U8 *pBd,  tpPESes
         }
     }
 
-} /*** end limProcessProbeReqFrame_multiple_BSS() ***/
+} /*                                                */
 
-/**
- * limSendSmeProbeReqInd()
- *
- *FUNCTION:
- * This function is to send
- *  eWNI_SME_WPS_PBC_PROBE_REQ_IND message to host
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * This function is used for sending  eWNI_SME_WPS_PBC_PROBE_REQ_IND
- * to host.
- *
- * @param peerMacAddr       Indicates the peer MAC addr that the probe request
- *                          is generated.
- * @param pProbeReqIE       pointer to RAW probe request IE
- * @param ProbeReqIELen     The length of probe request IE.
- * @param psessionEntry     A pointer to PE session
- *
- * @return None
+/* 
+                          
+  
+           
+                           
+                                                  
+  
+         
+  
+        
+  
+              
+     
+  
+       
+                                                                    
+           
+  
+                                                                              
+                                         
+                                                           
+                                                           
+                                                   
+  
+               
  */
 void
 limSendSmeProbeReqInd(tpAniSirGlobal pMac,
@@ -795,7 +795,7 @@ limSendSmeProbeReqInd(tpAniSirGlobal pMac,
     pSirSmeProbeReqInd = vos_mem_malloc(sizeof(tSirSmeProbeReqInd));
     if ( NULL == pSirSmeProbeReqInd )
     {
-        // Log error
+        //          
         limLog(pMac, LOGP,
             FL("call to AllocateMemory failed for eWNI_SME_PROBE_REQ"));
             return;
@@ -820,7 +820,7 @@ limSendSmeProbeReqInd(tpAniSirGlobal pMac,
                             PELOGE(limLog(pMac, LOGE, FL("couldnt send the probe req to hdd"));)
     } 
         
-} /*** end limSendSmeProbeReqInd() ***/
+} /*                                 */
 #ifdef WLAN_FEATURE_P2P_INTERNAL
 void limSendP2PProbeResponse(tpAniSirGlobal pMac, tANI_U8 *pBd, 
                       tpPESession psessionEntry)
@@ -832,14 +832,14 @@ void limSendP2PProbeResponse(tpAniSirGlobal pMac, tANI_U8 *pBd,
     tSirProbeReq        probeReq;
 
     pHdr =  WDA_GET_RX_MAC_HEADER(pBd);
-    // Get pointer to Probe Request frame body
+    //                                        
     pBody =  WDA_GET_RX_MPDU_DATA(pBd);   
 
     if( (pBody[0] == 0) && (pBody[1] == ssId.length) &&
       (vos_mem_compare(ssId.ssId, pBody + 2,
                        ssId.length)))
     {
-        // Parse Probe Request frame
+        //                          
         frameLen = WDA_GET_RX_PAYLOAD_LEN(pBd);
         if (eSIR_FAILURE == sirConvertProbeReqFrame2Struct(pMac, pBody, frameLen, &probeReq))
         {
@@ -863,4 +863,4 @@ void limSendP2PProbeResponse(tpAniSirGlobal pMac, tANI_U8 *pBd,
         }
     }
 }
-#endif //#ifdef WLAN_FEATURE_P2P_INTERNAL
+#endif //                                

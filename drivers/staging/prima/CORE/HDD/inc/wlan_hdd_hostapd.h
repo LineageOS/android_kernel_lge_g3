@@ -58,9 +58,9 @@
 >>>>>>> 009551c... wlan: hdd: remove obsolete "WLAN_SOFTAP_FEATURE" featurization:prima/CORE/HDD/inc/wlan_hdd_hostapd.h
   ==========================================================================*/
 
-/*---------------------------------------------------------------------------
-  Include files
-  -------------------------------------------------------------------------*/
+/*                                                                           
+               
+                                                                           */
 
 #include <linux/netdevice.h>
 #include <linux/skbuff.h>
@@ -70,9 +70,9 @@
 #include <wlan_qct_tl.h>
 #include <wlan_hdd_main.h>
 
-/*---------------------------------------------------------------------------
-  Preprocessor definitions and constants
-  -------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                           */
 
 hdd_adapter_t* hdd_wlan_create_ap_dev( hdd_context_t *pHddCtx, tSirMacAddr macAddr, tANI_U8 *name);
 
@@ -112,5 +112,5 @@ int hdd_hostapd_set_mc_rate(hdd_adapter_t *pHostapdAdapter,
                             int targetRateHkbps);
 #ifdef FEATURE_WLAN_CH_AVOID
 void hdd_hostapd_ch_avoid_cb(void *pAdapter, void *indParam);
-#endif /* FEATURE_WLAN_CH_AVOID */
-#endif    // end #if !defined( WLAN_HDD_HOSTAPD_H )
+#endif /*                       */
+#endif    //                                       

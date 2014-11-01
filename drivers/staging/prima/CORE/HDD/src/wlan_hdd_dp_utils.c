@@ -50,24 +50,24 @@
                Qualcomm Confidential and Proprietary.
   
   ==============================================================================**/
-/* $HEADER$ */
+/*          */
   
-/**-----------------------------------------------------------------------------
-  Include files
-  ----------------------------------------------------------------------------*/
+/*                                                                              
+               
+                                                                              */
 #include <wlan_hdd_dp_utils.h>
 
-/**-----------------------------------------------------------------------------
-  Preprocessor definitions and constants
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                             */
   
-/**-----------------------------------------------------------------------------
-  Type declarations
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                   
+                                                                             */
   
-/**-----------------------------------------------------------------------------
-  Function declarations and documenation
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                             */
 
 
 VOS_STATUS hdd_list_insert_front( hdd_list_t *pList, hdd_list_node_t *pNode )
@@ -137,7 +137,7 @@ VOS_STATUS hdd_list_remove_node( hdd_list_t *pList,
       return VOS_STATUS_E_EMPTY;
    }
 
-    // verify that pNodeToRemove is indeed part of list pList
+    //                                                       
    list_for_each(tmp, &pList->anchor) 
    {
      if (tmp == pNodeToRemove)
@@ -186,7 +186,7 @@ VOS_STATUS hdd_list_peek_next( hdd_list_t *pList, hdd_list_node_t *pNode,
        return VOS_STATUS_E_EMPTY;
    }
 
-   // verify that pNode is indeed part of list pList
+   //                                               
    list_for_each(tmp, &pList->anchor) 
    {
      if (tmp == pNode)
@@ -219,7 +219,7 @@ VOS_STATUS hdd_string_to_hex( char *pSrcMac, int length, char *pDescMac )
    char temp[3] = {0};
    int rv;
 
-   //18 is MAC Address length plus the colons
+   //                                        
    if ( !pSrcMac && (length > 18 || length < 18) )
    {
       return VOS_STATUS_E_FAILURE;

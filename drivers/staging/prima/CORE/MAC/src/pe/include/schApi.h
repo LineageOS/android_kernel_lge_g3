@@ -40,14 +40,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                            
+                        
+            
+                                                          
+                                                                       
+  
  */
 
 #ifndef __SCH_API_H__
@@ -58,43 +58,43 @@
 
 #include "aniGlobal.h"
 
-/// Send start scan response message
+//                                  
 extern void schSendStartScanRsp(tpAniSirGlobal pMac);
 
-// update only the broadcast qos params
+//                                     
 extern void schQosUpdateBroadcast(tpAniSirGlobal pMac, tpPESession psessionEntry);
 
-// fill in the default local edca parameter into gLimEdcaParams[]
+//                                                               
 extern void schSetDefaultEdcaParams(tpAniSirGlobal pMac, tpPESession psessionE);
 
-// update only local qos params
+//                             
 extern void schQosUpdateLocal(tpAniSirGlobal pMac, tpPESession psessionEntry);
 
-// update the edca profile parameters
+//                                   
 extern void schEdcaProfileUpdate(tpAniSirGlobal pMac, tpPESession psessionEntry);
 
-/// Set the fixed fields in a beacon frame
+//                                        
 extern tSirRetStatus schSetFixedBeaconFields(tpAniSirGlobal pMac,tpPESession psessionEntry);
 
-/// Initializations
+//                 
 extern void schInitialize(tpAniSirGlobal pMac);
 
-/// Initialize globals
+//                    
 extern void schInitGlobals(tpAniSirGlobal pMac);
 
-/// Initialize CF Poll template
+//                             
 extern void schInitializeCfPollTemplate(tpAniSirGlobal pMac);
 
-/// Initialize CF End template
+//                            
 extern void schInitializeCfEndTemplate(tpAniSirGlobal pMac);
 
-/// Process the scheduler messages
+//                                
 extern void schProcessMessage(tpAniSirGlobal pMac,tpSirMsgQ pSchMsg);
 
-/// The beacon Indication handler function
+//                                        
 extern void schProcessPreBeaconInd(tpAniSirGlobal pMac, tpSirMsgQ limMsg);
 
-/// Post a message to the scheduler message queue
+//                                               
 extern tSirRetStatus schPostMessage(tpAniSirGlobal pMac, tpSirMsgQ pMsg);
 
 

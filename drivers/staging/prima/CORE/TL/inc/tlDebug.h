@@ -36,7 +36,7 @@
 #define TLLOG3(x)  {}
 #define TLLOG4(x)  {}
 
-#else /*WLAN_MDM_DATAPATH_OPT*/
+#else /*                     */
 
 #define TLLOGP(x0)  x0
 #define TLLOGE(x0)  x0
@@ -62,9 +62,9 @@
 #endif
 
 
-#endif /*WLAN_MDM_DATAPATH_OPT*/
+#endif /*                     */
 
-#else /* WLAN DEBUG */
+#else /*            */
 
 #define TLLOGP(x)  x
 #define TLLOGE(x)  x
@@ -73,8 +73,8 @@
 #define TLLOG2(x)  {}
 #define TLLOG3(x)  {}
 #define TLLOG4(x)  {}
-#endif /* WLAN DEBUG */
+#endif /*            */
 
 
-#endif // __TL_DEBUG_H__
+#endif //               
 

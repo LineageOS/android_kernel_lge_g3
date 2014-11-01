@@ -55,35 +55,35 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 
-/**----------------------------------------------------------------------------
+/*                                                                             
   
- \brief VOS_TRACE() / vos_trace_msg() - Trace / logging API
+                                                           
    
- Users wishing to add tracing information to their code should use 
- VOS_TRACE.  VOS_TRACE() will compile into a call to vos_trace_msg() when
- tracing is enabled.
+                                                                   
+                                                                         
+                    
   
- \param module - module identifier.   A member of the VOS_MODULE_ID
-                 enumeration that identifies the module issuing the trace message.
+                                                                   
+                                                                                  
          
- \param level - trace level.   A member of the VOS_TRACE_LEVEL 
-                enumeration indicating the severity of the condition causing the
-                trace message to be issued.   More severe conditions are more 
-                likely to be logged.
+                                                               
+                                                                                
+                                                                              
+                                    
          
-   \param strFormat - format string.  The message to be logged.  This format
-                      string contains printf-like replacement parameters, which follow
-                      this parameter in the variable argument list.                    
+                                                                            
+                                                                                      
+                                                                                       
   
-   \return  nothing
+                   
     
-  --------------------------------------------------------------------------*/
+                                                                            */
 void vos_trace_msg( VOS_MODULE_ID module, VOS_TRACE_LEVEL level, char *strFormat, ... );
 
 void vos_trace_hex_dump( VOS_MODULE_ID module, VOS_TRACE_LEVEL level,
@@ -94,15 +94,15 @@ void vos_trace_display(void);
 void vos_trace_setValue( VOS_MODULE_ID module, VOS_TRACE_LEVEL level, v_U8_t on );
 
 
-// VOS_TRACE is the macro invoked to add trace messages to code.  See the 
-// documenation for vos_trace_msg() for the parameters etc. for this function.
+//                                                                        
+//                                                                            
 // 
-// NOTE:  Code VOS_TRACE() macros into the source code.  Do not code directly
-// to the vos_trace_msg() function.
+//                                                                           
+//                                 
 //
-// NOTE 2:  vos tracing is totally turned off if WLAN_DEBUG is *not* defined.
-// This allows us to build 'performance' builds where we can measure performance
-// without being bogged down by all the tracing in the code.
+//                                                                           
+//                                                                              
+//                                                          
 #if defined( WLAN_DEBUG )
 #define VOS_TRACE vos_trace_msg
 #define VOS_TRACE_HEX_DUMP vos_trace_hex_dump
@@ -129,8 +129,8 @@ void vos_snprintf(char *strBuffer, unsigned  int size, char *strFormat, ...);
 #else 
 
 
-  // This code will be used for compilation if tracing is to be compiled out
-  // of the code so these functions/macros are 'do nothing'
+  //                                                                        
+  //                                                       
   VOS_INLINE_FN void vos_trace_msg( VOS_MODULE_ID module, ... ){}
   
   #define VOS_ASSERT( _condition )

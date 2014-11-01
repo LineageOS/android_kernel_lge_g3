@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file schDebug.cc contains some debug functions.
- *
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                       
+  
+                            
+                        
+            
+                                                          
+                                                                       
+  
  */
 
 
@@ -64,10 +64,10 @@ void schLog(tpAniSirGlobal pMac, tANI_U32 loglevel, const char *pString, ...)
        char    logBuffer[LOG_SIZE];
        va_list marker;
 
-      /* getting proper Debug level*/
+      /*                           */
        vosDebugLevel = getVosDebugLevel(loglevel);
 
-      /* extracting arguments from pstring */
+      /*                                   */
        va_start( marker, pString );
        vsnprintf(logBuffer, LOG_SIZE, pString, marker);
        VOS_TRACE(VOS_MODULE_ID_PE, vosDebugLevel, "%s", logBuffer);
@@ -76,4 +76,4 @@ void schLog(tpAniSirGlobal pMac, tANI_U32 loglevel, const char *pString, ...)
 
 
 
-// --------------------------------------------------------------------
+//                                                                     

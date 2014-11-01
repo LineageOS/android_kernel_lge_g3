@@ -39,16 +39,16 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limGlobal.h contains the definitions exported by
- * LIM module.
- * Author:        Chandra Modumudi
- * Date:          02/11/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                             
+              
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 #ifndef __LIM_GLOBAL_H
 #define __LIM_GLOBAL_H
@@ -64,37 +64,37 @@
 #include "sapApi.h"
 #include "dot11f.h"
 
-/// Maximum number of scan hash table entries
+//                                           
 #define LIM_MAX_NUM_OF_SCAN_RESULTS 256
 
-// Link Test Report Status. This appears in the report frame
+//                                                          
 #define LINK_TEST_STATUS_SUCCESS                0x1
 #define LINK_TEST_STATUS_UNSUPPORTED_RATE       0x2
 #define LINK_TEST_STATUS_INVALID_ADDR           0x3
 
-// Amount of time in nanosec to be sleep-waited before
-// enabling RHP (1 millisec)
+//                                                    
+//                          
 #define LIM_RHP_WORK_AROUND_DURATION 1000000
 
-// Maximum amount of Quiet duration in millisec
+//                                             
 #define LIM_MAX_QUIET_DURATION 32
 
 #define LIM_TX_WQ_EMPTY_SLEEP_NS                100000
 
-// Sending Disassociate frames threshold
+//                                      
 #define LIM_SEND_DISASSOC_FRAME_THRESHOLD       2
 #define LIM_HASH_MISS_TIMER_MS                  10000
 
-// Deferred Message Queue Length
+//                              
 #define MAX_DEFERRED_QUEUE_LEN                  20
 
-// Maximum Buffer size
+//                    
 #define LIM_MAX_BUF_SIZE                        8192
 
-// Maximum number of PS - TIM's to be sent with out wakeup from STA
+//                                                                 
 #define LIM_TIM_WAIT_COUNT_FACTOR          5
 
-/** Use this count if (LIM_TIM_WAIT_FACTOR * ListenInterval) is less than LIM_MIN_TIM_WAIT_CNT*/
+/*                                                                                            */
 #define LIM_MIN_TIM_WAIT_COUNT          50  
 
 #define GET_TIM_WAIT_COUNT(LIntrvl)        ((LIntrvl * LIM_TIM_WAIT_COUNT_FACTOR) > LIM_MIN_TIM_WAIT_COUNT ? \
@@ -102,9 +102,9 @@
 #define IS_5G_BAND(__rfBand)     ((__rfBand & 0x3) == 0x2)
 #define IS_24G_BAND(__rfBand)    ((__rfBand & 0x3) == 0x1)
 
-// enums exported by LIM are as follows
+//                                     
 
-/// System role definition
+//                        
 typedef enum eLimSystemRole
 {
     eLIM_UNKNOWN_ROLE,
@@ -118,12 +118,12 @@ typedef enum eLimSystemRole
     eLIM_P2P_DEVICE_CLIENT
 } tLimSystemRole;
 
-/**
- * SME state definition accessible across all Sirius modules.
- * AP only states are LIM_SME_CHANNEL_SCAN_STATE &
- * LIM_SME_NORMAL_CHANNEL_SCAN_STATE.
- * Note that these states may also be present in STA
- * side too when DFS support is present for a STA in IBSS mode.
+/* 
+                                                             
+                                                  
+                                     
+                                                    
+                                                               
  */
 typedef enum eLimSmeStates
 {
@@ -151,11 +151,11 @@ typedef enum eLimSmeStates
     eLIM_SME_NORMAL_CHANNEL_SCAN_STATE
 } tLimSmeStates;
 
-/**
- * MLM state definition.
- * While these states are present on AP too when it is
- * STA mode, per-STA MLM state exclusive to AP is:
- * eLIM_MLM_WT_AUTH_FRAME3.
+/* 
+                        
+                                                      
+                                                  
+                           
  */
 typedef enum eLimMlmStates
 {
@@ -185,10 +185,10 @@ typedef enum eLimMlmStates
     eLIM_MLM_WT_ADD_BSS_RSP_PREASSOC_STATE,
     eLIM_MLM_WT_ADD_STA_RSP_STATE,
     eLIM_MLM_WT_DEL_STA_RSP_STATE,
-    //MLM goes to this state when LIM initiates DELETE_STA as processing of Assoc req because
-    //the entry already exists. LIM comes out of this state when DELETE_STA response from
-    //HAL is received. LIM needs to maintain this state so that ADD_STA can be issued while
-    //processing DELETE_STA response from HAL.
+    //                                                                                       
+    //                                                                                   
+    //                                                                                     
+    //                                        
     eLIM_MLM_WT_ASSOC_DEL_STA_RSP_STATE,
     eLIM_MLM_WT_SET_BSS_KEY_STATE,
     eLIM_MLM_WT_SET_STA_KEY_STATE,
@@ -204,14 +204,14 @@ typedef enum eLimMlmStates
     eLIM_MLM_P2P_LISTEN_STATE,
 } tLimMlmStates;
 
-// 11h channel quiet states
-/* This enum indicates in which state the device is in
- * when it receives quiet element in beacon or probe-response.
- * The default quiet state of the device is always INIT
- * eLIM_QUIET_BEGIN - When Quiet period is started
- * eLIM_QUIET_CHANGED - When Quiet period is updated
- * eLIM_QUIET_RUNNING - Between two successive Quiet updates
- * eLIM_QUIET_END - When quiet period ends
+//                         
+/*                                                    
+                                                              
+                                                       
+                                                  
+                                                    
+                                                            
+                                          
  */
 typedef enum eLimQuietStates
 {
@@ -222,12 +222,12 @@ typedef enum eLimQuietStates
     eLIM_QUIET_END
 } tLimQuietStates;
 
-// 11h channel switch states
-/* This enum indicates in which state the channel-swith
- * is presently operating.
- * eLIM_11H_CHANSW_INIT - Default state
- * eLIM_11H_CHANSW_RUNNING - When channel switch is running
- * eLIM_11H_CHANSW_END - After channel switch is complete
+//                          
+/*                                                     
+                          
+                                       
+                                                           
+                                                         
  */
 typedef enum eLimDot11hChanSwStates
 {
@@ -238,10 +238,10 @@ typedef enum eLimDot11hChanSwStates
 
 #ifdef GEN4_SCAN
 
-//WLAN_SUSPEND_LINK Related
+//                         
 typedef void (*SUSPEND_RESUME_LINK_CALLBACK)(tpAniSirGlobal pMac, eHalStatus status, tANI_U32 *data);
 
-// LIM to HAL SCAN Management Message Interface states
+//                                                    
 typedef enum eLimHalScanState
 {
   eLIM_HAL_IDLE_SCAN_STATE,
@@ -254,28 +254,28 @@ typedef enum eLimHalScanState
   eLIM_HAL_END_LEARN_WAIT_STATE,
   eLIM_HAL_FINISH_LEARN_WAIT_STATE,
   eLIM_HAL_SCANNING_STATE,
-//WLAN_SUSPEND_LINK Related
+//                         
   eLIM_HAL_SUSPEND_LINK_WAIT_STATE,
   eLIM_HAL_SUSPEND_LINK_STATE,
   eLIM_HAL_RESUME_LINK_WAIT_STATE,
-//end WLAN_SUSPEND_LINK Related
+//                             
 } tLimLimHalScanState;
-#endif // GEN4_SCAN
+#endif //          
 
-// LIM states related to A-MPDU/BA
-// This is used for maintaining the state between PE and HAL only.
+//                                
+//                                                                
 typedef enum eLimBAState
 {
-  eLIM_BA_STATE_IDLE, // we are not waiting for anything from HAL.
-  eLIM_BA_STATE_WT_ADD_RSP, //We are waiting for Add rsponse from HAL.
-  eLIM_BA_STATE_WT_DEL_RSP //  We are waiting for Del response from HAL.
+  eLIM_BA_STATE_IDLE, //                                          
+  eLIM_BA_STATE_WT_ADD_RSP, //                                        
+  eLIM_BA_STATE_WT_DEL_RSP //                                           
 } tLimBAState;
 
 
 
 
 
-// MLM Req/Cnf structure definitions
+//                                  
 typedef struct sLimMlmAuthReq
 {
     tSirMacAddr    peerMacAddr;
@@ -304,32 +304,32 @@ typedef struct sLimMlmScanReq
     tANI_U32           maxChannelTimeBtc;
     tSirBackgroundScanMode  backgroundScanMode;
     tANI_U32 dot11mode;
-    /* Number of SSIDs to scan(send Probe request) */
+    /*                                             */
     tANI_U8            numSsid;
 
     tANI_BOOLEAN   p2pSearch;
     tANI_U16           uIEFieldLen;
     tANI_U16           uIEFieldOffset;
 
-    //channelList MUST be the last field of this structure
+    //                                                    
     tSirChannelList    channelList;
-    /*-----------------------------
-      tLimMlmScanReq....
-      -----------------------------
-      uIEFiledLen 
-      -----------------------------
-      uIEFiledOffset               ----+
-      -----------------------------    |
-      channelList.numChannels          |
-      -----------------------------    |
-      ... variable size up to          |
-      channelNumber[numChannels-1]     |
-      This can be zero, if             |
-      numChannel is zero.              |
-      ----------------------------- <--+
-      ... variable size uIEFiled 
-      up to uIEFieldLen (can be 0)
-      -----------------------------*/
+    /*                             
+                        
+                                   
+                  
+                                   
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                        
+                                 
+                                  
+                                   */
 } tLimMlmScanReq, *tpLimMlmScanReq;
 
 typedef struct tLimScanResultNode tLimScanResultNode;
@@ -348,7 +348,7 @@ struct tLimScanResultNode
 #define OEM_DATA_RSP_SIZE 1968
 #endif
 
-// OEM Data related structure definitions
+//                                       
 typedef struct sLimMlmOemDataReq
 {
     tSirMacAddr           selfMacAddr;
@@ -361,7 +361,7 @@ typedef struct sLimMlmOemDataRsp
 } tLimMlmOemDataRsp, *tpLimMlmOemDataRsp;
 #endif
 
-// Pre-authentication structure definition
+//                                        
 typedef struct tLimPreAuthNode
 {
     struct tLimPreAuthNode     *next;
@@ -377,14 +377,14 @@ typedef struct tLimPreAuthNode
     TX_TIMER            timer;
 }tLimPreAuthNode, *tpLimPreAuthNode;
 
-// Pre-authentication table definition
+//                                    
 typedef struct tLimPreAuthTable
 {
     tANI_U32        numEntry;
     tpLimPreAuthNode pTable;
 }tLimPreAuthTable, *tpLimPreAuthTable;
 
-/// Per STA context structure definition
+//                                      
 typedef struct sLimMlmStaContext
 {
     tLimMlmStates           mlmState;
@@ -398,17 +398,17 @@ typedef struct sLimMlmStaContext
     tSirResultCodes resultCode;
     tANI_U16 protStatusCode;
     
-    tANI_U8                 subType:1; // Indicates ASSOC (0) or REASSOC (1)
+    tANI_U8                 subType:1; //                                   
     tANI_U8                 updateContext:1;
     tANI_U8                 schClean:1;
-    // 802.11n HT Capability in Station: Enabled 1 or DIsabled 0
+    //                                                          
     tANI_U8                 htCapability:1;
 #ifdef WLAN_FEATURE_11AC
     tANI_U8                 vhtCapability:1;
 #endif
 } tLimMlmStaContext, *tpLimMlmStaContext;
 
-// Structure definition to hold deferred messages queue parameters
+//                                                                
 typedef struct sLimDeferredMsgQParams
 {
     tSirMsgQ    deferredQueue[MAX_DEFERRED_QUEUE_LEN];
@@ -442,7 +442,7 @@ typedef struct sCfgProtection
     tANI_U32 overlapNonGf:1;
     tANI_U32 overlapLsigTxop:1;
     tANI_U32 overlapRifs:1;
-    tANI_U32 overlapOBSS:1; /* added for obss */
+    tANI_U32 overlapOBSS:1; /*                */
     tANI_U32 fromlla:1;
     tANI_U32 fromllb:1;
     tANI_U32 fromllg:1;
@@ -450,7 +450,7 @@ typedef struct sCfgProtection
     tANI_U32 nonGf:1;
     tANI_U32 lsigTxop:1;
     tANI_U32 rifs:1;
-    tANI_U32 obss:1; /* added for Obss */
+    tANI_U32 obss:1; /*                */
 }tCfgProtection, *tpCfgProtection;
 
 typedef enum eLimProtStaCacheType
@@ -514,48 +514,48 @@ struct tLimIbssPeerNode
     tANI_U16 propCapability;
     tANI_U8  erpIePresent;
 
-    //HT Capabilities of IBSS Peer
+    //                            
     tANI_U8 htGreenfield;
     tANI_U8 htShortGI40Mhz;
     tANI_U8 htShortGI20Mhz;
 
-    // DSSS/CCK at 40 MHz: Enabled 1 or Disabled
+    //                                          
     tANI_U8 htDsssCckRate40MHzSupport;
 
-    // MIMO Power Save
+    //                
     tSirMacHTMIMOPowerSaveState htMIMOPSState;
 
     //
-    // A-MPDU Density
-    // 000 - No restriction
-    // 001 - 1/8 usec
-    // 010 - 1/4 usec
-    // 011 - 1/2 usec
-    // 100 - 1 usec
-    // 101 - 2 usec
-    // 110 - 4 usec
-    // 111 - 8 usec
+    //               
+    //                     
+    //               
+    //               
+    //               
+    //             
+    //             
+    //             
+    //             
     //
     tANI_U8 htAMpduDensity;
 
-    // Maximum Rx A-MPDU factor
+    //                         
     tANI_U8 htMaxRxAMpduFactor;
 
-    //Set to 0 for 3839 octets
-    //Set to 1 for 7935 octets
+    //                        
+    //                        
     tANI_U8 htMaxAmsduLength;
 
     //
-    // Recommended Tx Width Set
-    // 0 - use 20 MHz channel (control channel)
-    // 1 - use 40 Mhz channel
+    //                         
+    //                                         
+    //                       
     //
     tANI_U8 htSupportedChannelWidthSet;
 
     tANI_U8 beaconHBCount;
     tANI_U8 heartbeatFailure;
 
-    tANI_U8 *beacon; //Hold beacon to be sent to HDD/CSR
+    tANI_U8 *beacon; //                                 
     tANI_U16 beaconLen;
 
 #ifdef WLAN_FEATURE_11AC
@@ -565,7 +565,7 @@ struct tLimIbssPeerNode
 #endif
 };
 
-// Enums used for channel switching.
+//                                  
 typedef enum eLimChannelSwitchState
 {
     eLIM_CHANNEL_SWITCH_IDLE,
@@ -575,7 +575,7 @@ typedef enum eLimChannelSwitchState
 } tLimChannelSwitchState;
 
 
-// Channel Switch Info
+//                    
 typedef struct sLimChannelSwitchInfo
 {
     tLimChannelSwitchState   state;
@@ -603,16 +603,16 @@ typedef struct sLimWiderBWChannelSwitch
     tANI_U8      newCenterChanFreq1;
 }tLimWiderBWChannelSwitchInfo, *tpLimWiderBWChannelSwitchInfo;
 #endif
-// Enums used when stopping the Tx.
+//                                 
 typedef enum eLimQuietTxMode
 {
-    eLIM_TX_ALL = 0,       /* Stops/resumes the transmission of all stations, Uses the global flag. */
-    eLIM_TX_STA,           /* Stops/resumes the transmission of specific stations identified by staId. */
-    eLIM_TX_BSS,           /* Stops/resumes the transmission of all the packets in BSS */
-    eLIM_TX_BSS_BUT_BEACON /* Stops/resumes the transmission of all packets except beacons in BSS
-                                                 * This is used when radar is detected in the current operating channel.
-                                                 * Beacon has to be sent to notify the stations associated about the
-                                                 * scheduled channel switch */
+    eLIM_TX_ALL = 0,       /*                                                                       */
+    eLIM_TX_STA,           /*                                                                          */
+    eLIM_TX_BSS,           /*                                                          */
+    eLIM_TX_BSS_BUT_BEACON /*                                                                    
+                                                                                                                        
+                                                                                                                    
+                                                                            */
 } tLimQuietTxMode;
 
 typedef enum eLimControlTx
@@ -622,26 +622,26 @@ typedef enum eLimControlTx
 } tLimControlTx;
 
 
-// --------------------------------------------------------------------
+//                                                                     
 
 typedef __ani_attr_pre_packed struct sLimTspecInfo
 {
-    tANI_U8          inuse;       // 0==free, else used
-    tANI_U8          idx;         // index in list
+    tANI_U8          inuse;       //                   
+    tANI_U8          idx;         //              
     tANI_U8          staAddr[6];
     tANI_U16         assocId;
     tSirMacTspecIE   tspec;
-    tANI_U8          numTclas; // number of Tclas elements
+    tANI_U8          numTclas; //                         
     tSirTclasInfo    tclasInfo[SIR_MAC_TCLASIE_MAXNUM];
     tANI_U8          tclasProc;
-    tANI_U8          tclasProcPresent:1; //tclassProc is valid only if this is set to 1.
+    tANI_U8          tclasProcPresent:1; //                                             
 } __ani_attr_packed tLimTspecInfo, *tpLimTspecInfo;
 
 typedef struct sLimAdmitPolicyInfo
 {
-    tANI_U8          type;      // admit control policy type
-    tANI_U8          bw_factor; // oversubscription factor : 0 means nothing is allowed
-                              // valid only when 'type' is set BW_FACTOR
+    tANI_U8          type;      //                          
+    tANI_U8          bw_factor; //                                                     
+                              //                                        
 } tLimAdmitPolicyInfo, *tpLimAdmitPolicyInfo;
 
 
@@ -667,24 +667,24 @@ typedef struct sLimWscIeInfo
     tANI_U8            respType;
 } tLimWscIeInfo, *tpLimWscIeInfo;
 
-// maximum number of tspec's supported
+//                                    
 #define LIM_NUM_TSPEC_MAX      15
 
 
-//structure to hold all 11h specific data
+//                                       
 typedef struct sLimSpecMgmtInfo
 {
     tLimQuietStates    quietState;
     tANI_U32           quietCount;
-    tANI_U32           quietDuration;    /* This is in units of system TICKS */
-    tANI_U32           quietDuration_TU; /* This is in units of TU, for over the air transmission */
-    tANI_U32           quietTimeoutValue; /* After this timeout, actual quiet starts */
-    tANI_BOOLEAN       fQuietEnabled;    /* Used on AP, if quiet is enabled during learning */
+    tANI_U32           quietDuration;    /*                                  */
+    tANI_U32           quietDuration_TU; /*                                                       */
+    tANI_U32           quietTimeoutValue; /*                                         */
+    tANI_BOOLEAN       fQuietEnabled;    /*                                                 */
 
     tLimDot11hChanSwStates dot11hChanSwState;
         
-    tANI_BOOLEAN       fRadarDetCurOperChan; /* Radar detected in cur oper chan on AP */
-    tANI_BOOLEAN       fRadarIntrConfigured; /* Whether radar interrupt has been configured */
+    tANI_BOOLEAN       fRadarDetCurOperChan; /*                                       */
+    tANI_BOOLEAN       fRadarIntrConfigured; /*                                             */
 }tLimSpecMgmtInfo, *tpLimSpecMgmtInfo;
 
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
@@ -697,7 +697,7 @@ typedef struct sLimDisResultList
 
 #ifdef FEATURE_WLAN_TDLS
 /*
- * Peer info needed for TDLS setup..
+                                    
  */
 typedef struct tLimTDLSPeerSta
 {
@@ -711,7 +711,7 @@ typedef struct tLimTDLSPeerSta
     tSirMacEdcaParamSetIE    edcaParams;
     tANI_U8                  mcsSet[SIZE_OF_SUPPORTED_MCS_SET];    
     tANI_U8                  tdls_bIsResponder ;
-    /* HT Capabilties */
+    /*                */
     tDot11fIEHTCaps tdlsPeerHTCaps ;
     tDot11fIEExtCap tdlsPeerExtCaps;
     tANI_U8 tdls_flags ;
@@ -739,6 +739,6 @@ typedef enum tdlsLinkMode
     TDLS_LINK_MODE_AC,
     TDLS_LINK_MODE_NONE
 } eLimTdlsLinkMode ;
-#endif  /* FEATURE_WLAN_TDLS */
+#endif  /*                   */
 
 #endif

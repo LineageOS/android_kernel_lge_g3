@@ -26,24 +26,24 @@
  *OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
  *IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-/*===========================================================================
-                       EDIT HISTORY FOR FILE
+/*                                                                           
+                                            
 
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                                                       
+                                                                
 
-  $Header:$ $DateTime: $ $Author: $
+                                   
 
-  when        who        what, where, why
-  --------    ---        -----------------------------------------------------
-  04/10/13    kumarpra   nv parser creation
-===========================================================================*/
+                                         
+                                                                              
+                                           
+                                                                           */
 
 #include <linux/string.h>
 #include "wlan_nv.h"
 
 /*
- * NV stream layer service
+                          
  */
 #include "wlan_nv_stream.h"
 #include "wlan_nv_template_internal.h"
@@ -52,34 +52,34 @@
 #include "wlan_nv_template_builtin.h"
 
 #define _RECURSIVE_DATA_TABLE_PARSING
-// Recursive/iterative switch !! Default iterative
+//                                                
 #define _RECURSIVE_VERSION
 
 /*
- * Build process should have created the built-in templates in
- *     "wlan_nv_templateBuiltIn.c"
- *     Include its auto-generated companion header file
- *     "wlan_nv_templateBuiltIn.h"
- *
- * The main definitions are
- *     _NV_TEMPLATE_TABLE NvTablesBuiltIn[];
- *
+                                                              
+                                  
+                                                       
+                                  
+  
+                           
+                                            
+  
  */
 
 /*
- * Parsing control bitmap
+                         
  */
 tANI_U32 gNVParsingControlLo;
 static int subTableSize;
 static int fieldSize;
 static sHalNv *gpnvData_t;
-/* store enum comparison results*/
+/*                              */
 static _ENUM_META_DATA enumMetaDataFromBin[INDEX_ENUM_MAX];
 
 
 /*
- * This data copy logic ignores the enum or int data types,
- * but simply copy the whole chunk to the NV data structure
+                                                           
+                                                           
  */
 typedef struct {
    int idxSubFromBin;
@@ -87,19 +87,19 @@ typedef struct {
 } _SUBTABLES_QUEUE;
 
 pF_NumElemBasedOnStorageType numElemBasedOnStorageType[] = {
-   numElemSingular,     // SINGULAR=0
-   numElemArray1,       // ARRAY_1=1
-   numElemArray2,       // ARRAY_2=2
-   numElemArray3,       // ARRAY_3=3
+   numElemSingular,     //           
+   numElemArray1,       //          
+   numElemArray2,       //          
+   numElemArray3,       //          
 };
 
 static int sizeOneElemBasedOnFieldIdBasicDataType[] = {
-   1,  // _FIELD_ID_DATA_TYPE_U8 =0
-   4,  // _FIELD_ID_DATA_TYPE_U32
-   1,  // _FIELD_ID_DATA_TYPE_S8
-   4,  // _FIELD_ID_DATA_TYPE_S32
-   2,  // _FIELD_ID_DATA_TYPE_U16
-   2,  // _FIELD_ID_DATA_TYPE_S16
+   1,  //                          
+   4,  //                        
+   1,  //                       
+   4,  //                        
+   2,  //                        
+   2,  //                        
 };
 
 static _NV_STREAM_BUF nvStream[_NV_STREAM_LEN_MAX];
@@ -110,20 +110,20 @@ static int subTableRd, subTableWr;
 static _SUBTABLES_QUEUE subTablesQueue[_SUBTABLES_MAX];
 #endif
 
-/*==============================================================================
-*
-* Storage for NvTablesFromBin
-*
-*===============================================================================
+/*                                                                              
+ 
+                             
+ 
+                                                                                
 */
 
 /*
- * Init NvTablesFromBin
- * All entries are initialized to 0, pointers to NULL
+                       
+                                                     
 */
 
 _NV_TEMPLATE_TABLE NvTablesFromBin[TABLES_MAX][TABLE_ENTRIES_MAX] = {
-   { /* TABLE_LAST*/
+   { /*           */
        {{nul}, 0, 0, 0, 0, 0, 0, {nul}},
    },
 };
@@ -152,21 +152,21 @@ static void initNvTablesFromBin(void)
    return;
 }
 
-/*==============================================================================
-*
-* Storage for NvEnumsFromBin
-*
-* ==============================================================================
+/*                                                                              
+ 
+                            
+ 
+                                                                                
 */
 
 /*
- * Prepare the NV enum templates storage parsed from nv.bin
- * They are used later for parsing the nv.bin data
- * All entries are initialized to 0, pointers to NULL
+                                                           
+                                                  
+                                                     
  */
 
 _NV_TEMPLATE_ENUM NvEnumsFromBin[INDEX_ENUM_MAX][ENUM_ENTRIES_MAX] = {
-   { /* INDEX_ENUM_LAST */
+   { /*                 */
       {{nul}, 0, 0, {nul}},
    },
 };
@@ -189,84 +189,84 @@ static void initNvEnumsFromBin(void)
 }
 
 
-// =============================================================================
+//                                                                              
 //
-// Parse template streams
+//                       
 //
-// =============================================================================
+//                                                                              
 
 /*
- * Read nv.bin to extract the template info
- *     _NV_TEMPLATE_TABLE NvTablesFromBin[];
+                                           
+                                            
  */
 
 /*
- * Parse nv.bin data and extract to the build-in data storage
- *
- * There are two outcomes from earlier templates comparison operation.
- *     different or identical
- * If identical, this operation will most likely take place.
- * If different,
- *     One is to simply indicate to the user and abort reading the nv.bin data
- *     The other is to continue this operation, and extract the matching entries
- *      in nv.bin
+                                                             
+  
+                                                                      
+                             
+                                                            
+                
+                                                                              
+                                                                                
+                 
  */
 
 /*
- * The template based NV logic:
- *    - the s/w module has the built-in templates
- *    - nv.bin is read one stream at a time, sequentially from beginning to end
- *    - if the stream is an enum stream,
- *    -     add to nv.bin template data structure
- *    -     compare with the built in template, by the string ID
- *    -     if two match, move on
- *    -     if not match, indicate mismatch, act based on the global logic
- *    _     selection
- *    -         if abort, exit here
- *    -         if extract-matching-ones,
- *    -             copy the enum from the built-in template over to a separate
- *    _             column
- *    -             when the enum comparison is done, all correlated enums have
- *    -             a built-in enum value
- *    -                 all mismtached ones have 0xff
- *    - else if the stream is a table
- *    -     add to nv.bin template data structure
- *    -     compare with the built-in template, by the field string ID
- *    -     if two tables match, move on
- *    -     if not match, indicate mismatch and proceed based on the global
- *    -     logic selection
- *    -         if abort, exit here
- *    -         if extract-matching-ones,
- *    -             copy the built-in template offset to a separate column
- *    - eles if the stream is a data stream
- *    -     parse the data stream based on the accumulated NV templates so far,
- *    -     note at this point,
- *    -         1. the accumulated templates may be incomplete, to make up the
- *    -            whole NV structure
- *    -         2. some will be "overwritten" by later templates definitions
- *    -            that change the earlier templates)
- *    -     how to parse?
- *    -         based on the nv.bin accumulated templates so far,
- *    -         select the table definition from the data stream,
- *    -         find the corresponding table template,
- *    -         start parsing data based on the template's field string IDs,
- *    -         field by field sequentially.
- *    -         if the field is a nested table,
- *    -             go inside to the next level
- *    -         if the field is a basic type,
- *    -             copy data of the given size to the offset which is the
- *    -             offset in the built-in nv data storage
- *    - end of the logic
+                               
+                                                 
+                                                                               
+                                        
+                                                 
+                                                                
+                                 
+                                                                          
+                     
+                                   
+                                         
+                                                                               
+                          
+                                                                               
+                                         
+                                                     
+                                     
+                                                 
+                                                                      
+                                        
+                                                                           
+                           
+                                   
+                                         
+                                                                          
+                                           
+                                                                               
+                               
+                                                                              
+                                     
+                                                                            
+                                                     
+                         
+                                                                 
+                                                                 
+                                                      
+                                                                            
+                                            
+                                               
+                                               
+                                             
+                                                                          
+                                                          
+                        
  */
 
-/*----------------------------------------------------------------------------
-  \brief nvParser() - parse nv data provided in input buffer and store
-  \ output in sHalNv
-  \param inputEncodedbuffer, length, sHalNv - ptr to input stream,
-  \param length, sHalNv
-  \return success when successfully decode and copy to sHalNv structure
-  \sa
------------------------------------------------------------------------------*/
+/*                                                                            
+                                                                      
+                    
+                                                                  
+                       
+                                                                       
+     
+                                                                             */
 
 VOS_STATUS nvParser(tANI_U8 *pnvEncodedBuf, tANI_U32 nvReadBufSize,
    sHalNv *hal_nv)
@@ -278,21 +278,21 @@ VOS_STATUS nvParser(tANI_U8 *pnvEncodedBuf, tANI_U32 nvReadBufSize,
    VOS_STATUS ret = VOS_STATUS_SUCCESS;
    gpnvData_t = hal_nv;
 
-    // prepare storages for parsing nv.bin
+    //                                    
    initNvTablesFromBin();
    initNvEnumsFromBin();
 
-    // init stream read pointer
+    //                         
    initReadStream(pnvEncodedBuf, nvReadBufSize);
 
-    // get and process streams one by one
+    //                                   
    while (RC_FAIL != (streamRc = NEXT_STREAM(&len, &nvStream[0])) ) {
-        // need to copy, stream layer is freeing it
+        //                                         
       if (len > _NV_STREAM_LEN_MAX) {
          errCode = _STREAM_NOT_FIT_BUF;
          goto _error;
       }
-        // template or data
+        //                 
       if (IsStreamTemplate(pStream[_NV_BIN_STREAM_HEADER_BYTE])) {
           if (_MIS_MATCH == processNvTemplate(pStream, len)) {
               if (_FLAG_AND_ABORT(gNVParsingControlLo) ) {
@@ -311,14 +311,14 @@ _error:
       ret = VOS_STATUS_E_INVAL;
    }
 
-    // all done
+    //         
    return ret;
 }
 
 static _NV_TEMPLATE_PROCESS_RC processNvTemplate(_NV_STREAM_BUF *pStream,
    int len)
 {
-    // Table or enum
+    //              
     if (IsTemplateStreamTable(pStream[_NV_BIN_STREAM_HEADER_BYTE])) {
         return processNvTemplateTable(pStream, len);
     }
@@ -327,11 +327,11 @@ static _NV_TEMPLATE_PROCESS_RC processNvTemplate(_NV_STREAM_BUF *pStream,
     }
 }
 
-/* -----------------------------------------------------------------------------
- *
- * Parse one table template stream in nv.bin
- * The length of table templates varies, based on the field ID class,
- * field size type
+/*                                                                              
+  
+                                            
+                                                                     
+                  
  */
 
 static _NV_TEMPLATE_PROCESS_RC processNvTemplateTable(_NV_STREAM_BUF *pStream,
@@ -341,16 +341,16 @@ static _NV_TEMPLATE_PROCESS_RC processNvTemplateTable(_NV_STREAM_BUF *pStream,
    char tableNameFromBin[_TABLE_NAME_LEN +1];
    int tableIdxFromBin;
 
-    // construct the template table in the NvTablesFromBin
+    //                                                    
    memset((void*)tableNameFromBin, '\0', (size_t) (_TABLE_NAME_LEN +1));
    tableIdxFromBin = constructATemplateTable(pStream, len, tableNameFromBin);
 
-    // fetch the table name from the first entry, the Table of all tables
-    // search for the corresponding table in NvDataBuiltIn
+    //                                                                   
+    //                                                    
    if (tableIdxFromBin) {
        rc = compareWithBuiltinTable(tableIdxFromBin, tableNameFromBin);
    }
-    // done
+    //     
    return rc;
 }
 
@@ -360,7 +360,7 @@ static int getOffsetFromBuiltIn(char *tableNameFromBin)
    int i;
 
    _NV_TEMPLATE_TABLE (*pTableBuiltin)[TABLE_ENTRIES_MAX] = NvTablesBuiltIn;
-    // search NvTablesBuiltIn for the same string named table, and its idx
+    //                                                                    
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
        if (nul == pTableBuiltin[0][i].fieldName[0]) {
           break;
@@ -374,8 +374,8 @@ static int getOffsetFromBuiltIn(char *tableNameFromBin)
 }
 
 /*
- * Construct a table template in the NvTablesFromBin
- * it returns the newly constructed table, for comparison with NvTablesBuiltIn
+                                                    
+                                                                              
  */
 static int constructATemplateTable(_NV_STREAM_BUF *pStream, int len,
    char *tableStrName)
@@ -392,7 +392,7 @@ static int constructATemplateTable(_NV_STREAM_BUF *pStream, int len,
    if (IsIdxTableOfAllTables(tableIdx)) {
    }
    else {
-        // find the string name of the table
+        //                                  
       for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
          if (nul == pTable[0][i].fieldName[0]) {
             break;
@@ -404,28 +404,28 @@ static int constructATemplateTable(_NV_STREAM_BUF *pStream, int len,
          }
      }
      if (TABLE_ENTRIES_MAX == i) {
-            // if string name not found, don't know what to do
+            //                                                
         errCode = _TABLE_NON_EXIST_IN_TABLE_OF_ALL_TABLES;
         goto _error;
      }
    }
 
-    // check if the table is already populated
-   if (nul != pTable[tableIdx][0].fieldName[0]) {  // there is data in that enty
-       // tbd: decision logic based on Parsing Control (bitmap)
+    //                                        
+   if (nul != pTable[tableIdx][0].fieldName[0]) {  //                           
+       //                                                      
    }
 
-    // overwrite table entry, tableIdx
+    //                                
    pos = _TABLE_FIELDS_POS;
    entryIdx = 0;
    while (pos < len) {
       if (!(pos <= (len - _TABLE_FIELD_MIN_LEN))) {
-           // error condition
+           //                
          errCode = _INSUFFICIENT_FOR_FIELD_PARSER_ERROR;
          break;
       }
 
-        //  populate the entry
+        //                    
       memset(pTable[tableIdx][entryIdx].fieldName, '\0',
          (size_t) (_TABLE_NAME_LEN + 1));
       memset(pTable[tableIdx][entryIdx].fieldFullName, '\0',
@@ -466,27 +466,27 @@ _error:
    if (_OK != errCode) {
    }
 
-    // all done
+    //         
    return tableIdx;
 }
 
-/* -----------------------------------------------------------------------------
- *
- * Table Compare logic:
- *
- * 1. the fields need to be in the same order. Looping through fields doesn't
- *    guarantee order.
- * 2. whenever mismatch occurs in this "same-order" comparison, flag.
- * 3. If extract matching entries' option is selected, proceed to nv.bin table
- *    and extract data.
- *
- * Note
- *   "compareWithBuiltinTable" is the initiating point.
- *   "compare2Tables" is the top level compare logic.
- *       it is naturally implemented as a recursive call, but out of stack
- *       overflow concern,
- *       it is also implemented as an iterative loop.
- *
+/*                                                                              
+  
+                       
+  
+                                                                             
+                      
+                                                                     
+                                                                              
+                       
+  
+       
+                                                       
+                                                     
+                                                                          
+                          
+                                                     
+  
  */
 
 static _NV_TEMPLATE_PROCESS_RC compareWithBuiltinTable(int idxFromBin,
@@ -498,7 +498,7 @@ static _NV_TEMPLATE_PROCESS_RC compareWithBuiltinTable(int idxFromBin,
    _NV_TEMPLATE_PROCESS_RC rc = _MATCH;
    _ErrorCode errCode = _OK;
 
-    // search NvTablesBuiltIn for the same string named table, and its idx
+    //                                                                    
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
       if (nul == pTableBuiltin[0][i].fieldName[0]) {
          break;
@@ -510,7 +510,7 @@ static _NV_TEMPLATE_PROCESS_RC compareWithBuiltinTable(int idxFromBin,
       }
    }
 
-   // compare and copy values
+   //                        
    if (!tableIdxBuiltin) {
       errCode = _TABLE_NON_EXIST_IN_TABLE_OF_ALL_TABLES;
       rc = _MIS_MATCH;
@@ -519,14 +519,14 @@ static _NV_TEMPLATE_PROCESS_RC compareWithBuiltinTable(int idxFromBin,
       subTableRd = 0;
       subTableWr = 0;
 
-      // fire the comparison logic
+      //                          
       if (_MIS_MATCH == compare2Tables(idxFromBin, tableIdxBuiltin)) {
           rc = _MIS_MATCH;
       }
 
-      // for iterative version
-      // return code (rc) should only be set to _MIS_MATCH when it happens at
-      // least once
+      //                      
+      //                                                                     
+      //           
 #if !defined(_RECURSIVE_VERSION)
       {
       int idxSubFromBin, idxSubBuiltin;
@@ -536,16 +536,16 @@ static _NV_TEMPLATE_PROCESS_RC compareWithBuiltinTable(int idxFromBin,
           if (_MIS_MATCH == compare2Tables(idxSubFromBin, idxSubBuiltin)) {
               rc = _MIS_MATCH;
           }
-          // increment read pointer
+          //                       
           subTableRd = (subTableRd+1) % _SUBTABLES_MAX;
      }
      }
-#endif //#if !defined(_RECURSIVE_VERSION)
+#endif //                                
    }
 
-//_error:
+//       
    if (_OK != errCode) {
-        //printf("Error %d \n", errCode);
+        //                               
    }
 
    //
@@ -564,9 +564,9 @@ static _NV_TEMPLATE_PROCESS_RC compare2Tables(int idxFromBin, int idxBuiltin)
 
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
       if ((nul == pTableBuiltIn[idxBuiltin][i].fieldName[0]) ||
-      // end of table occurs in either table
+      //                                    
           (nul == pTableFromBin[idxFromBin][i].fieldName[0])) {
-          // end of table occurs in either table
+          //                                    
          if ((nul == pTableBuiltIn[idxBuiltin][i].fieldName[0]) &&
              (nul == pTableFromBin[idxFromBin][i].fieldName[0])) {
             rc = _MATCH;
@@ -576,14 +576,14 @@ static _NV_TEMPLATE_PROCESS_RC compare2Tables(int idxFromBin, int idxBuiltin)
 
             for (j=0; j<TABLE_ENTRIES_MAX; j++) {
                if (nul == pTableBuiltIn[idxBuiltin][j].fieldName[0]) {
-                       // end of bin table
+                       //                 
                   break;
                }
                if (!strcmp(
                   (const char*) pTableBuiltIn[idxBuiltin][j].fieldName,
                   (const char*) pTableFromBin[idxFromBin][i].fieldName)) {
-                        // found matching field in bin table
-                        // DO NOT check return code, it's already a mismatch
+                        //                                  
+                        //                                                  
                   compare2FieldsAndCopyFromBin(
                        &(pTableBuiltIn[idxBuiltin][j]),
                        &(pTableFromBin[idxFromBin][i]), idxBuiltin,
@@ -592,12 +592,12 @@ static _NV_TEMPLATE_PROCESS_RC compare2Tables(int idxFromBin, int idxBuiltin)
                }
             }
          }
-         break; // end of table, either table, condition
+         break; //                                      
       }
       else {
          if (!strcmp(pTableBuiltIn[idxBuiltin][i].fieldName,
                  pTableFromBin[idxFromBin][i].fieldName)) {
-         // two field names match
+         //                      
             if (_MATCH == compare2FieldsAndCopyFromBin(
                              &(pTableBuiltIn[idxBuiltin][i]),
                              &(pTableFromBin[idxFromBin][i]),
@@ -616,19 +616,19 @@ static _NV_TEMPLATE_PROCESS_RC compare2Tables(int idxFromBin, int idxBuiltin)
             if ( _FLAG_AND_ABORT(gNVParsingControlLo) ) {
                break;
             }
-            // else
-            // loop through the WHOLE bin tables, looking for a matching field.
-            // this would take care of both cases where bin table field is
-            // either "ahead" or "behind"
+            //     
+            //                                                                 
+            //                                                            
+            //                           
             for (j = 0; j < TABLE_ENTRIES_MAX; j++) {
-            // end of bin table
+            //                 
                if (nul == pTableFromBin[idxBuiltin][j].fieldName[0]) {
                    break;
                }
                if (!strcmp(pTableBuiltIn[idxBuiltin][j].fieldName,
                      pTableFromBin[idxFromBin][i].fieldName)) {
-                // found matching field in bin table
-                // DO NOT check return code, it's already a mismatch
+                //                                  
+                //                                                  
                   compare2FieldsAndCopyFromBin(&(pTableBuiltIn[idxBuiltin][j]),
                       &(pTableFromBin[idxFromBin][i]), idxBuiltin, idxFromBin);
                   break;
@@ -647,22 +647,22 @@ static _NV_TEMPLATE_PROCESS_RC compare2FieldsAndCopyFromBin(
 {
    _NV_TEMPLATE_PROCESS_RC rc = _MATCH;
 
-   // Verified already the fieldNames match
-   // fieldId type matching?
+   //                                      
+   //                       
    /*
-    * If it's a simple type, simple comparison, ==,after mask out the data type
-    * else if it's a table, need to compare 2 tables, don't call recursively
+                                                                               
+                                                                            
     */
    if (_MIS_MATCH == compare2FieldIDType(pTableBuiltIn, pTableFromBin,
          idxBuiltin, idxFromBin)) {
       rc = _MIS_MATCH;
       goto _end;
    }
-    // storage type matching?
-    // If it's SINGULAR, simple == comparison
-    // else if it's ARRAY_n, besides check ARRAY_n equal, check sizes
-    //     if sizes are Index_int, simple comparison
-    //     else if sizes are INDEX_ENUM, need to loop through enums
+    //                       
+    //                                       
+    //                                                               
+    //                                              
+    //                                                             
     //
    if (_MIS_MATCH == compare2FieldStorageTypeAndSizes(pTableBuiltIn,
             pTableFromBin, idxBuiltin, idxFromBin)) {
@@ -670,7 +670,7 @@ static _NV_TEMPLATE_PROCESS_RC compare2FieldsAndCopyFromBin(
       goto _end;
    }
 
-   // all matched, copy offset over
+   //                              
    rc = _MATCH;
    pTableFromBin->offset = pTableBuiltIn->offset;
 
@@ -692,7 +692,7 @@ static _NV_TEMPLATE_PROCESS_RC compare2FieldIDType(
          rc = _MIS_MATCH;
       }
    }
-   else { // field is a table
+   else { //                 
       int idxSubBuiltin = pTableBuiltIn->fieldId &
         FIELD_ID_TABLE_OR_ENUM_IDX_MASK;
       int idxSubFromBin = pTableFromBin->fieldId &
@@ -705,7 +705,7 @@ static _NV_TEMPLATE_PROCESS_RC compare2FieldIDType(
       subTablesQueue[subTableWr].idxSubBuiltin = idxSubBuiltin;
       subTableWr = (subTableWr +1) % _SUBTABLES_MAX;
       }
-#endif //#if defined(_RECURSIVE_VERSION)
+#endif //                               
    }
 
    return rc;
@@ -802,8 +802,8 @@ static _NV_TEMPLATE_PROCESS_RC compare2StorageSize(int idxBuiltIn,
    }
    else if (!IsFieldSizeInt(sizeBuiltInLowByte) &&
               !IsFieldSizeInt(sizeFromBinLowByte)) {
-        // enums should have been compared when enum streams are parsed
-        // The implication is that the enum streams should go before tables'
+        //                                                             
+        //                                                                  
       rc = enumMetaDataFromBin[idxFromBin].match;
    }
    else {
@@ -814,28 +814,28 @@ static _NV_TEMPLATE_PROCESS_RC compare2StorageSize(int idxBuiltIn,
 }
 
 /*
- * ----------------------------------------------------------------------------
- *
- * Parse one enum template stream in nv.bin
+                                                                               
+  
+                                           
  */
 static _NV_TEMPLATE_PROCESS_RC processNvTemplateEnum(_NV_STREAM_BUF *pStream,
    int len)
 {
    _NV_TEMPLATE_PROCESS_RC rc = _MATCH;
    char enumStr[_ENUM_NAME_LEN + 1];
-    //_NV_TEMPLATE_ENUM *pEnum;
+    //                         
    int enumIdx;
 
-    // construct the enum template in the NvEnumsFromBin
+    //                                                  
    memset((void*)enumStr, '\0', (size_t) (_ENUM_NAME_LEN + 1));
    enumIdx = constructATemplateEnum(pStream, len, enumStr);
 
-    // Compare the enum template
-    // also record compare results for later use in the table
-    // templates parsing where
-    // the fields may be indexed by enums
-    // if enumIdx ==0, didn't construct any entry,
-    // (or only the first entry)
+    //                          
+    //                                                       
+    //                        
+    //                                   
+    //                                            
+    //                          
    if (enumIdx) {
       compareEnumWithBuiltin(enumStr, enumIdx);
    }
@@ -867,9 +867,9 @@ static void compareEnumWithBuiltin(char *enumStr, int enumIdxFromBin)
       compare2EnumEntriesAndCopy(enumIdxFromBin, enumIdxBuiltin);
    }
 
-//_error:
+//       
    if (_OK != errCode) {
-      //printf("Error %d\n", errCode);
+      //                              
    }
 
    return;
@@ -883,15 +883,15 @@ static _NV_TEMPLATE_PROCESS_RC compare2EnumEntriesAndCopy(int idxFromBin,
    _NV_TEMPLATE_ENUM (*enumsFromBin)[ENUM_ENTRIES_MAX] = NvEnumsFromBin;
    _NV_TEMPLATE_ENUM (*enumsBuiltin)[ENUM_ENTRIES_MAX] = NvEnumsBuiltIn;
 
-    // need to go through all enums
+    //                             
    for (i = 0; i < ENUM_ENTRIES_MAX; i++) {
-       // end conditions: either both reach the end (match),
-       // or one of them reaching the end (mismatch)
+       //                                                   
+       //                                           
       if ((nul == enumsBuiltin[idxBuiltin][i].enumName[0]) ||
           (nul == enumsFromBin[idxFromBin][i].enumName[0])) {
           if ((nul == enumsBuiltin[idxBuiltin][i].enumName[0]) &&
               (nul == enumsFromBin[idxFromBin][i].enumName[0])) {
-                // fully matched
+                //              
               rc = _MATCH;
               break;
           }
@@ -914,13 +914,13 @@ static _NV_TEMPLATE_PROCESS_RC compare2EnumEntriesAndCopy(int idxFromBin,
       else {
           if (!strcmp(enumsBuiltin[idxBuiltin][i].enumName,
                 enumsFromBin[idxFromBin][i].enumName)) {
-                // copy builtIn enum value to fromBin
+                //                                   
               enumsFromBin[idxFromBin][i].enumValuePeer =
                  enumsBuiltin[idxBuiltin][i].enumValue;
           }
           else {
-              // mismatch, but still loop through the whole enum list
-              // for the "ahead" and "behind" scenarios
+              //                                                     
+              //                                       
               rc = _MIS_MATCH;
               for (j = 0; j < ENUM_ENTRIES_MAX; j++) {
                  if (nul == enumsBuiltin[idxBuiltin][j].enumName[0]) {
@@ -937,10 +937,10 @@ static _NV_TEMPLATE_PROCESS_RC compare2EnumEntriesAndCopy(int idxFromBin,
       }
    }
 
-   // record match or mismatch for later data parsing use
+   //                                                    
    enumMetaDataFromBin[idxFromBin].match = rc;
 
-   // all done
+   //         
    return rc;
 }
 
@@ -958,11 +958,11 @@ static int constructATemplateEnum(_NV_STREAM_BUF *pStream, int len,
        FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
     pEnum = NvEnumsFromBin;
 
-    // find its string name
-    // the logic:
-    // since the nv.bin doesn't encode the enum string name in the actual enum
-    // stream, only the first "enum of all enums"
-    //    has the names of all enums.
+    //                     
+    //           
+    //                                                                        
+    //                                           
+    //                               
     if (IsIdxEnumOfAllEnums(enumIdx)) {
     }
     else {
@@ -976,42 +976,42 @@ static int constructATemplateEnum(_NV_STREAM_BUF *pStream, int len,
             }
         }
         if (ENUM_ENTRIES_MAX == i) {
-            // without a string name, don't know what to do with the enum indexed
+            //                                                                   
             errCode = _ENUM_NOT_FOUND_IN_BUILT_IN;
             goto _error;
         }
     }
 
-    // Found the enum string name, now parsing decision time ...
-    // Is the entry already populated?
-    if (nul != pEnum[enumIdx][0].enumName[0]) {  // there is data in that entry
-        // TBD:
-        // the logic here depends on how we support "parsing data based on the
-        // latest template".
-        // one way is to overwrite the template, so the subsequent parsing will
-        // be based on the "latest".
-        // the second way is to "append" the template, and the parsing should
-        // always be based on the "last" of the same name
-        // for simplicity, support the first approach for now.
+    //                                                          
+    //                                
+    if (nul != pEnum[enumIdx][0].enumName[0]) {  //                            
+        //     
+        //                                                                    
+        //                  
+        //                                                                     
+        //                          
+        //                                                                   
+        //                                               
+        //                                                    
         //
-        // the logic:
-        // based on the parsing control (bitmap), we may proceed on overwriting
-        // enums with blind faith that the writing logic is correct,
-        // or ignore the appended.
+        //           
+        //                                                                     
+        //                                                          
+        //                        
         //
     }
 
-    // overwrite entry, enumIdx
+    //                         
     pos = _ENUM_START_POS;
     entryIdx = 0;
     while (pos < len) {
         if (!(pos <= (len - _ENUM_MIN_LEN))) {
-            // error condition
+            //                
             errCode = _INSUFFICIENT_FOR_FIELD_PARSER_ERROR;
             break;
         }
 
-        // populate the entry
+        //                   
         memset(pEnum[enumIdx][entryIdx].enumName, '\0',
            (size_t) (_ENUM_NAME_LEN +1));
         memset(pEnum[enumIdx][entryIdx].enumFullName, '\0',
@@ -1024,34 +1024,34 @@ static int constructATemplateEnum(_NV_STREAM_BUF *pStream, int len,
 
 _error:
     if (_OK != errCode) {
-        //printf("Error %d\n", errCode);
+        //                              
     }
 
-    // all done
+    //         
     return enumIdx;
 }
 
-/* -----------------------------------------------------------------------------
- *
- * Process data stream
- * The purpose is to copy nv.bin data into built in NV data structure.
- * This is the parser function.
- *
- * Next phase:
- * With NV data in the s/w module data structure, nv.bin conforming
- * to the new format can be generated. That is the nv.bin generation logic.)
- *
- * Data stream has the following format
- *
- * delimiter|streamHeader|tableID|data....|CRC|delimiter
- * Note
- *    1. delimiters are not present in the stream data, pStream.
- *    2. nested tables do NOT have table IDs with them.
- *
+/*                                                                              
+  
+                      
+                                                                      
+                               
+  
+              
+                                                                   
+                                                                            
+  
+                                       
+  
+                                                        
+       
+                                                                
+                                                       
+  
  */
-// NV data, per built in templates
-// Recursive table parsing, which is naturally depth-first
-// If iterative, a bit hard to implement
+//                                
+//                                                        
+//                                      
 
 static void parseSubDataTable4Size(int tableIdx, int numElem)
 {
@@ -1060,30 +1060,30 @@ static void parseSubDataTable4Size(int tableIdx, int numElem)
    int i;
    int numSubElem = 0, idx=0;
 
-   // "apply" template to data -- parsing the actual NV data,
-   //     so far we have been parsing and building templates
+   //                                                        
+   //                                                       
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
       if (nul == pTable[tableIdx][i].fieldName[0]) {
-          // data parsing done for this stream
+          //                                  
           break;
       }
       if (IsFieldTypeBasicData(pTable[tableIdx][i].fieldId)) {
           getBasicDataSize(&(pTable[tableIdx][i]));
       }
       else {
-         // number of element
+         //                  
          idx =
             _STORAGE_TYPE(pTable[tableIdx][i].fieldStorageType);
          numSubElem = numElemBasedOnStorageType[idx](
                          &(pTable[tableIdx][i]), 1);
-         // get size of the sub-table
+         //                          
          idxSubTable = (pTable[tableIdx][i].fieldId &
             FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
-         // recursive calls for the total size of the subtable
+         //                                                   
          parseSubDataTable4Size(idxSubTable, numSubElem);
       }
    }
-   // update subTableSize for the number of elements
+   //                                               
    subTableSize *= numElem;
 
    return;
@@ -1435,7 +1435,7 @@ static void copyDataToBuiltInFromBin(int tableIdx,int fieldId,
    }
 }
 
-// search NvTablesBuiltIn for the same string named table, and its idx
+//                                                                    
 static int getBuiltInFieldCount (int tableIdxBin, char *tableNameFromBin,
    int *tblIdBuiltIn, int *fieldIdBuitIn, int *numElements)
 {
@@ -1460,7 +1460,7 @@ static int getBuiltInFieldCount (int tableIdxBin, char *tableNameFromBin,
       return -1;
    }
 
-   //fieldName index got from tableId from Bin
+   //                                         
    fieldIndex = i;
    found = 0;
 
@@ -1480,7 +1480,7 @@ static int getBuiltInFieldCount (int tableIdxBin, char *tableNameFromBin,
       return -1;
    }
 
-   //found tableId of builtIn
+   //                        
    tableIdxBuiltin = *tblIdBuiltIn =
                  (pTable[0][i].fieldId & FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
    found = 0;
@@ -1632,7 +1632,7 @@ static int getFieldCount(int tableIdx, int fieldId, int numElem, int nvBin)
       for (j=0; j<numElem; j++) {
          for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
             if (nul == pTable[idxSubTable][i].fieldName[0]) {
-             // data parsing done for this stream
+             //                                  
              break;
             }
 
@@ -1660,15 +1660,15 @@ static void parseSubDataTableAndCopy(int tableIdx, int numElem, int numElem2,
    _NV_TEMPLATE_TABLE (*pTable)[TABLE_ENTRIES_MAX] = NvTablesFromBin;
    _NV_TEMPLATE_TABLE (*pTableBuiltIn)[TABLE_ENTRIES_MAX] = NvTablesBuiltIn;
 
-   // "apply" template to data -- parsing the actual NV data,
-   //     so far we have been parsing and building templates
+   //                                                        
+   //                                                       
    if (IsFieldTypeBasicData(pTable[tableIdx][fieldId].fieldId)) {
-      // First Entry, same as off addOffset just increment localOffset
+      //                                                              
       if (pTable[tableIdx][fieldId].offset == addOffset) {
          totalOffset = localAddOffset + pTable[tableIdx][fieldId].offset;
       }
       else {
-         // Multiple  Entry next index array, addOffset and localOffset
+         //                                                            
          totalOffset = localAddOffset + pTable[tableIdx][fieldId].offset +
                        addOffset;
       }
@@ -1676,8 +1676,8 @@ static void parseSubDataTableAndCopy(int tableIdx, int numElem, int numElem2,
          tableBaseOffset);
    }
    else {
-      // number of element
-      // get size of the sub-table
+      //                  
+      //                          
       idxSubTable = (pTable[tableIdx][fieldId].fieldId &
                       FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
 
@@ -1807,7 +1807,7 @@ static void parseSubDataTableAndCopy(int tableIdx, int numElem, int numElem2,
 
                for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
                   if (nul == pTable[idxSubTable][i].fieldName[0]) {
-                   // data parsing done for this stream
+                   //                                  
                       break;
                   }
 
@@ -1863,15 +1863,15 @@ static void parseSubDataTableAndCopy(int tableIdx, int numElem, int numElem2,
                            addOffset, tableBaseOffset, localAddOffset);
                      }
                      else {
-                  // NOT the first Entry in the table..
+                  //                                   
                         if ( !pTable[tableIdx][fieldId].offset ) {
                            parseSubDataTableAndCopy(idxSubTable, numSubElem,
                              numSubElem2, numSubElem3, i, pStream, pos,
                              addOffset, tableBaseOffset, localAddOffset);
                         }
                         else {
-                           //First Entry in the the table..
-                           //(Sending parent offset..)
+                           //                              
+                           //                         
                            parseSubDataTableAndCopy(idxSubTable, numSubElem,
                               numSubElem2, numSubElem3, i, pStream, pos,
                               addOffset, tableBaseOffset,
@@ -1901,35 +1901,35 @@ static void processNvData(_NV_STREAM_BUF *pStream, int len)
    int numElem = 0, additionalOffset = 0, tableBaseOffset = 0;
    _NV_TEMPLATE_TABLE (*pTable)[TABLE_ENTRIES_MAX] = NvTablesFromBin;
 
-    // fetch the table template
-   pos = 0; // stream header byte is already checked, that's why we are here
+    //                         
+   pos = 0; //                                                              
    pos += _NV_BIN_DATA_STREAM_TABLEID_BYTE;
    tableIdx = (pStream[_NV_BIN_DATA_STREAM_TABLEID_BYTE] &
        FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
    pos++;
 
-   // call the table parsing
+   //                       
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
       if (nul == pTable[0][i].fieldName[0]) {
           break;
       }
       if (tableIdx == _TABLE_IDX(pTable[0][i].fieldId)) {
-         // Table base offset, stored in the "table of all tables" (index 0),
-         // will be added to
-         // fields relative offset in all tables.
+         //                                                                  
+         //                 
+         //                                      
          tableBaseOffset = pTable[0][i].offset;
 
          idx = _STORAGE_TYPE(pTable[0][i].fieldStorageType);
 
-         // number of element
+         //                  
          numElem = numElemBasedOnStorageType[idx](&(pTable[0][i]),1);
 
-         // recursive calls for the total size of the subtable, which may
-         // contain nested tables
+         //                                                              
+         //                      
          subTableSize = 0;
          parseSubDataTable4Size(tableIdx, numElem);
 
-         // additional offset for EACH subsequent table element
+         //                                                    
          additionalOffset = subTableSize/numElem;
 
          break;
@@ -1944,8 +1944,8 @@ static void processNvData(_NV_STREAM_BUF *pStream, int len)
       }
    }
 
-   // the above recursive data table parser takes care of the nested tables
-   // all done
+   //                                                                      
+   //         
    return;
 }
 
@@ -1956,15 +1956,15 @@ static void parseDataTable_new(_NV_STREAM_BUF *pStream, int* pos, int tableIdx,
    int i, idx, fieldCount;
    int numElem, numElem2, numElem3, storageType, idxSubTable;
 
-   // "apply" template to data -- parsing the actual NV data,
-   //     so far we have been parsing and building templates
+   //                                                        
+   //                                                       
    for (i = 0; i < TABLE_ENTRIES_MAX; i++) {
       if (nul == pTable[tableIdx][i].fieldName[0]) {
-          // data parsing done for this stream
+          //                                  
           break;
       }
 
-      // get size of the sub-table
+      //                          
       idxSubTable = (pTable[tableIdx][i].fieldId &
                              FIELD_ID_TABLE_OR_ENUM_IDX_MASK);
 
@@ -2033,18 +2033,18 @@ static void getBasicDataSize(_NV_TEMPLATE_TABLE *pTableEntry)
    int numElem, sizeOneElem, totalSize;
    int idx, idx1;
 
-   // number of element
+   //                  
    idx = _STORAGE_TYPE(pTableEntry->fieldStorageType);
    numElem = numElemBasedOnStorageType[idx](pTableEntry, 1);
 
-   // size of each element
+   //                     
    idx1 = pTableEntry->fieldId & FIELD_ID_TABLE_OR_ENUM_IDX_MASK;
    sizeOneElem = sizeOneElemBasedOnFieldIdBasicDataType[idx1];
 
-   // total size in bytes
+   //                    
    totalSize = numElem * sizeOneElem;
 
-   // all done, update global
+   //                        
    subTableSize += totalSize;
 
    return;
@@ -2087,7 +2087,7 @@ static int getNumElemOutOfStorageSize(int fieldStorageSize,
           }
       }
       ret = (maxEnumVal + 1);
-      return ret; // +1 to count for 0 to maxEnumVal
+      return ret; //                                
    }
 }
 

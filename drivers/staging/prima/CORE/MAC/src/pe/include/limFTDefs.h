@@ -56,43 +56,43 @@
 #include <palTypes.h>
 #include "halMsgApi.h"
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
-#define SIR_MDIE_SIZE               3 // MD ID(2 bytes), Capability(1 byte)
+/*                                                                           
+                                        
+                                                                          */
+#define SIR_MDIE_SIZE               3 //                                   
 #define MAX_TIDS                    8
-#define MAX_FTIE_SIZE             256 // Max size limited to 256, on acct. of IW custom events
+#define MAX_FTIE_SIZE             256 //                                                      
 
 
-/*-------------------------------------------------------------------------- 
-  Type declarations
-  ------------------------------------------------------------------------*/
-/*--------------------------------------------------------------------------
-  FT Pre Auth Req SME<->PE
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                   
+                                                                          */
+/*                                                                          
+                          
+                                                                          */
 typedef struct sSirFTPreAuthReq
 {
-   tANI_U16    messageType;      // eWNI_SME_FT_PRE_AUTH_REQ
+   tANI_U16    messageType;      //                         
    tANI_U16    length;
-   tANI_BOOLEAN bPreAuthRspProcessed; /* Track if response is processed for this request
-                                         We expect only one response per request. */
+   tANI_BOOLEAN bPreAuthRspProcessed; /*                                                
+                                                                                  */
    tANI_U8     preAuthchannelNum;
-   tSirMacAddr currbssId;        // BSSID currently associated to suspend the link
-   tSirMacAddr preAuthbssId;     // BSSID to preauth to
+   tSirMacAddr currbssId;        //                                               
+   tSirMacAddr preAuthbssId;     //                    
    tANI_U16    ft_ies_length;
    tANI_U8     ft_ies[MAX_FTIE_SIZE];
    tpSirBssDescription  pbssDescription;
 } tSirFTPreAuthReq, *tpSirFTPreAuthReq;
 
-/*-------------------------------------------------------------------------
-  FT Pre Auth Rsp PE<->SME
-  ------------------------------------------------------------------------*/
+/*                                                                         
+                          
+                                                                          */
 typedef struct sSirFTPreAuthRsp
 {
-   tANI_U16         messageType;      // eWNI_SME_FT_PRE_AUTH_RSP
+   tANI_U16         messageType;      //                         
    tANI_U16         length;
    tANI_U8          smeSessionId;
-   tSirMacAddr      preAuthbssId;     // BSSID to preauth to
+   tSirMacAddr      preAuthbssId;     //                    
    tSirRetStatus    status;
    tANI_U16         ft_ies_length;
    tANI_U8          ft_ies[MAX_FTIE_SIZE];
@@ -100,9 +100,9 @@ typedef struct sSirFTPreAuthRsp
    tANI_U8          ric_ies[MAX_FTIE_SIZE];
 } tSirFTPreAuthRsp, *tpSirFTPreAuthRsp;
 
-/*--------------------------------------------------------------------------
-  FT Pre Auth Rsp Key SME<->PE
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                              
+                                                                          */
 typedef struct sSirFTUpdateKeyInfo
 {
    tANI_U16             messageType;
@@ -111,34 +111,34 @@ typedef struct sSirFTUpdateKeyInfo
    tSirKeyMaterial      keyMaterial;
 } tSirFTUpdateKeyInfo, *tpSirFTUpdateKeyInfo;
 
-/*--------------------------------------------------------------------------
-  FT Pre Auth Rsp Key SME<->PE
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                              
+                                                                          */
 typedef struct sSirFTPreAuthKeyInfo
 {
-    tANI_U8 extSetStaKeyParamValid; //Ext Bss Config Msg if set
-    tSetStaKeyParams extSetStaKeyParam;  //SetStaKeyParams for ext bss msg
+    tANI_U8 extSetStaKeyParamValid; //                         
+    tSetStaKeyParams extSetStaKeyParam;  //                               
 } tSirFTPreAuthKeyInfo, *tpSirFTPreAuthKeyInfo;
 
-/*-------------------------------------------------------------------------
-  Global FT Information
-  ------------------------------------------------------------------------*/
+/*                                                                         
+                       
+                                                                          */
 typedef struct sFTPEContext
 {
-    tpSirFTPreAuthReq pFTPreAuthReq;                      // Saved FT Pre Auth Req
+    tpSirFTPreAuthReq pFTPreAuthReq;                      //                      
     void              *psavedsessionEntry;
     tSirRetStatus     ftPreAuthStatus;
     tANI_U16          saved_auth_rsp_length;
     tANI_U8           saved_auth_rsp[MAX_FTIE_SIZE];
     tSirFTPreAuthKeyInfo    *pPreAuthKeyInfo;
-    // Items created for the new FT, session
-    void              *pftSessionEntry;                   // Saved session created for pre-auth
-    void              *pAddBssReq;                        // Save add bss req.
-    void              *pAddStaReq;                        // Save add sta req.
+    //                                      
+    void              *pftSessionEntry;                   //                                   
+    void              *pAddBssReq;                        //                  
+    void              *pAddStaReq;                        //                  
 
 } tftPEContext, *tpftPEContext; 
 
 
-#endif /* __LIMFTDEFS_H__ */ 
+#endif /*                 */ 
 
-#endif /* WLAN_FEATURE_VOWIFI_11R */
+#endif /*                         */

@@ -40,23 +40,23 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file wniApi.h contains message definitions exported by
- * Sirius software modules.
- * NOTE: See projects/sirius/include/sirApi.h for structure
- * definitions of the host/FW messages.
- *
- * Author:        Chandra Modumudi
- * Date:          04/11/2002
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+                                                        
+                                                              
+                           
+                                                           
+                                       
+  
+                                  
+                            
+            
+                                                         
+                                                                       
  */
 
 #ifndef __WNI_API_H
 #define __WNI_API_H
 
-// DPH return error codes
+//                       
 #define ANI_DPH_SUCCESS            0
 
 #define ANI_DPH_RX_STA_INVALID     1
@@ -75,8 +75,8 @@
 #define ANI_DPH_APSD_DROP 18
 #define ANI_DPH_UNKNOWN_STA 19
 
-/// HDD type for special handling of BDs in the TX pkts
-/// Used in the structure ani_mod_info_t->bd_spl_proc_type
+//                                                     
+//                                                        
 #define ANI_HDD_NO_SPL_PROC             0
 #define ANI_HDD_DUMMY_PKT_SPL_PROC      1
 #define ANI_HDD_PRE_DUMMY_PKT_SPL_PROC  2
@@ -86,7 +86,7 @@
 #define ANI_HDD_EOSP_PKT                5
 #endif
 
-/// Message offset for the cmd to enqueue a dummy pkt to HDD TD ring
+//                                                                  
 #define ANI_DUMMY_PKT_MSG_TYPE_OFFSET    0
 #define ANI_DUMMY_PKT_MSG_LEN_OFFSET     2
 #define ANI_DUMMY_PKT_MAC_ADDR_OFFSET    4
@@ -95,9 +95,9 @@
 #define ANI_DUMMY_PKT_MSG_LEN            16
 #define ANI_DUMMY_DATA_PAYLOAD_OFFSET    10
 
-/**
- * Product IDs stored in the EEPROM for the different types of AP radio cards
- * supported by Polaris
+/* 
+                                                                             
+                       
  */
 #define AGN1323AR_00      4
 #define AGN1323AR_01      5
@@ -109,16 +109,16 @@
 
 
 
-/// Start of Sirius/Host message types
+//                                    
 #define WNI_HOST_MSG_START             0x1500
 
 enum eWniMsgTypes
 {
-    /// CFG message types
+    //                   
     eWNI_CFG_MSG_TYPES_BEGIN=WNI_HOST_MSG_START,
     eWNI_CFG_MSG_TYPES_END=eWNI_CFG_MSG_TYPES_BEGIN+0xFF,
 
-    /// SME message types
+    //                   
     eWNI_SME_MSG_TYPES_BEGIN=eWNI_CFG_MSG_TYPES_END,
     eWNI_SME_START_REQ,
     eWNI_SME_START_RSP,
@@ -185,8 +185,8 @@ enum eWniMsgTypes
     eWNI_SME_SELECT_CHANNEL_REQ,
     eWNI_SME_SELECT_CHANNEL_RSP,
     eWNI_SME_SET_PROPRIETARY_IE_REQ,
-    eWNI_SME_SET_PROPRIETARY_IE_RSP, // #endif
-    eWNI_SME_DISCARD_SKB_NTF,  // Used to cleanup SKBs by HDD
+    eWNI_SME_SET_PROPRIETARY_IE_RSP, //       
+    eWNI_SME_DISCARD_SKB_NTF,  //                            
     eWNI_SME_DEAUTH_CNF,
     eWNI_SME_MIC_FAILURE_IND,
     eWNI_SME_ADDTS_REQ,
@@ -247,33 +247,33 @@ enum eWniMsgTypes
     eWNI_SME_CLEAR_DFS_CHANNEL_LIST,
     eWNI_SME_PRE_CHANNEL_SWITCH_FULL_POWER,
     eWNI_SME_GET_SNR_REQ,
-    //General Power Save Messages
+    //                           
     eWNI_PMC_MSG_TYPES_BEGIN,
     eWNI_PMC_PWR_SAVE_CFG,
 
-    //BMPS Messages
+    //             
     eWNI_PMC_ENTER_BMPS_REQ,
     eWNI_PMC_ENTER_BMPS_RSP,
     eWNI_PMC_EXIT_BMPS_REQ,
     eWNI_PMC_EXIT_BMPS_RSP,
     eWNI_PMC_EXIT_BMPS_IND,
 
-    //IMPS Messages.
+    //              
     eWNI_PMC_ENTER_IMPS_REQ,
     eWNI_PMC_ENTER_IMPS_RSP,
     eWNI_PMC_EXIT_IMPS_REQ,
     eWNI_PMC_EXIT_IMPS_RSP,
 
-    //UAPSD Messages
+    //              
     eWNI_PMC_ENTER_UAPSD_REQ,
     eWNI_PMC_ENTER_UAPSD_RSP,
     eWNI_PMC_EXIT_UAPSD_REQ,
     eWNI_PMC_EXIT_UAPSD_RSP,
 
-    //WOWL Messages
+    //             
     eWNI_PMC_SMPS_STATE_IND,
 
-    //WoWLAN Messages
+    //               
     eWNI_PMC_WOWL_ADD_BCAST_PTRN,
     eWNI_PMC_WOWL_DEL_BCAST_PTRN,
     eWNI_PMC_ENTER_WOWL_REQ,
@@ -283,7 +283,7 @@ enum eWniMsgTypes
 
 #ifdef WLAN_FEATURE_PACKET_FILTERING
     eWNI_PMC_PACKET_COALESCING_FILTER_MATCH_COUNT_RSP,
-#endif // WLAN_FEATURE_PACKET_FILTERING
+#endif //                              
 
 #if defined WLAN_FEATURE_VOWIFI
     eWNI_SME_RRM_MSG_TYPE_BEGIN,
@@ -317,7 +317,7 @@ enum eWniMsgTypes
 
 #ifdef FEATURE_WLAN_SCAN_PNO
     eWNI_SME_PREF_NETWORK_FOUND_IND,
-#endif // FEATURE_WLAN_SCAN_PNO
+#endif //                      
 
     eWNI_SME_TX_PER_HIT_IND,
 
@@ -328,14 +328,14 @@ enum eWniMsgTypes
 
     eWNI_SME_MAX_ASSOC_EXCEEDED,
 
-    eWNI_SME_BTAMP_LOG_LINK_IND,//to serialize the create/accpet LL req from HCI
+    eWNI_SME_BTAMP_LOG_LINK_IND,//                                              
 
 
 #ifdef WLAN_WAKEUP_EVENTS
     eWNI_SME_WAKE_REASON_IND,
-#endif // WLAN_WAKEUP_EVENTS
+#endif //                   
     eWNI_SME_EXCLUDE_UNENCRYPTED,
-    eWNI_SME_RSSI_IND, //RSSI indication from TL to be serialized on MC thread
+    eWNI_SME_RSSI_IND, //                                                     
 #ifdef FEATURE_WLAN_TDLS
     eWNI_SME_TDLS_SEND_MGMT_REQ,    
     eWNI_SME_TDLS_SEND_MGMT_RSP,    
@@ -352,11 +352,11 @@ enum eWniMsgTypes
     eWNI_SME_TDLS_LINK_ESTABLISH_REQ,
     eWNI_SME_TDLS_LINK_ESTABLISH_RSP,
 #endif
-    //NOTE: If you are planning to add more mesages, please make sure that 
-    //SIR_LIM_ITC_MSG_TYPES_BEGIN is moved appropriately. It is set as
-    //SIR_LIM_MSG_TYPES_BEGIN+0xB0 = 12B0 (which means max of 176 messages and
-    //eWNI_SME_TDLS_DEL_STA_RSP = 175.
-    //Should fix above issue to enable TDLS_INTERNAL
+    //                                                                     
+    //                                                                
+    //                                                                        
+    //                                
+    //                                              
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
 #error ERROR_TDLS_INTERNAL
     eWNI_SME_TDLS_DISCOVERY_START_REQ,    
@@ -378,13 +378,13 @@ enum eWniMsgTypes
 #endif
 #ifdef WLAN_FEATURE_GTK_OFFLOAD
     eWNI_PMC_GTK_OFFLOAD_GETINFO_RSP,
-#endif // WLAN_FEATURE_GTK_OFFLOAD
-    eWNI_SME_CANDIDATE_FOUND_IND, /*ROAM candidate indication from FW*/
-    eWNI_SME_HANDOFF_REQ,/*upper layer requested handoff to driver in STA mode*/
-    eWNI_SME_ROAM_SCAN_OFFLOAD_RSP,/*Fwd the LFR scan offload rsp from FW to SME*/
+#endif //                         
+    eWNI_SME_CANDIDATE_FOUND_IND, /*                                 */
+    eWNI_SME_HANDOFF_REQ,/*                                                   */
+    eWNI_SME_ROAM_SCAN_OFFLOAD_RSP,/*                                           */
 #ifdef FEATURE_WLAN_LPHB
     eWNI_SME_LPHB_WAIT_TIMEOUT_IND,
-#endif /* FEATURE_WLAN_LPHB */
+#endif /*                   */
 
     eWNI_SME_GET_TSM_STATS_REQ,
     eWNI_SME_GET_TSM_STATS_RSP,
@@ -392,29 +392,29 @@ enum eWniMsgTypes
 
 #ifdef FEATURE_WLAN_CH_AVOID
    eWNI_SME_CH_AVOID_IND,
-#endif /* FEATURE_WLAN_CH_AVOID */
+#endif /*                       */
     eWNI_SME_MSG_TYPES_END
 };
 
 #define WNI_CFG_MSG_TYPES_BEGIN        0x1200
 
-/*---------------------------------------------------------------------*/
-/* CFG Module Definitions                                              */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 
 
-/*---------------------------------------------------------------------*/
-/* CFG message definitions                                             */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 #define WNI_CFG_MSG_HDR_MASK    0xffff0000
 #define WNI_CFG_MSG_LEN_MASK    0x0000ffff
 #define WNI_CFG_MB_HDR_LEN      4
 #define WNI_CFG_MAX_PARAM_NUM   32
 
 
-/*---------------------------------------------------------------------*/
-/* CFG to HDD message types                                            */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 #define WNI_CFG_PARAM_UPDATE_IND       (WNI_CFG_MSG_TYPES_BEGIN | 0x00)
 #define WNI_CFG_DNLD_REQ               (WNI_CFG_MSG_TYPES_BEGIN | 0x01)
 #define WNI_CFG_DNLD_CNF               (WNI_CFG_MSG_TYPES_BEGIN | 0x02)
@@ -430,41 +430,41 @@ enum eWniMsgTypes
 #define ANI_CFG_CLEAR_STAT_RSP         (WNI_CFG_MSG_TYPES_BEGIN | 0x0b)
 
 
-/*---------------------------------------------------------------------*/
-/* CFG to HDD message paramter indices                                 */
 /*                                                                     */
-/*   The followings are word indices starting from the message body    */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_xxxx:         index of parameter                */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_NUM:          number of parameters in message   */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_LEN:          byte length of message including  */
-/*                                   MB header                         */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_PARTIAL_LEN:  byte length of message including  */
-/*                                   parameters and MB header but      */
-/*                                   excluding variable data length    */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 
-// Parameter update indication
+//                            
 #define WNI_CFG_PARAM_UPDATE_IND_PID   0
 
 #define WNI_CFG_PARAM_UPDATE_IND_NUM   1
 #define WNI_CFG_PARAM_UPDATE_IND_LEN   (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_PARAM_UPDATE_IND_NUM << 2))
 
-// Configuration download request
+//                               
 #define WNI_CFG_DNLD_REQ_NUM           0
 #define WNI_CFG_DNLD_REQ_LEN           WNI_CFG_MB_HDR_LEN
 
-// Configuration download confirm
+//                               
 #define WNI_CFG_DNLD_CNF_RES           0
 
 #define WNI_CFG_DNLD_CNF_NUM           1
 #define WNI_CFG_DNLD_CNF_LEN           (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_DNLD_CNF_NUM << 2))
-// Get response
+//             
 #define WNI_CFG_GET_RSP_RES            0
 #define WNI_CFG_GET_RSP_PID            1
 #define WNI_CFG_GET_RSP_PLEN           2
@@ -472,14 +472,14 @@ enum eWniMsgTypes
 #define WNI_CFG_GET_RSP_NUM            3
 #define WNI_CFG_GET_RSP_PARTIAL_LEN    (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_GET_RSP_NUM << 2))
-// Set confirm
+//            
 #define WNI_CFG_SET_CNF_RES            0
 #define WNI_CFG_SET_CNF_PID            1
 
 #define WNI_CFG_SET_CNF_NUM            2
 #define WNI_CFG_SET_CNF_LEN            (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_SET_CNF_NUM << 2))
-// Get attribute response
+//                       
 #define WNI_CFG_GET_ATTRIB_RSP_RES     0
 #define WNI_CFG_GET_ATTRIB_RSP_PID     1
 #define WNI_CFG_GET_ATTRIB_RSP_TYPE    2
@@ -490,14 +490,14 @@ enum eWniMsgTypes
 #define WNI_CFG_GET_ATTRIB_RSP_LEN     (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_GET_ATTRIB_RSP_NUM << 2))
 
-// Add group address confirm
+//                          
 #define WNI_CFG_ADD_GRP_ADDR_CNF_RES   0
 
 #define WNI_CFG_ADD_GRP_ADDR_CNF_NUM   1
 #define WNI_CFG_ADD_GRP_ADDR_CNF_LEN   (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_ADD_GRP_ADDR_CNF_NUM << 2))
 
-// Delete group address confirm
+//                             
 #define WNI_CFG_DEL_GRP_ADDR_CNF_RES   0
 
 #define WNI_CFG_DEL_GRP_ADDR_CNF_NUM   1
@@ -507,7 +507,7 @@ enum eWniMsgTypes
 
 #define IS_CFG_MSG(msg) ((msg & 0xff00) == WNI_CFG_MSG_TYPES_BEGIN)
 
-// Clear stats types.
+//                   
 #define ANI_CLEAR_ALL_STATS          0
 #define ANI_CLEAR_RX_STATS           1
 #define ANI_CLEAR_TX_STATS           2
@@ -515,70 +515,70 @@ enum eWniMsgTypes
 #define ANI_CLEAR_AGGR_PER_STA_STATS 4
 #define ANI_CLEAR_STAT_TYPES_END     5
 
-/*---------------------------------------------------------------------*/
-/* HDD to CFG message types                                            */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 #define WNI_CFG_DNLD_RSP               (WNI_CFG_MSG_TYPES_BEGIN | 0x80)
 #define WNI_CFG_GET_REQ                (WNI_CFG_MSG_TYPES_BEGIN | 0x81)
 #define WNI_CFG_SET_REQ                (WNI_CFG_MSG_TYPES_BEGIN | 0x82)
-#define WNI_CFG_SET_REQ_NO_RSP         (WNI_CFG_MSG_TYPES_BEGIN | 0x83) //No RSP for this set
+#define WNI_CFG_SET_REQ_NO_RSP         (WNI_CFG_MSG_TYPES_BEGIN | 0x83) //                   
 
-// Shall be removed after stats integration
+//                                         
 
 
-/*---------------------------------------------------------------------*/
-/* HDD to CFG message paramter indices                                 */
 /*                                                                     */
-/*   The followings are word indices starting from the message body    */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_xxxx:         index of parameter                */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_NUM:          number of parameters in message   */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_LEN:          byte length of message including  */
-/*                                   MB header                         */
 /*                                                                     */
-/*   WNI_CFG_xxxx_xxxx_PARTIAL_LEN:  byte length of message including  */
-/*                                   parameters and MB header but      */
-/*                                   excluding variable data length    */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 
-// Download response
+//                  
 #define WNI_CFG_DNLD_RSP_BIN_LEN       0
 
 #define WNI_CFG_DNLD_RSP_NUM           1
 #define WNI_CFG_DNLD_RSP_PARTIAL_LEN   (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_DNLD_RSP_NUM << 2))
 
-// Set parameter request
+//                      
 #define WNI_CFG_SET_REQ_PID            0
 #define WNI_CFG_SET_REQ_PLEN           1
 
 /*
-// Get attribute request
-//#define WNI_CFG_GET_ATTRIB_REQ_PID   0
+                        
+                                        
 
-//#define WNI_CFG_GET_ATTRIB_REQ_NUM     1
-//#define WNI_CFG_GET_ATTRIB_REQ_LEN     (WNI_CFG_MB_HDR_LEN + \
-                                       (WNI_CFG_GET_ATTRIB_REQ_NUM << 2))
-// Add group address request
-#define WNI_CFG_ADD_GRP_ADDR_REQ_MAC_ADDR    0
+                                          
+                                                                
+                                                                         
+                            
+                                              
 
-#define WNI_CFG_ADD_GRP_ADDR_REQ_NUM   1
-#define WNI_CFG_ADD_GRP_ADDR_REQ_LEN   (WNI_CFG_MB_HDR_LEN + \
-                                       (WNI_CFG_ADD_GRP_ADDR_REQ_NUM << 2))
-// Delete group address request
-#define WNI_CFG_DEL_GRP_ADDR_REQ_MAC_ADDR    0
+                                        
+                                                              
+                                                                           
+                               
+                                              
 
-#define WNI_CFG_DEL_GRP_ADDR_REQ_NUM   1
-#define WNI_CFG_DEL_GRP_ADDR_REQ_LEN   (WNI_CFG_MB_HDR_LEN + \
-                                       (WNI_CFG_DEL_GRP_ADDR_REQ_NUM << 2))
+                                        
+                                                              
+                                                                           
 */
 
 
-/*---------------------------------------------------------------------*/
-/* CFG return values                                                   */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 #define WNI_CFG_SUCCESS             1
 #define WNI_CFG_NOT_READY           2
 #define WNI_CFG_INVALID_PID         3
@@ -591,17 +591,17 @@ enum eWniMsgTypes
 #define WNI_CFG_NEED_RELOAD        10
 
 
-/*---------------------------------------------------------------------*/
-/* CFG definitions                                                     */
-/*---------------------------------------------------------------------*/
+/*                                                                     */
+/*                                                                     */
+/*                                                                     */
 #define WNI_CFG_TYPE_STR            0x0000000
 #define WNI_CFG_TYPE_INT            0x0000001
 #define WNI_CFG_HOST_RE             0x0000002
 #define WNI_CFG_HOST_WE             0x0000004
 
 
-// Shall be removed after integration of stats.
-// Get statistic response
+//                                             
+//                       
 #define WNI_CFG_GET_STAT_RSP_RES       0
 #define WNI_CFG_GET_STAT_RSP_PARAMID   1
 #define WNI_CFG_GET_STAT_RSP_VALUE     2
@@ -609,12 +609,12 @@ enum eWniMsgTypes
 #define WNI_CFG_GET_STAT_RSP_NUM       3
 #define WNI_CFG_GET_STAT_RSP_LEN       (WNI_CFG_MB_HDR_LEN + \
                                         (WNI_CFG_GET_STAT_RSP_NUM <<2))
-// Get per station statistic response
+//                                   
 #define WNI_CFG_GET_PER_STA_STAT_RSP_RES                        0
 #define WNI_CFG_GET_PER_STA_STAT_RSP_STAID                      1
 #define WNI_CFG_GET_PER_STA_STAT_RSP_FIRST_PARAM                2
 
-// Per STA statistic structure
+//                            
 typedef struct sAniCfgPerStaStatStruct
 {
        unsigned long     sentAesBlksUcastHi;
@@ -652,7 +652,7 @@ typedef struct sAniCfgPerStaStatStruct
                                    (WNI_CFG_GET_PER_STA_STAT_RSP_NUM << 2))
 
 
-// Shall be removed after integrating stats.
+//                                          
 #define WNI_CFG_GET_STAT_RSP           (WNI_CFG_MSG_TYPES_BEGIN | 0x08)
 #define WNI_CFG_GET_PER_STA_STAT_RSP   (WNI_CFG_MSG_TYPES_BEGIN | 0x09)
 #define WNI_CFG_GET_AGG_STA_STAT_RSP   (WNI_CFG_MSG_TYPES_BEGIN | 0x0a)
@@ -663,12 +663,12 @@ typedef struct sAniCfgPerStaStatStruct
                                    (WNI_CFG_GET_AGG_STA_STAT_RSP_NUM << 2))
 #define WNI_CFG_GET_AGG_STA_STAT_RSP_RES 0
 
-  // Get TX rate based stats
+  //                        
 #define WNI_CFG_GET_TX_RATE_CTR_RSP_RES                        0
 
 typedef struct sAniCfgTxRateCtrs
 {
-// add the rate counters here
+//                           
     unsigned long TxFrames_1Mbps;
     unsigned long TxFrames_2Mbps;
     unsigned long TxFrames_5_5Mbps;
@@ -693,14 +693,14 @@ typedef struct sAniCfgTxRateCtrs
 #define WNI_CFG_GET_AGG_STA_STAT_REQ   (WNI_CFG_MSG_TYPES_BEGIN | 0x88)
 #define WNI_CFG_GET_TX_RATE_CTR_REQ    (WNI_CFG_MSG_TYPES_BEGIN | 0x89)
 
-// Get statistic request
+//                      
 #define WNI_CFG_GET_STAT_REQ_PARAMID   0
 
 #define WNI_CFG_GET_STAT_REQ_NUM       1
 #define WNI_CFG_GET_STAT_REQ_LEN       (WNI_CFG_MB_HDR_LEN + \
                                        (WNI_CFG_GET_STAT_REQ_NUM << 2))
 
-  // Get per station statistic request
+  //                                  
 #define WNI_CFG_GET_PER_STA_STAT_REQ_STAID 0
 
 #define WNI_CFG_GET_PER_STA_STAT_REQ_NUM   1
@@ -713,5 +713,5 @@ typedef struct sAniCfgTxRateCtrs
 #define DYNAMIC_CFG_TYPE_SELECTED_REGISTRAR   (0)
 #define DYNAMIC_CFG_TYPE_WPS_STATE            (1)
 
-#endif /* __WNI_API_H */
+#endif /*             */
 

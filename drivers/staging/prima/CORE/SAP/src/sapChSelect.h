@@ -67,36 +67,36 @@
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-
-  when             who       what, where, why
-----------       -----    --------------------------------------------------------
-2010-03-15        SoftAP    Created module
-
-===========================================================================*/
+                                                                       
+                                                                
 
 
-/*--------------------------------------------------------------------------
-  Include Files
-------------------------------------------------------------------------*/
+
+                                             
+                                                                                  
+                                          
+
+                                                                           */
+
+
+/*                                                                          
+               
+                                                                        */
 #include "aniGlobal.h"
-/*--------------------------------------------------------------------------
-  defines and enum
---------------------------------------------------------------------------*/
+/*                                                                          
+                  
+                                                                          */
 
-#define SPECT_24GHZ_CH_COUNT    (11) // USA regulatory domain
-#define SAPDFS_NORMALISE_1000      (1000/9) // Case of spec20 with channel diff = 0
-/* Gen 5 values
-#define SOFTAP_MIN_RSSI         (-85)
-#define SOFTAP_MAX_RSSI         (-45)
+#define SPECT_24GHZ_CH_COUNT    (11) //                      
+#define SAPDFS_NORMALISE_1000      (1000/9) //                                     
+/*             
+                                     
+                                     
 */
 #define SOFTAP_MIN_RSSI         (-100)
 #define SOFTAP_MAX_RSSI         (0)
@@ -110,14 +110,14 @@
 #define SAP_CHANNEL_NOT_SELECTED (0)
 
 #define SOFTAP_HT20_CHANNELWIDTH 0
-#define SAP_SUBBAND1_RSSI_EFFECT_PRIMARY  (-20) // In HT40/VHT80, Effect of primary Channel RSSi on Subband1
-#define SAP_SUBBAND2_RSSI_EFFECT_PRIMARY  (-30) // In VHT80, Effect of primary Channel RSSI on Subband2
-#define SAP_SUBBAND3_RSSI_EFFECT_PRIMARY  (-40) // In VHT80, Effect of Primary Channel RSSI on Subband3
+#define SAP_SUBBAND1_RSSI_EFFECT_PRIMARY  (-20) //                                                          
+#define SAP_SUBBAND2_RSSI_EFFECT_PRIMARY  (-30) //                                                     
+#define SAP_SUBBAND3_RSSI_EFFECT_PRIMARY  (-40) //                                                     
 
-#define SAP_24GHZ_FIRST_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY      (-10) // In 2.4GHZ, Effect of Primary  Channel RSSI on First Overlapping Channel
-#define SAP_24GHZ_SEC_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY        (-20) // In 2.4GHZ, Effect of Primary  Channel RSSI on Second Overlapping Channel
-#define SAP_24GHZ_THIRD_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY      (-30) // In 2.4GHZ, Effect of Primary  Channel RSSI on Third Overlapping Channel
-#define SAP_24GHZ_FOURTH_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY     (-40) // In 2.4GHZ, Effect of Primary  Channel RSSI on Fourth Overlapping Channel
+#define SAP_24GHZ_FIRST_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY      (-10) //                                                                        
+#define SAP_24GHZ_SEC_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY        (-20) //                                                                         
+#define SAP_24GHZ_THIRD_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY      (-30) //                                                                        
+#define SAP_24GHZ_FOURTH_OVERLAP_CHAN_RSSI_EFFECT_PRIMARY     (-40) //                                                                         
 
 typedef enum
 {
@@ -134,9 +134,9 @@ typedef enum
     CHANNEL_11
 } tSapChannel;
 
-/**
-* Structure holding information of each channel in the spectrum, 
-* it contains the channel number, the computed weight
+/* 
+                                                                 
+                                                     
 */
 
 typedef struct sSapChannelListInfo{
@@ -145,31 +145,31 @@ typedef struct sSapChannelListInfo{
 } tSapChannelListInfo;
 
 typedef struct {
-    v_U16_t chNum;      // Channel Number
-    v_U16_t channelWidth;      // Channel Width
-    v_U16_t bssCount;   // bss found in scanresult for this channel
-    v_S31_t rssiAgr;    // Max value of rssi among all BSS(es) from scanresult for this channel
-    v_U32_t weight;     // Weightage of this channel
-    v_BOOL_t valid;     // Is this a valid center frequency for regulatory domain
-} tSapSpectChInfo;//tDfsSpectChInfo;
+    v_U16_t chNum;      //               
+    v_U16_t channelWidth;      //              
+    v_U16_t bssCount;   //                                         
+    v_S31_t rssiAgr;    //                                                                     
+    v_U32_t weight;     //                          
+    v_BOOL_t valid;     //                                                       
+} tSapSpectChInfo;//                
 
-/**
-* Structure holding all the information required to make a 
-* decision for the best operating channel based on dfs formula
+/* 
+                                                           
+                                                              
 */
 
 typedef struct {
-    tSapSpectChInfo *pSpectCh;//tDfsSpectChInfo *pSpectCh;  // Ptr to the channels in the entire spectrum band
-    v_U8_t numSpectChans;      // Total num of channels in the spectrum
-} tSapChSelSpectInfo;//tDfsChSelParams;
+    tSapSpectChInfo *pSpectCh;//                                                                              
+    v_U8_t numSpectChans;      //                                      
+} tSapChSelSpectInfo;//                
 
-/**
- * Structure for channel weight calculation parameters
+/* 
+                                                      
  */
 typedef struct sSapChSelParams {
-    void *pSpectInfoParams;//*pDfsParams;   // Filled with tSapChSelSpectInfo
+    void *pSpectInfoParams;//                                                
     v_U16_t numChannels;
 } tSapChSelParams;
 
-#endif // if !defined __SAP_CH_SELECT_H
+#endif //                              
 

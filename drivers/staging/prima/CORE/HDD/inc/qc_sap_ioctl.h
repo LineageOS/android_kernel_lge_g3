@@ -43,13 +43,13 @@
 #define _QC_SAP_IOCTL_H_
 
 /*
- * QCSAP ioctls.
+                
  */
 
 /*
- * Max size of optional information elements.  We artificially
- * constrain this; it's limited only by the max frame size (and
- * the max parameter size of the wireless extensions).
+                                                              
+                                                               
+                                                      
  */
 #define QCSAP_MAX_OPT_IE        256
 #define QCSAP_MAX_WSC_IE        256
@@ -69,7 +69,7 @@ typedef struct sSSIDInfo
 
 typedef enum {
     eQC_DOT11_MODE_ALL = 0,
-    eQC_DOT11_MODE_ABG = 0x0001,    //11a/b/g only, no HT, no proprietary
+    eQC_DOT11_MODE_ABG = 0x0001,    //                                   
     eQC_DOT11_MODE_11A = 0x0002,
     eQC_DOT11_MODE_11B = 0x0004,
     eQC_DOT11_MODE_11G = 0x0008,
@@ -78,8 +78,8 @@ typedef enum {
     eQC_DOT11_MODE_11N_ONLY = 0x0040,
     eQC_DOT11_MODE_11B_ONLY = 0x0080,
     eQC_DOT11_MODE_11A_ONLY = 0x0100,
-    //This is for WIFI test. It is same as eWNIAPI_MAC_PROTOCOL_ALL except when it starts IBSS in 11B of 2.4GHz
-    //It is for CSR internal use
+    //                                                                                                         
+    //                          
     eQC_DOT11_MODE_AUTO = 0x0200,
 
 } tQcPhyMode;
@@ -109,15 +109,15 @@ typedef struct s_CommitConfig {
 
     tSSIDInfo SSIDinfo;
 
-    u_int32_t beacon_int;       /* Beacon Interval */
+    u_int32_t beacon_int;       /*                 */
 
-    tQcPhyMode hw_mode;         /* Wireless Mode */
+    tQcPhyMode hw_mode;         /*               */
 
-    u_int32_t channel;          /* Operation channel */
+    u_int32_t channel;          /*                   */
 
-    u_int32_t max_num_sta;      /* maximum number of STAs in station table */
+    u_int32_t max_num_sta;      /*                                         */
 
-    u_int32_t dtim_period;      /* dtim interval */
+    u_int32_t dtim_period;      /*               */
     u_int32_t max_listen_interval;
 
     enum {
@@ -125,9 +125,9 @@ typedef struct s_CommitConfig {
         QC_DENY_UNLESS_ACCEPTED = 1,
     } qc_macaddr_acl;
     
-    struct qc_mac_acl_entry *accept_mac; /* MAC filtering */
+    struct qc_mac_acl_entry *accept_mac; /*               */
     u_int32_t num_accept_mac;
-    struct qc_mac_acl_entry *deny_mac;   /* MAC filtering */
+    struct qc_mac_acl_entry *deny_mac;   /*               */
     u_int32_t num_deny_mac;
 
     u_int32_t ap_table_max_size;
@@ -135,15 +135,15 @@ typedef struct s_CommitConfig {
 
     int qcsap80211d;
 
-    u_int32_t countryCode[3];  //it ignored if [0] is 0.
+    u_int32_t countryCode[3];  //                       
 
     u_int32_t ht_op_mode_fixed;
     
-    /*HT capability information to enable/diabale protection
-     *           bit15   bit14   bit13   bit12 bit11 bit10    bit9 bit8
-     * (overlap) from11a from11b from11g Ht20  NonGf LsigTxop Rifs OBSS   
-     * bit7    bit6    bit5    bit4 bit3  bit2     bit1 bit0
-     * from11a from11b from11g ht20 nonGf lsigTxop rifs obss*/
+    /*                                                      
+                                                                       
+                                                                          
+                                                            
+                                                            */
     u_int16_t ht_capab;
 
     u_int32_t qcsap80211n;
@@ -154,32 +154,32 @@ typedef struct s_CommitConfig {
 
     u_int8_t set_ieee8021x;
 
-    u_int8_t RSNWPAReqIE[QCSAP_MAX_OPT_IE];     //If not null, it has the IE byte stream for RSN/WPA
-    u_int16_t RSNWPAReqIELength;  //The byte count in the pRSNReqIE/ WPAIE
+    u_int8_t RSNWPAReqIE[QCSAP_MAX_OPT_IE];     //                                                  
+    u_int16_t RSNWPAReqIELength;  //                                      
 
-    u_int8_t wps_state; //wps_state - disbaled/not configured, configured
+    u_int8_t wps_state; //                                               
 } s_CommitConfig_t;
 
 
 /*
- * MLME state manipulation request.  QCSAP_MLME_ASSOC
- * is used for station mode only.  The other types are used for station or ap mode.
+                                                     
+                                                                                   
  */
 struct sQcSapreq_mlme {
-    u_int8_t    im_op;          /* operation to perform */
-#define QCSAP_MLME_ASSOC        1       /* associate station */
-#define QCSAP_MLME_DISASSOC     2       /* disassociate station */
-#define QCSAP_MLME_DEAUTH       3       /* deauthenticate station */
-#define QCSAP_MLME_AUTHORIZE    4       /* authorize station */
-#define QCSAP_MLME_UNAUTHORIZE  5       /* unauthorize station */
-#define QCSAP_MLME_MICFAILURE   6       /* TKIP MICFAILURE */
-    u_int16_t   im_reason;      /* 802.11 reason code */
+    u_int8_t    im_op;          /*                      */
+#define QCSAP_MLME_ASSOC        1       /*                   */
+#define QCSAP_MLME_DISASSOC     2       /*                      */
+#define QCSAP_MLME_DEAUTH       3       /*                        */
+#define QCSAP_MLME_AUTHORIZE    4       /*                   */
+#define QCSAP_MLME_UNAUTHORIZE  5       /*                     */
+#define QCSAP_MLME_MICFAILURE   6       /*                 */
+    u_int16_t   im_reason;      /*                    */
     u_int8_t    im_macaddr[QCSAP_ADDR_LEN];
 };
 
 
 /*
- * Retrieve the WPA/RSN information element for an associated station.
+                                                                      
  */
 struct sQcSapreq_wpaie {
     u_int8_t    wpa_ie[QCSAP_MAX_OPT_IE];
@@ -187,7 +187,7 @@ struct sQcSapreq_wpaie {
 };
 
 /*
- * Retrieve the WSC information element for an associated station.
+                                                                  
  */
 struct sQcSapreq_wscie {
     u_int8_t    wsc_macaddr[QCSAP_ADDR_LEN];
@@ -196,7 +196,7 @@ struct sQcSapreq_wscie {
 
 
 /*
- * Retrieve the WPS PBC Probe Request IEs.
+                                          
  */
 typedef struct sQcSapreq_WPSPBCProbeReqIES {
     u_int8_t    macaddr[QCSAP_ADDR_LEN];
@@ -205,7 +205,7 @@ typedef struct sQcSapreq_WPSPBCProbeReqIES {
 } sQcSapreq_WPSPBCProbeReqIES_t ;
 
 /*
- * Channel List Info
+                    
  */
 
 typedef struct
@@ -217,10 +217,10 @@ typedef struct
 
 #ifdef __linux__
 /*
- * Wireless Extensions API, private ioctl interfaces.
- *
- * NB: Even-numbered ioctl numbers have set semantics and are privileged!
- *     (regardless of the incorrect comment in wireless.h!)
+                                                     
+  
+                                                                         
+                                                           
  */
 
 #define QCSAP_IOCTL_SETPARAM          (SIOCIWFIRSTPRIV+0)
@@ -247,7 +247,7 @@ typedef struct
 #define QCSAP_IOCTL_SET_CHANNEL_RANGE (SIOCIWFIRSTPRIV+17)
 
 #define WE_P2P_NOA_CMD  2
-//IOCTL to configure MCC params
+//                             
 #define WE_MCC_CONFIG_CREDENTIAL 3
 #define WE_MCC_CONFIG_PARAMS  4
 
@@ -277,6 +277,6 @@ int iw_softap_get_channel_list(struct net_device *dev,
                                struct iw_request_info *info,
                                union iwreq_data *wrqu, char *extra);
 
-#endif /* __linux__ */
+#endif /*           */
 
-#endif /*_QC_SAP_IOCTL_H_*/
+#endif /*                */

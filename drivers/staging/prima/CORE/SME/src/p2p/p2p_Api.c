@@ -62,11 +62,11 @@ static tANI_BOOLEAN p2pIsGOportEnabled(tpAniSirGlobal pMac);
 #endif
 
 eHalStatus p2pProcessNoAReq(tpAniSirGlobal pMac, tSmeCmd *pNoACmd);
-/*------------------------------------------------------------------
- *
- * handle SME remain on channel request.
- *
- *------------------------------------------------------------------*/
+/*                                                                  
+  
+                                        
+  
+                                                                    */
 
 eHalStatus p2pProcessRemainOnChannelCmd(tpAniSirGlobal pMac, tSmeCmd *p2pRemainonChn)
 {
@@ -113,7 +113,7 @@ eHalStatus p2pProcessRemainOnChannelCmd(tpAniSirGlobal pMac, tSmeCmd *p2pRemaino
 #endif
     if( len > 0xFFFF )
     {
-       /*In coming len for Msg is more then 16bit value*/
+       /*                                              */
        smsLog(pMac, LOGE, FL("  Message length is very large, %d"),
             len);
        return eHAL_STATUS_FAILURE;
@@ -150,11 +150,11 @@ eHalStatus p2pProcessRemainOnChannelCmd(tpAniSirGlobal pMac, tSmeCmd *p2pRemaino
 }
 
 
-/*------------------------------------------------------------------
- *
- * handle LIM remain on channel rsp: Success/failure.
- *
- *------------------------------------------------------------------*/
+/*                                                                  
+  
+                                                     
+  
+                                                                    */
 
 eHalStatus sme_remainOnChnRsp( tpAniSirGlobal pMac, tANI_U8 *pMsg)
 {
@@ -169,13 +169,13 @@ eHalStatus sme_remainOnChnRsp( tpAniSirGlobal pMac, tANI_U8 *pMsg)
         if( eSmeCommandRemainOnChannel == pCommand->command )
         {
             remainOnChanCallback callback = pCommand->u.remainChlCmd.callback;
-            /* process the msg */
+            /*                 */
             if( callback )
                 callback(pMac, pCommand->u.remainChlCmd.callbackCtx, 0);
              
             if( csrLLRemoveEntry( &pMac->sme.smeCmdActiveList, pEntry, LL_ACCESS_LOCK ) )
             {
-                //Now put this command back on the avilable command list
+                //                                                      
                 smeReleaseCommand(pMac, pCommand);
             }
             smeProcessPendingQueue( pMac );
@@ -185,11 +185,11 @@ eHalStatus sme_remainOnChnRsp( tpAniSirGlobal pMac, tANI_U8 *pMsg)
 }
 
 
-/*------------------------------------------------------------------
- *
- * Handle the Mgmt frm ind from LIM and forward to HDD.
- *
- *------------------------------------------------------------------*/
+/*                                                                  
+  
+                                                       
+  
+                                                                    */
 
 eHalStatus sme_mgmtFrmInd( tHalHandle hHal, tpSirSmeMgmtFrameInd pSmeMgmtFrm)
 {
@@ -203,7 +203,7 @@ eHalStatus sme_mgmtFrmInd( tHalHandle hHal, tpSirSmeMgmtFrameInd pSmeMgmtFrm)
 #ifdef WLAN_FEATURE_P2P_INTERNAL
     tANI_U8 i;
 
-    //For now, only action frames are needed.
+    //                                       
     if(SIR_MAC_MGMT_ACTION == pSmeMgmtFrm->frameType)
     {
        pRoamInfo.nFrameLength = pSmeMgmtFrm->mesgLen - sizeof(tSirSmeMgmtFrameInd);
@@ -212,13 +212,13 @@ eHalStatus sme_mgmtFrmInd( tHalHandle hHal, tpSirSmeMgmtFrameInd pSmeMgmtFrm)
        pRoamInfo.rxChan   = pSmeMgmtFrm->rxChan;
        pRoamInfo.rxRssi   = pSmeMgmtFrm->rxRssi;
 
-       //Somehow we don't get the right sessionId.
+       //                                         
        for(i = 0; i < CSR_ROAM_SESSION_MAX; i++)
        {
           if( CSR_IS_SESSION_VALID( pMac, i ) )
           {
               status = eHAL_STATUS_SUCCESS;
-              /* forward the mgmt frame to all active sessions*/
+              /*                                              */
               csrRoamCallCallback(pMac, i, &pRoamInfo, 0, eCSR_ROAM_INDICATE_MGMT_FRAME, 0);
           }
        }
@@ -230,7 +230,7 @@ eHalStatus sme_mgmtFrmInd( tHalHandle hHal, tpSirSmeMgmtFrameInd pSmeMgmtFrm)
     pRoamInfo.rxChan   = pSmeMgmtFrm->rxChan;
     pRoamInfo.rxRssi   = pSmeMgmtFrm->rxRssi;
 
-    /* forward the mgmt frame to HDD */
+    /*                               */
     csrRoamCallCallback(pMac, SessionId, &pRoamInfo, 0, eCSR_ROAM_INDICATE_MGMT_FRAME, 0);
 #endif
 
@@ -238,11 +238,11 @@ eHalStatus sme_mgmtFrmInd( tHalHandle hHal, tpSirSmeMgmtFrameInd pSmeMgmtFrm)
 }
 
 
-/*------------------------------------------------------------------
- *
- * Handle the remain on channel ready indication from PE
- *
- *------------------------------------------------------------------*/
+/*                                                                  
+  
+                                                        
+  
+                                                                    */
 
 eHalStatus sme_remainOnChnReady( tHalHandle hHal, tANI_U8* pMsg)
 {
@@ -253,7 +253,7 @@ eHalStatus sme_remainOnChnReady( tHalHandle hHal, tANI_U8* pMsg)
     tCsrRoamInfo RoamInfo; 
 #ifdef WLAN_FEATURE_P2P_INTERNAL
     tSirSmeRsp *pRsp = (tSirSmeRsp *)pMsg;
-    //pRsp->sessionId is SME's session index
+    //                                      
     tANI_U8  P2PSessionID = getP2PSessionIdFromSMESessionId(pMac, pRsp->sessionId);
 
     if(CSR_SESSION_ID_INVALID == P2PSessionID)
@@ -275,7 +275,7 @@ eHalStatus sme_remainOnChnReady( tHalHandle hHal, tANI_U8* pMsg)
                 p2pRemainOnChannelReadyCallback(pMac, &pMac->p2pContext[P2PSessionID], eHAL_STATUS_SUCCESS);
             }
 #else
-            /* forward the indication to HDD */
+            /*                               */
             RoamInfo.pRemainCtx = pCommand->u.remainChlCmd.callbackCtx;
             csrRoamCallCallback(pMac, ((tSirSmeRsp*)pMsg)->sessionId, &RoamInfo, 
                                 0, eCSR_ROAM_REMAIN_CHAN_READY, 0);
@@ -329,12 +329,12 @@ eHalStatus sme_sendActionCnf( tHalHandle hHal, tANI_U8* pMsg)
          }
          return status;
       }
-      //In case if there is new frame to send, finish the current frame
+      //                                                               
       else
       {
          smsLog(pMac, LOGE, " %s send next action frame type %d Last frame status (%d)",
             __func__, rspStatus);
-         //Force it to be success
+         //                      
          rspStatus = eSIR_SME_SUCCESS;
       }
    }
@@ -380,7 +380,7 @@ eHalStatus sme_sendActionCnf( tHalHandle hHal, tANI_U8* pMsg)
       }
       if(pP2pContext->pNextActionFrm)
       {
-         //need to send the next action frame
+         //                                  
          pP2pContext->pSentActionFrame = pP2pContext->pNextActionFrm;
          pP2pContext->ActionFrameLen = pP2pContext->nNextFrmLen;
          pP2pContext->actionFrameType = pP2pContext->NextActionFrameType;
@@ -401,7 +401,7 @@ eHalStatus sme_sendActionCnf( tHalHandle hHal, tANI_U8* pMsg)
       if (!VOS_IS_STATUS_SUCCESS(status))
       {
          smsLog(pMac, LOGE, FL(" %s fail to start timer status %d"), __func__, status);
-         //Without the timer we cannot continue
+         //                                    
          csrRoamCallCallback((tpAniSirGlobal)pP2pContext->hHal, 
                      pP2pContext->SMEsessionId, &RoamInfo, 0, 
                      eCSR_ROAM_SEND_ACTION_CNF, 
@@ -433,8 +433,8 @@ eHalStatus sme_sendActionCnf( tHalHandle hHal, tANI_U8* pMsg)
    }
     
 #else  
-    /* forward the indication to HDD */
-    //RoamInfo can be passed as NULL....todo
+    /*                               */
+    //                                      
     csrRoamCallCallback(pMac, pSmeRsp->sessionId, &RoamInfo, 0, 
                         eCSR_ROAM_SEND_ACTION_CNF, 
                        (pSmeRsp->statusCode == eSIR_SME_SUCCESS) ? 0:
@@ -452,8 +452,8 @@ void p2pResetContext(tp2pContext *pP2pContext)
       tpAniSirGlobal pMac = PMAC_STRUCT(pP2pContext->hHal);
       int i;
 
-      //When it is resetting a GO or client session, we
-      //need to reset the group capability back to the original one
+      //                                               
+      //                                                           
       if( (OPERATION_MODE_P2P_GROUP_OWNER == pP2pContext->operatingmode) ||
          (OPERATION_MODE_P2P_CLIENT == pP2pContext->operatingmode) )
       {
@@ -624,7 +624,7 @@ eHalStatus sme_p2pOpen( tHalHandle hHal )
       p2pCreateDefaultIEs(hHal, i);
    }
 #else
-   //If static structure is too big, Need to change this function to allocate memory dynamically
+   //                                                                                           
    vos_mem_zero( &pMac->p2pContext, sizeof( tp2pContext ) );
 #endif
 
@@ -729,19 +729,19 @@ tSirRFBand GetRFBand(tANI_U8 channel)
     return SIR_BAND_UNKNOWN;
 }
 
-/* ---------------------------------------------------------------------------
+/*                                                                            
 
-    \fn p2pRemainOnChannel
-    \brief  API to post the remain on channel command.
-    \param  hHal - The handle returned by macOpen.
-    \param  sessinId - HDD session ID.
-    \param  channel - Channel to remain on channel.
-    \param  duration - Duration for which we should remain on channel
-    \param  callback - callback function.
-    \param  pContext - argument to the callback function
-    \return eHalStatus
+                          
+                                                      
+                                                  
+                                      
+                                                   
+                                                                     
+                                         
+                                                        
+                      
 
-  -------------------------------------------------------------------------------*/
+                                                                                 */
 eHalStatus p2pRemainOnChannel(tHalHandle hHal, tANI_U8 sessionId,
          tANI_U8 channel, tANI_U32 duration,
         remainOnChanCallback callback, 
@@ -773,7 +773,7 @@ eHalStatus p2pRemainOnChannel(tHalHandle hHal, tANI_U8 sessionId,
 
     do
     {
-        /* call set in context */
+        /*                     */
         pRemainChlCmd->command = eSmeCommandRemainOnChannel;
         pRemainChlCmd->sessionId = sessionId;
         pRemainChlCmd->u.remainChlCmd.chn = channel;
@@ -782,7 +782,7 @@ eHalStatus p2pRemainOnChannel(tHalHandle hHal, tANI_U8 sessionId,
         pRemainChlCmd->u.remainChlCmd.callback = callback;
         pRemainChlCmd->u.remainChlCmd.callbackCtx = pContext;
     
-        //Put it at the head of the Q if we just finish finding the peer and ready to send a frame
+        //                                                                                        
 #ifdef WLAN_FEATURE_P2P_INTERNAL
         smePushCommand(pMac, pRemainChlCmd, (eP2PRemainOnChnReasonSendFrame == reason));
 #else
@@ -829,7 +829,7 @@ eHalStatus p2pCancelRemainOnChannel(tHalHandle hHal, tANI_U8 sessionId)
     tSirMbMsg *pMsg;
     tANI_U16 msgLen;
 
-    //Need to check session ID to support concurrency
+    //                                               
 
     msgLen = (tANI_U16)(sizeof( tSirMbMsg ));
     status = palAllocateMemory(pMac->hHdd, (void **)&pMsg, msgLen);
@@ -958,7 +958,7 @@ eHalStatus p2pPS(tHalHandle hHal, tANI_U8 sessionId)
    tpAniSirGlobal pMac = PMAC_STRUCT(hHal);
    tP2pPsConfig pNoA;
 
-   /* call set in context */
+   /*                     */
    pNoA.psSelection = pMac->p2pContext[sessionId].pNoA.psSelection;
    pNoA.sessionid = sessionId;
 
@@ -1076,7 +1076,7 @@ void p2pRetryActionFrameTimerHandler(void *pContext)
 
    p2pContext->PeerFound = TRUE;
    smsLog( pMac, LOGE, "%s Calling remain on channel ", __func__);
-   status = p2pRemainOnChannel( pMac, p2pContext->SMEsessionId, p2pContext->P2PListenChannel/*pScanResult->BssDescriptor.channelId*/, P2P_REMAIN_ON_CHAN_TIMEOUT_LOW,
+   status = p2pRemainOnChannel( pMac, p2pContext->SMEsessionId, p2pContext->P2PListenChannel/*                                    */, P2P_REMAIN_ON_CHAN_TIMEOUT_LOW,
                                     NULL, NULL, TRUE, eP2PRemainOnChnReasonSendFrame);
    if(status != eHAL_STATUS_SUCCESS)
    {
@@ -1126,7 +1126,7 @@ void p2pActionFrameTimerHandler(void *pContext)
       }
       if(pNextBuf)
       {
-         //Inform the failure of the next frame.
+         //                                     
          p2pContext->pSentActionFrame = pNextBuf;
          p2pContext->ActionFrameLen = p2pContext->nNextFrmLen;
          p2pContext->actionFrameType = p2pContext->NextActionFrameType;
@@ -1228,7 +1228,7 @@ eHalStatus p2pCreateActionFrame(tpAniSirGlobal pMac, tANI_U8 SessionID, void *p2
 
    if(NULL != pP2pContext->pSentActionFrame)
    {
-      //If there is one pending frame already. Drop that one and save the new one
+      //                                                                         
       pLocal = pP2pContext->pNextActionFrm;
       pendingActionFrameType = pP2pContext->NextActionFrameType;
       pendingFrameLen = pP2pContext->nNextFrmLen;
@@ -1383,7 +1383,7 @@ static eHalStatus p2pSendActionFrame(tpAniSirGlobal pMac, tANI_U8 HDDSessionID, 
 }
 
 
-#define WLAN_P2P_DEF_ACTION_FRM_TIMEOUT_VALUE 1000  //1s
+#define WLAN_P2P_DEF_ACTION_FRM_TIMEOUT_VALUE 1000  //  
 
 eHalStatus p2pCreateSendActionFrame(tHalHandle hHal, tANI_U8 HDDSessionID, 
    void *p2pactionframe, eP2PFrameType actionFrameType, tANI_U32 timeout)
@@ -1422,7 +1422,7 @@ eHalStatus p2pCreateSendActionFrame(tHalHandle hHal, tANI_U8 HDDSessionID,
 
          vos_mem_zero(&RoamInfo, sizeof(tCsrRoamInfo));
          smsLog(pMac, LOGE, FL(" %s fail to start timer status %d"), __func__, status);
-         //Without the timer we cannot continue
+         //                                    
          csrRoamCallCallback((tpAniSirGlobal)pP2pContext->hHal, 
                      pP2pContext->SMEsessionId, &RoamInfo, 0, 
                      eCSR_ROAM_SEND_ACTION_CNF, 
@@ -1436,18 +1436,18 @@ eHalStatus p2pCreateSendActionFrame(tHalHandle hHal, tANI_U8 HDDSessionID,
          p2pFsm(pP2pContext, eP2P_TRIGGER_DISCONNECTED);
          return status;
       }
-      //We can send this frame now
+      //                          
       status = p2pSendActionFrame(pMac, HDDSessionID, actionFrameType);
       if(!HAL_STATUS_SUCCESS(status))
       {
          smsLog(pMac, LOGE, FL("  fail to send action frame status %d"), status);
       }
-      //Let them retry
+      //              
       pP2pContext->actionFrameTimeout = FALSE;
    }
    else
    {
-      //An action frame is pedning at lower layer
+      //                                         
       smsLog(pMac, LOGW, FL("  An action frame is pending while trying to send frametype %d"), actionFrameType);
       if (timeout)
       {
@@ -1501,7 +1501,7 @@ static eHalStatus p2pListenStateDiscoverableCallback(tHalHandle halHandle, void 
    {
       VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO, "%s restart listen timer expire time %d",
                   __func__, p2pContext->expire_time);
-      //We can restart the listening
+      //                            
       status = vos_timer_start(&p2pContext->listenTimerHandler, (p2pContext->expire_time)/PAL_TIMER_TO_MS_UNIT);
       if (!VOS_IS_STATUS_SUCCESS(status))
       {
@@ -1591,7 +1591,7 @@ eHalStatus P2P_ListenStateDiscoverable(tHalHandle hHal, tANI_U8 sessionId,
       }
       break;
 
-   case 234: //Not to use this as it enabling GO to be concurrent with P2P device P2P_DEVICE_HIGH_AVAILABILITY:
+   case 234: //                                                                                                
       VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO, "%s P2P_HIGH_AVAILABILITY",__func__);
       pMac->p2pContext[sessionId].listenDiscoverableState = eStateEnabled;
       pMac->p2pContext[sessionId].DiscoverableCfg = listenState;
@@ -1683,7 +1683,7 @@ eHalStatus p2pGetResultFilter(tp2pContext *pP2pContext,
             if ((directedDiscoveryFilter->ucBitmask != QCWLAN_P2P_DISCOVER_ANY) 
                && (directedDiscoveryFilter->ucBitmask & DISCOVERY_FILTER_BITMASK_GO))
             {
-               //Matching Device ID and GroupSSID
+               //                                
                pFilter->BSSIDs.numOfBSSIDs++;
                if(directedDiscoveryFilter->GroupSSID.length)
                {
@@ -1772,18 +1772,18 @@ eHalStatus p2pGetResultFilter(tp2pContext *pP2pContext,
 
 
 /*
-  @breif Function calls P2P_Fsm function to initiate the P2P Discover process
+                                                                             
 
-  @param[in] hHal - Handle to MAC structure.
-        [in] sessionID - Session ID returned by sme_OpenSession
-        [in] pDiscoverRequest - pointer to the tp2pDiscoverRequest structure
-             whose parameters are filled in the HDD.
-        [in] callback - HDD callback function to be called when Discover
-             is complete
-        [in] pContext - a pointer passed in for the callback
+                                            
+                                                               
+                                                                            
+                                                    
+                                                                        
+                        
+                                                            
 
-  @return eHAL_STATUS_FAILURE - If success.
-          eHAL_STATUS_SUCCESS - If failure.
+                                           
+                                           
 */
 eHalStatus P2P_DiscoverRequest(tHalHandle hHal,
                 tANI_U8 SessionID,
@@ -1874,7 +1874,7 @@ eHalStatus P2P_DiscoverRequest(tHalHandle hHal,
                   "%s fail to create filter", __func__);
                break;
             }
-         }//if(NULL != pDeviceFilters)
+         }//                          
 
          status = csrScanGetResult(pMac, &filter, &hScanResult);
          if (hScanResult)
@@ -1980,17 +1980,17 @@ eHalStatus p2pScanRequest(tp2pContext *p2pContext, p2pDiscoverCompleteCallback c
                   __func__);
    }
 
-   /* set the scan type to active */
+   /*                             */
    scanRequest.scanType = eSIR_ACTIVE_SCAN;
 
    vos_mem_set( scanRequest.bssid, sizeof( tCsrBssid ), 0xff );
 
    scanRequest.requestType = eCSR_SCAN_P2P_FIND_PEER;
-   /* set min and max channel time to zero */
+   /*                                      */
    scanRequest.minChnTime = 30;
    scanRequest.maxChnTime = 100;
 
-   /* set BSSType to default type */
+   /*                             */
    scanRequest.BSSType = eCSR_BSS_TYPE_ANY;
 
    scanRequest.SSIDs.numOfSSIDs = 1;
@@ -2035,7 +2035,7 @@ tANI_U8 getP2PSessionIdFromSMESessionId(tHalHandle hHal, tANI_U8 SessionID)
 }
 
 
-/* SessionID is HDD session id, not SME sessionId*/
+/*                                               */
 eHalStatus p2pCloseSession(tHalHandle hHal, tANI_U8 SessionID)
 {
    tpAniSirGlobal pMac = PMAC_STRUCT(hHal);
@@ -2140,7 +2140,7 @@ eHalStatus p2pStopDiscovery(tHalHandle hHal, tANI_U8 SessionID)
    return status;
 }
 
-//Purge P2P device/GO from the list
+//                                 
 eHalStatus p2pPurgeDeviceList(tpAniSirGlobal pMac, tDblLinkList *pList)
 {
    eHalStatus status = eHAL_STATUS_SUCCESS;
@@ -2166,7 +2166,7 @@ eHalStatus p2pPurgeDeviceList(tpAniSirGlobal pMac, tDblLinkList *pList)
       }
       if( pIes->P2PBeaconProbeRes.present )
       {
-         //Found a P2P BSS
+         //               
          if(csrLLRemoveEntry(pList, pEntry, LL_ACCESS_NOLOCK) )
          {
             csrFreeScanResultEntry( pMac, pBssResult );
@@ -2242,7 +2242,7 @@ eHalStatus sme_p2pGetResultFilter(tHalHandle hHal, tANI_U8 HDDSessionId,
 
 
 
-#endif //WLAN_FEATURE_P2P_INTERNAL
+#endif //                         
 
 eHalStatus p2pProcessNoAReq(tpAniSirGlobal pMac, tSmeCmd *pNoACmd)
 {

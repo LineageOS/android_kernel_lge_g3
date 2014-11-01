@@ -57,64 +57,64 @@
 
 #include <linux/netlink.h>
 
-/*---------------------------------------------------------------------------
- * External Functions
- *-------------------------------------------------------------------------*/
+/*                                                                           
+                     
+                                                                           */
 
-/*---------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- *-------------------------------------------------------------------------*/
-#define WLAN_NL_MAX_PAYLOAD   256     /* maximum size for netlink message*/
+/*                                                                           
+                                         
+                                                                           */
+#define WLAN_NL_MAX_PAYLOAD   256     /*                                 */
 #define WLAN_NLINK_PROTO_FAMILY  NETLINK_USERSOCK
 #define WLAN_NLINK_MCAST_GRP_ID  0x01 
 
-/*---------------------------------------------------------------------------
- * Type Declarations
- *-------------------------------------------------------------------------*/
+/*                                                                           
+                    
+                                                                           */
 
 /* 
- * The following enum defines the target service within WLAN driver for which the
- * message is intended for. Each service along with its counterpart 
- * in the user space, define a set of messages they recognize.
- * Each of this message will have an header of type tAniMsgHdr defined below.
- * Each Netlink message to/from a kernel module will contain only one
- * message which is preceded by a tAniMsgHdr. The maximun size (in bytes) of
- * a netlink message is assumed to be MAX_PAYLOAD bytes.
- *
- *         +------------+-------+----------+----------+
- *         |Netlink hdr | Align |tAniMsgHdr| msg body |
- *         +------------+-------+----------|----------+
+                                                                                 
+                                                                    
+                                                              
+                                                                             
+                                                                     
+                                                                            
+                                                        
+  
+                                                       
+                                                       
+                                                       
  */
 
-// Message Types 
-#define WLAN_BTC_QUERY_STATE_REQ    0x01  // BTC  --> WLAN
-#define WLAN_BTC_BT_EVENT_IND       0x02  // BTC  --> WLAN
-#define WLAN_BTC_QUERY_STATE_RSP    0x03  // WLAN -->  BTC
-#define WLAN_MODULE_UP_IND          0x04  // WLAN -->  BTC
-#define WLAN_MODULE_DOWN_IND        0x05  // WLAN -->  BTC
-#define WLAN_STA_ASSOC_DONE_IND     0x06  // WLAN -->  BTC
-#define WLAN_STA_DISASSOC_DONE_IND  0x07  // WLAN -->  BTC
+//               
+#define WLAN_BTC_QUERY_STATE_REQ    0x01  //              
+#define WLAN_BTC_BT_EVENT_IND       0x02  //              
+#define WLAN_BTC_QUERY_STATE_RSP    0x03  //              
+#define WLAN_MODULE_UP_IND          0x04  //              
+#define WLAN_MODULE_DOWN_IND        0x05  //              
+#define WLAN_STA_ASSOC_DONE_IND     0x06  //              
+#define WLAN_STA_DISASSOC_DONE_IND  0x07  //              
 
-// Special Message Type used by AMP, intercepted by send_btc_nlink_msg() and
-// replaced by WLAN_STA_ASSOC_DONE_IND or WLAN_STA_DISASSOC_DONE_IND
+//                                                                          
+//                                                                  
 #define WLAN_AMP_ASSOC_DONE_IND     0x10
 
-// Special Message Type used by SoftAP, intercepted by send_btc_nlink_msg() and
-// replaced by WLAN_STA_ASSOC_DONE_IND
+//                                                                             
+//                                    
 #define WLAN_BTC_SOFTAP_BSS_START      0x11
 
 
-// Event data for WLAN_BTC_QUERY_STATE_RSP & WLAN_STA_ASSOC_DONE_IND
+//                                                                  
 typedef struct
 {
-   unsigned char channel;  // 0 implies STA not associated to AP
+   unsigned char channel;  //                                   
 } tWlanAssocData;
 
-#define ANI_NL_MSG_BASE     0x10    /* Some arbitrary base */
+#define ANI_NL_MSG_BASE     0x10    /*                     */
 
 typedef enum eAniNlModuleTypes {
-   ANI_NL_MSG_PUMAC = ANI_NL_MSG_BASE + 0x01,// PTT Socket App
-   ANI_NL_MSG_PTT   = ANI_NL_MSG_BASE + 0x07,// Quarky GUI
+   ANI_NL_MSG_PUMAC = ANI_NL_MSG_BASE + 0x01,//               
+   ANI_NL_MSG_PTT   = ANI_NL_MSG_BASE + 0x07,//           
    WLAN_NL_MSG_BTC,
    ANI_NL_MSG_MAX  
 } tAniNlModTypes, tWlanNlModTypes;
@@ -122,10 +122,10 @@ typedef enum eAniNlModuleTypes {
 #define WLAN_NL_MSG_BASE ANI_NL_MSG_BASE
 #define WLAN_NL_MSG_MAX  ANI_NL_MSG_MAX
 
-//All Netlink messages must contain this header
+//                                             
 typedef struct sAniHdr {
    unsigned short type;
    unsigned short length;
 } tAniHdr, tAniMsgHdr;
 
-#endif //WLAN_NLINK_COMMON_H__
+#endif //                     

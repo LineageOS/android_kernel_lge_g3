@@ -40,14 +40,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- * 
+  
+                                                        
+                            
+                        
+            
+                                                          
+                                                                       
+   
  */
 
 #ifndef __PMM_DEBUG_H__

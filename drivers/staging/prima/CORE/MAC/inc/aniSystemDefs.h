@@ -40,15 +40,15 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file aniSystemDefs.h contains definitions used by
- * various ANI entities
- * Author:    Chandra Modumudi
- * Date:      09/18/2002
- * History:-
- * Date       Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                         
+                       
+                              
+                        
+            
+                                                     
+                                                                       
  */
 
 #ifndef __ANI_SYSTEM_DEFS_H
@@ -59,17 +59,17 @@
 
 #define ANI_OUI  0x000AF5
 
-/// Max WDS info length.
+//                      
 #define ANI_WDS_INFO_MAX_LENGTH        64
 
 
-/// Max number of SSIDs to support Multiple SSID feature
+//                                                      
 #define ANI_MAX_NUM_OF_SSIDS           16
 
-//This is to force compiler to use the maximum of an int for enum
+//                                                               
 #define SIR_MAX_ENUM_SIZE    0x7FFFFFFF
 
-/* Max key size  including the WAPI and TKIP */
+/*                                           */
 #define WLAN_MAX_KEY_RSC_LEN         16
 #define WLAN_WAPI_KEY_RSC_LEN        16
 
@@ -91,7 +91,7 @@ typedef enum eAniBool
     eSIR_DONOT_USE_BOOL = SIR_MAX_ENUM_SIZE
 } tAniBool;
 
-/// Authentication type enum used with peer
+//                                         
 typedef enum eAniAuthType
 {
     eSIR_OPEN_SYSTEM,
@@ -106,7 +106,7 @@ typedef enum eAniAuthType
     eSIR_DONOT_USE_AUTH_TYPE = SIR_MAX_ENUM_SIZE
 } tAniAuthType;
 
-/// Encryption type enum used with peer
+//                                     
 typedef enum eAniEdType
 {
     eSIR_ED_NONE,
@@ -117,9 +117,9 @@ typedef enum eAniEdType
 #if defined(FEATURE_WLAN_WAPI)
     eSIR_ED_WPI,
 #endif
-    /*DPU HW treats encryption mode 4 plus RMF bit set in TX BD as BIP.
-      Thus while setting BIP encryption mode in corresponding DPU Desc
-      eSIR_ED_AES_128_CMAC should be set to eSIR_ED_CCMP*/
+    /*                                                                 
+                                                                      
+                                                        */
     eSIR_ED_AES_128_CMAC,
     eSIR_ED_NOT_IMPLEMENTED = SIR_MAX_ENUM_SIZE
 } tAniEdType;
@@ -131,8 +131,8 @@ typedef enum eAniWepType
     eSIR_WEP_DYNAMIC,
 } tAniWepType;
 
-/// Enum to specify whether key is used
-/// for TX only, RX only or both
+//                                     
+//                              
 typedef enum eAniKeyDirection
 {
     eSIR_TX_ONLY,
@@ -142,7 +142,7 @@ typedef enum eAniKeyDirection
     eSIR_DONOT_USE_KEY_DIRECTION = SIR_MAX_ENUM_SIZE
 } tAniKeyDirection;
 
-/// Enum for rate
+//               
 typedef enum eAniRate
 {
     eSIR_ANY_RATE
@@ -160,17 +160,17 @@ typedef struct sAniApName
     tANI_U8        name[SIR_MAC_MAX_SSID_LENGTH];
 } tAniApName, *tpAniApName;
 
-/// RSN IE information
+//                    
 typedef struct sSirRSNie
 {
     tANI_U16       length;
     tANI_U8        rsnIEdata[SIR_MAC_MAX_IE_LENGTH+2];
 } tSirRSNie, *tpSirRSNie;
 
-/// Additional IE information :
-/// This can include WSC IE, P2P IE, and/or FTIE from upper layer.
-/// MAC layer transparently convey these IE info between peer STA and upper layer,
-/// but never requires to parse it.
+//                             
+//                                                                
+//                                                                                
+//                                 
 typedef struct sSirAddie
 {
     tANI_U16       length;
@@ -179,8 +179,8 @@ typedef struct sSirAddie
 
 #ifdef FEATURE_WLAN_CCX
 
-// The CCKM IE needs to be in the
-// Join and Reassoc Req.
+//                               
+//                      
 typedef struct sSirCCKMie
 {
     tANI_U16       length;
@@ -189,55 +189,55 @@ typedef struct sSirCCKMie
 
 #endif
 
-/// Need to refine structure definitions for Keying material,
-/// QoS policy, etc
+//                                                           
+//                 
 
-/// Definition Quality of Service
+//                               
 typedef struct sSirQos
 {
-    tANI_U16                temp1;  // Need to define later
-    tANI_U16                temp2;  // Need to define later
+    tANI_U16                temp1;  //                     
+    tANI_U16                temp2;  //                     
 } tSirQos, *tpSirQos;
 
-/// Definition for Encryption Keys
+//                                
 typedef struct sSirKeys
 {
     tANI_U8                  keyId;
-    tANI_U8                  unicast;     // 0 for multicast
+    tANI_U8                  unicast;     //                
     tAniKeyDirection    keyDirection;
-    tANI_U8                  keyRsc[WLAN_MAX_KEY_RSC_LEN];   // Usage is unknown
-    tANI_U8                  paeRole;     // =1 for authenticator,
-                                     // =0 for supplicant
+    tANI_U8                  keyRsc[WLAN_MAX_KEY_RSC_LEN];   //                 
+    tANI_U8                  paeRole;     //                      
+                                     //                  
     tANI_U16                 keyLength;
     tANI_U8                  key[SIR_MAC_MAX_KEY_LENGTH];
 } tSirKeys, *tpSirKeys;
 
-/// Definition for Keying material
+//                                
 typedef struct sSirKeyMaterial
 {
-    tANI_U16         length;    // This is the length of all
-                           // data that follows
-    tAniEdType  edType;    // Encryption/Decryption type
+    tANI_U16         length;    //                          
+                           //                  
+    tAniEdType  edType;    //                           
     tANI_U8          numKeys;
     tSirKeys    key[1];
 } tSirKeyMaterial, *tpSirKeyMaterial;
 
 #define SIR_CIPHER_SEQ_CTR_SIZE 6
-/// Definition for MIC failure indication
+//                                       
 typedef struct sSirMicFailureInfo
 {
-    tSirMacAddr            srcMacAddr; //address used to compute MIC
-    tSirMacAddr            taMacAddr; //transmitter address
+    tSirMacAddr            srcMacAddr; //                           
+    tSirMacAddr            taMacAddr; //                   
     tSirMacAddr            dstMacAddr;
     tAniBool               multicast;
-    tANI_U8     IV1;            // first byte of IV
-    tANI_U8     keyId;          // second byte of IV
-    tANI_U8     TSC[SIR_CIPHER_SEQ_CTR_SIZE]; // sequence number
-    tSirMacAddr            rxMacAddr; // receive address
+    tANI_U8     IV1;            //                 
+    tANI_U8     keyId;          //                  
+    tANI_U8     TSC[SIR_CIPHER_SEQ_CTR_SIZE]; //                
+    tSirMacAddr            rxMacAddr; //                
 
 } tSirMicFailureInfo, *tpSirMicFailureInfo;
 
-// Boa command. Used mainly for radar info persistance
+//                                                    
 typedef struct sBoaCommand
 {
     tANI_U8     length;
@@ -272,5 +272,5 @@ typedef __ani_attr_pre_packed struct sBcnReportFields
 } __ani_attr_packed tBcnReportFields, *tpBcnReportFields;
 
 
-#endif /* __ANI_SYSTEM_DEFS_H */
+#endif /*                     */
 

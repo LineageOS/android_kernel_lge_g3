@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limSerDesUtils.h contains the utility definitions
- * LIM uses while processing messages from upper layer software
- * modules
- * Author:        Chandra Modumudi
- * Date:          10/20/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                              
+                                                               
+          
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 #ifndef __LIM_SERDES_UTILS_H
 #define __LIM_SERDES_UTILS_H
@@ -89,7 +89,7 @@ tSirRetStatus limUpdateAPWPSIEsReqSerDes(tpAniSirGlobal pMac, tpSirUpdateAPWPSIE
 tSirRetStatus limUpdateAPWPARSNIEsReqSerDes(tpAniSirGlobal pMac, tpSirUpdateAPWPARSNIEsReq pUpdateAPWPARSNIEsReq, tANI_U8 *pBuf);
 
 
-// Byte String <--> tANI_U16/tANI_U32 copy functions
+//                                                  
 static inline void limCopyU16(tANI_U8 *ptr, tANI_U16 u16Val)
 {
 #if ((defined(ANI_OS_TYPE_QNX) && defined(ANI_LITTLE_BYTE_ENDIAN)) ||   \
@@ -138,5 +138,5 @@ static inline tANI_U32 limGetU32(tANI_U8 *ptr)
 #endif
 }
 
-#endif /* __LIM_SERDES_UTILS_H */
+#endif /*                      */
 

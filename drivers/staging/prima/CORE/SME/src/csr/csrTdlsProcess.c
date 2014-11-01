@@ -58,7 +58,7 @@
 
 #ifdef FEATURE_WLAN_TDLS
 
-#include "aniGlobal.h" //for tpAniSirGlobal
+#include "aniGlobal.h" //                  
 #include "palApi.h"
 #include "csrInsideApi.h"
 #include "smeInside.h"
@@ -75,7 +75,7 @@
 
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
 /*
- * initialize Discovery list 
+                             
  */
 eHalStatus csrTdlsInitPeerList(tpAniSirGlobal pMac )
 {
@@ -87,8 +87,8 @@ eHalStatus csrTdlsInitPeerList(tpAniSirGlobal pMac )
 #endif
 
 /*
- * common routine to remove TDLS cmd from SME command list..
- * commands are removed after getting reponse from PE.
+                                                            
+                                                      
  */
 eHalStatus csrTdlsRemoveSmeCmd(tpAniSirGlobal pMac, eSmeCommandType cmdType)
 {
@@ -116,8 +116,8 @@ eHalStatus csrTdlsRemoveSmeCmd(tpAniSirGlobal pMac, eSmeCommandType cmdType)
 }
     
 /*
- * TDLS request API, called from HDD to send a TDLS frame 
- * in SME/CSR and send message to PE to trigger TDLS discovery procedure.
+                                                          
+                                                                         
  */
 eHalStatus csrTdlsSendMgmtReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSendMgmt *tdlsSendMgmt)
 {
@@ -125,7 +125,7 @@ eHalStatus csrTdlsSendMgmtReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSendMg
     tSmeCmd *tdlsSendMgmtCmd ;
     eHalStatus status = eHAL_STATUS_FAILURE ;
  
-    //If connected and in Infra. Only then allow this
+    //                                               
     if( CSR_IS_SESSION_VALID( pMac, sessionId ) && 
         csrIsConnStateConnectedInfra( pMac, sessionId ) &&
         (NULL != tdlsSendMgmt) )
@@ -177,7 +177,7 @@ eHalStatus csrTdlsSendMgmtReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSendMg
 }
 
 /*
- * TDLS request API, called from HDD to add a TDLS peer 
+                                                        
  */
 eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac,
                                 tCsrStaParams *pstaParams)
@@ -186,7 +186,7 @@ eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr 
     tSmeCmd *tdlsAddStaCmd ;
     eHalStatus status = eHAL_STATUS_FAILURE ;
 
-    //If connected and in Infra. Only then allow this
+    //                                               
     if (CSR_IS_SESSION_VALID( pMac, sessionId ) &&
         csrIsConnStateConnectedInfra( pMac, sessionId ) &&
         (NULL != peerMac)){
@@ -242,7 +242,7 @@ eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr 
     return status ;
 }
 /*
- * TDLS request API, called from HDD to Send Link Establishment Parameters
+                                                                          
  */
 VOS_STATUS csrTdlsSendLinkEstablishParams(tHalHandle hHal,
                                                  tANI_U8 sessionId,
@@ -252,7 +252,7 @@ VOS_STATUS csrTdlsSendLinkEstablishParams(tHalHandle hHal,
     tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
     tSmeCmd *tdlsLinkEstablishCmd;
     eHalStatus status = eHAL_STATUS_FAILURE ;
-    //If connected and in Infra. Only then allow this
+    //                                               
     if( CSR_IS_SESSION_VALID( pMac, sessionId ) &&
         csrIsConnStateConnectedInfra( pMac, sessionId ) &&
         (NULL != peerMac) )
@@ -283,7 +283,7 @@ VOS_STATUS csrTdlsSendLinkEstablishParams(tHalHandle hHal,
 }
 
 /*
- * TDLS request API, called from HDD to add a TDLS peer
+                                                       
  */
 eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac)
 {
@@ -291,7 +291,7 @@ eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr pee
     tSmeCmd *tdlsAddStaCmd ;
     eHalStatus status = eHAL_STATUS_FAILURE ;
  
-    //If connected and in Infra. Only then allow this
+    //                                               
     if( CSR_IS_SESSION_VALID( pMac, sessionId ) && 
         csrIsConnStateConnectedInfra( pMac, sessionId ) &&
         (NULL != peerMac) )
@@ -320,7 +320,7 @@ eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr pee
 }
 
 /*
- * TDLS request API, called from HDD to delete a TDLS peer
+                                                          
  */
 eHalStatus csrTdlsDelPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac)
 {
@@ -328,7 +328,7 @@ eHalStatus csrTdlsDelPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr pee
     tSmeCmd *tdlsDelStaCmd ;
     eHalStatus status = eHAL_STATUS_FAILURE ;
  
-    //If connected and in Infra. Only then allow this
+    //                                               
     if( CSR_IS_SESSION_VALID( pMac, sessionId ) && 
         csrIsConnStateConnectedInfra( pMac, sessionId ) &&
         (NULL != peerMac) )
@@ -356,8 +356,8 @@ eHalStatus csrTdlsDelPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr pee
 }
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
 /*
- * TDLS request API, called from HDD to enable TDLS discovery request
- * in SME/CSR and send message to PE to trigger TDLS discovery procedure.
+                                                                     
+                                                                         
  */
 eHalStatus csrTdlsDiscoveryReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsDisRequest *tdlsDisReq)
 {
@@ -390,8 +390,8 @@ eHalStatus csrTdlsDiscoveryReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsDisRe
 }
 
 /*
- * TDLS request API, called from HDD to enable TDLS link setup request
- * in SME/CSR and send message to PE to trigger TDLS link setup procedure.
+                                                                      
+                                                                          
  */
 eHalStatus csrTdlsSetupReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSetupRequest *tdlsSetupReq)
 {
@@ -422,8 +422,8 @@ eHalStatus csrTdlsSetupReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSetupRequ
     return status ;
 }
 /*
- * TDLS request API, called from HDD to enable TDLS link teardown request
- * in SME/CSR and send message to PE to trigger TDLS link teardown procedure.
+                                                                         
+                                                                             
  */
 eHalStatus csrTdlsTeardownReq(tHalHandle hHal, tANI_U8 sessionId, 
                                  tCsrTdlsTeardownRequest *tdlsTeardownReq)
@@ -459,7 +459,7 @@ eHalStatus csrTdlsTeardownReq(tHalHandle hHal, tANI_U8 sessionId,
 #endif
 
 /*
- * TDLS messages sent to PE .
+                             
  */
 eHalStatus tdlsSendMessage(tpAniSirGlobal pMac, tANI_U16 msg_type, 
                               void *msg_data, tANI_U32 msg_size)
@@ -471,7 +471,7 @@ eHalStatus tdlsSendMessage(tpAniSirGlobal pMac, tANI_U16 msg_type,
 
     VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO,
                               ("sending msg = %d"), pMsg->type) ;
-      /* Send message. */
+      /*               */
     if (palSendMBMessage(pMac->hHdd, pMsg) != eHAL_STATUS_SUCCESS)
     {
         smsLog(pMac, LOGE, FL("Cannot send message"));
@@ -504,7 +504,7 @@ eHalStatus csrTdlsProcessSendMgmt( tpAniSirGlobal pMac, tSmeCmd *cmd )
         return status ;
     }
     tdlsSendMgmtReq->sessionId = cmd->sessionId;
-    //Using dialog as transactionId. This can be used to match response with request
+    //                                                                              
     tdlsSendMgmtReq->transactionId = tdlsSendMgmtCmdInfo->dialog;  
     tdlsSendMgmtReq->reqType =  tdlsSendMgmtCmdInfo->frameType ;
     tdlsSendMgmtReq->dialog =  tdlsSendMgmtCmdInfo->dialog ;
@@ -523,7 +523,7 @@ eHalStatus csrTdlsProcessSendMgmt( tpAniSirGlobal pMac, tSmeCmd *cmd )
                 tdlsSendMgmtCmdInfo->len);
 
     }
-    // Send the request to PE.
+    //                        
     smsLog( pMac, LOG1, "sending TDLS Mgmt Frame req to PE " );
     status = tdlsSendMessage(pMac, eWNI_SME_TDLS_SEND_MGMT_REQ, 
             (void *)tdlsSendMgmtReq , sizeof(tSirTdlsSendMgmtReq)+tdlsSendMgmtCmdInfo->len) ;
@@ -533,7 +533,7 @@ eHalStatus csrTdlsProcessSendMgmt( tpAniSirGlobal pMac, tSmeCmd *cmd )
     }
     if(tdlsSendMgmtCmdInfo->len && tdlsSendMgmtCmdInfo->buf)
     {
-        //Done with the buf. Free it.
+        //                           
         vos_mem_free( tdlsSendMgmtCmdInfo->buf );
         tdlsSendMgmtCmdInfo->buf = NULL;
         tdlsSendMgmtCmdInfo->len = 0;
@@ -566,7 +566,7 @@ eHalStatus csrTdlsProcessAddSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
     }
     tdlsAddStaReq->sessionId = cmd->sessionId;
     tdlsAddStaReq->tdlsAddOper = tdlsAddStaCmdInfo->tdlsAddOper;
-    //Using dialog as transactionId. This can be used to match response with request
+    //                                                                              
     tdlsAddStaReq->transactionId = 0;
 
     palCopyMemory(pMac->hHdd, tdlsAddStaReq->bssid,
@@ -592,7 +592,7 @@ eHalStatus csrTdlsProcessAddSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
     palCopyMemory(pMac->hHdd, &tdlsAddStaReq->supported_rates,
                   tdlsAddStaCmdInfo->supportedRates, tdlsAddStaCmdInfo->supportedRatesLen);
 
-    // Send the request to PE.
+    //                        
     smsLog( pMac, LOGE, "sending TDLS Add Sta req to PE " );
     status = tdlsSendMessage(pMac, eWNI_SME_TDLS_ADD_STA_REQ, 
             (void *)tdlsAddStaReq , sizeof(tSirTdlsAddStaReq)) ;
@@ -626,7 +626,7 @@ eHalStatus csrTdlsProcessDelSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
         return status ;
     }
     tdlsDelStaReq->sessionId = cmd->sessionId;
-    //Using dialog as transactionId. This can be used to match response with request
+    //                                                                              
     tdlsDelStaReq->transactionId = 0;
 
     palCopyMemory(pMac->hHdd, tdlsDelStaReq->bssid,
@@ -635,7 +635,7 @@ eHalStatus csrTdlsProcessDelSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
     palCopyMemory(pMac->hHdd, tdlsDelStaReq->peerMac, 
             tdlsDelStaCmdInfo->peerMac, sizeof(tSirMacAddr)) ;
 
-    // Send the request to PE.
+    //                        
 #ifdef WLAN_FEATURE_TDLS_DEBUG
     smsLog( pMac, LOGE,
 #else
@@ -652,7 +652,7 @@ eHalStatus csrTdlsProcessDelSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
     return status;
 }
 /*
- * commands received from CSR
+                             
  */
 eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
 {
@@ -716,7 +716,7 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
                 break ;
             }
             disReq->sessionId = cmd->sessionId;
-            disReq->transactionId = 0;  /* TODO ? */
+            disReq->transactionId = 0;  /*        */
             disReq->reqType =  disReqCmdInfo->tdlsDisType ;
             palCopyMemory(pMac->hHdd, disReq->bssid, pSession->pConnectBssDesc->bssId, 
                                  sizeof (tSirMacAddr));
@@ -729,7 +729,7 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
             {
                status = eANI_BOOLEAN_FALSE ;
             }
-                /* TODO: Add error handling */
+                /*                          */
 
             break ;
         }
@@ -750,7 +750,7 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
                 break ;
             }
             setupReq->sessionId = cmd->sessionId;
-            setupReq->transactionId = 0;  /* TODO ? */
+            setupReq->transactionId = 0;  /*        */
             
             palCopyMemory(pMac->hHdd, setupReq->bssid, pSession->pConnectBssDesc->bssId, 
                                  sizeof (tSirMacAddr));
@@ -766,7 +766,7 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
             {
                status = eANI_BOOLEAN_FALSE ;
             }
-                /* TODO: Add error handling */
+                /*                          */
             break ;
         }
         case eSmeCommandTdlsLinkTear:
@@ -785,7 +785,7 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
                 break ;
             }
             teardownReq->sessionId = cmd->sessionId;
-            teardownReq->transactionId = 0;  /* TODO ? */
+            teardownReq->transactionId = 0;  /*        */
 
             palCopyMemory(pMac->hHdd, teardownReq->bssid, pSession->pConnectBssDesc->bssId, 
                                  sizeof (tSirMacAddr));
@@ -800,13 +800,13 @@ eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
             {
                status = eANI_BOOLEAN_FALSE ;
             }
-                /* TODO: Add error handling */
+                /*                          */
             break ;
         }
 #endif
        default:
        {
-            /* TODO: Add defualt handling */  
+            /*                            */  
            break ;
        } 
              
@@ -831,7 +831,7 @@ eHalStatus csrTdlsProcessLinkEstablish( tpAniSirGlobal pMac, tSmeCmd *cmd )
         return status ;
     }
     tdlsLinkEstablishReq->sessionId = cmd->sessionId;
-    //Using dialog as transactionId. This can be used to match response with request
+    //                                                                              
     tdlsLinkEstablishReq->transactionId = 0;
     palCopyMemory(pMac->hHdd, tdlsLinkEstablishReq->peerMac,
                   tdlsLinkEstablishCmdInfo->peerMac, sizeof(tSirMacAddr));
@@ -843,7 +843,7 @@ eHalStatus csrTdlsProcessLinkEstablish( tpAniSirGlobal pMac, tSmeCmd *cmd )
     tdlsLinkEstablishReq->maxSp= tdlsLinkEstablishCmdInfo->maxSp;
 
 
-    // Send the request to PE.
+    //                        
     smsLog( pMac, LOGE, "sending TDLS Link Establish Request to PE \n" );
     status = tdlsSendMessage(pMac, eWNI_SME_TDLS_LINK_ESTABLISH_REQ,
                              (void *)tdlsLinkEstablishReq,
@@ -857,7 +857,7 @@ eHalStatus csrTdlsProcessLinkEstablish( tpAniSirGlobal pMac, tSmeCmd *cmd )
 
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
 /*
- * Find specific TDLS peer (based on peer MAC address).
+                                                       
  */
 tCsrTdlsPeerLinkinfo *findTdlsPeer(tpAniSirGlobal pMac, 
                                 tDblLinkList *peerList, tSirMacAddr peerMac)
@@ -885,7 +885,7 @@ tCsrTdlsPeerLinkinfo *findTdlsPeer(tpAniSirGlobal pMac,
     return ((pEntry) ? peerLinkInfo: NULL) ; 
 }
 /*
- * Delete TDLD peer info, called from TDLS teardown request.
+                                                            
  */
 static eHalStatus tdlsDeleteTdlsPeerInfo(tpAniSirGlobal pMac,
                                               tSirMacAddr peerMac)
@@ -906,8 +906,8 @@ static eHalStatus tdlsDeleteTdlsPeerInfo(tpAniSirGlobal pMac,
 }
 
 /*
- * UPDATE TDLS peer state to TDLS LINK STATE, this will be called after
- * link is successfully setup with TDLS Peer.
+                                                                       
+                                             
  */
 static eHalStatus tdlsUpdateTdlsPeerState(tpAniSirGlobal pMac,
                                           tSirMacAddr peerMac,tANI_U8 state )
@@ -925,7 +925,7 @@ static eHalStatus tdlsUpdateTdlsPeerState(tpAniSirGlobal pMac,
     }
     else
     {
-        /* TODO: update this peer found in link setup in peer list */
+        /*                                                         */
         VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO, 
                        ("This TDLS client is not in discovery list ") );
         status = eHAL_STATUS_SUCCESS ;
@@ -935,8 +935,8 @@ static eHalStatus tdlsUpdateTdlsPeerState(tpAniSirGlobal pMac,
 }
 
 /*
- * save TDLS peer info, this will be called after successfull completion
- * of TDLS discovery procedure.
+                                                                        
+                               
  */
 static eHalStatus tdlsSaveTdlsPeerInfo(tpAniSirGlobal pMac, 
                                           tSirTdlsPeerInfo *disPeerInfo)
@@ -945,17 +945,17 @@ static eHalStatus tdlsSaveTdlsPeerInfo(tpAniSirGlobal pMac,
     tCsrTdlsCtxStruct *disInfo = &pMac->tdlsCtx ;
     eHalStatus status = eHAL_STATUS_FAILURE ;
     /* 
-     * Ok, allocate memory for peer info here
-     * we allocate memory for each peer here and free his memory
-     * at the time the peer node is getting deleted, possible case is 
-     * teardown
+                                             
+                                                                
+                                                                      
+               
      */
     status = palAllocateMemory( pMac->hHdd, (void **)&peerInfo, 
                                 sizeof(tCsrTdlsPeerLinkinfo));
 
     /* 
-     * go ahead and copy peerInfo and insert this node info discovery rsp
-     * database.
+                                                                         
+                
      */ 
     if (HAL_STATUS_SUCCESS(status))
     {
@@ -965,13 +965,13 @@ static eHalStatus tdlsSaveTdlsPeerInfo(tpAniSirGlobal pMac,
                                              sizeof(tSirTdlsPeerInfo));
 
         /*
-         * update TDLS client count to indicate there is tdls client
-         * in tdls potential peer list.
+                                                                    
+                                       
          */
         disInfo->tdlsPeerCount++ ;
 
         /*
-         * finally insert this tdls peer info into tdls potential peer list
+                                                                           
          */
         csrLLInsertTail( &disInfo->tdlsPotentialPeerList, 
                                  &peerInfo->tdlsPeerStaLink, LL_ACCESS_LOCK );
@@ -983,8 +983,8 @@ static eHalStatus tdlsSaveTdlsPeerInfo(tpAniSirGlobal pMac,
 
 #endif
 /*
- * TDLS Message processor, will be called after TDLS message recieved from
- * PE
+                                                                          
+     
  */
 eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
                                 void *pMsgBuf)
@@ -993,7 +993,7 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
     {
         case eWNI_SME_TDLS_SEND_MGMT_RSP:
         {
-            /* remove pending eSmeCommandTdlsDiscovery command */
+            /*                                                 */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsSendMgmt) ;
         }
         break;
@@ -1009,18 +1009,18 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             roamInfo.bcastSig = addStaRsp->bcastSig ;
             roamInfo.statusCode = addStaRsp->statusCode ;
             /*
-             * register peer with TL, we have to go through HDD as this is
-             * the only way to register any STA with TL.
+                                                                          
+                                                        
              */
             if (addStaRsp->tdlsAddOper == TDLS_OPER_ADD)
                 roamResult = eCSR_ROAM_RESULT_ADD_TDLS_PEER;
-            else /* addStaRsp->tdlsAddOper must be TDLS_OPER_UPDATE */
+            else /*                                                 */
                 roamResult = eCSR_ROAM_RESULT_UPDATE_TDLS_PEER;
             csrRoamCallCallback(pMac, addStaRsp->sessionId, &roamInfo, 0, 
                                 eCSR_ROAM_TDLS_STATUS_UPDATE,
                                 roamResult);
 
-            /* remove pending eSmeCommandTdlsDiscovery command */
+            /*                                                 */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsAddPeer) ;
         }
         break;
@@ -1034,8 +1034,8 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             roamInfo.staId = delStaRsp->staId ;
             roamInfo.statusCode = delStaRsp->statusCode ;
             /*
-             * register peer with TL, we have to go through HDD as this is
-             * the only way to register any STA with TL.
+                                                                          
+                                                        
              */
             csrRoamCallCallback(pMac, delStaRsp->sessionId, &roamInfo, 0, 
                          eCSR_ROAM_TDLS_STATUS_UPDATE, 
@@ -1053,7 +1053,7 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             roamInfo.staId = pSirTdlsDelStaInd->staId ;
             roamInfo.reasonCode = pSirTdlsDelStaInd->reasonCode ;
 
-            /* Sending the TEARDOWN indication to HDD. */
+            /*                                         */
             csrRoamCallCallback(pMac, pSirTdlsDelStaInd->sessionId, &roamInfo, 0,
                          eCSR_ROAM_TDLS_STATUS_UPDATE,
                                eCSR_ROAM_RESULT_TEARDOWN_TDLS_PEER_IND);
@@ -1065,7 +1065,7 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             tpSirTdlsDisappearAPInd pSirTdlsDisappearAPInd = (tpSirTdlsDisappearAPInd) pMsgBuf;
             tCsrRoamInfo roamInfo = {0} ;
             roamInfo.staId = pSirTdlsDisappearAPInd->staId ;
-            /* Sending the TEARDOWN indication to HDD. */
+            /*                                         */
             csrRoamCallCallback(pMac, pSirTdlsDisappearAPInd->sessionId, &roamInfo, 0,
                          eCSR_ROAM_TDLS_STATUS_UPDATE,
                                eCSR_ROAM_RESULT_TDLS_DISAPPEAR_AP_IND);
@@ -1077,7 +1077,7 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             tpSirTdlsDelAllPeerInd pSirTdlsDelAllPeerInd = (tpSirTdlsDelAllPeerInd) pMsgBuf ;
             tCsrRoamInfo roamInfo = {0} ;
 
-            /* Sending the TEARDOWN indication to HDD. */
+            /*                                         */
             csrRoamCallCallback(pMac, pSirTdlsDelAllPeerInd->sessionId, &roamInfo, 0,
                                 eCSR_ROAM_TDLS_STATUS_UPDATE,
                                 eCSR_ROAM_RESULT_DELETE_ALL_TDLS_PEER_IND);
@@ -1106,17 +1106,17 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             csrRoamCallCallback(pMac, linkEstablishReqRsp->sessionId, &roamInfo, 0,
                          eCSR_ROAM_TDLS_STATUS_UPDATE,
                                eCSR_ROAM_RESULT_LINK_ESTABLISH_REQ_RSP);
-            /* remove pending eSmeCommandTdlsLinkEstablish command */
+            /*                                                     */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsLinkEstablish);
             break;
         }
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
         case eWNI_SME_TDLS_DISCOVERY_START_RSP:
         {
-            /* remove pending eSmeCommandTdlsDiscovery command */
+            /*                                                 */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsDiscovery) ;
         }
-        /* fall through .. */
+        /*                 */
         case eWNI_SME_TDLS_DISCOVERY_START_IND:
         {
             tSirTdlsDisRsp *disRsp = (tSirTdlsDisRsp *)pMsgBuf ;
@@ -1143,12 +1143,12 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
 
                     if(NULL == peerLinkInfo)
                     {
-                        /* update discovery data base, if this is new entry */
+                        /*                                                  */
                         tdlsSaveTdlsPeerInfo(pMac, peerInfo) ;
                     }
                     else
                     {
-                        /* update RSSI of existing peer */
+                        /*                              */
                         tSirTdlsPeerInfo *newPeerInfo = 
                                             &peerLinkInfo->tdlsDisPeerInfo ; 
                         newPeerInfo->tdlsPeerRssi = peerInfo->tdlsPeerRssi ;
@@ -1164,15 +1164,15 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             {
                 smsLog( pMac, LOGW, "there is no tdls client discovered .." );
             }
-            /* Now free the memory for this message */
+            /*                                      */
             break ;    
         }    
         case eWNI_SME_TDLS_LINK_START_RSP:
         {
-            /* remove pending eSmeCommandTdlsLinkSetup command */
+            /*                                                 */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsLinkSetup) ;
         }
-        /* fall through .. */
+        /*                 */
         case eWNI_SME_TDLS_LINK_START_IND:
         {
             tSirTdlsLinksetupRsp *linkSetupRsp = 
@@ -1198,10 +1198,10 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
         {
             VOS_TRACE(VOS_MODULE_ID_SME, VOS_TRACE_LEVEL_INFO, 
                                           ("TEARDOWN RSP from PE ")) ;
-            /* remove pending eSmeCommandTdlsLinkTear command */
+            /*                                                */
             csrTdlsRemoveSmeCmd(pMac, eSmeCommandTdlsLinkTear) ;
         }
-        /* fall through .. */
+        /*                 */
         case eWNI_SME_TDLS_TEARDOWN_IND:
         {
             tSirTdlsTeardownRsp *linkTearRsp = 
@@ -1231,8 +1231,8 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
             roamInfo.ucastSig = peerInd->ucastSig ;
             roamInfo.bcastSig = peerInd->bcastSig ;
             /*
-             * register peer with TL, we have to go through HDD as this is
-             * the only way to register any STA with TL.
+                                                                          
+                                                        
              */
             csrRoamCallCallback(pMac, peerInd->sessionId, &roamInfo, 0, 
                          eCSR_ROAM_TDLS_STATUS_UPDATE, 
@@ -1248,8 +1248,8 @@ eHalStatus tdlsMsgProcessor(tpAniSirGlobal pMac,  v_U16_t msgType,
                                          sizeof(tSirMacAddr)) ;
             roamInfo.staId = peerInd->staId ;
             /*
-             * register peer with TL, we have to go through HDD as this is
-             * the only way to register any STA with TL.
+                                                                          
+                                                        
              */
             csrRoamCallCallback(pMac, peerInd->sessionId, &roamInfo, 0, 
                          eCSR_ROAM_TDLS_STATUS_UPDATE, 

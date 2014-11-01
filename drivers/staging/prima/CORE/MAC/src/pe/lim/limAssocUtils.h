@@ -40,15 +40,15 @@
  */
 
 /*
- * This file limAssocUtils.h contains the utility definitions
- * LIM uses while processing Re/Association messages.
- * Author:        Chandra Modumudi
- * Date:          02/13/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- * 05/26/10       js             WPA handling in (Re)Assoc frames
- *
+                                                             
+                                                     
+                                  
+                          
+            
+                                                         
+                                                                       
+                                                                 
+  
  */
 #ifndef __LIM_ASSOC_UTILS_H
 #define __LIM_ASSOC_UTILS_H
@@ -133,7 +133,7 @@ tSirRetStatus   limDelSta(tpAniSirGlobal, tpDphHashNode, tANI_BOOLEAN, tpPESessi
 #ifdef WLAN_FEATURE_VOWIFI_11R
 tSirRetStatus   limAddFTStaSelf(tpAniSirGlobal pMac, tANI_U16 assocId,
                     tpPESession psessionEntry);
-#endif /* WLAN_FEATURE_VOWIFI_11R */
+#endif /*                         */
 tSirRetStatus   limAddStaSelf(tpAniSirGlobal, tANI_U16, tANI_U8, tpPESession);
 tStaRateMode limGetStaRateMode(tANI_U8 dot11Mode);
 
@@ -177,16 +177,16 @@ void limInitPreAuthTimerTable(tpAniSirGlobal pMac, tpLimPreAuthTable pPreAuthTim
 tpLimPreAuthNode limAcquireFreePreAuthNode(tpAniSirGlobal pMac, tpLimPreAuthTable pPreAuthTimerTable);
 tpLimPreAuthNode limGetPreAuthNodeFromIndex(tpAniSirGlobal pMac, tpLimPreAuthTable pAuthTable, tANI_U32 authNodeIdx);
 
-/* Util API to check if the channels supported by STA is within range */
+/*                                                                    */
 tSirRetStatus limIsDot11hSupportedChannelsValid(tpAniSirGlobal pMac, tSirAssocReq *assoc);
 
-/* Util API to check if the txpower supported by STA is within range */
+/*                                                                   */
 tSirRetStatus limIsDot11hPowerCapabilitiesInRange(tpAniSirGlobal pMac, tSirAssocReq *assoc,tpPESession);
 
-/* API to re-add the same BSS during re-association */
+/*                                                  */
 void limHandleAddBssInReAssocContext(tpAniSirGlobal pMac, tpDphHashNode pStaDs, tpPESession psessionEntry);
 
-/* API to fill in RX Highest Supported data Rate */
+/*                                               */
 void limFillRxHighestSupportedRate(tpAniSirGlobal pMac, tANI_U16 *rxHighestRate, tANI_U8* pSupportedMCSSet);
 #if  defined (WLAN_FEATURE_VOWIFI_11R) || defined (FEATURE_WLAN_CCX) || defined(FEATURE_WLAN_LFR)
 void limSendRetryReassocReqFrame(tpAniSirGlobal pMac, tLimMlmReassocReq *pMlmReassocReq, tpPESession psessionEntry);
@@ -199,8 +199,8 @@ void limSendSmeUnprotectedMgmtFrameInd(tpAniSirGlobal pMac, tANI_U8 frameType,
 #if defined(FEATURE_WLAN_CCX) && defined(FEATURE_WLAN_CCX_UPLOAD)
 void limSendSmeTsmIEInd( tpAniSirGlobal pMac, tpPESession psessionEntry,
                             tANI_U8 tid, tANI_U8 state, tANI_U16 measInterval);
-#endif /* FEATURE_WLAN_CCX && FEATURE_WLAN_CCX_UPLOAD */
+#endif /*                                             */
 
 
-#endif /* __LIM_ASSOC_UTILS_H */
+#endif /*                     */
 

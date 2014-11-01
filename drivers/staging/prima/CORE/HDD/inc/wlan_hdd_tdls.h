@@ -20,13 +20,13 @@
  */
 #ifndef __HDD_TDSL_H
 #define __HDD_TDSL_H
-/**===========================================================================
+/*                                                                            
 
-\file         wlan_hdd_tdls.h
+                             
 
-\brief       Linux HDD TDLS include file
+                                        
 
-==========================================================================*/
+                                                                          */
 
 #define MAX_NUM_TDLS_PEER           3
 
@@ -44,11 +44,11 @@
 
 #define TDLS_RSSI_TRIGGER_HYSTERESIS 50
 
-/* before UpdateTimer expires, we want to timeout discovery response.
-should not be more than 2000 */
+/*                                                                   
+                             */
 #define TDLS_DISCOVERY_TIMEOUT_BEFORE_UPDATE     1000
 
-#define TDLS_CTX_MAGIC 0x54444c53    // "TDLS"
+#define TDLS_CTX_MAGIC 0x54444c53    //       
 
 #define TDLS_MAX_SCAN_SCHEDULE          10
 #define TDLS_MAX_SCAN_REJECT            5
@@ -86,9 +86,9 @@ typedef struct
 
 typedef enum {
     eTDLS_SUPPORT_NOT_ENABLED = 0,
-    eTDLS_SUPPORT_DISABLED, /* suppress implicit trigger and not respond to the peer */
-    eTDLS_SUPPORT_EXPLICIT_TRIGGER_ONLY, /* suppress implicit trigger, but respond to the peer */
-    eTDLS_SUPPORT_ENABLED, /* implicit trigger */
+    eTDLS_SUPPORT_DISABLED, /*                                                       */
+    eTDLS_SUPPORT_EXPLICIT_TRIGGER_ONLY, /*                                                    */
+    eTDLS_SUPPORT_ENABLED, /*                  */
 } eTDLSSupportMode;
 
 typedef enum eTDLSCapType{
@@ -167,11 +167,11 @@ typedef struct _hddTdlsPeer_t {
 } hddTdlsPeer_t;
 
 typedef struct {
-    /* Session ID */
+    /*            */
     tANI_U8 sessionId;
-    /*TDLS peer station id */
+    /*                     */
     v_U8_t staId;
-    /* TDLS peer mac Address */
+    /*                       */
     v_MACADDR_t peerMac;
 } tdlsConnInfo_t;
 
@@ -275,4 +275,4 @@ void wlan_hdd_tdls_indicate_teardown(hdd_adapter_t *pAdapter,
                                            tANI_U16 reason);
 
 
-#endif // __HDD_TDSL_H
+#endif //             

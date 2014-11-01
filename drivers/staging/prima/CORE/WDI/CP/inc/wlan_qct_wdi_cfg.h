@@ -61,32 +61,32 @@ DESCRIPTION
 ===========================================================================*/
 
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-when        who    what, where, why
---------    ---    ----------------------------------------------------------
-08/19/10    lti     Created module.
+                                   
 
-===========================================================================*/
 
-/*-------------------------------------------------------------------------
-  Preprocessor definitions and constants
--------------------------------------------------------------------------*/
+                                   
+                                                                             
+                                   
+
+                                                                           */
+
+/*                                                                         
+                                        
+                                                                         */
 #define WDI_MAX_CFG_LENGTH                  0x06
 
-/*-------------------------------------------------------------------------
-  Configuration Parameter IDs
--------------------------------------------------------------------------*/
+/*                                                                         
+                             
+                                                                         */
 #define WDI_CFG_STA_ID                             0
 #define WDI_CFG_CURRENT_TX_ANTENNA                 1
 #define WDI_CFG_CURRENT_RX_ANTENNA                 2
@@ -122,26 +122,26 @@ when        who    what, where, why
 #define WDI_CFG_STATS_PERIOD                       32
 #define WDI_CFG_CFP_MAX_DURATION                   33
 
-/*-------------------------------------------------------------------------
-  Configuration Parameter min, max, defaults
--------------------------------------------------------------------------*/
+/*                                                                         
+                                            
+                                                                         */
 
-/* WDI_CFG_CURRENT_TX_ANTENNA */
+/*                            */
 #define WDI_CFG_CURRENT_TX_ANTENNA_STAMIN          1
 #define WDI_CFG_CURRENT_TX_ANTENNA_STAMAX          1
 #define WDI_CFG_CURRENT_TX_ANTENNA_STADEF          1
 
-/* WDI_CFG_CURRENT_RX_ANTENNA */
+/*                            */
 #define WDI_CFG_CURRENT_RX_ANTENNA_STAMIN          1
 #define WDI_CFG_CURRENT_RX_ANTENNA_STAMAX          2
 #define WDI_CFG_CURRENT_RX_ANTENNA_STADEF          1
 
-/* WDI_CFG_LOW_GAIN_OVERRIDE */
+/*                           */
 #define WDI_CFG_LOW_GAIN_OVERRIDE_STAMIN           0
 #define WDI_CFG_LOW_GAIN_OVERRIDE_STAMAX           1
 #define WDI_CFG_LOW_GAIN_OVERRIDE_STADEF           0
 
-/* WDI_CFG_POWER_STATE_PER_CHAIN */
+/*                               */
 #define WDI_CFG_POWER_STATE_PER_CHAIN_STAMIN             0
 #define WDI_CFG_POWER_STATE_PER_CHAIN_STAMAX             65535
 #define WDI_CFG_POWER_STATE_PER_CHAIN_STADEF             785
@@ -154,24 +154,24 @@ when        who    what, where, why
 #define WDI_CFG_POWER_STATE_PER_CHAIN_CHAIN_1_OFFSET     4
 #define WDI_CFG_POWER_STATE_PER_CHAIN_CHAIN_2_OFFSET     8
 
-/* WDI_CFG_CAL_PERIOD */
+/*                    */
 #define WDI_CFG_CAL_PERIOD_STAMIN                  2
 #define WDI_CFG_CAL_PERIOD_STAMAX                  10
 #define WDI_CFG_CAL_PERIOD_STADEF                  5
 
-/* WDI_CFG_CAL_CONTROL */
+/*                     */
 #define WDI_CFG_CAL_CONTROL_STAMIN    0
 #define WDI_CFG_CAL_CONTROL_STAMAX    1
 #define WDI_CFG_CAL_CONTROL_STADEF    0
 
-/* WDI_CFG_PROXIMITY */
+/*                   */
 #define WDI_CFG_PROXIMITY_STAMIN    0
 #define WDI_CFG_PROXIMITY_STAMAX    1
 #define WDI_CFG_PROXIMITY_STADEF    0
 #define WDI_CFG_PROXIMITY_OFF       0
 #define WDI_CFG_PROXIMITY_ON        1
 
-/* WDI_CFG_NETWORK_DENSITY */
+/*                         */
 #define WDI_CFG_NETWORK_DENSITY_STAMIN    0
 #define WDI_CFG_NETWORK_DENSITY_STAMAX    3
 #define WDI_CFG_NETWORK_DENSITY_STADEF    3
@@ -180,52 +180,52 @@ when        who    what, where, why
 #define WDI_CFG_NETWORK_DENSITY_HIGH      2
 #define WDI_CFG_NETWORK_DENSITY_ADAPTIVE  3
 
-/* WDI_CFG_MAX_MEDIUM_TIME */
+/*                         */
 #define WDI_CFG_MAX_MEDIUM_TIME_STAMIN    0
 #define WDI_CFG_MAX_MEDIUM_TIME_STAMAX    65535
 #define WDI_CFG_MAX_MEDIUM_TIME_STADEF    1024
 
-/* WDI_CFG_MAX_MPDUS_IN_AMPDU */
+/*                            */
 #define WDI_CFG_MAX_MPDUS_IN_AMPDU_STAMIN    0
 #define WDI_CFG_MAX_MPDUS_IN_AMPDU_STAMAX    65535
 #define WDI_CFG_MAX_MPDUS_IN_AMPDU_STADEF    64
 
-/* WDI_CFG_RTS_THRESHOLD */
+/*                       */
 #define WDI_CFG_RTS_THRESHOLD_STAMIN               0
 #define WDI_CFG_RTS_THRESHOLD_STAMAX               2347
 #define WDI_CFG_RTS_THRESHOLD_STADEF               2347
 
-/* WDI_CFG_SHORT_RETRY_LIMIT */
+/*                           */
 #define WDI_CFG_SHORT_RETRY_LIMIT_STAMIN    0
 #define WDI_CFG_SHORT_RETRY_LIMIT_STAMAX    255
 #define WDI_CFG_SHORT_RETRY_LIMIT_STADEF    6
 
-/* WDI_CFG_LONG_RETRY_LIMIT */
+/*                          */
 #define WDI_CFG_LONG_RETRY_LIMIT_STAMIN    0
 #define WDI_CFG_LONG_RETRY_LIMIT_STAMAX    255
 #define WDI_CFG_LONG_RETRY_LIMIT_STADEF    6
 
-/* WDI_CFG_FRAGMENTATION_THRESHOLD */
+/*                                 */
 #define WDI_CFG_FRAGMENTATION_THRESHOLD_STAMIN    256
 #define WDI_CFG_FRAGMENTATION_THRESHOLD_STAMAX    8000
 #define WDI_CFG_FRAGMENTATION_THRESHOLD_STADEF    8000
 
-/* WDI_CFG_DYNAMIC_THRESHOLD_ZERO */
+/*                                */
 #define WDI_CFG_DYNAMIC_THRESHOLD_ZERO_STAMIN    0
 #define WDI_CFG_DYNAMIC_THRESHOLD_ZERO_STAMAX    255
 #define WDI_CFG_DYNAMIC_THRESHOLD_ZERO_STADEF    2
 
-/* WDI_CFG_DYNAMIC_THRESHOLD_ONE */
+/*                               */
 #define WDI_CFG_DYNAMIC_THRESHOLD_ONE_STAMIN    0
 #define WDI_CFG_DYNAMIC_THRESHOLD_ONE_STAMAX    255
 #define WDI_CFG_DYNAMIC_THRESHOLD_ONE_STADEF    4
 
-/* WDI_CFG_DYNAMIC_THRESHOLD_TWO */
+/*                               */
 #define WDI_CFG_DYNAMIC_THRESHOLD_TWO_STAMIN    0
 #define WDI_CFG_DYNAMIC_THRESHOLD_TWO_STAMAX    255
 #define WDI_CFG_DYNAMIC_THRESHOLD_TWO_STADEF    6
 
-/* WDI_CFG_FIXED_RATE */
+/*                    */
 #define WDI_CFG_FIXED_RATE_STAMIN                        0
 #define WDI_CFG_FIXED_RATE_STAMAX                        31
 #define WDI_CFG_FIXED_RATE_STADEF                        0
@@ -262,7 +262,7 @@ when        who    what, where, why
 #define WDI_CFG_FIXED_RATE_0_5MBPS_SLR_20MHZ_SIMO        30
 #define WDI_CFG_FIXED_RATE_68_25MBPS_QC_PROP_20MHZ_SIMO  31
 
-/* WDI_CFG_RETRYRATE_POLICY */
+/*                          */
 #define WDI_CFG_RETRYRATE_POLICY_STAMIN         0
 #define WDI_CFG_RETRYRATE_POLICY_STAMAX         255
 #define WDI_CFG_RETRYRATE_POLICY_STADEF         4
@@ -273,17 +273,17 @@ when        who    what, where, why
 #define WDI_CFG_RETRYRATE_POLICY_AUTOSELECT     4
 #define WDI_CFG_RETRYRATE_POLICY_MAX            5
 
-/* WDI_CFG_RETRYRATE_SECONDARY */
+/*                             */
 #define WDI_CFG_RETRYRATE_SECONDARY_STAMIN    0
 #define WDI_CFG_RETRYRATE_SECONDARY_STAMAX    255
 #define WDI_CFG_RETRYRATE_SECONDARY_STADEF    0
 
-/* WDI_CFG_RETRYRATE_TERTIARY */
+/*                            */
 #define WDI_CFG_RETRYRATE_TERTIARY_STAMIN    0
 #define WDI_CFG_RETRYRATE_TERTIARY_STAMAX    255
 #define WDI_CFG_RETRYRATE_TERTIARY_STADEF    0
 
-/* WDI_CFG_FORCE_POLICY_PROTECTION */
+/*                                 */
 #define WDI_CFG_FORCE_POLICY_PROTECTION_STAMIN     0
 #define WDI_CFG_FORCE_POLICY_PROTECTION_STAMAX     5
 #define WDI_CFG_FORCE_POLICY_PROTECTION_STADEF     5
@@ -294,59 +294,59 @@ when        who    what, where, why
 #define WDI_CFG_FORCE_POLICY_PROTECTION_RTS_ALWAYS 4
 #define WDI_CFG_FORCE_POLICY_PROTECTION_AUTO       5
 
-/* WDI_CFG_FIXED_RATE_MULTICAST_24GHZ */
+/*                                    */
 #define WDI_CFG_FIXED_RATE_MULTICAST_24GHZ_STAMIN    0
 #define WDI_CFG_FIXED_RATE_MULTICAST_24GHZ_STAMAX    31
 #define WDI_CFG_FIXED_RATE_MULTICAST_24GHZ_STADEF    1
 
-/* WDI_CFG_FIXED_RATE_MULTICAST_5GHZ */
+/*                                   */
 #define WDI_CFG_FIXED_RATE_MULTICAST_5GHZ_STAMIN    0
 #define WDI_CFG_FIXED_RATE_MULTICAST_5GHZ_STAMAX    31
 #define WDI_CFG_FIXED_RATE_MULTICAST_5GHZ_STADEF    5
 
-/* WDI_CFG_DEFAULT_RATE_INDEX_24GHZ */
+/*                                  */
 #define WDI_CFG_DEFAULT_RATE_INDEX_24GHZ_STAMIN    0
 #define WDI_CFG_DEFAULT_RATE_INDEX_24GHZ_STAMAX    31
 #define WDI_CFG_DEFAULT_RATE_INDEX_24GHZ_STADEF    1
 
-/* WDI_CFG_DEFAULT_RATE_INDEX_5GHZ */
+/*                                 */
 #define WDI_CFG_DEFAULT_RATE_INDEX_5GHZ_STAMIN    0
 #define WDI_CFG_DEFAULT_RATE_INDEX_5GHZ_STAMAX    11
 #define WDI_CFG_DEFAULT_RATE_INDEX_5GHZ_STADEF    5
 
-/* WDI_CFG_MAX_BA_SESSIONS */
+/*                         */
 #define WDI_CFG_MAX_BA_SESSIONS_STAMIN    0
 #define WDI_CFG_MAX_BA_SESSIONS_STAMAX    64
 #define WDI_CFG_MAX_BA_SESSIONS_STADEF    16
 
-/* WDI_CFG_PS_DATA_INACTIVITY_TIMEOUT */
+/*                                    */
 #define WDI_CFG_PS_DATA_INACTIVITY_TIMEOUT_STAMIN    1
 #define WDI_CFG_PS_DATA_INACTIVITY_TIMEOUT_STAMAX    255
 #define WDI_CFG_PS_DATA_INACTIVITY_TIMEOUT_STADEF    20
 
-/* WDI_CFG_PS_ENABLE_BCN_FILTER */
+/*                              */
 #define WDI_CFG_PS_ENABLE_BCN_FILTER_STAMIN    0
 #define WDI_CFG_PS_ENABLE_BCN_FILTER_STAMAX    1
 #define WDI_CFG_PS_ENABLE_BCN_FILTER_STADEF    1
 
-/* WDI_CFG_PS_ENABLE_RSSI_MONITOR */
+/*                                */
 #define WDI_CFG_PS_ENABLE_RSSI_MONITOR_STAMIN    0
 #define WDI_CFG_PS_ENABLE_RSSI_MONITOR_STAMAX    1
 #define WDI_CFG_PS_ENABLE_RSSI_MONITOR_STADEF    1
 
-/* WDI_CFG_NUM_BEACON_PER_RSSI_AVERAGE */
+/*                                     */
 #define WDI_CFG_NUM_BEACON_PER_RSSI_AVERAGE_STAMIN    1
 #define WDI_CFG_NUM_BEACON_PER_RSSI_AVERAGE_STAMAX    20
 #define WDI_CFG_NUM_BEACON_PER_RSSI_AVERAGE_STADEF    20
 
-/* WDI_CFG_STATS_PERIOD */
+/*                      */
 #define WDI_CFG_STATS_PERIOD_STAMIN    1
 #define WDI_CFG_STATS_PERIOD_STAMAX    10
 #define WDI_CFG_STATS_PERIOD_STADEF    10
 
-/* WDI_CFG_CFP_MAX_DURATION */
+/*                          */
 #define WDI_CFG_CFP_PERIOD_STAMIN                  0
 #define WDI_CFG_CFP_PERIOD_STAMAX                  255
 #define WDI_CFG_CFP_PERIOD_STADEF                  1
 
-#endif /*WLAN_QCT_WDI_CFG_H*/
+#endif /*                  */

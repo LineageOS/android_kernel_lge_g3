@@ -50,75 +50,75 @@
 #endif
 #define TKIP_COUNTER_MEASURE_STARTED 1
 #define TKIP_COUNTER_MEASURE_STOPED  0 
-/* Timeout (in ms) for Link to Up before Registering Station */
+/*                                                           */
 #define ASSOC_LINKUP_TIMEOUT 60
 #define IBSS_BROADCAST_STAID 0
 typedef enum 
 {
-   /** Not associated in Infra or participating in an IBSS / Ad-hoc network.*/
+   /*                                                                       */
    eConnectionState_NotConnected,
 
-   /** While connection in progress */
+   /*                               */
    eConnectionState_Connecting,
 
-   /** Associated in an Infrastructure network.*/
+   /*                                          */
    eConnectionState_Associated,
 
-   /** Participating in an IBSS network though disconnected (no partner stations
-       in the IBSS).*/
+   /*                                                                           
+                    */
    eConnectionState_IbssDisconnected,
 
-   /** Participating in an IBSS network with partner stations also present*/
+   /*                                                                     */
    eConnectionState_IbssConnected,
 
-   /** Disconnecting in an Infrastructure network.*/
+   /*                                             */
    eConnectionState_Disconnecting
 
 }eConnectionState;
-/**This structure stores the connection information */
+/*                                                  */
 typedef struct connection_info_s
 {
-   /** connection state of the NIC.*/
+   /*                              */
    eConnectionState connState;
    
-   /** BSS type of the current connection.   Comes from the MIB at the
-       time the connect request is issued in combination with the BssDescription
-      from the associated entity.*/
+   /*                                                                 
+                                                                                
+                                 */
       
    eMib_dot11DesiredBssType connDot11DesiredBssType;
-   /** BSSID */
+   /*        */
    tCsrBssid bssId;
    
-   /** SSID Info*/
+   /*           */
    tCsrSSIDInfo SSID;
    
-   /** Station ID */
+   /*             */
    v_U8_t staId[ HDD_MAX_NUM_IBSS_STA ];
-   /** Peer Mac Address of the IBSS Stations */
+   /*                                        */
    v_MACADDR_t peerMacAddress[ HDD_MAX_NUM_IBSS_STA ];         
-   /** Auth Type */
+   /*            */
    eCsrAuthType   authType;
 
-   /** Unicast Encryption Type */
+   /*                          */
    eCsrEncryptionType ucEncryptionType;
 
-   /** Multicast Encryption Type */
+   /*                            */
    eCsrEncryptionType mcEncryptionType;
 
-   /** Keys */
+   /*       */
    tCsrKeys Keys;
 
-   /** Operation Channel  */
+   /*                     */
    v_U8_t operationChannel; 
    
-    /** Remembers authenticated state */
+    /*                                */
    v_U8_t uIsAuthenticated;
 
-   /** Dot11Mode */
+   /*            */
    tANI_U32 dot11Mode;
    
 }connection_info_t;
-/*Forward declaration of Adapter*/
+/*                              */
 typedef struct hdd_adapter_s hdd_adapter_t;
 typedef struct hdd_context_s hdd_context_t;
 typedef struct hdd_station_ctx hdd_station_ctx_t;

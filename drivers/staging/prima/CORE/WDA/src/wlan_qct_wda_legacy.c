@@ -61,34 +61,34 @@
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/* Standard include files */
-/* Application Specific include files */
+/*                        */
+/*                                    */
 #include "limApi.h"
 #include "pmmApi.h"
 #include "cfgApi.h"
 #include "wlan_qct_wda_debug.h"
 
-/* Locally used Defines */
+/*                      */
 
 #define HAL_MMH_MB_MSG_TYPE_MASK    0xFF00
 
-// -------------------------------------------------------------
-/**
- * wdaPostCtrlMsg
- *
- * FUNCTION:
- *     Posts WDA messages to MC thread
- *
- * LOGIC:
- *
- * ASSUMPTIONS:pl
- *
- *
- * NOTE:
- *
- * @param tpAniSirGlobal MAC parameters structure
- * @param pMsg pointer with message
- * @return Success or Failure
+//                                                              
+/* 
+                 
+  
+            
+                                      
+  
+         
+  
+                 
+  
+  
+        
+  
+                                                 
+                                   
+                             
  */
 
 tSirRetStatus
@@ -98,24 +98,24 @@ wdaPostCtrlMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
       return eSIR_FAILURE;
    else
       return eSIR_SUCCESS;
-} // halPostMsg()
+} //             
 
-/**
- * wdaPostCfgMsg
- *
- * FUNCTION:
- *     Posts MNT messages to gSirMntMsgQ
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- *
- * NOTE:
- *
- * @param tpAniSirGlobal MAC parameters structure
- * @param pMsg A pointer to the msg
- * @return Success or Failure
+/* 
+                
+  
+            
+                                        
+  
+         
+  
+               
+  
+  
+        
+  
+                                                 
+                                   
+                             
  */
 
 tSirRetStatus
@@ -125,39 +125,39 @@ wdaPostCfgMsg(tpAniSirGlobal pMac, tSirMsgQ *pMsg)
 
    do
    {
-      // For Windows based MAC, instead of posting message to different
-      // queues we will call the handler routines directly
+      //                                                               
+      //                                                  
 
       cfgProcessMbMsg(pMac, (tSirMbMsg*)pMsg->bodyptr);
       rc = eSIR_SUCCESS;
    } while (0);
 
    return rc;
-} // halMntPostMsg()
+} //                
 
 
-// -------------------------------------------------------------
-/**
- * uMacPostCtrlMsg
- *
- * FUNCTION:
- *     Forwards the completely received message to the respective
- *    modules for further processing.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *    Freeing up of the message buffer is left to the destination module.
- *
- * NOTE:
- *  This function has been moved to the API file because for MAC running
- *  on Windows host, the host module will call this routine directly to
- *  send any mailbox messages. Making this function an API makes sure that
- *  outside world (any module outside MMH) only calls APIs to use MMH
- *  services and not an internal function.
- *
- * @param pMb A pointer to the maibox message
- * @return NONE
+//                                                              
+/* 
+                  
+  
+            
+                                                                 
+                                     
+  
+         
+  
+               
+                                                                         
+  
+        
+                                                                        
+                                                                       
+                                                                          
+                                                                     
+                                          
+  
+                                             
+               
  */
 
 tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
@@ -173,12 +173,12 @@ tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
    WDALOG3(wdaLog(pMac, LOG3, FL("msgType %d, msgLen %d\n" ),
         pMb->type, pMb->msgLen));
 
-   // copy the message from host buffer to firmware buffer
-   // this will make sure that firmware allocates, uses and frees
-   // it's own buffers for mailbox message instead of working on
-   // host buffer
+   //                                                     
+   //                                                            
+   //                                                           
+   //            
 
-   // second parameter, 'wait option', to palAllocateMemory is ignored on Windows
+   //                                                                            
    pMbLocal = vos_mem_malloc(pMb->msgLen);
    if ( NULL == pMbLocal )
    {
@@ -191,19 +191,19 @@ tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
 
    switch (msg.type & HAL_MMH_MB_MSG_TYPE_MASK)
    {
-   case WDA_MSG_TYPES_BEGIN:    // Posts a message to the HAL MsgQ
+   case WDA_MSG_TYPES_BEGIN:    //                                
       wdaPostCtrlMsg(pMac, &msg);
       break;
 
-   case SIR_LIM_MSG_TYPES_BEGIN:    // Posts a message to the LIM MsgQ
+   case SIR_LIM_MSG_TYPES_BEGIN:    //                                
       limPostMsgApi(pMac, &msg);
       break;
 
-   case SIR_CFG_MSG_TYPES_BEGIN:    // Posts a message to the CFG MsgQ
+   case SIR_CFG_MSG_TYPES_BEGIN:    //                                
       wdaPostCfgMsg(pMac, &msg);
       break;
 
-   case SIR_PMM_MSG_TYPES_BEGIN:    // Posts a message to the PMM MsgQ
+   case SIR_PMM_MSG_TYPES_BEGIN:    //                                
       pmmPostMessage(pMac, &msg);
       break;
 
@@ -219,21 +219,21 @@ tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb)
              "0x%X\n"),
              msg.type));
 
-      // Release the memory.
+      //                    
       vos_mem_free(msg.bodyptr);
       break;
    }
 
    return eSIR_SUCCESS;
 
-} // uMacPostCtrlMsg()
+} //                  
 
 
-/* ---------------------------------------------------------
- * FUNCTION:  wdaGetGlobalSystemRole()
- *
- * Get the global HAL system role. 
- * ---------------------------------------------------------
+/*                                                          
+                                      
+  
+                                   
+                                                            
  */
 tBssSystemRole wdaGetGlobalSystemRole(tpAniSirGlobal pMac)
 {

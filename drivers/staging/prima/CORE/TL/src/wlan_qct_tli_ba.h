@@ -58,42 +58,42 @@ DESCRIPTION
 ===========================================================================*/
 
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-when        who    what, where, why
---------    ---    ----------------------------------------------------------
-08/22/08    sch     Update based on unit test
-07/31/08    lti     Created module.
-
-===========================================================================*/
+                                   
 
 
+                                   
+                                                                             
+                                             
+                                   
 
-/*===========================================================================
+                                                                           */
 
-                          INCLUDE FILES FOR MODULE
 
-===========================================================================*/
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                           
+
+                                                  
+
+                                                                           */
+
+/*                                                                            
+                
+                                                                            */
 #include "wlan_qct_tli.h" 
 
-/*---------------------------------------------------------------------------
-   Re-order opcode filled in by RPE 
-   !!! fix me: (check with RPE doc if the codes are correct)
- ---------------------------------------------------------------------------*/
+/*                                                                           
+                                    
+                                                            
+                                                                            */
 typedef enum
 {
   WLANTL_OPCODE_INVALID         = 0,
@@ -114,41 +114,41 @@ void WLANTL_InitBAReorderBuffer
    v_PVOID_t   pvosGCtx
 );
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    WLANTL_BaSessionAdd
+                                 
 
-  DESCRIPTION 
-    HAL notifies TL when a new Block Ack session is being added. 
+              
+                                                                 
     
-  DEPENDENCIES 
-    A BA session on Rx needs to be added in TL before the response is 
-    being sent out 
+               
+                                                                      
+                   
     
-  PARAMETERS 
+             
 
-    IN
-    pvosGCtx:       pointer to the global vos context; a handle to TL's 
-                    control block can be extracted from its context 
-    ucSTAId:        identifier of the station for which requested the BA 
-                    session
-    ucTid:          Tspec ID for the new BA session
-    uSize:          size of the reordering window
+      
+                                                                        
+                                                                    
+                                                                         
+                           
+                                                   
+                                                 
 
    
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-    VOS_STATUS_E_INVAL:      Input parameters are invalid 
-    VOS_STATUS_E_FAULT:      Station ID is outside array boundaries or pointer 
-                             to TL cb is NULL ; access would cause a page fault  
-    VOS_STATUS_E_EXISTS:     Station was not registered or BA session already
-                             exists
-    VOS_STATUS_E_NOSUPPORT:  Not yet supported
+                                                          
+                                                                               
+                                                                                 
+                                                                             
+                                   
+                                              
     
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_BaSessionAdd 
 ( 
@@ -161,37 +161,37 @@ WLANTL_BaSessionAdd
   v_U32_t     SSN 
 );
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    WLANTL_BaSessionDel
+                                 
 
-  DESCRIPTION 
-    HAL notifies TL when a new Block Ack session is being deleted. 
+              
+                                                                   
     
-  DEPENDENCIES 
+               
     
-  PARAMETERS 
+             
 
-    IN
-    pvosGCtx:       pointer to the global vos context; a handle to TL's 
-                    control block can be extracted from its context 
-    ucSTAId:        identifier of the station for which requested the BA 
-                    session
-    ucTid:          Tspec ID for the new BA session
+      
+                                                                        
+                                                                    
+                                                                         
+                           
+                                                   
    
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-    VOS_STATUS_E_INVAL:      Input parameters are invalid 
-    VOS_STATUS_E_FAULT:      Station ID is outside array boundaries or pointer 
-                             to TL cb is NULL ; access would cause a page fault  
-    VOS_STATUS_E_EXISTS:     Station was not registered or BA session already
-                             exists
-    VOS_STATUS_E_NOSUPPORT:  Not yet supported
+                                                          
+                                                                               
+                                                                                 
+                                                                             
+                                   
+                                              
     
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_BaSessionDel 
 ( 
@@ -200,36 +200,36 @@ WLANTL_BaSessionDel
   v_U8_t              ucTid
 );
 
-/*==========================================================================
-  FUNCTION    WLANTL_AMSDUProcess
+/*                                                                          
+                                 
 
-  DESCRIPTION 
-    Process A-MSDU sub-frame. Start of chain if marked as first frame. 
-    Linked at the end of the existing AMSDU chain. 
+              
+                                                                       
+                                                   
     
 
-  DEPENDENCIES 
+               
          
-  PARAMETERS 
+             
 
-   IN/OUT:
-   vosDataBuff: vos packet for the received data
-                 outgoing contains the root of the chain for the rx 
-                 aggregated MSDU if the frame is marked as last; otherwise 
-                 NULL
+          
+                                                
+                                                                    
+                                                                           
+                     
    
-   IN
-   pAdapter:     pointer to the global adapter context; a handle to TL's 
-                 control block can be extracted from its context 
-   pvBDHeader:   pointer to the BD header
-   ucSTAId:      STAtion ID 
+     
+                                                                         
+                                                                 
+                                         
+                            
       
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_AMSDUProcess
 ( 
@@ -241,28 +241,28 @@ WLANTL_AMSDUProcess
   v_U16_t     usMPDULen
 );
 
-/*==========================================================================
-  FUNCTION    WLANTL_MSDUReorder
+/*                                                                          
+                                
 
-  DESCRIPTION 
-    MSDU reordering 
+              
+                    
 
-  DEPENDENCIES 
+               
          
-  PARAMETERS 
+             
 
-   IN
+     
    
-   vosDataBuff: vos packet for the received data
-   pvBDHeader: pointer to the BD header
-   ucSTAId:    STAtion ID 
+                                                
+                                       
+                          
       
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_MSDUReorder
 ( 
@@ -274,33 +274,33 @@ WLANTL_MSDUReorder
 );
 
 
-/*==========================================================================
-    Utility functions
-  ==========================================================================*/
+/*                                                                          
+                     
+                                                                            */
 
-/*==========================================================================
-  FUNCTION    WLANTL_AMSDUCompleteFrame
+/*                                                                          
+                                       
 
-  DESCRIPTION 
-    Complete AMSDU de-aggregation
+              
+                                 
 
-  DEPENDENCIES 
+               
          
-  PARAMETERS 
+             
 
-   IN/OUT:
-   vosDataBuff: vos packet for the received data
+          
+                                                
    
-   IN
-   pvBDHeader: pointer to the BD header
-   ucSTAId:    STAtion ID 
+     
+                                       
+                          
       
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_AMSDUCompleteFrame
 ( 
@@ -309,31 +309,31 @@ WLANTL_AMSDUCompleteFrame
   v_U16_t     usMPDULen
 );
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    WLANTL_QueueCurrent
+                                 
 
-  DESCRIPTION 
-    It will queue a packet at a given slot index in the MSDU reordering list. 
+              
+                                                                              
     
-  DEPENDENCIES 
+               
     
-  PARAMETERS 
+             
 
-    IN
-    pwBaReorder:   pointer to the BA reordering session info 
-    vosDataBuff:   data buffer to be queued
-    ucSlotIndex:   slot index 
+      
+                                                             
+                                           
+                              
    
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-    VOS_STATUS_E_SUCCESS:     Everything is OK
+                                              
 
     
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANTL_QueueCurrent
 (
@@ -342,34 +342,34 @@ WLANTL_QueueCurrent
   v_U8_t                 ucSlotIndex
 );
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    WLANTL_ChainFrontPkts
+                                   
 
-  DESCRIPTION 
-    It will remove all the packets from the front of a vos list and chain 
-    them to a vos pkt . 
+              
+                                                                          
+                        
     
-  DEPENDENCIES 
+               
     
-  PARAMETERS 
+             
 
-    IN
-    ucCount:       number of packets to extract
-    pwBaReorder:   pointer to the BA reordering session info 
+      
+                                               
+                                                             
 
-    OUT
-    vosDataBuff:   data buffer containing the extracted chain of packets
+       
+                                                                        
    
-  RETURN VALUE
-    The result code associated with performing the operation  
+              
+                                                              
 
-    VOS_STATUS_E_SUCCESS:     Everything is OK
+                                              
 
     
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_ChainFrontPkts
 ( 
    v_U32_t                fwdIndex,
@@ -379,30 +379,30 @@ VOS_STATUS WLANTL_ChainFrontPkts
    WLANTL_CbType          *pTLCb
 );
 
-/*==========================================================================
+/*                                                                          
  
-   FUNCTION    WLANTL_FillReplayCounter
+                                       
  
-   DESCRIPTION 
-    It will fill repaly counter at a given slot index in the MSDU reordering list. 
+               
+                                                                                   
               
-   DEPENDENCIES 
                 
-   PARAMETERS 
+                
+              
 
-   IN
-   pwBaReorder  :   pointer to the BA reordering session info 
-   replayCounter:   replay counter to be filled
-   ucSlotIndex  :   slot index 
+     
+                                                              
+                                               
+                               
                  
-   RETURN VALUE
-   NONE 
+               
+        
  
                                              
-   SIDE EFFECTS 
-   NONE
+                
+       
                                                    
- ============================================================================*/
+                                                                             */
 void WLANTL_FillReplayCounter
 (
    WLANTL_BAReorderType*  pwBaReorder,
@@ -410,4 +410,4 @@ void WLANTL_FillReplayCounter
    v_U8_t                 ucSlotIndex
 );
 
-#endif /* #ifndef WLAN_QCT_TLI_H */
+#endif /*                        */

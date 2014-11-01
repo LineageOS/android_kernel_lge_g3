@@ -40,20 +40,20 @@
  */
 
 /*
- *
+  
 
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Sandesh Goel
+                                                        
+                            
 
- * Date:        02/25/02
+                        
 
- * History:-
+            
 
- * Date            Modified by    Modification Information
+                                                          
 
- * --------------------------------------------------------------------
+                                                                       
 
- *
+  
 
  */
 
@@ -65,7 +65,7 @@
 
 #include "limGlobal.h"
 
-//#include "parserApi.h"
+//                      
 
 #include "sirMacProtDef.h"
 
@@ -74,22 +74,22 @@
 #include "sirApi.h"
 
 
-/// Following determines whether statistics are maintained or not
+//                                                               
 
 #define DPH_STATS
 
 
-/// traffic category not allowed
+//                              
 
 #define DPH_TID_NOTALLOWED           0xFF
 
 
-/// Periodicity of invocation of rate adaptation (in ms)
+//                                                      
 
 #define DPH_RATE_ADAPTATION_PERIOD     20
 
 
-// Rate indices
+//             
 
 #define DPH_PHY_RATE_1_INDEX     0
 
@@ -126,53 +126,53 @@
 #define DPH_PHY_RATE_MAX_INDEX  16
 
 
-/// Maximum time to wait for a management packet to go out (ms)
+//                                                             
 
 #define DPH_MAX_MGMT_WAIT_TIME  10000
 
 
-/// Step size for the wait time histogram (ms)
+//                                            
 
 #define DPH_WAIT_HIST_STEP 20
 
 
-/// Number of entries in wait time histogram
+//                                          
 
 #define DPH_WAIT_HIST_SIZE  100
 
 
-/// TCID for Management & Keep Alive Mgmt frames
+//                                              
 
 #define DPH_MGMT_TCID                      4
 
 #define DPH_KEEPALIVE_PROBE_RESPONSE_TCID  0
 
 
-/// STAID for Management frames
+//                             
 
 #define DPH_USE_MGMT_STAID  -1
 
 
-// Keep Alive frames
+//                  
 
 #define DPH_NON_KEEPALIVE_FRAME  0
 
 #define DPH_KEEPALIVE_FRAME      1
 
 
-/// Mask for subtype, type, protocol version, order and wep fields in the mac frame control
+//                                                                                         
 
 #define DPH_FC_BD_FILL_MASK  0xFFCC
 
 
-/// Enable/Disable Txop generation in TFP for HCF mode
+//                                                    
 
 #define DPH_ENABLE_HCF_TXOP_GEN_AT_TFP   0x00
 
 #define DPH_DISABLE_HCF_TXOP_GEN_AT_TFP  0x02
 
 
-/// Enable/Disable Txop generation in TFP for EDCF mode
+//                                                     
 
 #define DPH_ENABLE_EDCF_TXOP_GEN_AT_TFP   0x00
 
@@ -188,7 +188,7 @@
 #define DPH_DUMP_TX_MGMT_BD      2
 
 
-//DPH Hash Index for BSS(STA's Peer) on station.
+//                                              
 
 #define DPH_STA_HASH_INDEX_PEER   1
 
@@ -245,7 +245,7 @@ typedef struct sDphQosParams
 } tDphQosParams;
 
 
-/// Queue attribute structure
+//                           
 
 typedef struct sDphQueueAttr
 
@@ -265,11 +265,11 @@ typedef struct sDphQueueAttr
 
 typedef struct sCfgTrafficClass {
 
-    //Use Block ACK on this STA/TID
+    //                             
 
-    // Fields used to store the default TC parameters for this TSPEC.
+    //                                                               
 
-    // They will be used when the TSPEC is deleted.
+    //                                             
 
     tANI_U8 fDisableTx:1;
 
@@ -280,64 +280,64 @@ typedef struct sCfgTrafficClass {
     tANI_U8 fUseBARx:1;
 
 
-    // 1: expect to see frames with compressed BA coming from this peer MAC
+    //                                                                     
 
     tANI_U8 fRxCompBA:1;
 
     tANI_U8 fTxCompBA:1;
 
 
-    // immediate ACK or delayed ACK for frames from this peer MAC
+    //                                                           
 
     tANI_U8 fRxBApolicy:1;
 
 
-    // immediate ACK or delayed ACK for frames to this peer MAC
+    //                                                         
 
     tANI_U8 fTxBApolicy:1;
 
 
-    //Initiator or recipient
+    //                      
 
     tANI_U8 role;
 
 
-    //Max # of MSDU received from this STA, negotiated at ADDBA
+    //                                                         
 
-    // used for maintaining block ack state info
+    //                                          
 
     tANI_U16 rxBufSize;
 
 
-    //Max # of MSDU send to this STA, negotiated at ADDBA
+    //                                                   
 
     tANI_U16 txBufSize;
 
 
-    //BA timeout negotiated at ADDBA. Unit: TU
+    //                                        
 
-    tANI_U16 tuTxBAWaitTimeout; //Time for Tx to wait for BA. 0 means no timeout
+    tANI_U16 tuTxBAWaitTimeout; //                                              
 
 
-    tANI_U16 tuRxBAWaitTimeout; //Time for Rx to wait for explicit/implicit BAR. 0 means no timeout
+    tANI_U16 tuRxBAWaitTimeout; //                                                                 
 
 
 } tCfgTrafficClass;
 
 
 
-/// STA state node
+//                
 
 typedef struct sDphHashNode
 
 {
 
 
-    //BYTE 0
+    //      
 
-    // HASH ENTRY FIELDS NOT NEEDED IN HAL.
+    //                                     
 
-    /// This STA valid or not
+    //                       
 
     tANI_U8   valid : 1;
 
@@ -350,11 +350,11 @@ typedef struct sDphHashNode
     tANI_U8   qosMode : 1;
 
 
-    //BYTE 1
+    //      
 
     tANI_U8   erpEnabled : 1;
 
-    tANI_U8   added : 1; // This has been added to the dph hash table
+    tANI_U8   added : 1; //                                          
 
     tANI_U8   linkTestOn : 1;
 
@@ -364,69 +364,69 @@ typedef struct sDphHashNode
 
     tANI_U8   stopTx:1;
 
-    tANI_U8   wmeEnabled: 1; // set if both ap and sta are wme capable
+    tANI_U8   wmeEnabled: 1; //                                       
 
-    tANI_U8   lleEnabled: 1; // set if both ap and sta are 11e capable
+    tANI_U8   lleEnabled: 1; //                                       
 
 
-    //BYTE 2
+    //      
 
-    tANI_U8   wsmEnabled: 1; // set if both ap and sta are wsm capable
+    tANI_U8   wsmEnabled: 1; //                                       
 
-    tANI_U8   versionPresent:1; // station gave version info
+    tANI_U8   versionPresent:1; //                          
 
-    tANI_U8   burstEnableForce:1; // allow bursting regardless of qosMode
+    tANI_U8   burstEnableForce:1; //                                     
 
     tANI_U8   staAuthenticated:1;    
 
-    /// Whether the peer is ANI or not
+    //                                
 
     tANI_U8  aniPeer:1;
 
-    tANI_U8   titanPeer:1;                // flag to indicate if its a titan peer    
+    tANI_U8   titanPeer:1;                //                                         
 
     tANI_U8  fAniCount:1;
 
     tANI_U8   rmfEnabled:1;
 
 
-    /// Fragmentation size
+    //                    
 
     tANI_U16   fragSize;
 
 
-    /// LIM state
+    //           
 
     tLimMlmStaContext mlmStaContext;
 
 
-    /// Number of Tim to wait if the STA doesn't respond / fetch data
+    //                                                               
 
     tANI_U8  timWaitCount;
 
 
-    /// Number of Successfull MPDU's being sent
+    //                                         
 
     tANI_U32    curTxMpduCnt;
 
 
 
 
-    /// number of consecutive TIMs sent without response
+    //                                                  
 
     tANI_U8  numTimSent;
 
 
-    // qos parameter info
+    //                   
 
     tDphQosParams  qos;
 
 
-    // station version info - valid only if versionPresent is set
+    //                                                           
 
     tSirMacPropVersion version;
 
-    // station proprietary capability
+    //                               
 
     tANI_U16                propCapability;
 
@@ -440,14 +440,14 @@ typedef struct sDphHashNode
 #endif
 
 
-   //Taurus capabilities
+   //                   
 
-   tANI_U16 baPolicyFlag;                 //BA Policy for each TID. 
+   tANI_U16 baPolicyFlag;                 //                        
 
 
     /*
 
-    * All the legacy and airgo supported rates.
+                                               
 
     */
 
@@ -460,31 +460,31 @@ typedef struct sDphHashNode
 
     tANI_U8 htShortGI20Mhz:1;
 
-    // DSSS/CCK at 40 MHz: Enabled 1 or Disabled
+    //                                          
 
     tANI_U8 htDsssCckRate40MHzSupport:1;
 
-    // L-SIG TXOP Protection used only if peer support available
+    //                                                          
 
     tANI_U8 htLsigTXOPProtection:1;
 
-    // A-MPDU Density
+    //               
 
-    // 000 - No restriction
+    //                     
 
-    // 001 - 1/8 usec
+    //               
 
-    // 010 - 1/4 usec
+    //               
 
-    // 011 - 1/2 usec
+    //               
 
-    // 100 - 1 usec
+    //             
 
-    // 101 - 2 usec
+    //             
 
-    // 110 - 4 usec
+    //             
 
-    // 111 - 8 usec
+    //             
 
     //
 
@@ -493,16 +493,16 @@ typedef struct sDphHashNode
 
 
 
-    //Set to 0 for 3839 octets
+    //                        
 
-    //Set to 1 for 7935 octets
+    //                        
 
     tANI_U8 htMaxAmsduLength;
 
 
 
 
-    // MIMO Power Save
+    //                
 
     tSirMacHTMIMOPowerSaveState htMIMOPSState;
 
@@ -510,17 +510,17 @@ typedef struct sDphHashNode
     //
 
 
-    // Maximum Rx A-MPDU factor
+    //                         
 
     tANI_U8 htMaxRxAMpduFactor:2;
 
     //
 
-    // Recommended Tx Width Set
+    //                         
 
-    // 0 - use 20 MHz channel (control channel)
+    //                                         
 
-    // 1 - use 40 Mhz channel
+    //                       
 
     //
 
@@ -529,87 +529,87 @@ typedef struct sDphHashNode
     tANI_U8 rsvd1:3;
 
 
-    ///////////////////////////////////////////////////////////////////////
+    //                                                                     
 
-    // DPH HASH ENTRY FIELDS NEEDED IN HAL ONLY
+    //                                         
 
-    ///////////////////////////////////////////////////////////////////////
+    //                                                                     
 
-    tANI_U8 dpuSig:4;                       // DPU signiture
+    tANI_U8 dpuSig:4;                       //              
 
-    tANI_U8 staSig:4;                       // STA signature
+    tANI_U8 staSig:4;                       //              
 
     tANI_U8 staType;
 
 
-    tANI_U16 bssId;                          // BSSID
+    tANI_U16 bssId;                          //      
 
-    tANI_U16 assocId;                       // Association ID
-
-
+    tANI_U16 assocId;                       //               
 
 
-    //This is the real sta index generated by HAL
+
+
+    //                                           
 
     tANI_U16 staIndex;
 
     tANI_U8    staAddr[6];
 
-    /*The DPU signatures will be sent eventually to TL to help it determine the 
+    /*                                                                          
 
-      association to which a packet belongs to*/
+                                              */
 
-    /*Unicast DPU signature*/
+    /*                     */
 
     tANI_U8     ucUcastSig;
 
 
-    /*Broadcast DPU signature*/
+    /*                       */
 
     tANI_U8     ucBcastSig;
 
 
     //
 
-    // PE needs this info on a per-STA, per-TID basis
+    //                                               
 
-    // At any point in time, when this data is sampled,
+    //                                                 
 
-    // it gives a measure of:
+    //                       
 
-    // a) All the active bA sessions
+    //                              
 
-    // b) And the BA configuration itself
+    //                                   
 
     //
 
     tCfgTrafficClass tcCfg[STACFG_MAX_TC];
 
 
-    // Block Ack state
+    //                
 
-    // This is used between PE and HAL only.
+    //                                      
 
-    // can be set to one of the values from the following enum
+    //                                                        
 
-    /*typedef enum eLimBAState
+    /*                        
 
-    {
+     
 
-        eLIM_BA_STATE_IDLE, // we are not waiting for anything from HAL.
+                                                                        
 
-        eLIM_BA_STATE_WT_ADD_RSP, //We are waiting for Add rsponse from HAL.
+                                                                            
 
-        eLIM_BA_STATE_WT_DEL_RSP //  We are waiting for Del response from HAL.
+                                                                              
 
-    } tLimBAState; */
-
-
+                   */
 
 
-    //BA state bitmap 2 bits per tid
 
-    // BA state for tid i  = (baState >> tid*2) & 0x3
+
+    //                              
+
+    //                                               
 
     tANI_U32 baState;
 
@@ -621,13 +621,13 @@ typedef struct sDphHashNode
     tANI_U8 htLdpcCapable;
     tANI_U8 vhtLdpcCapable;
 
-    /* When a station with already an existing dph entry tries to 
+    /*                                                            
 
-     * associate again, the old dph entry will be zeroed out except 
+                                                                    
 
-     * for the next pointer. The next pointer must be defined at the  
+                                                                      
 
-     * end of the structure.
+                            
 
      */
 
@@ -640,14 +640,14 @@ typedef struct sDphHashNode
 #include "dphHashTable.h"
 
 
-// -------------------------------------------------------------------
+//                                                                    
 
 
-// get protection overrides from config variable
+//                                              
 
-// bit0: force cts to self protection for tx to Airgo peers
+//                                                         
 
-// bit1: force cts to self protection for tx to non Airgo peers
+//                                                             
 
 #define DPH_PROT_OVERRIDE_NONANI_PEER_GET(cfgval)    ((cfgval) & 1)
 
@@ -658,7 +658,7 @@ typedef struct sAniSirDph
 
 {
 
-    /// The hash table object
+    //                       
 
     dphHashTableClass dphHashTable;
 

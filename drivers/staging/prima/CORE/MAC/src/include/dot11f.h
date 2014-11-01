@@ -68,22 +68,22 @@
 typedef tANI_U32 tDOT11F_U64[2];
 
 #if defined ( _MSC_VER )
-#   pragma warning (disable: 4214) /* nonstandard extension used */
-#endif /* Microsoft C/C++             bit field types other than int */
+#   pragma warning (disable: 4214) /*                            */
+#endif /*                                                            */
 
 /*
- * Frames Return Codes:
- *
- * Success is indicated by a return value of zero.  Failure is indicated
- * by the presence of the high bit.  Warnings encountered in the course
- * of a successful parse are indicated by various bits in the lower 31
- * being turned on.
- *
- * For instance, a return value of 0x0000000a would indicate that the
- * parse succeeded, but that a mandatory IE wasn't present, and some IE
- * was found to be corrupt.
- *
- *
+                       
+  
+                                                                        
+                                                                       
+                                                                      
+                   
+  
+                                                                     
+                                                                       
+                           
+  
+  
  */
 
 #define DOT11F_PARSE_SUCCESS         ( 0x00000000 )
@@ -109,9 +109,9 @@ typedef tANI_U32 tDOT11F_U64[2];
 #define DOT11F_WARNED(code)          ( ( ( 0 == (code) ) & 0x10000000 ) && code)
 #define DOT11F_SUCCEEDED(code)       ( (code) == 0 )
 
-/*********************************************************************
- * Fixed Fields                                                      *
- ********************************************************************/
+/*                                                                    
+                                                                      
+                                                                    */
 
 typedef struct sDot11fFfAID {
     tANI_U16 associd;
@@ -579,11 +579,11 @@ void dot11fUnpackFfTxPower(tpAniSirGlobal, tANI_U8*, tDot11fFfTxPower*);
 
 void dot11fPackFfTxPower(tpAniSirGlobal, tDot11fFfTxPower*, tANI_U8*);
 
-/*********************************************************************
- * TLVs                                                              *
- ********************************************************************/
+/*                                                                    
+                                                                      
+                                                                    */
 
-// ID 1 (0x0001)
+//              
 typedef struct sDot11fTLVAuthorizedMACs {
     tANI_U8      present;
     tANI_U8      mac[6];
@@ -591,14 +591,14 @@ typedef struct sDot11fTLVAuthorizedMACs {
 
 #define DOT11F_TLV_AUTHORIZEDMACS ( 1 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_AUTHORIZEDMACS_MIN_LEN ( 6 )
 
 #define DOT11F_TLV_AUTHORIZEDMACS_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvAuthorizedMACs(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVAuthorizedMACs*);
 
 tANI_U32 dot11fPackTlvAuthorizedMACs(tpAniSirGlobal, tDot11fTLVAuthorizedMACs*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -606,9 +606,9 @@ tANI_U32 dot11fPackTlvAuthorizedMACs(tpAniSirGlobal, tDot11fTLVAuthorizedMACs*, 
 tANI_U32 dot11fGetPackedTlvAuthorizedMACs(tpAniSirGlobal, tDot11fTLVAuthorizedMACs*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3 (0x0003)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVRequestToEnroll {
     tANI_U8      present;
     tANI_U8      req;
@@ -616,14 +616,14 @@ typedef struct sDot11fTLVRequestToEnroll {
 
 #define DOT11F_TLV_REQUESTTOENROLL ( 3 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_REQUESTTOENROLL_MIN_LEN ( 1 )
 
 #define DOT11F_TLV_REQUESTTOENROLL_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvRequestToEnroll(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVRequestToEnroll*);
 
 tANI_U32 dot11fPackTlvRequestToEnroll(tpAniSirGlobal, tDot11fTLVRequestToEnroll*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -631,9 +631,9 @@ tANI_U32 dot11fPackTlvRequestToEnroll(tpAniSirGlobal, tDot11fTLVRequestToEnroll*
 tANI_U32 dot11fGetPackedTlvRequestToEnroll(tpAniSirGlobal, tDot11fTLVRequestToEnroll*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 0 (0x0000)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVVersion2 {
     tANI_U8      present;
     tANI_U8            minor: 4;
@@ -642,14 +642,14 @@ typedef struct sDot11fTLVVersion2 {
 
 #define DOT11F_TLV_VERSION2 ( 0 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_VERSION2_MIN_LEN ( 1 )
 
 #define DOT11F_TLV_VERSION2_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvVersion2(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVVersion2*);
 
 tANI_U32 dot11fPackTlvVersion2(tpAniSirGlobal, tDot11fTLVVersion2*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -657,9 +657,9 @@ tANI_U32 dot11fPackTlvVersion2(tpAniSirGlobal, tDot11fTLVVersion2*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedTlvVersion2(tpAniSirGlobal, tDot11fTLVVersion2*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4183 (0x1057)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVAPSetupLocked {
     tANI_U8      present;
     tANI_U8      fLocked;
@@ -667,14 +667,14 @@ typedef struct sDot11fTLVAPSetupLocked {
 
 #define DOT11F_TLV_APSETUPLOCKED ( 4183 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_APSETUPLOCKED_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_APSETUPLOCKED_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvAPSetupLocked(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVAPSetupLocked*);
 
 tANI_U32 dot11fPackTlvAPSetupLocked(tpAniSirGlobal, tDot11fTLVAPSetupLocked*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -682,9 +682,9 @@ tANI_U32 dot11fPackTlvAPSetupLocked(tpAniSirGlobal, tDot11fTLVAPSetupLocked*, tA
 tANI_U32 dot11fGetPackedTlvAPSetupLocked(tpAniSirGlobal, tDot11fTLVAPSetupLocked*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4098 (0x1002)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVAssociationState {
     tANI_U8      present;
     tANI_U16     state;
@@ -692,14 +692,14 @@ typedef struct sDot11fTLVAssociationState {
 
 #define DOT11F_TLV_ASSOCIATIONSTATE ( 4098 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_ASSOCIATIONSTATE_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_ASSOCIATIONSTATE_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvAssociationState(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVAssociationState*);
 
 tANI_U32 dot11fPackTlvAssociationState(tpAniSirGlobal, tDot11fTLVAssociationState*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -707,9 +707,9 @@ tANI_U32 dot11fPackTlvAssociationState(tpAniSirGlobal, tDot11fTLVAssociationStat
 tANI_U32 dot11fGetPackedTlvAssociationState(tpAniSirGlobal, tDot11fTLVAssociationState*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 11 (0x000b)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVChannelList {
     tANI_U8      present;
     tANI_U8      countryString[3];
@@ -719,14 +719,14 @@ typedef struct sDot11fTLVChannelList {
 
 #define DOT11F_TLV_CHANNELLIST ( 11 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_CHANNELLIST_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_CHANNELLIST_MAX_LEN ( 255 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvChannelList(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVChannelList*);
 
 tANI_U32 dot11fPackTlvChannelList(tpAniSirGlobal, tDot11fTLVChannelList*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -734,9 +734,9 @@ tANI_U32 dot11fPackTlvChannelList(tpAniSirGlobal, tDot11fTLVChannelList*, tANI_U
 tANI_U32 dot11fGetPackedTlvChannelList(tpAniSirGlobal, tDot11fTLVChannelList*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4104 (0x1008)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVConfigMethods {
     tANI_U8      present;
     tANI_U16     methods;
@@ -744,14 +744,14 @@ typedef struct sDot11fTLVConfigMethods {
 
 #define DOT11F_TLV_CONFIGMETHODS ( 4104 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_CONFIGMETHODS_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_CONFIGMETHODS_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvConfigMethods(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVConfigMethods*);
 
 tANI_U32 dot11fPackTlvConfigMethods(tpAniSirGlobal, tDot11fTLVConfigMethods*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -759,9 +759,9 @@ tANI_U32 dot11fPackTlvConfigMethods(tpAniSirGlobal, tDot11fTLVConfigMethods*, tA
 tANI_U32 dot11fGetPackedTlvConfigMethods(tpAniSirGlobal, tDot11fTLVConfigMethods*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4105 (0x1009)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVConfigurationError {
     tANI_U8      present;
     tANI_U16     error;
@@ -769,14 +769,14 @@ typedef struct sDot11fTLVConfigurationError {
 
 #define DOT11F_TLV_CONFIGURATIONERROR ( 4105 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_CONFIGURATIONERROR_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_CONFIGURATIONERROR_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvConfigurationError(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVConfigurationError*);
 
 tANI_U32 dot11fPackTlvConfigurationError(tpAniSirGlobal, tDot11fTLVConfigurationError*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -784,9 +784,9 @@ tANI_U32 dot11fPackTlvConfigurationError(tpAniSirGlobal, tDot11fTLVConfiguration
 tANI_U32 dot11fGetPackedTlvConfigurationError(tpAniSirGlobal, tDot11fTLVConfigurationError*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5 (0x0005)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVConfigurationTimeout {
     tANI_U8      present;
     tANI_U8      GOConfigTimeout;
@@ -795,14 +795,14 @@ typedef struct sDot11fTLVConfigurationTimeout {
 
 #define DOT11F_TLV_CONFIGURATIONTIMEOUT ( 5 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_CONFIGURATIONTIMEOUT_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_CONFIGURATIONTIMEOUT_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvConfigurationTimeout(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVConfigurationTimeout*);
 
 tANI_U32 dot11fPackTlvConfigurationTimeout(tpAniSirGlobal, tDot11fTLVConfigurationTimeout*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -810,9 +810,9 @@ tANI_U32 dot11fPackTlvConfigurationTimeout(tpAniSirGlobal, tDot11fTLVConfigurati
 tANI_U32 dot11fGetPackedTlvConfigurationTimeout(tpAniSirGlobal, tDot11fTLVConfigurationTimeout*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4113 (0x1011)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVDeviceName {
     tANI_U8      present;
     tANI_U8      num_text;
@@ -821,14 +821,14 @@ typedef struct sDot11fTLVDeviceName {
 
 #define DOT11F_TLV_DEVICENAME ( 4113 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_DEVICENAME_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_DEVICENAME_MAX_LEN ( 34 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvDeviceName(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVDeviceName*);
 
 tANI_U32 dot11fPackTlvDeviceName(tpAniSirGlobal, tDot11fTLVDeviceName*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -836,9 +836,9 @@ tANI_U32 dot11fPackTlvDeviceName(tpAniSirGlobal, tDot11fTLVDeviceName*, tANI_U8*
 tANI_U32 dot11fGetPackedTlvDeviceName(tpAniSirGlobal, tDot11fTLVDeviceName*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4114 (0x1012)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVDevicePasswordID {
     tANI_U8      present;
     tANI_U16     id;
@@ -846,14 +846,14 @@ typedef struct sDot11fTLVDevicePasswordID {
 
 #define DOT11F_TLV_DEVICEPASSWORDID ( 4114 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_DEVICEPASSWORDID_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_DEVICEPASSWORDID_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvDevicePasswordID(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVDevicePasswordID*);
 
 tANI_U32 dot11fPackTlvDevicePasswordID(tpAniSirGlobal, tDot11fTLVDevicePasswordID*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -861,9 +861,9 @@ tANI_U32 dot11fPackTlvDevicePasswordID(tpAniSirGlobal, tDot11fTLVDevicePasswordI
 tANI_U32 dot11fGetPackedTlvDevicePasswordID(tpAniSirGlobal, tDot11fTLVDevicePasswordID*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 8 (0x0008)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVExtendedListenTiming {
     tANI_U8      present;
     tANI_U16     availibilityPeriod;
@@ -872,14 +872,14 @@ typedef struct sDot11fTLVExtendedListenTiming {
 
 #define DOT11F_TLV_EXTENDEDLISTENTIMING ( 8 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_EXTENDEDLISTENTIMING_MIN_LEN ( 5 )
 
 #define DOT11F_TLV_EXTENDEDLISTENTIMING_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvExtendedListenTiming(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVExtendedListenTiming*);
 
 tANI_U32 dot11fPackTlvExtendedListenTiming(tpAniSirGlobal, tDot11fTLVExtendedListenTiming*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -887,9 +887,9 @@ tANI_U32 dot11fPackTlvExtendedListenTiming(tpAniSirGlobal, tDot11fTLVExtendedLis
 tANI_U32 dot11fGetPackedTlvExtendedListenTiming(tpAniSirGlobal, tDot11fTLVExtendedListenTiming*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4 (0x0004)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVGOIntent {
     tANI_U8      present;
     tANI_U8      GOIntent;
@@ -897,14 +897,14 @@ typedef struct sDot11fTLVGOIntent {
 
 #define DOT11F_TLV_GOINTENT ( 4 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_GOINTENT_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_GOINTENT_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvGOIntent(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVGOIntent*);
 
 tANI_U32 dot11fPackTlvGOIntent(tpAniSirGlobal, tDot11fTLVGOIntent*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -912,9 +912,9 @@ tANI_U32 dot11fPackTlvGOIntent(tpAniSirGlobal, tDot11fTLVGOIntent*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedTlvGOIntent(tpAniSirGlobal, tDot11fTLVGOIntent*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 9 (0x0009)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVIntendedP2PInterfaceAddress {
     tANI_U8      present;
     tANI_U8      P2PInterfaceAddress[6];
@@ -922,14 +922,14 @@ typedef struct sDot11fTLVIntendedP2PInterfaceAddress {
 
 #define DOT11F_TLV_INTENDEDP2PINTERFACEADDRESS ( 9 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_INTENDEDP2PINTERFACEADDRESS_MIN_LEN ( 7 )
 
 #define DOT11F_TLV_INTENDEDP2PINTERFACEADDRESS_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVIntendedP2PInterfaceAddress*);
 
 tANI_U32 dot11fPackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal, tDot11fTLVIntendedP2PInterfaceAddress*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -937,9 +937,9 @@ tANI_U32 dot11fPackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal, tDot11fTLVInte
 tANI_U32 dot11fGetPackedTlvIntendedP2PInterfaceAddress(tpAniSirGlobal, tDot11fTLVIntendedP2PInterfaceAddress*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 18 (0x0012)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVInvitationFlags {
     tANI_U8      present;
     tANI_U8      invitationFlags;
@@ -947,14 +947,14 @@ typedef struct sDot11fTLVInvitationFlags {
 
 #define DOT11F_TLV_INVITATIONFLAGS ( 18 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_INVITATIONFLAGS_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_INVITATIONFLAGS_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvInvitationFlags(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVInvitationFlags*);
 
 tANI_U32 dot11fPackTlvInvitationFlags(tpAniSirGlobal, tDot11fTLVInvitationFlags*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -962,9 +962,9 @@ tANI_U32 dot11fPackTlvInvitationFlags(tpAniSirGlobal, tDot11fTLVInvitationFlags*
 tANI_U32 dot11fGetPackedTlvInvitationFlags(tpAniSirGlobal, tDot11fTLVInvitationFlags*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 6 (0x0006)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVListenChannel {
     tANI_U8      present;
     tANI_U8      countryString[3];
@@ -974,14 +974,14 @@ typedef struct sDot11fTLVListenChannel {
 
 #define DOT11F_TLV_LISTENCHANNEL ( 6 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_LISTENCHANNEL_MIN_LEN ( 6 )
 
 #define DOT11F_TLV_LISTENCHANNEL_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvListenChannel(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVListenChannel*);
 
 tANI_U32 dot11fPackTlvListenChannel(tpAniSirGlobal, tDot11fTLVListenChannel*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -989,9 +989,9 @@ tANI_U32 dot11fPackTlvListenChannel(tpAniSirGlobal, tDot11fTLVListenChannel*, tA
 tANI_U32 dot11fGetPackedTlvListenChannel(tpAniSirGlobal, tDot11fTLVListenChannel*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4129 (0x1021)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVManufacturer {
     tANI_U8      present;
     tANI_U8      num_name;
@@ -1000,14 +1000,14 @@ typedef struct sDot11fTLVManufacturer {
 
 #define DOT11F_TLV_MANUFACTURER ( 4129 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_MANUFACTURER_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_MANUFACTURER_MAX_LEN ( 66 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvManufacturer(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVManufacturer*);
 
 tANI_U32 dot11fPackTlvManufacturer(tpAniSirGlobal, tDot11fTLVManufacturer*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1015,9 +1015,9 @@ tANI_U32 dot11fPackTlvManufacturer(tpAniSirGlobal, tDot11fTLVManufacturer*, tANI
 tANI_U32 dot11fGetPackedTlvManufacturer(tpAniSirGlobal, tDot11fTLVManufacturer*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1 (0x0001)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVMinorReasonCode {
     tANI_U8      present;
     tANI_U8      minorReasonCode;
@@ -1025,14 +1025,14 @@ typedef struct sDot11fTLVMinorReasonCode {
 
 #define DOT11F_TLV_MINORREASONCODE ( 1 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_MINORREASONCODE_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_MINORREASONCODE_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvMinorReasonCode(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVMinorReasonCode*);
 
 tANI_U32 dot11fPackTlvMinorReasonCode(tpAniSirGlobal, tDot11fTLVMinorReasonCode*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1040,9 +1040,9 @@ tANI_U32 dot11fPackTlvMinorReasonCode(tpAniSirGlobal, tDot11fTLVMinorReasonCode*
 tANI_U32 dot11fGetPackedTlvMinorReasonCode(tpAniSirGlobal, tDot11fTLVMinorReasonCode*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4131 (0x1023)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVModelName {
     tANI_U8      present;
     tANI_U8      num_text;
@@ -1051,14 +1051,14 @@ typedef struct sDot11fTLVModelName {
 
 #define DOT11F_TLV_MODELNAME ( 4131 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_MODELNAME_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_MODELNAME_MAX_LEN ( 34 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvModelName(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVModelName*);
 
 tANI_U32 dot11fPackTlvModelName(tpAniSirGlobal, tDot11fTLVModelName*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1066,9 +1066,9 @@ tANI_U32 dot11fPackTlvModelName(tpAniSirGlobal, tDot11fTLVModelName*, tANI_U8*, 
 tANI_U32 dot11fGetPackedTlvModelName(tpAniSirGlobal, tDot11fTLVModelName*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4132 (0x1024)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVModelNumber {
     tANI_U8      present;
     tANI_U8      num_text;
@@ -1077,14 +1077,14 @@ typedef struct sDot11fTLVModelNumber {
 
 #define DOT11F_TLV_MODELNUMBER ( 4132 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_MODELNUMBER_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_MODELNUMBER_MAX_LEN ( 34 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvModelNumber(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVModelNumber*);
 
 tANI_U32 dot11fPackTlvModelNumber(tpAniSirGlobal, tDot11fTLVModelNumber*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1092,9 +1092,9 @@ tANI_U32 dot11fPackTlvModelNumber(tpAniSirGlobal, tDot11fTLVModelNumber*, tANI_U
 tANI_U32 dot11fGetPackedTlvModelNumber(tpAniSirGlobal, tDot11fTLVModelNumber*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 12 (0x000c)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVNoticeOfAbsence {
     tANI_U8      present;
     tANI_U8      index;
@@ -1105,14 +1105,14 @@ typedef struct sDot11fTLVNoticeOfAbsence {
 
 #define DOT11F_TLV_NOTICEOFABSENCE ( 12 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_NOTICEOFABSENCE_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_NOTICEOFABSENCE_MAX_LEN ( 39 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvNoticeOfAbsence(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVNoticeOfAbsence*);
 
 tANI_U32 dot11fPackTlvNoticeOfAbsence(tpAniSirGlobal, tDot11fTLVNoticeOfAbsence*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1120,9 +1120,9 @@ tANI_U32 dot11fPackTlvNoticeOfAbsence(tpAniSirGlobal, tDot11fTLVNoticeOfAbsence*
 tANI_U32 dot11fGetPackedTlvNoticeOfAbsence(tpAniSirGlobal, tDot11fTLVNoticeOfAbsence*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 17 (0x0011)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVOperatingChannel {
     tANI_U8      present;
     tANI_U8      countryString[3];
@@ -1132,14 +1132,14 @@ typedef struct sDot11fTLVOperatingChannel {
 
 #define DOT11F_TLV_OPERATINGCHANNEL ( 17 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_OPERATINGCHANNEL_MIN_LEN ( 6 )
 
 #define DOT11F_TLV_OPERATINGCHANNEL_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvOperatingChannel(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVOperatingChannel*);
 
 tANI_U32 dot11fPackTlvOperatingChannel(tpAniSirGlobal, tDot11fTLVOperatingChannel*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1147,9 +1147,9 @@ tANI_U32 dot11fPackTlvOperatingChannel(tpAniSirGlobal, tDot11fTLVOperatingChanne
 tANI_U32 dot11fGetPackedTlvOperatingChannel(tpAniSirGlobal, tDot11fTLVOperatingChannel*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 2 (0x0002)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVP2PCapability {
     tANI_U8      present;
     tANI_U8      deviceCapability;
@@ -1158,14 +1158,14 @@ typedef struct sDot11fTLVP2PCapability {
 
 #define DOT11F_TLV_P2PCAPABILITY ( 2 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PCAPABILITY_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_P2PCAPABILITY_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PCapability(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PCapability*);
 
 tANI_U32 dot11fPackTlvP2PCapability(tpAniSirGlobal, tDot11fTLVP2PCapability*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1173,9 +1173,9 @@ tANI_U32 dot11fPackTlvP2PCapability(tpAniSirGlobal, tDot11fTLVP2PCapability*, tA
 tANI_U32 dot11fGetPackedTlvP2PCapability(tpAniSirGlobal, tDot11fTLVP2PCapability*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3 (0x0003)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVP2PDeviceId {
     tANI_U8      present;
     tANI_U8      P2PDeviceAddress[6];
@@ -1183,14 +1183,14 @@ typedef struct sDot11fTLVP2PDeviceId {
 
 #define DOT11F_TLV_P2PDEVICEID ( 3 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PDEVICEID_MIN_LEN ( 7 )
 
 #define DOT11F_TLV_P2PDEVICEID_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PDeviceId(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PDeviceId*);
 
 tANI_U32 dot11fPackTlvP2PDeviceId(tpAniSirGlobal, tDot11fTLVP2PDeviceId*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1198,9 +1198,9 @@ tANI_U32 dot11fPackTlvP2PDeviceId(tpAniSirGlobal, tDot11fTLVP2PDeviceId*, tANI_U
 tANI_U32 dot11fGetPackedTlvP2PDeviceId(tpAniSirGlobal, tDot11fTLVP2PDeviceId*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 13 (0x000d)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVP2PDeviceInfo {
     tANI_U8              present;
     tANI_U8              P2PDeviceAddress[6];
@@ -1211,14 +1211,14 @@ typedef struct sDot11fTLVP2PDeviceInfo {
 
 #define DOT11F_TLV_P2PDEVICEINFO ( 13 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PDEVICEINFO_MIN_LEN ( 17 )
 
 #define DOT11F_TLV_P2PDEVICEINFO_MAX_LEN ( 53 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PDeviceInfo(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PDeviceInfo*);
 
 tANI_U32 dot11fPackTlvP2PDeviceInfo(tpAniSirGlobal, tDot11fTLVP2PDeviceInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1226,9 +1226,9 @@ tANI_U32 dot11fPackTlvP2PDeviceInfo(tpAniSirGlobal, tDot11fTLVP2PDeviceInfo*, tA
 tANI_U32 dot11fGetPackedTlvP2PDeviceInfo(tpAniSirGlobal, tDot11fTLVP2PDeviceInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 7 (0x0007)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVP2PGroupBssid {
     tANI_U8      present;
     tANI_U8      P2PGroupBssid[6];
@@ -1236,14 +1236,14 @@ typedef struct sDot11fTLVP2PGroupBssid {
 
 #define DOT11F_TLV_P2PGROUPBSSID ( 7 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PGROUPBSSID_MIN_LEN ( 7 )
 
 #define DOT11F_TLV_P2PGROUPBSSID_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PGroupBssid(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PGroupBssid*);
 
 tANI_U32 dot11fPackTlvP2PGroupBssid(tpAniSirGlobal, tDot11fTLVP2PGroupBssid*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1251,9 +1251,9 @@ tANI_U32 dot11fPackTlvP2PGroupBssid(tpAniSirGlobal, tDot11fTLVP2PGroupBssid*, tA
 tANI_U32 dot11fGetPackedTlvP2PGroupBssid(tpAniSirGlobal, tDot11fTLVP2PGroupBssid*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 15 (0x000f)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVP2PGroupId {
     tANI_U8      present;
     tANI_U8      deviceAddress[6];
@@ -1263,14 +1263,14 @@ typedef struct sDot11fTLVP2PGroupId {
 
 #define DOT11F_TLV_P2PGROUPID ( 15 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PGROUPID_MIN_LEN ( 7 )
 
 #define DOT11F_TLV_P2PGROUPID_MAX_LEN ( 39 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PGroupId(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PGroupId*);
 
 tANI_U32 dot11fPackTlvP2PGroupId(tpAniSirGlobal, tDot11fTLVP2PGroupId*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1278,9 +1278,9 @@ tANI_U32 dot11fPackTlvP2PGroupId(tpAniSirGlobal, tDot11fTLVP2PGroupId*, tANI_U8*
 tANI_U32 dot11fGetPackedTlvP2PGroupId(tpAniSirGlobal, tDot11fTLVP2PGroupId*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 14 (0x000e)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVP2PGroupInfo {
     tANI_U8      present;
     tANI_U8      num_P2PClientInfoDesc;
@@ -1289,14 +1289,14 @@ typedef struct sDot11fTLVP2PGroupInfo {
 
 #define DOT11F_TLV_P2PGROUPINFO ( 14 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PGROUPINFO_MIN_LEN ( 1 )
 
 #define DOT11F_TLV_P2PGROUPINFO_MAX_LEN ( 1025 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PGroupInfo(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PGroupInfo*);
 
 tANI_U32 dot11fPackTlvP2PGroupInfo(tpAniSirGlobal, tDot11fTLVP2PGroupInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1304,9 +1304,9 @@ tANI_U32 dot11fPackTlvP2PGroupInfo(tpAniSirGlobal, tDot11fTLVP2PGroupInfo*, tANI
 tANI_U32 dot11fGetPackedTlvP2PGroupInfo(tpAniSirGlobal, tDot11fTLVP2PGroupInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 0 (0x0000)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fTLVP2PStatus {
     tANI_U8      present;
     tANI_U8      status;
@@ -1314,14 +1314,14 @@ typedef struct sDot11fTLVP2PStatus {
 
 #define DOT11F_TLV_P2PSTATUS ( 0 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PSTATUS_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_P2PSTATUS_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PStatus(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PStatus*);
 
 tANI_U32 dot11fPackTlvP2PStatus(tpAniSirGlobal, tDot11fTLVP2PStatus*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1329,9 +1329,9 @@ tANI_U32 dot11fPackTlvP2PStatus(tpAniSirGlobal, tDot11fTLVP2PStatus*, tANI_U8*, 
 tANI_U32 dot11fGetPackedTlvP2PStatus(tpAniSirGlobal, tDot11fTLVP2PStatus*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4180 (0x1054)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVPrimaryDeviceType {
     tANI_U8      present;
     tANI_U16     primary_category;
@@ -1341,14 +1341,14 @@ typedef struct sDot11fTLVPrimaryDeviceType {
 
 #define DOT11F_TLV_PRIMARYDEVICETYPE ( 4180 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_PRIMARYDEVICETYPE_MIN_LEN ( 10 )
 
 #define DOT11F_TLV_PRIMARYDEVICETYPE_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvPrimaryDeviceType(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVPrimaryDeviceType*);
 
 tANI_U32 dot11fPackTlvPrimaryDeviceType(tpAniSirGlobal, tDot11fTLVPrimaryDeviceType*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1356,9 +1356,9 @@ tANI_U32 dot11fPackTlvPrimaryDeviceType(tpAniSirGlobal, tDot11fTLVPrimaryDeviceT
 tANI_U32 dot11fGetPackedTlvPrimaryDeviceType(tpAniSirGlobal, tDot11fTLVPrimaryDeviceType*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4156 (0x103c)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVRFBands {
     tANI_U8      present;
     tANI_U8      bands;
@@ -1366,14 +1366,14 @@ typedef struct sDot11fTLVRFBands {
 
 #define DOT11F_TLV_RFBANDS ( 4156 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_RFBANDS_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_RFBANDS_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvRFBands(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVRFBands*);
 
 tANI_U32 dot11fPackTlvRFBands(tpAniSirGlobal, tDot11fTLVRFBands*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1381,9 +1381,9 @@ tANI_U32 dot11fPackTlvRFBands(tpAniSirGlobal, tDot11fTLVRFBands*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedTlvRFBands(tpAniSirGlobal, tDot11fTLVRFBands*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4202 (0x106a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVRequestDeviceType {
     tANI_U8      present;
     tANI_U16     primary_category;
@@ -1393,14 +1393,14 @@ typedef struct sDot11fTLVRequestDeviceType {
 
 #define DOT11F_TLV_REQUESTDEVICETYPE ( 4202 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_REQUESTDEVICETYPE_MIN_LEN ( 10 )
 
 #define DOT11F_TLV_REQUESTDEVICETYPE_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvRequestDeviceType(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVRequestDeviceType*);
 
 tANI_U32 dot11fPackTlvRequestDeviceType(tpAniSirGlobal, tDot11fTLVRequestDeviceType*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1408,9 +1408,9 @@ tANI_U32 dot11fPackTlvRequestDeviceType(tpAniSirGlobal, tDot11fTLVRequestDeviceT
 tANI_U32 dot11fGetPackedTlvRequestDeviceType(tpAniSirGlobal, tDot11fTLVRequestDeviceType*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4154 (0x103a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVRequestType {
     tANI_U8      present;
     tANI_U8      reqType;
@@ -1418,14 +1418,14 @@ typedef struct sDot11fTLVRequestType {
 
 #define DOT11F_TLV_REQUESTTYPE ( 4154 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_REQUESTTYPE_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_REQUESTTYPE_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvRequestType(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVRequestType*);
 
 tANI_U32 dot11fPackTlvRequestType(tpAniSirGlobal, tDot11fTLVRequestType*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1433,9 +1433,9 @@ tANI_U32 dot11fPackTlvRequestType(tpAniSirGlobal, tDot11fTLVRequestType*, tANI_U
 tANI_U32 dot11fGetPackedTlvRequestType(tpAniSirGlobal, tDot11fTLVRequestType*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4155 (0x103b)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVResponseType {
     tANI_U8      present;
     tANI_U8      resType;
@@ -1443,14 +1443,14 @@ typedef struct sDot11fTLVResponseType {
 
 #define DOT11F_TLV_RESPONSETYPE ( 4155 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_RESPONSETYPE_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_RESPONSETYPE_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvResponseType(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVResponseType*);
 
 tANI_U32 dot11fPackTlvResponseType(tpAniSirGlobal, tDot11fTLVResponseType*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1458,9 +1458,9 @@ tANI_U32 dot11fPackTlvResponseType(tpAniSirGlobal, tDot11fTLVResponseType*, tANI
 tANI_U32 dot11fGetPackedTlvResponseType(tpAniSirGlobal, tDot11fTLVResponseType*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4161 (0x1041)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVSelectedRegistrar {
     tANI_U8      present;
     tANI_U8      selected;
@@ -1468,14 +1468,14 @@ typedef struct sDot11fTLVSelectedRegistrar {
 
 #define DOT11F_TLV_SELECTEDREGISTRAR ( 4161 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_SELECTEDREGISTRAR_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_SELECTEDREGISTRAR_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvSelectedRegistrar(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVSelectedRegistrar*);
 
 tANI_U32 dot11fPackTlvSelectedRegistrar(tpAniSirGlobal, tDot11fTLVSelectedRegistrar*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1483,9 +1483,9 @@ tANI_U32 dot11fPackTlvSelectedRegistrar(tpAniSirGlobal, tDot11fTLVSelectedRegist
 tANI_U32 dot11fGetPackedTlvSelectedRegistrar(tpAniSirGlobal, tDot11fTLVSelectedRegistrar*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4179 (0x1053)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVSelectedRegistrarConfigMethods {
     tANI_U8      present;
     tANI_U16     methods;
@@ -1493,14 +1493,14 @@ typedef struct sDot11fTLVSelectedRegistrarConfigMethods {
 
 #define DOT11F_TLV_SELECTEDREGISTRARCONFIGMETHODS ( 4179 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_SELECTEDREGISTRARCONFIGMETHODS_MIN_LEN ( 4 )
 
 #define DOT11F_TLV_SELECTEDREGISTRARCONFIGMETHODS_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvSelectedRegistrarConfigMethods(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVSelectedRegistrarConfigMethods*);
 
 tANI_U32 dot11fPackTlvSelectedRegistrarConfigMethods(tpAniSirGlobal, tDot11fTLVSelectedRegistrarConfigMethods*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1508,9 +1508,9 @@ tANI_U32 dot11fPackTlvSelectedRegistrarConfigMethods(tpAniSirGlobal, tDot11fTLVS
 tANI_U32 dot11fGetPackedTlvSelectedRegistrarConfigMethods(tpAniSirGlobal, tDot11fTLVSelectedRegistrarConfigMethods*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4162 (0x1042)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVSerialNumber {
     tANI_U8      present;
     tANI_U8      num_text;
@@ -1519,14 +1519,14 @@ typedef struct sDot11fTLVSerialNumber {
 
 #define DOT11F_TLV_SERIALNUMBER ( 4162 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_SERIALNUMBER_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_SERIALNUMBER_MAX_LEN ( 34 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvSerialNumber(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVSerialNumber*);
 
 tANI_U32 dot11fPackTlvSerialNumber(tpAniSirGlobal, tDot11fTLVSerialNumber*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1534,9 +1534,9 @@ tANI_U32 dot11fPackTlvSerialNumber(tpAniSirGlobal, tDot11fTLVSerialNumber*, tANI
 tANI_U32 dot11fGetPackedTlvSerialNumber(tpAniSirGlobal, tDot11fTLVSerialNumber*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4167 (0x1047)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVUUID_E {
     tANI_U8      present;
     tANI_U8      uuid[16];
@@ -1544,14 +1544,14 @@ typedef struct sDot11fTLVUUID_E {
 
 #define DOT11F_TLV_UUID_E ( 4167 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_UUID_E_MIN_LEN ( 18 )
 
 #define DOT11F_TLV_UUID_E_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvUUID_E(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVUUID_E*);
 
 tANI_U32 dot11fPackTlvUUID_E(tpAniSirGlobal, tDot11fTLVUUID_E*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1559,9 +1559,9 @@ tANI_U32 dot11fPackTlvUUID_E(tpAniSirGlobal, tDot11fTLVUUID_E*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedTlvUUID_E(tpAniSirGlobal, tDot11fTLVUUID_E*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4168 (0x1048)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVUUID_R {
     tANI_U8      present;
     tANI_U8      uuid[16];
@@ -1569,14 +1569,14 @@ typedef struct sDot11fTLVUUID_R {
 
 #define DOT11F_TLV_UUID_R ( 4168 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_UUID_R_MIN_LEN ( 18 )
 
 #define DOT11F_TLV_UUID_R_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvUUID_R(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVUUID_R*);
 
 tANI_U32 dot11fPackTlvUUID_R(tpAniSirGlobal, tDot11fTLVUUID_R*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1584,9 +1584,9 @@ tANI_U32 dot11fPackTlvUUID_R(tpAniSirGlobal, tDot11fTLVUUID_R*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedTlvUUID_R(tpAniSirGlobal, tDot11fTLVUUID_R*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4169 (0x1049)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVVendorExtension {
     tANI_U8                   present;
     tANI_U8                   vendorId[3];
@@ -1597,14 +1597,14 @@ typedef struct sDot11fTLVVendorExtension {
 
 #define DOT11F_TLV_VENDOREXTENSION ( 4169 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_VENDOREXTENSION_MIN_LEN ( 5 )
 
 #define DOT11F_TLV_VENDOREXTENSION_MAX_LEN ( 19 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvVendorExtension(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVVendorExtension*);
 
 tANI_U32 dot11fPackTlvVendorExtension(tpAniSirGlobal, tDot11fTLVVendorExtension*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1612,9 +1612,9 @@ tANI_U32 dot11fPackTlvVendorExtension(tpAniSirGlobal, tDot11fTLVVendorExtension*
 tANI_U32 dot11fGetPackedTlvVendorExtension(tpAniSirGlobal, tDot11fTLVVendorExtension*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4170 (0x104a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVVersion {
     tANI_U8      present;
     tANI_U8            minor: 4;
@@ -1623,14 +1623,14 @@ typedef struct sDot11fTLVVersion {
 
 #define DOT11F_TLV_VERSION ( 4170 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_VERSION_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_VERSION_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvVersion(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVVersion*);
 
 tANI_U32 dot11fPackTlvVersion(tpAniSirGlobal, tDot11fTLVVersion*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1638,9 +1638,9 @@ tANI_U32 dot11fPackTlvVersion(tpAniSirGlobal, tDot11fTLVVersion*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedTlvVersion(tpAniSirGlobal, tDot11fTLVVersion*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4164 (0x1044)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sDot11fTLVWPSState {
     tANI_U8      present;
     tANI_U8      state;
@@ -1648,14 +1648,14 @@ typedef struct sDot11fTLVWPSState {
 
 #define DOT11F_TLV_WPSSTATE ( 4164 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_WPSSTATE_MIN_LEN ( 3 )
 
 #define DOT11F_TLV_WPSSTATE_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvWPSState(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVWPSState*);
 
 tANI_U32 dot11fPackTlvWPSState(tpAniSirGlobal, tDot11fTLVWPSState*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1663,9 +1663,9 @@ tANI_U32 dot11fPackTlvWPSState(tpAniSirGlobal, tDot11fTLVWPSState*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedTlvWPSState(tpAniSirGlobal, tDot11fTLVWPSState*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 16 (0x0010)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVP2PInterface {
     tANI_U8      present;
     tANI_U8      P2PDeviceAddress[6];
@@ -1673,14 +1673,14 @@ typedef struct sDot11fTLVP2PInterface {
 
 #define DOT11F_TLV_P2PINTERFACE ( 16 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PINTERFACE_MIN_LEN ( 7 )
 
 #define DOT11F_TLV_P2PINTERFACE_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PInterface(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PInterface*);
 
 tANI_U32 dot11fPackTlvP2PInterface(tpAniSirGlobal, tDot11fTLVP2PInterface*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1688,9 +1688,9 @@ tANI_U32 dot11fPackTlvP2PInterface(tpAniSirGlobal, tDot11fTLVP2PInterface*, tANI
 tANI_U32 dot11fGetPackedTlvP2PInterface(tpAniSirGlobal, tDot11fTLVP2PInterface*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 10 (0x000a)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fTLVP2PManageability {
     tANI_U8      present;
     tANI_U8      manageability;
@@ -1698,14 +1698,14 @@ typedef struct sDot11fTLVP2PManageability {
 
 #define DOT11F_TLV_P2PMANAGEABILITY ( 10 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define DOT11F_TLV_P2PMANAGEABILITY_MIN_LEN ( 2 )
 
 #define DOT11F_TLV_P2PMANAGEABILITY_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackTlvP2PManageability(tpAniSirGlobal, tANI_U8*,tANI_U16, tDot11fTLVP2PManageability*);
 
 tANI_U32 dot11fPackTlvP2PManageability(tpAniSirGlobal, tDot11fTLVP2PManageability*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1713,13 +1713,13 @@ tANI_U32 dot11fPackTlvP2PManageability(tpAniSirGlobal, tDot11fTLVP2PManageabilit
 tANI_U32 dot11fGetPackedTlvP2PManageability(tpAniSirGlobal, tDot11fTLVP2PManageability*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-/*********************************************************************
- * Information Elements                                              *
- ********************************************************************/
+}; /*                 */
+#endif /*     */
+/*                                                                    
+                                                                      
+                                                                    */
 
-// EID 1 (0x01)
+//             
 typedef struct sDot11fIEAPName {
     tANI_U8      present;
     tANI_U8      num_name;
@@ -1728,14 +1728,14 @@ typedef struct sDot11fIEAPName {
 
 #define DOT11F_EID_APNAME ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_APNAME_MIN_LEN ( 1 )
 
 #define DOT11F_IE_APNAME_MAX_LEN ( 32 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeAPName(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEAPName*);
 
 tANI_U32 dot11fPackIeAPName(tpAniSirGlobal, tDot11fIEAPName*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1743,9 +1743,9 @@ tANI_U32 dot11fPackIeAPName(tpAniSirGlobal, tDot11fIEAPName*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEAPName(tpAniSirGlobal, tDot11fIEAPName*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 4 (0x04)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEBPIndicator {
     tANI_U8      present;
     tANI_U8      indicator;
@@ -1754,14 +1754,14 @@ typedef struct sDot11fIEBPIndicator {
 
 #define DOT11F_EID_BPINDICATOR ( 4 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_BPINDICATOR_MIN_LEN ( 2 )
 
 #define DOT11F_IE_BPINDICATOR_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeBPIndicator(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEBPIndicator*);
 
 tANI_U32 dot11fPackIeBPIndicator(tpAniSirGlobal, tDot11fIEBPIndicator*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1769,9 +1769,9 @@ tANI_U32 dot11fPackIeBPIndicator(tpAniSirGlobal, tDot11fIEBPIndicator*, tANI_U8*
 tANI_U32 dot11fGetPackedIEBPIndicator(tpAniSirGlobal, tDot11fIEBPIndicator*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 2 (0x02)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIECondensedCountryStr {
     tANI_U8      present;
     tANI_U8      countryStr[2];
@@ -1779,14 +1779,14 @@ typedef struct sDot11fIECondensedCountryStr {
 
 #define DOT11F_EID_CONDENSEDCOUNTRYSTR ( 2 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CONDENSEDCOUNTRYSTR_MIN_LEN ( 2 )
 
 #define DOT11F_IE_CONDENSEDCOUNTRYSTR_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCondensedCountryStr(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECondensedCountryStr*);
 
 tANI_U32 dot11fPackIeCondensedCountryStr(tpAniSirGlobal, tDot11fIECondensedCountryStr*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1794,9 +1794,9 @@ tANI_U32 dot11fPackIeCondensedCountryStr(tpAniSirGlobal, tDot11fIECondensedCount
 tANI_U32 dot11fGetPackedIECondensedCountryStr(tpAniSirGlobal, tDot11fIECondensedCountryStr*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 2 (0x02)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEGTK {
     tANI_U8      present;
     tANI_U16            keyId: 2;
@@ -1809,14 +1809,14 @@ typedef struct sDot11fIEGTK {
 
 #define DOT11F_EID_GTK ( 2 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_GTK_MIN_LEN ( 16 )
 
 #define DOT11F_IE_GTK_MAX_LEN ( 43 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeGTK(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEGTK*);
 
 tANI_U32 dot11fPackIeGTK(tpAniSirGlobal, tDot11fIEGTK*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1824,9 +1824,9 @@ tANI_U32 dot11fPackIeGTK(tpAniSirGlobal, tDot11fIEGTK*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEGTK(tpAniSirGlobal, tDot11fIEGTK*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 2 (0x02)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEHCF {
     tANI_U8      present;
     tANI_U8      enabled;
@@ -1834,14 +1834,14 @@ typedef struct sDot11fIEHCF {
 
 #define DOT11F_EID_HCF ( 2 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_HCF_MIN_LEN ( 1 )
 
 #define DOT11F_IE_HCF_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeHCF(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEHCF*);
 
 tANI_U32 dot11fPackIeHCF(tpAniSirGlobal, tDot11fIEHCF*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1849,9 +1849,9 @@ tANI_U32 dot11fPackIeHCF(tpAniSirGlobal, tDot11fIEHCF*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEHCF(tpAniSirGlobal, tDot11fIEHCF*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 4 (0x04)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEIGTK {
     tANI_U8      present;
     tANI_U8      keyID[2];
@@ -1862,14 +1862,14 @@ typedef struct sDot11fIEIGTK {
 
 #define DOT11F_EID_IGTK ( 4 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_IGTK_MIN_LEN ( 33 )
 
 #define DOT11F_IE_IGTK_MAX_LEN ( 33 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeIGTK(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEIGTK*);
 
 tANI_U32 dot11fPackIeIGTK(tpAniSirGlobal, tDot11fIEIGTK*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1877,9 +1877,9 @@ tANI_U32 dot11fPackIeIGTK(tpAniSirGlobal, tDot11fIEIGTK*, tANI_U8*, tANI_U32, tA
 tANI_U32 dot11fGetPackedIEIGTK(tpAniSirGlobal, tDot11fIEIGTK*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 9 (0x09)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIELLAttr {
     tANI_U8      present;
     tANI_U32     defer_threshold;
@@ -1887,14 +1887,14 @@ typedef struct sDot11fIELLAttr {
 
 #define DOT11F_EID_LLATTR ( 9 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_LLATTR_MIN_LEN ( 4 )
 
 #define DOT11F_IE_LLATTR_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeLLAttr(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIELLAttr*);
 
 tANI_U32 dot11fPackIeLLAttr(tpAniSirGlobal, tDot11fIELLAttr*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1902,9 +1902,9 @@ tANI_U32 dot11fPackIeLLAttr(tpAniSirGlobal, tDot11fIELLAttr*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIELLAttr(tpAniSirGlobal, tDot11fIELLAttr*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 8 (0x08)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIELoadBalance {
     tANI_U8      present;
     tANI_U8      bssid[6];
@@ -1913,14 +1913,14 @@ typedef struct sDot11fIELoadBalance {
 
 #define DOT11F_EID_LOADBALANCE ( 8 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_LOADBALANCE_MIN_LEN ( 7 )
 
 #define DOT11F_IE_LOADBALANCE_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeLoadBalance(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIELoadBalance*);
 
 tANI_U32 dot11fPackIeLoadBalance(tpAniSirGlobal, tDot11fIELoadBalance*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1928,9 +1928,9 @@ tANI_U32 dot11fPackIeLoadBalance(tpAniSirGlobal, tDot11fIELoadBalance*, tANI_U8*
 tANI_U32 dot11fGetPackedIELoadBalance(tpAniSirGlobal, tDot11fIELoadBalance*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 6 (0x06)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIELoadInfo {
     tANI_U8      present;
     tANI_U16     num_stas;
@@ -1939,14 +1939,14 @@ typedef struct sDot11fIELoadInfo {
 
 #define DOT11F_EID_LOADINFO ( 6 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_LOADINFO_MIN_LEN ( 4 )
 
 #define DOT11F_IE_LOADINFO_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeLoadInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIELoadInfo*);
 
 tANI_U32 dot11fPackIeLoadInfo(tpAniSirGlobal, tDot11fIELoadInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1954,9 +1954,9 @@ tANI_U32 dot11fPackIeLoadInfo(tpAniSirGlobal, tDot11fIELoadInfo*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIELoadInfo(tpAniSirGlobal, tDot11fIELoadInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 7 (0x07)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEPropAssocType {
     tANI_U8      present;
     tANI_U8      type;
@@ -1964,14 +1964,14 @@ typedef struct sDot11fIEPropAssocType {
 
 #define DOT11F_EID_PROPASSOCTYPE ( 7 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPASSOCTYPE_MIN_LEN ( 1 )
 
 #define DOT11F_IE_PROPASSOCTYPE_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropAssocType(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropAssocType*);
 
 tANI_U32 dot11fPackIePropAssocType(tpAniSirGlobal, tDot11fIEPropAssocType*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -1979,9 +1979,9 @@ tANI_U32 dot11fPackIePropAssocType(tpAniSirGlobal, tDot11fIEPropAssocType*, tANI
 tANI_U32 dot11fGetPackedIEPropAssocType(tpAniSirGlobal, tDot11fIEPropAssocType*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 10 (0x0a)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPropCapability {
     tANI_U8      present;
     tANI_U16     capability;
@@ -1989,14 +1989,14 @@ typedef struct sDot11fIEPropCapability {
 
 #define DOT11F_EID_PROPCAPABILITY ( 10 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPCAPABILITY_MIN_LEN ( 2 )
 
 #define DOT11F_IE_PROPCAPABILITY_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropCapability(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropCapability*);
 
 tANI_U32 dot11fPackIePropCapability(tpAniSirGlobal, tDot11fIEPropCapability*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2004,9 +2004,9 @@ tANI_U32 dot11fPackIePropCapability(tpAniSirGlobal, tDot11fIEPropCapability*, tA
 tANI_U32 dot11fGetPackedIEPropCapability(tpAniSirGlobal, tDot11fIEPropCapability*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 15 (0x0f)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPropChannSwitchAnn {
     tANI_U8      present;
     tANI_U8      mode;
@@ -2017,14 +2017,14 @@ typedef struct sDot11fIEPropChannSwitchAnn {
 
 #define DOT11F_EID_PROPCHANNSWITCHANN ( 15 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPCHANNSWITCHANN_MIN_LEN ( 4 )
 
 #define DOT11F_IE_PROPCHANNSWITCHANN_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropChannSwitchAnn(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropChannSwitchAnn*);
 
 tANI_U32 dot11fPackIePropChannSwitchAnn(tpAniSirGlobal, tDot11fIEPropChannSwitchAnn*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2032,9 +2032,9 @@ tANI_U32 dot11fPackIePropChannSwitchAnn(tpAniSirGlobal, tDot11fIEPropChannSwitch
 tANI_U32 dot11fGetPackedIEPropChannSwitchAnn(tpAniSirGlobal, tDot11fIEPropChannSwitchAnn*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 12 (0x0c)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPropEDCAParams {
     tANI_U8      present;
     tANI_U8      qos;
@@ -2071,14 +2071,14 @@ typedef struct sDot11fIEPropEDCAParams {
 
 #define DOT11F_EID_PROPEDCAPARAMS ( 12 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPEDCAPARAMS_MIN_LEN ( 18 )
 
 #define DOT11F_IE_PROPEDCAPARAMS_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropEDCAParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropEDCAParams*);
 
 tANI_U32 dot11fPackIePropEDCAParams(tpAniSirGlobal, tDot11fIEPropEDCAParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2086,9 +2086,9 @@ tANI_U32 dot11fPackIePropEDCAParams(tpAniSirGlobal, tDot11fIEPropEDCAParams*, tA
 tANI_U32 dot11fGetPackedIEPropEDCAParams(tpAniSirGlobal, tDot11fIEPropEDCAParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 16 (0x10)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPropQuietBSS {
     tANI_U8      present;
     tANI_U8      quiet_count;
@@ -2099,14 +2099,14 @@ typedef struct sDot11fIEPropQuietBSS {
 
 #define DOT11F_EID_PROPQUIETBSS ( 16 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPQUIETBSS_MIN_LEN ( 6 )
 
 #define DOT11F_IE_PROPQUIETBSS_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropQuietBSS(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropQuietBSS*);
 
 tANI_U32 dot11fPackIePropQuietBSS(tpAniSirGlobal, tDot11fIEPropQuietBSS*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2114,9 +2114,9 @@ tANI_U32 dot11fPackIePropQuietBSS(tpAniSirGlobal, tDot11fIEPropQuietBSS*, tANI_U
 tANI_U32 dot11fGetPackedIEPropQuietBSS(tpAniSirGlobal, tDot11fIEPropQuietBSS*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 0 (0x00)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEPropSuppRates {
     tANI_U8      present;
     tANI_U8      num_rates;
@@ -2125,14 +2125,14 @@ typedef struct sDot11fIEPropSuppRates {
 
 #define DOT11F_EID_PROPSUPPRATES ( 0 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PROPSUPPRATES_MIN_LEN ( 1 )
 
 #define DOT11F_IE_PROPSUPPRATES_MAX_LEN ( 12 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePropSuppRates(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPropSuppRates*);
 
 tANI_U32 dot11fPackIePropSuppRates(tpAniSirGlobal, tDot11fIEPropSuppRates*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2140,9 +2140,9 @@ tANI_U32 dot11fPackIePropSuppRates(tpAniSirGlobal, tDot11fIEPropSuppRates*, tANI
 tANI_U32 dot11fGetPackedIEPropSuppRates(tpAniSirGlobal, tDot11fIEPropSuppRates*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 3 (0x03)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIER0KH_ID {
     tANI_U8      present;
     tANI_U8      num_PMK_R0_ID;
@@ -2151,14 +2151,14 @@ typedef struct sDot11fIER0KH_ID {
 
 #define DOT11F_EID_R0KH_ID ( 3 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_R0KH_ID_MIN_LEN ( 1 )
 
 #define DOT11F_IE_R0KH_ID_MAX_LEN ( 48 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeR0KH_ID(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIER0KH_ID*);
 
 tANI_U32 dot11fPackIeR0KH_ID(tpAniSirGlobal, tDot11fIER0KH_ID*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2166,9 +2166,9 @@ tANI_U32 dot11fPackIeR0KH_ID(tpAniSirGlobal, tDot11fIER0KH_ID*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIER0KH_ID(tpAniSirGlobal, tDot11fIER0KH_ID*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 1 (0x01)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIER1KH_ID {
     tANI_U8      present;
     tANI_U8      PMK_R1_ID[6];
@@ -2176,14 +2176,14 @@ typedef struct sDot11fIER1KH_ID {
 
 #define DOT11F_EID_R1KH_ID ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_R1KH_ID_MIN_LEN ( 6 )
 
 #define DOT11F_IE_R1KH_ID_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeR1KH_ID(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIER1KH_ID*);
 
 tANI_U32 dot11fPackIeR1KH_ID(tpAniSirGlobal, tDot11fIER1KH_ID*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2191,9 +2191,9 @@ tANI_U32 dot11fPackIeR1KH_ID(tpAniSirGlobal, tDot11fIER1KH_ID*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIER1KH_ID(tpAniSirGlobal, tDot11fIER1KH_ID*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 1 (0x01)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIETSFInfo {
     tANI_U8      present;
     tANI_U16     TsfOffset;
@@ -2202,14 +2202,14 @@ typedef struct sDot11fIETSFInfo {
 
 #define DOT11F_EID_TSFINFO ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TSFINFO_MIN_LEN ( 4 )
 
 #define DOT11F_IE_TSFINFO_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTSFInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETSFInfo*);
 
 tANI_U32 dot11fPackIeTSFInfo(tpAniSirGlobal, tDot11fIETSFInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2217,9 +2217,9 @@ tANI_U32 dot11fPackIeTSFInfo(tpAniSirGlobal, tDot11fIETSFInfo*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIETSFInfo(tpAniSirGlobal, tDot11fIETSFInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 18 (0x12)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETaurus {
     tANI_U8      present;
     tANI_U16     baTIDBitmap;
@@ -2230,14 +2230,14 @@ typedef struct sDot11fIETaurus {
 
 #define DOT11F_EID_TAURUS ( 18 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TAURUS_MIN_LEN ( 6 )
 
 #define DOT11F_IE_TAURUS_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTaurus(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETaurus*);
 
 tANI_U32 dot11fPackIeTaurus(tpAniSirGlobal, tDot11fIETaurus*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2245,9 +2245,9 @@ tANI_U32 dot11fPackIeTaurus(tpAniSirGlobal, tDot11fIETaurus*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIETaurus(tpAniSirGlobal, tDot11fIETaurus*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 14 (0x0e)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETitan {
     tANI_U8      present;
     tANI_U8      concat_tcid_bitmap;
@@ -2258,14 +2258,14 @@ typedef struct sDot11fIETitan {
 
 #define DOT11F_EID_TITAN ( 14 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TITAN_MIN_LEN ( 4 )
 
 #define DOT11F_IE_TITAN_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTitan(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETitan*);
 
 tANI_U32 dot11fPackIeTitan(tpAniSirGlobal, tDot11fIETitan*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2273,9 +2273,9 @@ tANI_U32 dot11fPackIeTitan(tpAniSirGlobal, tDot11fIETitan*, tANI_U8*, tANI_U32, 
 tANI_U32 dot11fGetPackedIETitan(tpAniSirGlobal, tDot11fIETitan*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 17 (0x11)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETriggerStaBgScan {
     tANI_U8      present;
     tANI_U8      enable;
@@ -2283,14 +2283,14 @@ typedef struct sDot11fIETriggerStaBgScan {
 
 #define DOT11F_EID_TRIGGERSTABGSCAN ( 17 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TRIGGERSTABGSCAN_MIN_LEN ( 1 )
 
 #define DOT11F_IE_TRIGGERSTABGSCAN_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTriggerStaBgScan(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETriggerStaBgScan*);
 
 tANI_U32 dot11fPackIeTriggerStaBgScan(tpAniSirGlobal, tDot11fIETriggerStaBgScan*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2298,9 +2298,9 @@ tANI_U32 dot11fPackIeTriggerStaBgScan(tpAniSirGlobal, tDot11fIETriggerStaBgScan*
 tANI_U32 dot11fGetPackedIETriggerStaBgScan(tpAniSirGlobal, tDot11fIETriggerStaBgScan*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 11 (0x0b)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEVersion {
     tANI_U8      present;
     tANI_U32     chip_rev;
@@ -2311,14 +2311,14 @@ typedef struct sDot11fIEVersion {
 
 #define DOT11F_EID_VERSION ( 11 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_VERSION_MIN_LEN ( 5 )
 
 #define DOT11F_IE_VERSION_MAX_LEN ( 25 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeVersion(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEVersion*);
 
 tANI_U32 dot11fPackIeVersion(tpAniSirGlobal, tDot11fIEVersion*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2326,9 +2326,9 @@ tANI_U32 dot11fPackIeVersion(tpAniSirGlobal, tDot11fIEVersion*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIEVersion(tpAniSirGlobal, tDot11fIEVersion*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 3 (0x03)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEWDS {
     tANI_U8      present;
     tANI_U8      num_wdsData;
@@ -2337,14 +2337,14 @@ typedef struct sDot11fIEWDS {
 
 #define DOT11F_EID_WDS ( 3 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WDS_MIN_LEN ( 0 )
 
 #define DOT11F_IE_WDS_MAX_LEN ( 64 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWDS(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWDS*);
 
 tANI_U32 dot11fPackIeWDS(tpAniSirGlobal, tDot11fIEWDS*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2352,9 +2352,9 @@ tANI_U32 dot11fPackIeWDS(tpAniSirGlobal, tDot11fIEWDS*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEWDS(tpAniSirGlobal, tDot11fIEWDS*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 51 (0x33)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEAPChannelReport {
     tANI_U8      present;
     tANI_U8      regulatoryClass;
@@ -2364,14 +2364,14 @@ typedef struct sDot11fIEAPChannelReport {
 
 #define DOT11F_EID_APCHANNELREPORT ( 51 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_APCHANNELREPORT_MIN_LEN ( 1 )
 
 #define DOT11F_IE_APCHANNELREPORT_MAX_LEN ( 51 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeAPChannelReport(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEAPChannelReport*);
 
 tANI_U32 dot11fPackIeAPChannelReport(tpAniSirGlobal, tDot11fIEAPChannelReport*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2379,9 +2379,9 @@ tANI_U32 dot11fPackIeAPChannelReport(tpAniSirGlobal, tDot11fIEAPChannelReport*, 
 tANI_U32 dot11fGetPackedIEAPChannelReport(tpAniSirGlobal, tDot11fIEAPChannelReport*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 2 (0x02)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEBcnReportingDetail {
     tANI_U8      present;
     tANI_U8      reportingDetail;
@@ -2389,14 +2389,14 @@ typedef struct sDot11fIEBcnReportingDetail {
 
 #define DOT11F_EID_BCNREPORTINGDETAIL ( 2 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_BCNREPORTINGDETAIL_MIN_LEN ( 1 )
 
 #define DOT11F_IE_BCNREPORTINGDETAIL_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeBcnReportingDetail(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEBcnReportingDetail*);
 
 tANI_U32 dot11fPackIeBcnReportingDetail(tpAniSirGlobal, tDot11fIEBcnReportingDetail*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2404,9 +2404,9 @@ tANI_U32 dot11fPackIeBcnReportingDetail(tpAniSirGlobal, tDot11fIEBcnReportingDet
 tANI_U32 dot11fGetPackedIEBcnReportingDetail(tpAniSirGlobal, tDot11fIEBcnReportingDetail*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 1 (0x01)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEBeaconReportFrmBody {
     tANI_U8      present;
     tANI_U8      num_reportedFields;
@@ -2415,14 +2415,14 @@ typedef struct sDot11fIEBeaconReportFrmBody {
 
 #define DOT11F_EID_BEACONREPORTFRMBODY ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_BEACONREPORTFRMBODY_MIN_LEN ( 0 )
 
 #define DOT11F_IE_BEACONREPORTFRMBODY_MAX_LEN ( 224 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeBeaconReportFrmBody(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEBeaconReportFrmBody*);
 
 tANI_U32 dot11fPackIeBeaconReportFrmBody(tpAniSirGlobal, tDot11fIEBeaconReportFrmBody*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2430,9 +2430,9 @@ tANI_U32 dot11fPackIeBeaconReportFrmBody(tpAniSirGlobal, tDot11fIEBeaconReportFr
 tANI_U32 dot11fGetPackedIEBeaconReportFrmBody(tpAniSirGlobal, tDot11fIEBeaconReportFrmBody*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 1 (0x01)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEBeaconReporting {
     tANI_U8      present;
     tANI_U8      reportingCondition;
@@ -2441,14 +2441,14 @@ typedef struct sDot11fIEBeaconReporting {
 
 #define DOT11F_EID_BEACONREPORTING ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_BEACONREPORTING_MIN_LEN ( 2 )
 
 #define DOT11F_IE_BEACONREPORTING_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeBeaconReporting(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEBeaconReporting*);
 
 tANI_U32 dot11fPackIeBeaconReporting(tpAniSirGlobal, tDot11fIEBeaconReporting*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2456,9 +2456,9 @@ tANI_U32 dot11fPackIeBeaconReporting(tpAniSirGlobal, tDot11fIEBeaconReporting*, 
 tANI_U32 dot11fGetPackedIEBeaconReporting(tpAniSirGlobal, tDot11fIEBeaconReporting*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 66 (0x42)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEMeasurementPilot {
     tANI_U8      present;
     tANI_U8      measurementPilot;
@@ -2468,14 +2468,14 @@ typedef struct sDot11fIEMeasurementPilot {
 
 #define DOT11F_EID_MEASUREMENTPILOT ( 66 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_MEASUREMENTPILOT_MIN_LEN ( 1 )
 
 #define DOT11F_IE_MEASUREMENTPILOT_MAX_LEN ( 256 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeMeasurementPilot(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEMeasurementPilot*);
 
 tANI_U32 dot11fPackIeMeasurementPilot(tpAniSirGlobal, tDot11fIEMeasurementPilot*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2483,9 +2483,9 @@ tANI_U32 dot11fPackIeMeasurementPilot(tpAniSirGlobal, tDot11fIEMeasurementPilot*
 tANI_U32 dot11fGetPackedIEMeasurementPilot(tpAniSirGlobal, tDot11fIEMeasurementPilot*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 71 (0x47)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEMultiBssid {
     tANI_U8      present;
     tANI_U8      maxBSSIDIndicator;
@@ -2495,14 +2495,14 @@ typedef struct sDot11fIEMultiBssid {
 
 #define DOT11F_EID_MULTIBSSID ( 71 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_MULTIBSSID_MIN_LEN ( 1 )
 
 #define DOT11F_IE_MULTIBSSID_MAX_LEN ( 256 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeMultiBssid(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEMultiBssid*);
 
 tANI_U32 dot11fPackIeMultiBssid(tpAniSirGlobal, tDot11fIEMultiBssid*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2510,9 +2510,9 @@ tANI_U32 dot11fPackIeMultiBssid(tpAniSirGlobal, tDot11fIEMultiBssid*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEMultiBssid(tpAniSirGlobal, tDot11fIEMultiBssid*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 57 (0x39)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERICData {
     tANI_U8      present;
     tANI_U8      Identifier;
@@ -2522,14 +2522,14 @@ typedef struct sDot11fIERICData {
 
 #define DOT11F_EID_RICDATA ( 57 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RICDATA_MIN_LEN ( 4 )
 
 #define DOT11F_IE_RICDATA_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRICData(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERICData*);
 
 tANI_U32 dot11fPackIeRICData(tpAniSirGlobal, tDot11fIERICData*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2537,9 +2537,9 @@ tANI_U32 dot11fPackIeRICData(tpAniSirGlobal, tDot11fIERICData*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIERICData(tpAniSirGlobal, tDot11fIERICData*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 75 (0x4b)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERICDescriptor {
     tANI_U8      present;
     tANI_U8      resourceType;
@@ -2549,14 +2549,14 @@ typedef struct sDot11fIERICDescriptor {
 
 #define DOT11F_EID_RICDESCRIPTOR ( 75 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RICDESCRIPTOR_MIN_LEN ( 1 )
 
 #define DOT11F_IE_RICDESCRIPTOR_MAX_LEN ( 256 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRICDescriptor(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERICDescriptor*);
 
 tANI_U32 dot11fPackIeRICDescriptor(tpAniSirGlobal, tDot11fIERICDescriptor*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2564,9 +2564,9 @@ tANI_U32 dot11fPackIeRICDescriptor(tpAniSirGlobal, tDot11fIERICDescriptor*, tANI
 tANI_U32 dot11fGetPackedIERICDescriptor(tpAniSirGlobal, tDot11fIERICDescriptor*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 70 (0x46)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERRMEnabledCap {
     tANI_U8      present;
     tANI_U8  LinkMeasurement: 1;
@@ -2602,14 +2602,14 @@ typedef struct sDot11fIERRMEnabledCap {
 
 #define DOT11F_EID_RRMENABLEDCAP ( 70 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RRMENABLEDCAP_MIN_LEN ( 5 )
 
 #define DOT11F_IE_RRMENABLEDCAP_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRRMEnabledCap(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERRMEnabledCap*);
 
 tANI_U32 dot11fPackIeRRMEnabledCap(tpAniSirGlobal, tDot11fIERRMEnabledCap*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2617,9 +2617,9 @@ tANI_U32 dot11fPackIeRRMEnabledCap(tpAniSirGlobal, tDot11fIERRMEnabledCap*, tANI
 tANI_U32 dot11fGetPackedIERRMEnabledCap(tpAniSirGlobal, tDot11fIERRMEnabledCap*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 10 (0x0a)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERequestedInfo {
     tANI_U8      present;
     tANI_U8      num_requested_eids;
@@ -2628,14 +2628,14 @@ typedef struct sDot11fIERequestedInfo {
 
 #define DOT11F_EID_REQUESTEDINFO ( 10 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_REQUESTEDINFO_MIN_LEN ( 0 )
 
 #define DOT11F_IE_REQUESTEDINFO_MAX_LEN ( 255 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRequestedInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERequestedInfo*);
 
 tANI_U32 dot11fPackIeRequestedInfo(tpAniSirGlobal, tDot11fIERequestedInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2643,9 +2643,9 @@ tANI_U32 dot11fPackIeRequestedInfo(tpAniSirGlobal, tDot11fIERequestedInfo*, tANI
 tANI_U32 dot11fGetPackedIERequestedInfo(tpAniSirGlobal, tDot11fIERequestedInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 0 (0x00)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIESSID {
     tANI_U8      present;
     tANI_U8      num_ssid;
@@ -2654,14 +2654,14 @@ typedef struct sDot11fIESSID {
 
 #define DOT11F_EID_SSID ( 0 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_SSID_MIN_LEN ( 0 )
 
 #define DOT11F_IE_SSID_MAX_LEN ( 32 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeSSID(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIESSID*);
 
 tANI_U32 dot11fPackIeSSID(tpAniSirGlobal, tDot11fIESSID*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2669,9 +2669,9 @@ tANI_U32 dot11fPackIeSSID(tpAniSirGlobal, tDot11fIESSID*, tANI_U8*, tANI_U32, tA
 tANI_U32 dot11fGetPackedIESSID(tpAniSirGlobal, tDot11fIESSID*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 15 (0x0f)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIESchedule {
     tANI_U8      present;
     tANI_U16      aggregation: 1;
@@ -2686,14 +2686,14 @@ typedef struct sDot11fIESchedule {
 
 #define DOT11F_EID_SCHEDULE ( 15 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_SCHEDULE_MIN_LEN ( 14 )
 
 #define DOT11F_IE_SCHEDULE_MAX_LEN ( 14 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeSchedule(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIESchedule*);
 
 tANI_U32 dot11fPackIeSchedule(tpAniSirGlobal, tDot11fIESchedule*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2701,9 +2701,9 @@ tANI_U32 dot11fPackIeSchedule(tpAniSirGlobal, tDot11fIESchedule*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIESchedule(tpAniSirGlobal, tDot11fIESchedule*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 14 (0x0e)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETCLAS {
     tANI_U8      present;
     tANI_U8      user_priority;
@@ -2716,7 +2716,7 @@ typedef struct sDot11fIETCLAS {
             tANI_U8 source[6];
             tANI_U8 dest[6];
             tANI_U16 type;
-        } EthParams; /* classifier_type = 0 */
+        } EthParams; /*                     */
         struct
         {
             tANI_U8 version;
@@ -2731,7 +2731,7 @@ typedef struct sDot11fIETCLAS {
                     tANI_U8 DSCP;
                     tANI_U8 proto;
                     tANI_U8 reserved;
-                } IpV4Params; /* version = 4 */
+                } IpV4Params; /*             */
                 struct
                 {
                     tANI_U8 source[16];
@@ -2739,26 +2739,26 @@ typedef struct sDot11fIETCLAS {
                     tANI_U16 src_port;
                     tANI_U16 dest_port;
                     tANI_U8 flow_label[3];
-                } IpV6Params; /* version = 6 */
+                } IpV6Params; /*             */
             } params;
-        } IpParams; /* classifier_type = 1 */
+        } IpParams; /*                     */
         struct
         {
             tANI_U16 tag_type;
-        } Params8021dq; /* classifier_type = 2 */
+        } Params8021dq; /*                     */
     } info;
 } tDot11fIETCLAS;
 
 #define DOT11F_EID_TCLAS ( 14 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TCLAS_MIN_LEN ( 5 )
 
 #define DOT11F_IE_TCLAS_MAX_LEN ( 43 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTCLAS(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETCLAS*);
 
 tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal, tDot11fIETCLAS*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2766,9 +2766,9 @@ tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal, tDot11fIETCLAS*, tANI_U8*, tANI_U32, 
 tANI_U32 dot11fGetPackedIETCLAS(tpAniSirGlobal, tDot11fIETCLAS*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 44 (0x2c)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETCLASSPROC {
     tANI_U8      present;
     tANI_U8      processing;
@@ -2776,14 +2776,14 @@ typedef struct sDot11fIETCLASSPROC {
 
 #define DOT11F_EID_TCLASSPROC ( 44 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TCLASSPROC_MIN_LEN ( 1 )
 
 #define DOT11F_IE_TCLASSPROC_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTCLASSPROC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETCLASSPROC*);
 
 tANI_U32 dot11fPackIeTCLASSPROC(tpAniSirGlobal, tDot11fIETCLASSPROC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2791,9 +2791,9 @@ tANI_U32 dot11fPackIeTCLASSPROC(tpAniSirGlobal, tDot11fIETCLASSPROC*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIETCLASSPROC(tpAniSirGlobal, tDot11fIETCLASSPROC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 43 (0x2b)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETSDelay {
     tANI_U8      present;
     tANI_U32     delay;
@@ -2801,14 +2801,14 @@ typedef struct sDot11fIETSDelay {
 
 #define DOT11F_EID_TSDELAY ( 43 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TSDELAY_MIN_LEN ( 4 )
 
 #define DOT11F_IE_TSDELAY_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTSDelay(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETSDelay*);
 
 tANI_U32 dot11fPackIeTSDelay(tpAniSirGlobal, tDot11fIETSDelay*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2816,9 +2816,9 @@ tANI_U32 dot11fPackIeTSDelay(tpAniSirGlobal, tDot11fIETSDelay*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIETSDelay(tpAniSirGlobal, tDot11fIETSDelay*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 13 (0x0d)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETSPEC {
     tANI_U8      present;
     tANI_U16     traffic_type: 1;
@@ -2851,14 +2851,14 @@ typedef struct sDot11fIETSPEC {
 
 #define DOT11F_EID_TSPEC ( 13 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TSPEC_MIN_LEN ( 55 )
 
 #define DOT11F_IE_TSPEC_MAX_LEN ( 55 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTSPEC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETSPEC*);
 
 tANI_U32 dot11fPackIeTSPEC(tpAniSirGlobal, tDot11fIETSPEC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2866,12 +2866,12 @@ tANI_U32 dot11fPackIeTSPEC(tpAniSirGlobal, tDot11fIETSPEC*, tANI_U8*, tANI_U32, 
 tANI_U32 dot11fGetPackedIETSPEC(tpAniSirGlobal, tDot11fIETSPEC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x09}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMSchedule {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U16      aggregation: 1;
     tANI_U16             tsid: 4;
     tANI_U16        direction: 2;
@@ -2884,14 +2884,14 @@ typedef struct sDot11fIEWMMSchedule {
 
 #define DOT11F_EID_WMMSCHEDULE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMSCHEDULE_MIN_LEN ( 20 )
 
 #define DOT11F_IE_WMMSCHEDULE_MAX_LEN ( 20 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMSchedule(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMSchedule*);
 
 tANI_U32 dot11fPackIeWMMSchedule(tpAniSirGlobal, tDot11fIEWMMSchedule*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2899,12 +2899,12 @@ tANI_U32 dot11fPackIeWMMSchedule(tpAniSirGlobal, tDot11fIEWMMSchedule*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWMMSchedule(tpAniSirGlobal, tDot11fIEWMMSchedule*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x06}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMTCLAS {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U8      user_priority;
     tANI_U8      classifier_type;
     tANI_U8      classifier_mask;
@@ -2915,7 +2915,7 @@ typedef struct sDot11fIEWMMTCLAS {
             tANI_U8 source[6];
             tANI_U8 dest[6];
             tANI_U16 type;
-        } EthParams; /* classifier_type = 0 */
+        } EthParams; /*                     */
         struct
         {
             tANI_U8 version;
@@ -2930,7 +2930,7 @@ typedef struct sDot11fIEWMMTCLAS {
                     tANI_U8 DSCP;
                     tANI_U8 proto;
                     tANI_U8 reserved;
-                } IpV4Params; /* version = 4 */
+                } IpV4Params; /*             */
                 struct
                 {
                     tANI_U8 source[16];
@@ -2938,26 +2938,26 @@ typedef struct sDot11fIEWMMTCLAS {
                     tANI_U16 src_port;
                     tANI_U16 dest_port;
                     tANI_U8 flow_label[3];
-                } IpV6Params; /* version = 6 */
+                } IpV6Params; /*             */
             } params;
-        } IpParams; /* classifier_type = 1 */
+        } IpParams; /*                     */
         struct
         {
             tANI_U16 tag_type;
-        } Params8021dq; /* classifier_type = 2 */
+        } Params8021dq; /*                     */
     } info;
 } tDot11fIEWMMTCLAS;
 
 #define DOT11F_EID_WMMTCLAS ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMTCLAS_MIN_LEN ( 11 )
 
 #define DOT11F_IE_WMMTCLAS_MAX_LEN ( 49 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMTCLAS(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMTCLAS*);
 
 tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal, tDot11fIEWMMTCLAS*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2965,25 +2965,25 @@ tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal, tDot11fIEWMMTCLAS*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIEWMMTCLAS(tpAniSirGlobal, tDot11fIEWMMTCLAS*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x07}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMTCLASPROC {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U8      processing;
 } tDot11fIEWMMTCLASPROC;
 
 #define DOT11F_EID_WMMTCLASPROC ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMTCLASPROC_MIN_LEN ( 7 )
 
 #define DOT11F_IE_WMMTCLASPROC_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMTCLASPROC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMTCLASPROC*);
 
 tANI_U32 dot11fPackIeWMMTCLASPROC(tpAniSirGlobal, tDot11fIEWMMTCLASPROC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -2991,25 +2991,25 @@ tANI_U32 dot11fPackIeWMMTCLASPROC(tpAniSirGlobal, tDot11fIEWMMTCLASPROC*, tANI_U
 tANI_U32 dot11fGetPackedIEWMMTCLASPROC(tpAniSirGlobal, tDot11fIEWMMTCLASPROC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x08}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMTSDelay {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U32     delay;
 } tDot11fIEWMMTSDelay;
 
 #define DOT11F_EID_WMMTSDELAY ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMTSDELAY_MIN_LEN ( 10 )
 
 #define DOT11F_IE_WMMTSDELAY_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMTSDelay(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMTSDelay*);
 
 tANI_U32 dot11fPackIeWMMTSDelay(tpAniSirGlobal, tDot11fIEWMMTSDelay*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3017,12 +3017,12 @@ tANI_U32 dot11fPackIeWMMTSDelay(tpAniSirGlobal, tDot11fIEWMMTSDelay*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEWMMTSDelay(tpAniSirGlobal, tDot11fIEWMMTSDelay*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x02}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMTSPEC {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U16     traffic_type: 1;
     tANI_U16             tsid: 4;
     tANI_U16        direction: 2;
@@ -3053,14 +3053,14 @@ typedef struct sDot11fIEWMMTSPEC {
 
 #define DOT11F_EID_WMMTSPEC ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMTSPEC_MIN_LEN ( 61 )
 
 #define DOT11F_IE_WMMTSPEC_MAX_LEN ( 61 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMTSPEC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMTSPEC*);
 
 tANI_U32 dot11fPackIeWMMTSPEC(tpAniSirGlobal, tDot11fIEWMMTSPEC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3068,9 +3068,9 @@ tANI_U32 dot11fPackIeWMMTSPEC(tpAniSirGlobal, tDot11fIEWMMTSPEC*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIEWMMTSPEC(tpAniSirGlobal, tDot11fIEWMMTSPEC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 197 (0xc5)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEAID {
     tANI_U8      present;
     tANI_U16     assocId;
@@ -3078,14 +3078,14 @@ typedef struct sDot11fIEAID {
 
 #define DOT11F_EID_AID ( 197 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_AID_MIN_LEN ( 2 )
 
 #define DOT11F_IE_AID_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeAID(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEAID*);
 
 tANI_U32 dot11fPackIeAID(tpAniSirGlobal, tDot11fIEAID*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3093,9 +3093,9 @@ tANI_U32 dot11fPackIeAID(tpAniSirGlobal, tDot11fIEAID*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEAID(tpAniSirGlobal, tDot11fIEAID*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x0a, 0xf5}
+}; /*                 */
+#endif /*     */
+//                                      
 typedef struct sDot11fIEAirgo {
     tANI_U8                     present;
     tDot11fIEPropSuppRates      PropSuppRates;
@@ -3119,14 +3119,14 @@ typedef struct sDot11fIEAirgo {
 
 #define DOT11F_EID_AIRGO ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_AIRGO_MIN_LEN ( 3 )
 
 #define DOT11F_IE_AIRGO_MAX_LEN ( 230 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeAirgo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEAirgo*);
 
 tANI_U32 dot11fPackIeAirgo(tpAniSirGlobal, tDot11fIEAirgo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3134,9 +3134,9 @@ tANI_U32 dot11fPackIeAirgo(tpAniSirGlobal, tDot11fIEAirgo*, tANI_U8*, tANI_U32, 
 tANI_U32 dot11fGetPackedIEAirgo(tpAniSirGlobal, tDot11fIEAirgo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 156 (0x9c) {OUI 0x00, 0x40, 0x96, 0x00}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXCckmOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -3145,14 +3145,14 @@ typedef struct sDot11fIECCXCckmOpaque {
 
 #define DOT11F_EID_CCXCCKMOPAQUE ( 156 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXCCKMOPAQUE_MIN_LEN ( 10 )
 
 #define DOT11F_IE_CCXCCKMOPAQUE_MAX_LEN ( 24 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXCckmOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXCckmOpaque*);
 
 tANI_U32 dot11fPackIeCCXCckmOpaque(tpAniSirGlobal, tDot11fIECCXCckmOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3160,9 +3160,9 @@ tANI_U32 dot11fPackIeCCXCckmOpaque(tpAniSirGlobal, tDot11fIECCXCckmOpaque*, tANI
 tANI_U32 dot11fGetPackedIECCXCckmOpaque(tpAniSirGlobal, tDot11fIECCXCckmOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x40, 0x96, 0x01}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXRadMgmtCap {
     tANI_U8      present;
     tANI_U8      mgmt_state;
@@ -3172,14 +3172,14 @@ typedef struct sDot11fIECCXRadMgmtCap {
 
 #define DOT11F_EID_CCXRADMGMTCAP ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXRADMGMTCAP_MIN_LEN ( 6 )
 
 #define DOT11F_IE_CCXRADMGMTCAP_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXRadMgmtCap(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXRadMgmtCap*);
 
 tANI_U32 dot11fPackIeCCXRadMgmtCap(tpAniSirGlobal, tDot11fIECCXRadMgmtCap*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3187,9 +3187,9 @@ tANI_U32 dot11fPackIeCCXRadMgmtCap(tpAniSirGlobal, tDot11fIECCXRadMgmtCap*, tANI
 tANI_U32 dot11fGetPackedIECCXRadMgmtCap(tpAniSirGlobal, tDot11fIECCXRadMgmtCap*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x40, 0x96, 0x07}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXTrafStrmMet {
     tANI_U8      present;
     tANI_U8      tsid;
@@ -3199,14 +3199,14 @@ typedef struct sDot11fIECCXTrafStrmMet {
 
 #define DOT11F_EID_CCXTRAFSTRMMET ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXTRAFSTRMMET_MIN_LEN ( 8 )
 
 #define DOT11F_IE_CCXTRAFSTRMMET_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXTrafStrmMet(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXTrafStrmMet*);
 
 tANI_U32 dot11fPackIeCCXTrafStrmMet(tpAniSirGlobal, tDot11fIECCXTrafStrmMet*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3214,9 +3214,9 @@ tANI_U32 dot11fPackIeCCXTrafStrmMet(tpAniSirGlobal, tDot11fIECCXTrafStrmMet*, tA
 tANI_U32 dot11fGetPackedIECCXTrafStrmMet(tpAniSirGlobal, tDot11fIECCXTrafStrmMet*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x40, 0x96, 0x08}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXTrafStrmRateSet {
     tANI_U8      present;
     tANI_U8      tsid;
@@ -3226,14 +3226,14 @@ typedef struct sDot11fIECCXTrafStrmRateSet {
 
 #define DOT11F_EID_CCXTRAFSTRMRATESET ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXTRAFSTRMRATESET_MIN_LEN ( 5 )
 
 #define DOT11F_IE_CCXTRAFSTRMRATESET_MAX_LEN ( 13 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXTrafStrmRateSet(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXTrafStrmRateSet*);
 
 tANI_U32 dot11fPackIeCCXTrafStrmRateSet(tpAniSirGlobal, tDot11fIECCXTrafStrmRateSet*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3241,9 +3241,9 @@ tANI_U32 dot11fPackIeCCXTrafStrmRateSet(tpAniSirGlobal, tDot11fIECCXTrafStrmRate
 tANI_U32 dot11fGetPackedIECCXTrafStrmRateSet(tpAniSirGlobal, tDot11fIECCXTrafStrmRateSet*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 150 (0x96) {OUI 0x00, 0x40, 0x96, 0x00}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXTxmitPower {
     tANI_U8      present;
     tANI_U8      power_limit;
@@ -3252,14 +3252,14 @@ typedef struct sDot11fIECCXTxmitPower {
 
 #define DOT11F_EID_CCXTXMITPOWER ( 150 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXTXMITPOWER_MIN_LEN ( 6 )
 
 #define DOT11F_IE_CCXTXMITPOWER_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXTxmitPower(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXTxmitPower*);
 
 tANI_U32 dot11fPackIeCCXTxmitPower(tpAniSirGlobal, tDot11fIECCXTxmitPower*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3267,9 +3267,9 @@ tANI_U32 dot11fPackIeCCXTxmitPower(tpAniSirGlobal, tDot11fIECCXTxmitPower*, tANI
 tANI_U32 dot11fGetPackedIECCXTxmitPower(tpAniSirGlobal, tDot11fIECCXTxmitPower*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x40, 0x96, 0x03}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIECCXVersion {
     tANI_U8      present;
     tANI_U8      version;
@@ -3277,14 +3277,14 @@ typedef struct sDot11fIECCXVersion {
 
 #define DOT11F_EID_CCXVERSION ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CCXVERSION_MIN_LEN ( 5 )
 
 #define DOT11F_IE_CCXVERSION_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCCXVersion(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECCXVersion*);
 
 tANI_U32 dot11fPackIeCCXVersion(tpAniSirGlobal, tDot11fIECCXVersion*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3292,9 +3292,9 @@ tANI_U32 dot11fPackIeCCXVersion(tpAniSirGlobal, tDot11fIECCXVersion*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIECCXVersion(tpAniSirGlobal, tDot11fIECCXVersion*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 4 (0x04)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIECFParams {
     tANI_U8      present;
     tANI_U8      cfp_count;
@@ -3305,14 +3305,14 @@ typedef struct sDot11fIECFParams {
 
 #define DOT11F_EID_CFPARAMS ( 4 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CFPARAMS_MIN_LEN ( 6 )
 
 #define DOT11F_IE_CFPARAMS_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCFParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECFParams*);
 
 tANI_U32 dot11fPackIeCFParams(tpAniSirGlobal, tDot11fIECFParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3320,9 +3320,9 @@ tANI_U32 dot11fPackIeCFParams(tpAniSirGlobal, tDot11fIECFParams*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIECFParams(tpAniSirGlobal, tDot11fIECFParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 16 (0x10)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEChallengeText {
     tANI_U8      present;
     tANI_U8      num_text;
@@ -3331,14 +3331,14 @@ typedef struct sDot11fIEChallengeText {
 
 #define DOT11F_EID_CHALLENGETEXT ( 16 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CHALLENGETEXT_MIN_LEN ( 1 )
 
 #define DOT11F_IE_CHALLENGETEXT_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeChallengeText(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEChallengeText*);
 
 tANI_U32 dot11fPackIeChallengeText(tpAniSirGlobal, tDot11fIEChallengeText*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3346,9 +3346,9 @@ tANI_U32 dot11fPackIeChallengeText(tpAniSirGlobal, tDot11fIEChallengeText*, tANI
 tANI_U32 dot11fGetPackedIEChallengeText(tpAniSirGlobal, tDot11fIEChallengeText*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 37 (0x25)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEChanSwitchAnn {
     tANI_U8      present;
     tANI_U8      switchMode;
@@ -3358,14 +3358,14 @@ typedef struct sDot11fIEChanSwitchAnn {
 
 #define DOT11F_EID_CHANSWITCHANN ( 37 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_CHANSWITCHANN_MIN_LEN ( 3 )
 
 #define DOT11F_IE_CHANSWITCHANN_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeChanSwitchAnn(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEChanSwitchAnn*);
 
 tANI_U32 dot11fPackIeChanSwitchAnn(tpAniSirGlobal, tDot11fIEChanSwitchAnn*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3373,9 +3373,9 @@ tANI_U32 dot11fPackIeChanSwitchAnn(tpAniSirGlobal, tDot11fIEChanSwitchAnn*, tANI
 tANI_U32 dot11fGetPackedIEChanSwitchAnn(tpAniSirGlobal, tDot11fIEChanSwitchAnn*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 7 (0x07)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIECountry {
     tANI_U8      present;
     tANI_U8      country[3];
@@ -3385,14 +3385,14 @@ typedef struct sDot11fIECountry {
 
 #define DOT11F_EID_COUNTRY ( 7 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_COUNTRY_MIN_LEN ( 3 )
 
 #define DOT11F_IE_COUNTRY_MAX_LEN ( 255 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeCountry(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIECountry*);
 
 tANI_U32 dot11fPackIeCountry(tpAniSirGlobal, tDot11fIECountry*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3400,9 +3400,9 @@ tANI_U32 dot11fPackIeCountry(tpAniSirGlobal, tDot11fIECountry*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIECountry(tpAniSirGlobal, tDot11fIECountry*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 3 (0x03)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEDSParams {
     tANI_U8      present;
     tANI_U8      curr_channel;
@@ -3410,14 +3410,14 @@ typedef struct sDot11fIEDSParams {
 
 #define DOT11F_EID_DSPARAMS ( 3 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_DSPARAMS_MIN_LEN ( 1 )
 
 #define DOT11F_IE_DSPARAMS_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeDSParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEDSParams*);
 
 tANI_U32 dot11fPackIeDSParams(tpAniSirGlobal, tDot11fIEDSParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3425,9 +3425,9 @@ tANI_U32 dot11fPackIeDSParams(tpAniSirGlobal, tDot11fIEDSParams*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIEDSParams(tpAniSirGlobal, tDot11fIEDSParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 12 (0x0c)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEEDCAParamSet {
     tANI_U8      present;
     tANI_U8      qos;
@@ -3464,14 +3464,14 @@ typedef struct sDot11fIEEDCAParamSet {
 
 #define DOT11F_EID_EDCAPARAMSET ( 12 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_EDCAPARAMSET_MIN_LEN ( 18 )
 
 #define DOT11F_IE_EDCAPARAMSET_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeEDCAParamSet(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEEDCAParamSet*);
 
 tANI_U32 dot11fPackIeEDCAParamSet(tpAniSirGlobal, tDot11fIEEDCAParamSet*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3479,9 +3479,9 @@ tANI_U32 dot11fPackIeEDCAParamSet(tpAniSirGlobal, tDot11fIEEDCAParamSet*, tANI_U
 tANI_U32 dot11fGetPackedIEEDCAParamSet(tpAniSirGlobal, tDot11fIEEDCAParamSet*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 42 (0x2a)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEERPInfo {
     tANI_U8      present;
     tANI_U8  non_erp_present: 1;
@@ -3492,14 +3492,14 @@ typedef struct sDot11fIEERPInfo {
 
 #define DOT11F_EID_ERPINFO ( 42 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_ERPINFO_MIN_LEN ( 1 )
 
 #define DOT11F_IE_ERPINFO_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeERPInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEERPInfo*);
 
 tANI_U32 dot11fPackIeERPInfo(tpAniSirGlobal, tDot11fIEERPInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3507,9 +3507,9 @@ tANI_U32 dot11fPackIeERPInfo(tpAniSirGlobal, tDot11fIEERPInfo*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIEERPInfo(tpAniSirGlobal, tDot11fIEERPInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 127 (0x7f)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEExtCap {
     tANI_U8      present;
     tANI_U32 bssCoexistMgmtSupport: 1;
@@ -3567,14 +3567,14 @@ typedef struct sDot11fIEExtCap {
 
 #define DOT11F_EID_EXTCAP ( 127 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_EXTCAP_MIN_LEN ( 8 )
 
 #define DOT11F_IE_EXTCAP_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeExtCap(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEExtCap*);
 
 tANI_U32 dot11fPackIeExtCap(tpAniSirGlobal, tDot11fIEExtCap*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3582,9 +3582,9 @@ tANI_U32 dot11fPackIeExtCap(tpAniSirGlobal, tDot11fIEExtCap*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEExtCap(tpAniSirGlobal, tDot11fIEExtCap*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 62 (0x3e)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEExtChanSwitchAnn {
     tANI_U8      present;
     tANI_U8      secondaryChannelOffset;
@@ -3592,14 +3592,14 @@ typedef struct sDot11fIEExtChanSwitchAnn {
 
 #define DOT11F_EID_EXTCHANSWITCHANN ( 62 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_EXTCHANSWITCHANN_MIN_LEN ( 1 )
 
 #define DOT11F_IE_EXTCHANSWITCHANN_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeExtChanSwitchAnn(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEExtChanSwitchAnn*);
 
 tANI_U32 dot11fPackIeExtChanSwitchAnn(tpAniSirGlobal, tDot11fIEExtChanSwitchAnn*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3607,9 +3607,9 @@ tANI_U32 dot11fPackIeExtChanSwitchAnn(tpAniSirGlobal, tDot11fIEExtChanSwitchAnn*
 tANI_U32 dot11fGetPackedIEExtChanSwitchAnn(tpAniSirGlobal, tDot11fIEExtChanSwitchAnn*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 50 (0x32)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEExtSuppRates {
     tANI_U8      present;
     tANI_U8      num_rates;
@@ -3618,14 +3618,14 @@ typedef struct sDot11fIEExtSuppRates {
 
 #define DOT11F_EID_EXTSUPPRATES ( 50 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_EXTSUPPRATES_MIN_LEN ( 1 )
 
 #define DOT11F_IE_EXTSUPPRATES_MAX_LEN ( 12 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeExtSuppRates(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEExtSuppRates*);
 
 tANI_U32 dot11fPackIeExtSuppRates(tpAniSirGlobal, tDot11fIEExtSuppRates*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3633,9 +3633,9 @@ tANI_U32 dot11fPackIeExtSuppRates(tpAniSirGlobal, tDot11fIEExtSuppRates*, tANI_U
 tANI_U32 dot11fGetPackedIEExtSuppRates(tpAniSirGlobal, tDot11fIEExtSuppRates*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 2 (0x02)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEFHParamSet {
     tANI_U8      present;
     tANI_U16     dwell_time;
@@ -3646,14 +3646,14 @@ typedef struct sDot11fIEFHParamSet {
 
 #define DOT11F_EID_FHPARAMSET ( 2 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_FHPARAMSET_MIN_LEN ( 5 )
 
 #define DOT11F_IE_FHPARAMSET_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeFHParamSet(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEFHParamSet*);
 
 tANI_U32 dot11fPackIeFHParamSet(tpAniSirGlobal, tDot11fIEFHParamSet*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3661,9 +3661,9 @@ tANI_U32 dot11fPackIeFHParamSet(tpAniSirGlobal, tDot11fIEFHParamSet*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEFHParamSet(tpAniSirGlobal, tDot11fIEFHParamSet*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 8 (0x08)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEFHParams {
     tANI_U8      present;
     tANI_U8      radix;
@@ -3672,14 +3672,14 @@ typedef struct sDot11fIEFHParams {
 
 #define DOT11F_EID_FHPARAMS ( 8 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_FHPARAMS_MIN_LEN ( 2 )
 
 #define DOT11F_IE_FHPARAMS_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeFHParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEFHParams*);
 
 tANI_U32 dot11fPackIeFHParams(tpAniSirGlobal, tDot11fIEFHParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3687,9 +3687,9 @@ tANI_U32 dot11fPackIeFHParams(tpAniSirGlobal, tDot11fIEFHParams*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIEFHParams(tpAniSirGlobal, tDot11fIEFHParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 9 (0x09)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEFHPattTable {
     tANI_U8      present;
     tANI_U8      flag;
@@ -3702,14 +3702,14 @@ typedef struct sDot11fIEFHPattTable {
 
 #define DOT11F_EID_FHPATTTABLE ( 9 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_FHPATTTABLE_MIN_LEN ( 4 )
 
 #define DOT11F_IE_FHPATTTABLE_MAX_LEN ( 255 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeFHPattTable(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEFHPattTable*);
 
 tANI_U32 dot11fPackIeFHPattTable(tpAniSirGlobal, tDot11fIEFHPattTable*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3717,9 +3717,9 @@ tANI_U32 dot11fPackIeFHPattTable(tpAniSirGlobal, tDot11fIEFHPattTable*, tANI_U8*
 tANI_U32 dot11fGetPackedIEFHPattTable(tpAniSirGlobal, tDot11fIEFHPattTable*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 55 (0x37)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEFTInfo {
     tANI_U8          present;
     tANI_U16             reserved: 8;
@@ -3735,14 +3735,14 @@ typedef struct sDot11fIEFTInfo {
 
 #define DOT11F_EID_FTINFO ( 55 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_FTINFO_MIN_LEN ( 82 )
 
 #define DOT11F_IE_FTINFO_MAX_LEN ( 220 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeFTInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEFTInfo*);
 
 tANI_U32 dot11fPackIeFTInfo(tpAniSirGlobal, tDot11fIEFTInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3750,9 +3750,9 @@ tANI_U32 dot11fPackIeFTInfo(tpAniSirGlobal, tDot11fIEFTInfo*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEFTInfo(tpAniSirGlobal, tDot11fIEFTInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 56 (0x38)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEFTTimeoutInterval {
     tANI_U8      present;
     tANI_U8      timeoutType;
@@ -3761,14 +3761,14 @@ typedef struct sDot11fIEFTTimeoutInterval {
 
 #define DOT11F_EID_FTTIMEOUTINTERVAL ( 56 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_FTTIMEOUTINTERVAL_MIN_LEN ( 5 )
 
 #define DOT11F_IE_FTTIMEOUTINTERVAL_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeFTTimeoutInterval(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEFTTimeoutInterval*);
 
 tANI_U32 dot11fPackIeFTTimeoutInterval(tpAniSirGlobal, tDot11fIEFTTimeoutInterval*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3776,9 +3776,9 @@ tANI_U32 dot11fPackIeFTTimeoutInterval(tpAniSirGlobal, tDot11fIEFTTimeoutInterva
 tANI_U32 dot11fGetPackedIEFTTimeoutInterval(tpAniSirGlobal, tDot11fIEFTTimeoutInterval*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 45 (0x2d)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEHTCaps {
     tANI_U8      present;
     tANI_U16     advCodingCap: 1;
@@ -3834,14 +3834,14 @@ typedef struct sDot11fIEHTCaps {
 
 #define DOT11F_EID_HTCAPS ( 45 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_HTCAPS_MIN_LEN ( 26 )
 
 #define DOT11F_IE_HTCAPS_MAX_LEN ( 58 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeHTCaps(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEHTCaps*);
 
 tANI_U32 dot11fPackIeHTCaps(tpAniSirGlobal, tDot11fIEHTCaps*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3849,9 +3849,9 @@ tANI_U32 dot11fPackIeHTCaps(tpAniSirGlobal, tDot11fIEHTCaps*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEHTCaps(tpAniSirGlobal, tDot11fIEHTCaps*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 61 (0x3d)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEHTInfo {
     tANI_U8      present;
     tANI_U8      primaryChannel;
@@ -3879,14 +3879,14 @@ typedef struct sDot11fIEHTInfo {
 
 #define DOT11F_EID_HTINFO ( 61 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_HTINFO_MIN_LEN ( 22 )
 
 #define DOT11F_IE_HTINFO_MAX_LEN ( 54 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeHTInfo(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEHTInfo*);
 
 tANI_U32 dot11fPackIeHTInfo(tpAniSirGlobal, tDot11fIEHTInfo*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3894,9 +3894,9 @@ tANI_U32 dot11fPackIeHTInfo(tpAniSirGlobal, tDot11fIEHTInfo*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEHTInfo(tpAniSirGlobal, tDot11fIEHTInfo*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 6 (0x06)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIEIBSSParams {
     tANI_U8      present;
     tANI_U16     atim;
@@ -3904,14 +3904,14 @@ typedef struct sDot11fIEIBSSParams {
 
 #define DOT11F_EID_IBSSPARAMS ( 6 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_IBSSPARAMS_MIN_LEN ( 2 )
 
 #define DOT11F_IE_IBSSPARAMS_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeIBSSParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEIBSSParams*);
 
 tANI_U32 dot11fPackIeIBSSParams(tpAniSirGlobal, tDot11fIEIBSSParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3919,9 +3919,9 @@ tANI_U32 dot11fPackIeIBSSParams(tpAniSirGlobal, tDot11fIEIBSSParams*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEIBSSParams(tpAniSirGlobal, tDot11fIEIBSSParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 101 (0x65)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIELinkIdentifier {
     tANI_U8      present;
     tANI_U8      bssid[6];
@@ -3931,14 +3931,14 @@ typedef struct sDot11fIELinkIdentifier {
 
 #define DOT11F_EID_LINKIDENTIFIER ( 101 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_LINKIDENTIFIER_MIN_LEN ( 18 )
 
 #define DOT11F_IE_LINKIDENTIFIER_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeLinkIdentifier(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIELinkIdentifier*);
 
 tANI_U32 dot11fPackIeLinkIdentifier(tpAniSirGlobal, tDot11fIELinkIdentifier*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -3946,9 +3946,9 @@ tANI_U32 dot11fPackIeLinkIdentifier(tpAniSirGlobal, tDot11fIELinkIdentifier*, tA
 tANI_U32 dot11fGetPackedIELinkIdentifier(tpAniSirGlobal, tDot11fIELinkIdentifier*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 39 (0x27)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEMeasurementReport {
     tANI_U8      present;
     tANI_U8      token;
@@ -3970,14 +3970,14 @@ typedef struct sDot11fIEMeasurementReport {
             tANI_U8          rader: 1;
             tANI_U8     unmeasured: 1;
             tANI_U8         unused: 3;
-        } Basic; /* type = 0 */
+        } Basic; /*          */
         struct
         {
             tANI_U8 channel;
             tDOT11F_U64 meas_start_time;
             tANI_U16 meas_duration;
             tANI_U8 cca_busy_fraction;
-        } CCA; /* type = 1 */
+        } CCA; /*          */
         struct
         {
             tANI_U8 channel;
@@ -3991,7 +3991,7 @@ typedef struct sDot11fIEMeasurementReport {
             tANI_U8 rpi5_density;
             tANI_U8 rpi6_density;
             tANI_U8 rpi7_density;
-        } RPIHistogram; /* type = 2 */
+        } RPIHistogram; /*          */
         struct
         {
             tANI_U8 regClass;
@@ -4006,20 +4006,20 @@ typedef struct sDot11fIEMeasurementReport {
             tANI_U8 antenna_id;
             tANI_U32 parent_TSF;
     tDot11fIEBeaconReportFrmBody BeaconReportFrmBody;
-        } Beacon; /* type = 5 */
+        } Beacon; /*          */
     } report;
 } tDot11fIEMeasurementReport;
 
 #define DOT11F_EID_MEASUREMENTREPORT ( 39 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_MEASUREMENTREPORT_MIN_LEN ( 3 )
 
 #define DOT11F_IE_MEASUREMENTREPORT_MAX_LEN ( 29 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeMeasurementReport(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEMeasurementReport*);
 
 tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal, tDot11fIEMeasurementReport*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4027,9 +4027,9 @@ tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal, tDot11fIEMeasurementRepor
 tANI_U32 dot11fGetPackedIEMeasurementReport(tpAniSirGlobal, tDot11fIEMeasurementReport*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 38 (0x26)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEMeasurementRequest {
     tANI_U8      present;
     tANI_U8      measurement_token;
@@ -4047,19 +4047,19 @@ typedef struct sDot11fIEMeasurementRequest {
             tANI_U8 channel_no;
             tANI_U8 meas_start_time[8];
             tANI_U16 meas_duration;
-        } Basic; /* measurement_type = 0 */
+        } Basic; /*                      */
         struct
         {
             tANI_U8 channel_no;
             tANI_U8 meas_start_time[8];
             tANI_U16 meas_duration;
-        } CCA; /* measurement_type = 1 */
+        } CCA; /*                      */
         struct
         {
             tANI_U8 channel_no;
             tANI_U8 meas_start_time[8];
             tANI_U16 meas_duration;
-        } RPIHistogram; /* measurement_type = 2 */
+        } RPIHistogram; /*                      */
         struct
         {
             tANI_U8 regClass;
@@ -4074,20 +4074,20 @@ typedef struct sDot11fIEMeasurementRequest {
     tDot11fIERequestedInfo RequestedInfo;
     tANI_U16 num_APChannelReport;
     tDot11fIEAPChannelReport APChannelReport[2];
-        } Beacon; /* measurement_type = 5 */
+        } Beacon; /*                      */
     } measurement_request;
 } tDot11fIEMeasurementRequest;
 
 #define DOT11F_EID_MEASUREMENTREQUEST ( 38 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_MEASUREMENTREQUEST_MIN_LEN ( 14 )
 
 #define DOT11F_IE_MEASUREMENTREQUEST_MAX_LEN ( 16 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeMeasurementRequest(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEMeasurementRequest*);
 
 tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal, tDot11fIEMeasurementRequest*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4095,9 +4095,9 @@ tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal, tDot11fIEMeasurementRequ
 tANI_U32 dot11fGetPackedIEMeasurementRequest(tpAniSirGlobal, tDot11fIEMeasurementRequest*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 54 (0x36)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEMobilityDomain {
     tANI_U8      present;
     tANI_U16     MDID;
@@ -4108,14 +4108,14 @@ typedef struct sDot11fIEMobilityDomain {
 
 #define DOT11F_EID_MOBILITYDOMAIN ( 54 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_MOBILITYDOMAIN_MIN_LEN ( 3 )
 
 #define DOT11F_IE_MOBILITYDOMAIN_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeMobilityDomain(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEMobilityDomain*);
 
 tANI_U32 dot11fPackIeMobilityDomain(tpAniSirGlobal, tDot11fIEMobilityDomain*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4123,9 +4123,9 @@ tANI_U32 dot11fPackIeMobilityDomain(tpAniSirGlobal, tDot11fIEMobilityDomain*, tA
 tANI_U32 dot11fGetPackedIEMobilityDomain(tpAniSirGlobal, tDot11fIEMobilityDomain*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 52 (0x34)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIENeighborReport {
     tANI_U8                      present;
     tANI_U8                      bssid[6];
@@ -4153,14 +4153,14 @@ typedef struct sDot11fIENeighborReport {
 
 #define DOT11F_EID_NEIGHBORREPORT ( 52 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_NEIGHBORREPORT_MIN_LEN ( 13 )
 
 #define DOT11F_IE_NEIGHBORREPORT_MAX_LEN ( 546 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeNeighborReport(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIENeighborReport*);
 
 tANI_U32 dot11fPackIeNeighborReport(tpAniSirGlobal, tDot11fIENeighborReport*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4168,9 +4168,9 @@ tANI_U32 dot11fPackIeNeighborReport(tpAniSirGlobal, tDot11fIENeighborReport*, tA
 tANI_U32 dot11fGetPackedIENeighborReport(tpAniSirGlobal, tDot11fIENeighborReport*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 199 (0xc7)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEOperatingMode {
     tANI_U8      present;
     tANI_U8        chanWidth: 2;
@@ -4181,14 +4181,14 @@ typedef struct sDot11fIEOperatingMode {
 
 #define DOT11F_EID_OPERATINGMODE ( 199 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_OPERATINGMODE_MIN_LEN ( 1 )
 
 #define DOT11F_IE_OPERATINGMODE_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeOperatingMode(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEOperatingMode*);
 
 tANI_U32 dot11fPackIeOperatingMode(tpAniSirGlobal, tDot11fIEOperatingMode*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4196,9 +4196,9 @@ tANI_U32 dot11fPackIeOperatingMode(tpAniSirGlobal, tDot11fIEOperatingMode*, tANI
 tANI_U32 dot11fGetPackedIEOperatingMode(tpAniSirGlobal, tDot11fIEOperatingMode*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x16, 0x32}
+}; /*                 */
+#endif /*     */
+//                                      
 typedef struct sDot11fIEOxygenNetwork {
     tANI_U8      present;
     tANI_U16     data;
@@ -4206,14 +4206,14 @@ typedef struct sDot11fIEOxygenNetwork {
 
 #define DOT11F_EID_OXYGENNETWORK ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_OXYGENNETWORK_MIN_LEN ( 5 )
 
 #define DOT11F_IE_OXYGENNETWORK_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeOxygenNetwork(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEOxygenNetwork*);
 
 tANI_U32 dot11fPackIeOxygenNetwork(tpAniSirGlobal, tDot11fIEOxygenNetwork*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4221,9 +4221,9 @@ tANI_U32 dot11fPackIeOxygenNetwork(tpAniSirGlobal, tDot11fIEOxygenNetwork*, tANI
 tANI_U32 dot11fGetPackedIEOxygenNetwork(tpAniSirGlobal, tDot11fIEOxygenNetwork*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PAssocReq {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4233,14 +4233,14 @@ typedef struct sDot11fIEP2PAssocReq {
 
 #define DOT11F_EID_P2PASSOCREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PASSOCREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PASSOCREQ_MAX_LEN ( 71 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PAssocReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PAssocReq*);
 
 tANI_U32 dot11fPackIeP2PAssocReq(tpAniSirGlobal, tDot11fIEP2PAssocReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4248,9 +4248,9 @@ tANI_U32 dot11fPackIeP2PAssocReq(tpAniSirGlobal, tDot11fIEP2PAssocReq*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PAssocReq(tpAniSirGlobal, tDot11fIEP2PAssocReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PAssocRes {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4259,14 +4259,14 @@ typedef struct sDot11fIEP2PAssocRes {
 
 #define DOT11F_EID_P2PASSOCRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PASSOCRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PASSOCRES_MAX_LEN ( 15 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PAssocRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PAssocRes*);
 
 tANI_U32 dot11fPackIeP2PAssocRes(tpAniSirGlobal, tDot11fIEP2PAssocRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4274,9 +4274,9 @@ tANI_U32 dot11fPackIeP2PAssocRes(tpAniSirGlobal, tDot11fIEP2PAssocRes*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PAssocRes(tpAniSirGlobal, tDot11fIEP2PAssocRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PBeacon {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4286,14 +4286,14 @@ typedef struct sDot11fIEP2PBeacon {
 
 #define DOT11F_EID_P2PBEACON ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PBEACON_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PBEACON_MAX_LEN ( 59 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PBeacon(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PBeacon*);
 
 tANI_U32 dot11fPackIeP2PBeacon(tpAniSirGlobal, tDot11fIEP2PBeacon*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4301,9 +4301,9 @@ tANI_U32 dot11fPackIeP2PBeacon(tpAniSirGlobal, tDot11fIEP2PBeacon*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEP2PBeacon(tpAniSirGlobal, tDot11fIEP2PBeacon*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PBeaconProbeRes {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4316,14 +4316,14 @@ typedef struct sDot11fIEP2PBeaconProbeRes {
 
 #define DOT11F_EID_P2PBEACONPROBERES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PBEACONPROBERES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PBEACONPROBERES_MAX_LEN ( 1148 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PBeaconProbeRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PBeaconProbeRes*);
 
 tANI_U32 dot11fPackIeP2PBeaconProbeRes(tpAniSirGlobal, tDot11fIEP2PBeaconProbeRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4331,9 +4331,9 @@ tANI_U32 dot11fPackIeP2PBeaconProbeRes(tpAniSirGlobal, tDot11fIEP2PBeaconProbeRe
 tANI_U32 dot11fGetPackedIEP2PBeaconProbeRes(tpAniSirGlobal, tDot11fIEP2PBeaconProbeRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PDeAuth {
     tANI_U8      present;
     tDot11fTLVMinorReasonCode MinorReasonCode;
@@ -4341,14 +4341,14 @@ typedef struct sDot11fIEP2PDeAuth {
 
 #define DOT11F_EID_P2PDEAUTH ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PDEAUTH_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PDEAUTH_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PDeAuth(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PDeAuth*);
 
 tANI_U32 dot11fPackIeP2PDeAuth(tpAniSirGlobal, tDot11fIEP2PDeAuth*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4356,9 +4356,9 @@ tANI_U32 dot11fPackIeP2PDeAuth(tpAniSirGlobal, tDot11fIEP2PDeAuth*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEP2PDeAuth(tpAniSirGlobal, tDot11fIEP2PDeAuth*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PDeviceDiscoverabilityReq {
     tANI_U8      present;
     tDot11fTLVP2PDeviceId P2PDeviceId;
@@ -4367,14 +4367,14 @@ typedef struct sDot11fIEP2PDeviceDiscoverabilityReq {
 
 #define DOT11F_EID_P2PDEVICEDISCOVERABILITYREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PDEVICEDISCOVERABILITYREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PDEVICEDISCOVERABILITYREQ_MAX_LEN ( 54 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PDeviceDiscoverabilityReq*);
 
 tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal, tDot11fIEP2PDeviceDiscoverabilityReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4382,9 +4382,9 @@ tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal, tDot11fIEP2PDev
 tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityReq(tpAniSirGlobal, tDot11fIEP2PDeviceDiscoverabilityReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PDeviceDiscoverabilityRes {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4392,14 +4392,14 @@ typedef struct sDot11fIEP2PDeviceDiscoverabilityRes {
 
 #define DOT11F_EID_P2PDEVICEDISCOVERABILITYRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PDEVICEDISCOVERABILITYRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PDEVICEDISCOVERABILITYRES_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PDeviceDiscoverabilityRes*);
 
 tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal, tDot11fIEP2PDeviceDiscoverabilityRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4407,9 +4407,9 @@ tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal, tDot11fIEP2PDev
 tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityRes(tpAniSirGlobal, tDot11fIEP2PDeviceDiscoverabilityRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PDisAssoc {
     tANI_U8      present;
     tDot11fTLVMinorReasonCode MinorReasonCode;
@@ -4417,14 +4417,14 @@ typedef struct sDot11fIEP2PDisAssoc {
 
 #define DOT11F_EID_P2PDISASSOC ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PDISASSOC_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PDISASSOC_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PDisAssoc(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PDisAssoc*);
 
 tANI_U32 dot11fPackIeP2PDisAssoc(tpAniSirGlobal, tDot11fIEP2PDisAssoc*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4432,9 +4432,9 @@ tANI_U32 dot11fPackIeP2PDisAssoc(tpAniSirGlobal, tDot11fIEP2PDisAssoc*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PDisAssoc(tpAniSirGlobal, tDot11fIEP2PDisAssoc*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PGONegCnf {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4446,14 +4446,14 @@ typedef struct sDot11fIEP2PGONegCnf {
 
 #define DOT11F_EID_P2PGONEGCNF ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PGONEGCNF_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PGONEGCNF_MAX_LEN ( 319 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PGONegCnf(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PGONegCnf*);
 
 tANI_U32 dot11fPackIeP2PGONegCnf(tpAniSirGlobal, tDot11fIEP2PGONegCnf*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4461,9 +4461,9 @@ tANI_U32 dot11fPackIeP2PGONegCnf(tpAniSirGlobal, tDot11fIEP2PGONegCnf*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PGONegCnf(tpAniSirGlobal, tDot11fIEP2PGONegCnf*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PGONegReq {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4479,14 +4479,14 @@ typedef struct sDot11fIEP2PGONegReq {
 
 #define DOT11F_EID_P2PGONEGREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PGONEGREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PGONEGREQ_MAX_LEN ( 362 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PGONegReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PGONegReq*);
 
 tANI_U32 dot11fPackIeP2PGONegReq(tpAniSirGlobal, tDot11fIEP2PGONegReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4494,9 +4494,9 @@ tANI_U32 dot11fPackIeP2PGONegReq(tpAniSirGlobal, tDot11fIEP2PGONegReq*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PGONegReq(tpAniSirGlobal, tDot11fIEP2PGONegReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PGONegRes {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4512,14 +4512,14 @@ typedef struct sDot11fIEP2PGONegRes {
 
 #define DOT11F_EID_P2PGONEGRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PGONEGRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PGONEGRES_MAX_LEN ( 392 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PGONegRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PGONegRes*);
 
 tANI_U32 dot11fPackIeP2PGONegRes(tpAniSirGlobal, tDot11fIEP2PGONegRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4527,9 +4527,9 @@ tANI_U32 dot11fPackIeP2PGONegRes(tpAniSirGlobal, tDot11fIEP2PGONegRes*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PGONegRes(tpAniSirGlobal, tDot11fIEP2PGONegRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PGONegWPS {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -4538,14 +4538,14 @@ typedef struct sDot11fIEP2PGONegWPS {
 
 #define DOT11F_EID_P2PGONEGWPS ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PGONEGWPS_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PGONEGWPS_MAX_LEN ( 15 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PGONegWPS(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PGONegWPS*);
 
 tANI_U32 dot11fPackIeP2PGONegWPS(tpAniSirGlobal, tDot11fIEP2PGONegWPS*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4553,9 +4553,9 @@ tANI_U32 dot11fPackIeP2PGONegWPS(tpAniSirGlobal, tDot11fIEP2PGONegWPS*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PGONegWPS(tpAniSirGlobal, tDot11fIEP2PGONegWPS*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIEP2PIEOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -4564,14 +4564,14 @@ typedef struct sDot11fIEP2PIEOpaque {
 
 #define DOT11F_EID_P2PIEOPAQUE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PIEOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_P2PIEOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PIEOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PIEOpaque*);
 
 tANI_U32 dot11fPackIeP2PIEOpaque(tpAniSirGlobal, tDot11fIEP2PIEOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4579,9 +4579,9 @@ tANI_U32 dot11fPackIeP2PIEOpaque(tpAniSirGlobal, tDot11fIEP2PIEOpaque*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PIEOpaque(tpAniSirGlobal, tDot11fIEP2PIEOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PInvitationReq {
     tANI_U8      present;
     tDot11fTLVConfigurationTimeout ConfigurationTimeout;
@@ -4595,14 +4595,14 @@ typedef struct sDot11fIEP2PInvitationReq {
 
 #define DOT11F_EID_P2PINVITATIONREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PINVITATIONREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PINVITATIONREQ_MAX_LEN ( 383 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PInvitationReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PInvitationReq*);
 
 tANI_U32 dot11fPackIeP2PInvitationReq(tpAniSirGlobal, tDot11fIEP2PInvitationReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4610,9 +4610,9 @@ tANI_U32 dot11fPackIeP2PInvitationReq(tpAniSirGlobal, tDot11fIEP2PInvitationReq*
 tANI_U32 dot11fGetPackedIEP2PInvitationReq(tpAniSirGlobal, tDot11fIEP2PInvitationReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PInvitationRes {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4624,14 +4624,14 @@ typedef struct sDot11fIEP2PInvitationRes {
 
 #define DOT11F_EID_P2PINVITATIONRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PINVITATIONRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PINVITATIONRES_MAX_LEN ( 287 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PInvitationRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PInvitationRes*);
 
 tANI_U32 dot11fPackIeP2PInvitationRes(tpAniSirGlobal, tDot11fIEP2PInvitationRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4639,9 +4639,9 @@ tANI_U32 dot11fPackIeP2PInvitationRes(tpAniSirGlobal, tDot11fIEP2PInvitationRes*
 tANI_U32 dot11fGetPackedIEP2PInvitationRes(tpAniSirGlobal, tDot11fIEP2PInvitationRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PNoticeOfAbsence {
     tANI_U8      present;
     tDot11fTLVNoticeOfAbsence NoticeOfAbsence;
@@ -4649,14 +4649,14 @@ typedef struct sDot11fIEP2PNoticeOfAbsence {
 
 #define DOT11F_EID_P2PNOTICEOFABSENCE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PNOTICEOFABSENCE_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PNOTICEOFABSENCE_MAX_LEN ( 45 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PNoticeOfAbsence(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PNoticeOfAbsence*);
 
 tANI_U32 dot11fPackIeP2PNoticeOfAbsence(tpAniSirGlobal, tDot11fIEP2PNoticeOfAbsence*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4664,9 +4664,9 @@ tANI_U32 dot11fPackIeP2PNoticeOfAbsence(tpAniSirGlobal, tDot11fIEP2PNoticeOfAbse
 tANI_U32 dot11fGetPackedIEP2PNoticeOfAbsence(tpAniSirGlobal, tDot11fIEP2PNoticeOfAbsence*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PPresenceResponse {
     tANI_U8      present;
     tDot11fTLVP2PStatus P2PStatus;
@@ -4675,14 +4675,14 @@ typedef struct sDot11fIEP2PPresenceResponse {
 
 #define DOT11F_EID_P2PPRESENCERESPONSE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PPRESENCERESPONSE_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PPRESENCERESPONSE_MAX_LEN ( 49 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PPresenceResponse(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PPresenceResponse*);
 
 tANI_U32 dot11fPackIeP2PPresenceResponse(tpAniSirGlobal, tDot11fIEP2PPresenceResponse*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4690,9 +4690,9 @@ tANI_U32 dot11fPackIeP2PPresenceResponse(tpAniSirGlobal, tDot11fIEP2PPresenceRes
 tANI_U32 dot11fGetPackedIEP2PPresenceResponse(tpAniSirGlobal, tDot11fIEP2PPresenceResponse*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PProbeReq {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4704,14 +4704,14 @@ typedef struct sDot11fIEP2PProbeReq {
 
 #define DOT11F_EID_P2PPROBEREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PPROBEREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PPROBEREQ_MAX_LEN ( 41 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PProbeReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PProbeReq*);
 
 tANI_U32 dot11fPackIeP2PProbeReq(tpAniSirGlobal, tDot11fIEP2PProbeReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4719,9 +4719,9 @@ tANI_U32 dot11fPackIeP2PProbeReq(tpAniSirGlobal, tDot11fIEP2PProbeReq*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PProbeReq(tpAniSirGlobal, tDot11fIEP2PProbeReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PProbeRes {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4733,14 +4733,14 @@ typedef struct sDot11fIEP2PProbeRes {
 
 #define DOT11F_EID_P2PPROBERES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PPROBERES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PPROBERES_MAX_LEN ( 1139 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PProbeRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PProbeRes*);
 
 tANI_U32 dot11fPackIeP2PProbeRes(tpAniSirGlobal, tDot11fIEP2PProbeRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4748,9 +4748,9 @@ tANI_U32 dot11fPackIeP2PProbeRes(tpAniSirGlobal, tDot11fIEP2PProbeRes*, tANI_U8*
 tANI_U32 dot11fGetPackedIEP2PProbeRes(tpAniSirGlobal, tDot11fIEP2PProbeRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x09} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PProvisionDiscoveryReq {
     tANI_U8      present;
     tDot11fTLVP2PCapability P2PCapability;
@@ -4760,14 +4760,14 @@ typedef struct sDot11fIEP2PProvisionDiscoveryReq {
 
 #define DOT11F_EID_P2PPROVISIONDISCOVERYREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PPROVISIONDISCOVERYREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PPROVISIONDISCOVERYREQ_MAX_LEN ( 105 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PProvisionDiscoveryReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PProvisionDiscoveryReq*);
 
 tANI_U32 dot11fPackIeP2PProvisionDiscoveryReq(tpAniSirGlobal, tDot11fIEP2PProvisionDiscoveryReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4775,9 +4775,9 @@ tANI_U32 dot11fPackIeP2PProvisionDiscoveryReq(tpAniSirGlobal, tDot11fIEP2PProvis
 tANI_U32 dot11fGetPackedIEP2PProvisionDiscoveryReq(tpAniSirGlobal, tDot11fIEP2PProvisionDiscoveryReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEP2PWSCProvisionDiscoveryRes {
     tANI_U8      present;
     tDot11fTLVConfigMethods ConfigMethods;
@@ -4785,14 +4785,14 @@ typedef struct sDot11fIEP2PWSCProvisionDiscoveryRes {
 
 #define DOT11F_EID_P2PWSCPROVISIONDISCOVERYRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_P2PWSCPROVISIONDISCOVERYRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_P2PWSCPROVISIONDISCOVERYRES_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEP2PWSCProvisionDiscoveryRes*);
 
 tANI_U32 dot11fPackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal, tDot11fIEP2PWSCProvisionDiscoveryRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4800,9 +4800,9 @@ tANI_U32 dot11fPackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal, tDot11fIEP2PWSC
 tANI_U32 dot11fGetPackedIEP2PWSCProvisionDiscoveryRes(tpAniSirGlobal, tDot11fIEP2PWSCProvisionDiscoveryRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 105 (0x69)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEPTIControl {
     tANI_U8      present;
     tANI_U8      tid;
@@ -4811,14 +4811,14 @@ typedef struct sDot11fIEPTIControl {
 
 #define DOT11F_EID_PTICONTROL ( 105 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PTICONTROL_MIN_LEN ( 3 )
 
 #define DOT11F_IE_PTICONTROL_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePTIControl(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPTIControl*);
 
 tANI_U32 dot11fPackIePTIControl(tpAniSirGlobal, tDot11fIEPTIControl*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4826,9 +4826,9 @@ tANI_U32 dot11fPackIePTIControl(tpAniSirGlobal, tDot11fIEPTIControl*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEPTIControl(tpAniSirGlobal, tDot11fIEPTIControl*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 106 (0x6a)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEPUBufferStatus {
     tANI_U8      present;
     tANI_U8 ac_bk_traffic_aval: 1;
@@ -4840,14 +4840,14 @@ typedef struct sDot11fIEPUBufferStatus {
 
 #define DOT11F_EID_PUBUFFERSTATUS ( 106 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_PUBUFFERSTATUS_MIN_LEN ( 1 )
 
 #define DOT11F_IE_PUBUFFERSTATUS_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePUBufferStatus(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPUBufferStatus*);
 
 tANI_U32 dot11fPackIePUBufferStatus(tpAniSirGlobal, tDot11fIEPUBufferStatus*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4855,9 +4855,9 @@ tANI_U32 dot11fPackIePUBufferStatus(tpAniSirGlobal, tDot11fIEPUBufferStatus*, tA
 tANI_U32 dot11fGetPackedIEPUBufferStatus(tpAniSirGlobal, tDot11fIEPUBufferStatus*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 33 (0x21)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPowerCaps {
     tANI_U8      present;
     tANI_U8      minTxPower;
@@ -4866,14 +4866,14 @@ typedef struct sDot11fIEPowerCaps {
 
 #define DOT11F_EID_POWERCAPS ( 33 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_POWERCAPS_MIN_LEN ( 2 )
 
 #define DOT11F_IE_POWERCAPS_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePowerCaps(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPowerCaps*);
 
 tANI_U32 dot11fPackIePowerCaps(tpAniSirGlobal, tDot11fIEPowerCaps*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4881,9 +4881,9 @@ tANI_U32 dot11fPackIePowerCaps(tpAniSirGlobal, tDot11fIEPowerCaps*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEPowerCaps(tpAniSirGlobal, tDot11fIEPowerCaps*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 32 (0x20)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEPowerConstraints {
     tANI_U8      present;
     tANI_U8      localPowerConstraints;
@@ -4891,14 +4891,14 @@ typedef struct sDot11fIEPowerConstraints {
 
 #define DOT11F_EID_POWERCONSTRAINTS ( 32 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_POWERCONSTRAINTS_MIN_LEN ( 1 )
 
 #define DOT11F_IE_POWERCONSTRAINTS_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIePowerConstraints(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEPowerConstraints*);
 
 tANI_U32 dot11fPackIePowerConstraints(tpAniSirGlobal, tDot11fIEPowerConstraints*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4906,9 +4906,9 @@ tANI_U32 dot11fPackIePowerConstraints(tpAniSirGlobal, tDot11fIEPowerConstraints*
 tANI_U32 dot11fGetPackedIEPowerConstraints(tpAniSirGlobal, tDot11fIEPowerConstraints*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 11 (0x0b)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEQBSSLoad {
     tANI_U8      present;
     tANI_U16     stacount;
@@ -4918,14 +4918,14 @@ typedef struct sDot11fIEQBSSLoad {
 
 #define DOT11F_EID_QBSSLOAD ( 11 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_QBSSLOAD_MIN_LEN ( 5 )
 
 #define DOT11F_IE_QBSSLOAD_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeQBSSLoad(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEQBSSLoad*);
 
 tANI_U32 dot11fPackIeQBSSLoad(tpAniSirGlobal, tDot11fIEQBSSLoad*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4933,9 +4933,9 @@ tANI_U32 dot11fPackIeQBSSLoad(tpAniSirGlobal, tDot11fIEQBSSLoad*, tANI_U8*, tANI
 tANI_U32 dot11fGetPackedIEQBSSLoad(tpAniSirGlobal, tDot11fIEQBSSLoad*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 46 (0x2e)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEQOSCapsAp {
     tANI_U8      present;
     tANI_U8            count: 4;
@@ -4947,14 +4947,14 @@ typedef struct sDot11fIEQOSCapsAp {
 
 #define DOT11F_EID_QOSCAPSAP ( 46 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_QOSCAPSAP_MIN_LEN ( 1 )
 
 #define DOT11F_IE_QOSCAPSAP_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeQOSCapsAp(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEQOSCapsAp*);
 
 tANI_U32 dot11fPackIeQOSCapsAp(tpAniSirGlobal, tDot11fIEQOSCapsAp*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4962,9 +4962,9 @@ tANI_U32 dot11fPackIeQOSCapsAp(tpAniSirGlobal, tDot11fIEQOSCapsAp*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEQOSCapsAp(tpAniSirGlobal, tDot11fIEQOSCapsAp*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 46 (0x2e)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEQOSCapsStation {
     tANI_U8      present;
     tANI_U8       acvo_uapsd: 1;
@@ -4978,14 +4978,14 @@ typedef struct sDot11fIEQOSCapsStation {
 
 #define DOT11F_EID_QOSCAPSSTATION ( 46 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_QOSCAPSSTATION_MIN_LEN ( 1 )
 
 #define DOT11F_IE_QOSCAPSSTATION_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeQOSCapsStation(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEQOSCapsStation*);
 
 tANI_U32 dot11fPackIeQOSCapsStation(tpAniSirGlobal, tDot11fIEQOSCapsStation*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -4993,9 +4993,9 @@ tANI_U32 dot11fPackIeQOSCapsStation(tpAniSirGlobal, tDot11fIEQOSCapsStation*, tA
 tANI_U32 dot11fGetPackedIEQOSCapsStation(tpAniSirGlobal, tDot11fIEQOSCapsStation*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 40 (0x28)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEQuiet {
     tANI_U8      present;
     tANI_U8      count;
@@ -5006,14 +5006,14 @@ typedef struct sDot11fIEQuiet {
 
 #define DOT11F_EID_QUIET ( 40 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_QUIET_MIN_LEN ( 6 )
 
 #define DOT11F_IE_QUIET_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeQuiet(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEQuiet*);
 
 tANI_U32 dot11fPackIeQuiet(tpAniSirGlobal, tDot11fIEQuiet*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5021,9 +5021,9 @@ tANI_U32 dot11fPackIeQuiet(tpAniSirGlobal, tDot11fIEQuiet*, tANI_U8*, tANI_U32, 
 tANI_U32 dot11fGetPackedIEQuiet(tpAniSirGlobal, tDot11fIEQuiet*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 53 (0x35)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERCPIIE {
     tANI_U8      present;
     tANI_U8      rcpi;
@@ -5031,14 +5031,14 @@ typedef struct sDot11fIERCPIIE {
 
 #define DOT11F_EID_RCPIIE ( 53 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RCPIIE_MIN_LEN ( 1 )
 
 #define DOT11F_IE_RCPIIE_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRCPIIE(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERCPIIE*);
 
 tANI_U32 dot11fPackIeRCPIIE(tpAniSirGlobal, tDot11fIERCPIIE*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5046,9 +5046,9 @@ tANI_U32 dot11fPackIeRCPIIE(tpAniSirGlobal, tDot11fIERCPIIE*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIERCPIIE(tpAniSirGlobal, tDot11fIERCPIIE*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 57 (0x39)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERICDataDesc {
     tANI_U8                present;
     tDot11fIERICData       RICData;
@@ -5069,14 +5069,14 @@ typedef struct sDot11fIERICDataDesc {
 
 #define DOT11F_EID_RICDATADESC ( 57 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RICDATADESC_MIN_LEN ( 0 )
 
 #define DOT11F_IE_RICDATADESC_MAX_LEN ( 548 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRICDataDesc(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERICDataDesc*);
 
 tANI_U32 dot11fPackIeRICDataDesc(tpAniSirGlobal, tDot11fIERICDataDesc*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5084,12 +5084,12 @@ tANI_U32 dot11fPackIeRICDataDesc(tpAniSirGlobal, tDot11fIERICDataDesc*, tANI_U8*
 tANI_U32 dot11fGetPackedIERICDataDesc(tpAniSirGlobal, tDot11fIERICDataDesc*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 48 (0x30)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERSN {
     tANI_U8      present;
-    tANI_U16     version /* Must be 1! */;
+    tANI_U16     version /*            */;
     tANI_U8      gp_cipher_suite[4];
     tANI_U16     pwise_cipher_suite_count;
     tANI_U8      pwise_cipher_suites[4][4];
@@ -5103,14 +5103,14 @@ typedef struct sDot11fIERSN {
 
 #define DOT11F_EID_RSN ( 48 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RSN_MIN_LEN ( 6 )
 
 #define DOT11F_IE_RSN_MAX_LEN ( 114 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRSN(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERSN*);
 
 tANI_U32 dot11fPackIeRSN(tpAniSirGlobal, tDot11fIERSN*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5118,9 +5118,9 @@ tANI_U32 dot11fPackIeRSN(tpAniSirGlobal, tDot11fIERSN*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIERSN(tpAniSirGlobal, tDot11fIERSN*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 65 (0x41)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERSNIIE {
     tANI_U8      present;
     tANI_U8      rsni;
@@ -5128,14 +5128,14 @@ typedef struct sDot11fIERSNIIE {
 
 #define DOT11F_EID_RSNIIE ( 65 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RSNIIE_MIN_LEN ( 1 )
 
 #define DOT11F_IE_RSNIIE_MAX_LEN ( 1 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRSNIIE(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERSNIIE*);
 
 tANI_U32 dot11fPackIeRSNIIE(tpAniSirGlobal, tDot11fIERSNIIE*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5143,9 +5143,9 @@ tANI_U32 dot11fPackIeRSNIIE(tpAniSirGlobal, tDot11fIERSNIIE*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIERSNIIE(tpAniSirGlobal, tDot11fIERSNIIE*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 48 (0x30)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIERSNOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -5154,14 +5154,14 @@ typedef struct sDot11fIERSNOpaque {
 
 #define DOT11F_EID_RSNOPAQUE ( 48 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_RSNOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_RSNOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeRSNOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIERSNOpaque*);
 
 tANI_U32 dot11fPackIeRSNOpaque(tpAniSirGlobal, tDot11fIERSNOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5169,9 +5169,9 @@ tANI_U32 dot11fPackIeRSNOpaque(tpAniSirGlobal, tDot11fIERSNOpaque*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIERSNOpaque(tpAniSirGlobal, tDot11fIERSNOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 36 (0x24)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIESuppChannels {
     tANI_U8      present;
     tANI_U8      num_bands;
@@ -5180,14 +5180,14 @@ typedef struct sDot11fIESuppChannels {
 
 #define DOT11F_EID_SUPPCHANNELS ( 36 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_SUPPCHANNELS_MIN_LEN ( 2 )
 
 #define DOT11F_IE_SUPPCHANNELS_MAX_LEN ( 96 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeSuppChannels(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIESuppChannels*);
 
 tANI_U32 dot11fPackIeSuppChannels(tpAniSirGlobal, tDot11fIESuppChannels*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5195,9 +5195,9 @@ tANI_U32 dot11fPackIeSuppChannels(tpAniSirGlobal, tDot11fIESuppChannels*, tANI_U
 tANI_U32 dot11fGetPackedIESuppChannels(tpAniSirGlobal, tDot11fIESuppChannels*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 1 (0x01)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIESuppRates {
     tANI_U8      present;
     tANI_U8      num_rates;
@@ -5206,7 +5206,7 @@ typedef struct sDot11fIESuppRates {
 
 #define DOT11F_EID_SUPPRATES ( 1 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_SUPPRATES_MIN_LEN ( 0 )
 
 #define DOT11F_IE_SUPPRATES_MAX_LEN ( 12 )
@@ -5226,7 +5226,7 @@ typedef struct sDot11fIESuppRates {
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeSuppRates(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIESuppRates*);
 
 tANI_U32 dot11fPackIeSuppRates(tpAniSirGlobal, tDot11fIESuppRates*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5234,9 +5234,9 @@ tANI_U32 dot11fPackIeSuppRates(tpAniSirGlobal, tDot11fIESuppRates*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIESuppRates(tpAniSirGlobal, tDot11fIESuppRates*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 5 (0x05)
+}; /*                 */
+#endif /*     */
+//             
 typedef struct sDot11fIETIM {
     tANI_U8      present;
     tANI_U8      dtim_count;
@@ -5248,14 +5248,14 @@ typedef struct sDot11fIETIM {
 
 #define DOT11F_EID_TIM ( 5 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TIM_MIN_LEN ( 4 )
 
 #define DOT11F_IE_TIM_MAX_LEN ( 254 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTIM(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETIM*);
 
 tANI_U32 dot11fPackIeTIM(tpAniSirGlobal, tDot11fIETIM*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5263,9 +5263,9 @@ tANI_U32 dot11fPackIeTIM(tpAniSirGlobal, tDot11fIETIM*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIETIM(tpAniSirGlobal, tDot11fIETIM*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 35 (0x23)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETPCReport {
     tANI_U8      present;
     tANI_U8      tx_power;
@@ -5274,14 +5274,14 @@ typedef struct sDot11fIETPCReport {
 
 #define DOT11F_EID_TPCREPORT ( 35 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TPCREPORT_MIN_LEN ( 2 )
 
 #define DOT11F_IE_TPCREPORT_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTPCReport(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETPCReport*);
 
 tANI_U32 dot11fPackIeTPCReport(tpAniSirGlobal, tDot11fIETPCReport*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5289,23 +5289,23 @@ tANI_U32 dot11fPackIeTPCReport(tpAniSirGlobal, tDot11fIETPCReport*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIETPCReport(tpAniSirGlobal, tDot11fIETPCReport*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 34 (0x22)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIETPCRequest {
     tANI_U8      present;
 } tDot11fIETPCRequest;
 
 #define DOT11F_EID_TPCREQUEST ( 34 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_TPCREQUEST_MIN_LEN ( 0 )
 
 #define DOT11F_IE_TPCREQUEST_MAX_LEN ( 0 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeTPCRequest(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIETPCRequest*);
 
 tANI_U32 dot11fPackIeTPCRequest(tpAniSirGlobal, tDot11fIETPCRequest*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5313,9 +5313,9 @@ tANI_U32 dot11fPackIeTPCRequest(tpAniSirGlobal, tDot11fIETPCRequest*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIETPCRequest(tpAniSirGlobal, tDot11fIETPCRequest*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 191 (0xbf)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEVHTCaps {
     tANI_U8      present;
     tANI_U32       maxMPDULen: 2;
@@ -5348,14 +5348,14 @@ typedef struct sDot11fIEVHTCaps {
 
 #define DOT11F_EID_VHTCAPS ( 191 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_VHTCAPS_MIN_LEN ( 12 )
 
 #define DOT11F_IE_VHTCAPS_MAX_LEN ( 12 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeVHTCaps(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEVHTCaps*);
 
 tANI_U32 dot11fPackIeVHTCaps(tpAniSirGlobal, tDot11fIEVHTCaps*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5363,9 +5363,9 @@ tANI_U32 dot11fPackIeVHTCaps(tpAniSirGlobal, tDot11fIEVHTCaps*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIEVHTCaps(tpAniSirGlobal, tDot11fIEVHTCaps*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 193 (0xc1)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEVHTExtBssLoad {
     tANI_U8      present;
     tANI_U8      muMIMOCapStaCount;
@@ -5377,14 +5377,14 @@ typedef struct sDot11fIEVHTExtBssLoad {
 
 #define DOT11F_EID_VHTEXTBSSLOAD ( 193 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_VHTEXTBSSLOAD_MIN_LEN ( 5 )
 
 #define DOT11F_IE_VHTEXTBSSLOAD_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeVHTExtBssLoad(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEVHTExtBssLoad*);
 
 tANI_U32 dot11fPackIeVHTExtBssLoad(tpAniSirGlobal, tDot11fIEVHTExtBssLoad*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5392,9 +5392,9 @@ tANI_U32 dot11fPackIeVHTExtBssLoad(tpAniSirGlobal, tDot11fIEVHTExtBssLoad*, tANI
 tANI_U32 dot11fGetPackedIEVHTExtBssLoad(tpAniSirGlobal, tDot11fIEVHTExtBssLoad*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 192 (0xc0)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEVHTOperation {
     tANI_U8      present;
     tANI_U8      chanWidth;
@@ -5405,14 +5405,14 @@ typedef struct sDot11fIEVHTOperation {
 
 #define DOT11F_EID_VHTOPERATION ( 192 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_VHTOPERATION_MIN_LEN ( 5 )
 
 #define DOT11F_IE_VHTOPERATION_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeVHTOperation(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEVHTOperation*);
 
 tANI_U32 dot11fPackIeVHTOperation(tpAniSirGlobal, tDot11fIEVHTOperation*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5420,12 +5420,12 @@ tANI_U32 dot11fPackIeVHTOperation(tpAniSirGlobal, tDot11fIEVHTOperation*, tANI_U
 tANI_U32 dot11fGetPackedIEVHTOperation(tpAniSirGlobal, tDot11fIEVHTOperation*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 68 (0x44)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEWAPI {
     tANI_U8      present;
-    tANI_U16     version /* Must be 1! */;
+    tANI_U16     version /*            */;
     tANI_U16     akm_suite_count;
     tANI_U8      akm_suites[4][4];
     tANI_U16     unicast_cipher_suite_count;
@@ -5439,14 +5439,14 @@ typedef struct sDot11fIEWAPI {
 
 #define DOT11F_EID_WAPI ( 68 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WAPI_MIN_LEN ( 12 )
 
 #define DOT11F_IE_WAPI_MAX_LEN ( 110 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWAPI(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWAPI*);
 
 tANI_U32 dot11fPackIeWAPI(tpAniSirGlobal, tDot11fIEWAPI*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5454,9 +5454,9 @@ tANI_U32 dot11fPackIeWAPI(tpAniSirGlobal, tDot11fIEWAPI*, tANI_U8*, tANI_U32, tA
 tANI_U32 dot11fGetPackedIEWAPI(tpAniSirGlobal, tDot11fIEWAPI*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 68 (0x44)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sDot11fIEWAPIOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -5465,14 +5465,14 @@ typedef struct sDot11fIEWAPIOpaque {
 
 #define DOT11F_EID_WAPIOPAQUE ( 68 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WAPIOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_WAPIOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWAPIOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWAPIOpaque*);
 
 tANI_U32 dot11fPackIeWAPIOpaque(tpAniSirGlobal, tDot11fIEWAPIOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5480,9 +5480,9 @@ tANI_U32 dot11fPackIeWAPIOpaque(tpAniSirGlobal, tDot11fIEWAPIOpaque*, tANI_U8*, 
 tANI_U32 dot11fGetPackedIEWAPIOpaque(tpAniSirGlobal, tDot11fIEWAPIOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x08, 0x00}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWFATPC {
     tANI_U8      present;
     tANI_U8      txPower;
@@ -5491,14 +5491,14 @@ typedef struct sDot11fIEWFATPC {
 
 #define DOT11F_EID_WFATPC ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WFATPC_MIN_LEN ( 7 )
 
 #define DOT11F_IE_WFATPC_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWFATPC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWFATPC*);
 
 tANI_U32 dot11fPackIeWFATPC(tpAniSirGlobal, tDot11fIEWFATPC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5506,9 +5506,9 @@ tANI_U32 dot11fPackIeWFATPC(tpAniSirGlobal, tDot11fIEWFATPC*, tANI_U8*, tANI_U32
 tANI_U32 dot11fGetPackedIEWFATPC(tpAniSirGlobal, tDot11fIEWFATPC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x50, 0x6f, 0x9a, 0x0a}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIEWFDIEOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -5517,14 +5517,14 @@ typedef struct sDot11fIEWFDIEOpaque {
 
 #define DOT11F_EID_WFDIEOPAQUE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WFDIEOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_WFDIEOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWFDIEOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWFDIEOpaque*);
 
 tANI_U32 dot11fPackIeWFDIEOpaque(tpAniSirGlobal, tDot11fIEWFDIEOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5532,12 +5532,12 @@ tANI_U32 dot11fPackIeWFDIEOpaque(tpAniSirGlobal, tDot11fIEWFDIEOpaque*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWFDIEOpaque(tpAniSirGlobal, tDot11fIEWFDIEOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x05}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMCaps {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U8         reserved: 4;
     tANI_U8             qack: 1;
     tANI_U8    queue_request: 1;
@@ -5547,14 +5547,14 @@ typedef struct sDot11fIEWMMCaps {
 
 #define DOT11F_EID_WMMCAPS ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMCAPS_MIN_LEN ( 7 )
 
 #define DOT11F_IE_WMMCAPS_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMCaps(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMCaps*);
 
 tANI_U32 dot11fPackIeWMMCaps(tpAniSirGlobal, tDot11fIEWMMCaps*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5562,9 +5562,9 @@ tANI_U32 dot11fPackIeWMMCaps(tpAniSirGlobal, tDot11fIEWMMCaps*, tANI_U8*, tANI_U
 tANI_U32 dot11fGetPackedIEWMMCaps(tpAniSirGlobal, tDot11fIEWMMCaps*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x00}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMInfoAp {
     tANI_U8      present;
     tANI_U8      version;
@@ -5575,14 +5575,14 @@ typedef struct sDot11fIEWMMInfoAp {
 
 #define DOT11F_EID_WMMINFOAP ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMINFOAP_MIN_LEN ( 7 )
 
 #define DOT11F_IE_WMMINFOAP_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMInfoAp(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMInfoAp*);
 
 tANI_U32 dot11fPackIeWMMInfoAp(tpAniSirGlobal, tDot11fIEWMMInfoAp*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5590,9 +5590,9 @@ tANI_U32 dot11fPackIeWMMInfoAp(tpAniSirGlobal, tDot11fIEWMMInfoAp*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEWMMInfoAp(tpAniSirGlobal, tDot11fIEWMMInfoAp*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x00}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMInfoStation {
     tANI_U8      present;
     tANI_U8      version;
@@ -5607,14 +5607,14 @@ typedef struct sDot11fIEWMMInfoStation {
 
 #define DOT11F_EID_WMMINFOSTATION ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMINFOSTATION_MIN_LEN ( 7 )
 
 #define DOT11F_IE_WMMINFOSTATION_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMInfoStation(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMInfoStation*);
 
 tANI_U32 dot11fPackIeWMMInfoStation(tpAniSirGlobal, tDot11fIEWMMInfoStation*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5622,12 +5622,12 @@ tANI_U32 dot11fPackIeWMMInfoStation(tpAniSirGlobal, tDot11fIEWMMInfoStation*, tA
 tANI_U32 dot11fGetPackedIEWMMInfoStation(tpAniSirGlobal, tDot11fIEWMMInfoStation*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x02, 0x01}
+}; /*                 */
+#endif /*     */
+//                                                  
 typedef struct sDot11fIEWMMParams {
     tANI_U8      present;
-    tANI_U8      version /* Must be 1! */;
+    tANI_U8      version /*            */;
     tANI_U8      qosInfo;
     tANI_U8      reserved2;
     tANI_U8       acbe_aifsn: 4;
@@ -5662,14 +5662,14 @@ typedef struct sDot11fIEWMMParams {
 
 #define DOT11F_EID_WMMPARAMS ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WMMPARAMS_MIN_LEN ( 24 )
 
 #define DOT11F_IE_WMMPARAMS_MAX_LEN ( 24 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWMMParams(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWMMParams*);
 
 tANI_U32 dot11fPackIeWMMParams(tpAniSirGlobal, tDot11fIEWMMParams*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5677,13 +5677,13 @@ tANI_U32 dot11fPackIeWMMParams(tpAniSirGlobal, tDot11fIEWMMParams*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEWMMParams(tpAniSirGlobal, tDot11fIEWMMParams*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x01}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIEWPA {
     tANI_U8      present;
-    tANI_U16     version /* Must be 1! */;
-    tANI_U8      multicast_cipher_present;   //field added to fix the bug in dot11fPackIEWPA 
+    tANI_U16     version /*            */;
+    tANI_U8      multicast_cipher_present;   //                                              
     tANI_U8      multicast_cipher[4];
     tANI_U16     unicast_cipher_count;
     tANI_U8      unicast_ciphers[4][4];
@@ -5694,14 +5694,14 @@ typedef struct sDot11fIEWPA {
 
 #define DOT11F_EID_WPA ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WPA_MIN_LEN ( 6 )
 
 #define DOT11F_IE_WPA_MAX_LEN ( 48 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWPA(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWPA*);
 
 tANI_U32 dot11fPackIeWPA(tpAniSirGlobal, tDot11fIEWPA*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5709,9 +5709,9 @@ tANI_U32 dot11fPackIeWPA(tpAniSirGlobal, tDot11fIEWPA*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEWPA(tpAniSirGlobal, tDot11fIEWPA*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x01}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIEWPAOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -5720,14 +5720,14 @@ typedef struct sDot11fIEWPAOpaque {
 
 #define DOT11F_EID_WPAOPAQUE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WPAOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_WPAOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWPAOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWPAOpaque*);
 
 tANI_U32 dot11fPackIeWPAOpaque(tpAniSirGlobal, tDot11fIEWPAOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5735,9 +5735,9 @@ tANI_U32 dot11fPackIeWPAOpaque(tpAniSirGlobal, tDot11fIEWPAOpaque*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEWPAOpaque(tpAniSirGlobal, tDot11fIEWPAOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWSC {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5766,14 +5766,14 @@ typedef struct sDot11fIEWSC {
 
 #define DOT11F_EID_WSC ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSC_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSC_MAX_LEN ( 366 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWSC(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWSC*);
 
 tANI_U32 dot11fPackIeWSC(tpAniSirGlobal, tDot11fIEWSC*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5781,9 +5781,9 @@ tANI_U32 dot11fPackIeWSC(tpAniSirGlobal, tDot11fIEWSC*, tANI_U8*, tANI_U32, tANI
 tANI_U32 dot11fGetPackedIEWSC(tpAniSirGlobal, tDot11fIEWSC*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 194 (0xc2)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sDot11fIEWiderBWChanSwitchAnn {
     tANI_U8      present;
     tANI_U8      newChanWidth;
@@ -5793,14 +5793,14 @@ typedef struct sDot11fIEWiderBWChanSwitchAnn {
 
 #define DOT11F_EID_WIDERBWCHANSWITCHANN ( 194 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WIDERBWCHANSWITCHANN_MIN_LEN ( 3 )
 
 #define DOT11F_IE_WIDERBWCHANSWITCHANN_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWiderBWChanSwitchAnn(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWiderBWChanSwitchAnn*);
 
 tANI_U32 dot11fPackIeWiderBWChanSwitchAnn(tpAniSirGlobal, tDot11fIEWiderBWChanSwitchAnn*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5808,9 +5808,9 @@ tANI_U32 dot11fPackIeWiderBWChanSwitchAnn(tpAniSirGlobal, tDot11fIEWiderBWChanSw
 tANI_U32 dot11fGetPackedIEWiderBWChanSwitchAnn(tpAniSirGlobal, tDot11fIEWiderBWChanSwitchAnn*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscAssocReq {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5820,14 +5820,14 @@ typedef struct sDot11fIEWscAssocReq {
 
 #define DOT11F_EID_WSCASSOCREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCASSOCREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCASSOCREQ_MAX_LEN ( 35 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscAssocReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscAssocReq*);
 
 tANI_U32 dot11fPackIeWscAssocReq(tpAniSirGlobal, tDot11fIEWscAssocReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5835,9 +5835,9 @@ tANI_U32 dot11fPackIeWscAssocReq(tpAniSirGlobal, tDot11fIEWscAssocReq*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWscAssocReq(tpAniSirGlobal, tDot11fIEWscAssocReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscAssocRes {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5847,14 +5847,14 @@ typedef struct sDot11fIEWscAssocRes {
 
 #define DOT11F_EID_WSCASSOCRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCASSOCRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCASSOCRES_MAX_LEN ( 35 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscAssocRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscAssocRes*);
 
 tANI_U32 dot11fPackIeWscAssocRes(tpAniSirGlobal, tDot11fIEWscAssocRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5862,9 +5862,9 @@ tANI_U32 dot11fPackIeWscAssocRes(tpAniSirGlobal, tDot11fIEWscAssocRes*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWscAssocRes(tpAniSirGlobal, tDot11fIEWscAssocRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscBeacon {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5880,14 +5880,14 @@ typedef struct sDot11fIEWscBeacon {
 
 #define DOT11F_EID_WSCBEACON ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCBEACON_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCBEACON_MAX_LEN ( 82 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscBeacon(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscBeacon*);
 
 tANI_U32 dot11fPackIeWscBeacon(tpAniSirGlobal, tDot11fIEWscBeacon*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5895,9 +5895,9 @@ tANI_U32 dot11fPackIeWscBeacon(tpAniSirGlobal, tDot11fIEWscBeacon*, tANI_U8*, tA
 tANI_U32 dot11fGetPackedIEWscBeacon(tpAniSirGlobal, tDot11fIEWscBeacon*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscBeaconProbeRes {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5921,14 +5921,14 @@ typedef struct sDot11fIEWscBeaconProbeRes {
 
 #define DOT11F_EID_WSCBEACONPROBERES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCBEACONPROBERES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCBEACONPROBERES_MAX_LEN ( 317 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscBeaconProbeRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscBeaconProbeRes*);
 
 tANI_U32 dot11fPackIeWscBeaconProbeRes(tpAniSirGlobal, tDot11fIEWscBeaconProbeRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5936,9 +5936,9 @@ tANI_U32 dot11fPackIeWscBeaconProbeRes(tpAniSirGlobal, tDot11fIEWscBeaconProbeRe
 tANI_U32 dot11fGetPackedIEWscBeaconProbeRes(tpAniSirGlobal, tDot11fIEWscBeaconProbeRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04}
+}; /*                 */
+#endif /*     */
+//                                            
 typedef struct sDot11fIEWscIEOpaque {
     tANI_U8      present;
     tANI_U8      num_data;
@@ -5947,14 +5947,14 @@ typedef struct sDot11fIEWscIEOpaque {
 
 #define DOT11F_EID_WSCIEOPAQUE ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCIEOPAQUE_MIN_LEN ( 6 )
 
 #define DOT11F_IE_WSCIEOPAQUE_MAX_LEN ( 253 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscIEOpaque(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscIEOpaque*);
 
 tANI_U32 dot11fPackIeWscIEOpaque(tpAniSirGlobal, tDot11fIEWscIEOpaque*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -5962,9 +5962,9 @@ tANI_U32 dot11fPackIeWscIEOpaque(tpAniSirGlobal, tDot11fIEWscIEOpaque*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWscIEOpaque(tpAniSirGlobal, tDot11fIEWscIEOpaque*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscProbeReq {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -5986,14 +5986,14 @@ typedef struct sDot11fIEWscProbeReq {
 
 #define DOT11F_EID_WSCPROBEREQ ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCPROBEREQ_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCPROBEREQ_MAX_LEN ( 284 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscProbeReq(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscProbeReq*);
 
 tANI_U32 dot11fPackIeWscProbeReq(tpAniSirGlobal, tDot11fIEWscProbeReq*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -6001,9 +6001,9 @@ tANI_U32 dot11fPackIeWscProbeReq(tpAniSirGlobal, tDot11fIEWscProbeReq*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWscProbeReq(tpAniSirGlobal, tDot11fIEWscProbeReq*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscProbeRes {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -6027,14 +6027,14 @@ typedef struct sDot11fIEWscProbeRes {
 
 #define DOT11F_EID_WSCPROBERES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCPROBERES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCPROBERES_MAX_LEN ( 317 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscProbeRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscProbeRes*);
 
 tANI_U32 dot11fPackIeWscProbeRes(tpAniSirGlobal, tDot11fIEWscProbeRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -6042,9 +6042,9 @@ tANI_U32 dot11fPackIeWscProbeRes(tpAniSirGlobal, tDot11fIEWscProbeRes*, tANI_U8*
 tANI_U32 dot11fGetPackedIEWscProbeRes(tpAniSirGlobal, tDot11fIEWscProbeRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// EID 221 (0xdd) {OUI 0x00, 0x50, 0xf2, 0x04} (Multi-IE)
+}; /*                 */
+#endif /*     */
+//                                                       
 typedef struct sDot11fIEWscReassocRes {
     tANI_U8      present;
     tDot11fTLVVersion Version;
@@ -6054,14 +6054,14 @@ typedef struct sDot11fIEWscReassocRes {
 
 #define DOT11F_EID_WSCREASSOCRES ( 221 )
 
-// N.B. These #defines do *not* include the EID & length
+//                                                      
 #define DOT11F_IE_WSCREASSOCRES_MIN_LEN ( 4 )
 
 #define DOT11F_IE_WSCREASSOCRES_MAX_LEN ( 35 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 tANI_U32 dot11fUnpackIeWscReassocRes(tpAniSirGlobal, tANI_U8*,tANI_U8, tDot11fIEWscReassocRes*);
 
 tANI_U32 dot11fPackIeWscReassocRes(tpAniSirGlobal, tDot11fIEWscReassocRes*, tANI_U8*, tANI_U32, tANI_U32*);
@@ -6069,11 +6069,11 @@ tANI_U32 dot11fPackIeWscReassocRes(tpAniSirGlobal, tDot11fIEWscReassocRes*, tANI
 tANI_U32 dot11fGetPackedIEWscReassocRes(tpAniSirGlobal, tDot11fIEWscReassocRes*, tANI_U32*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-/************************************************************************
- * Frames
- **********************************************************************/
+}; /*                 */
+#endif /*     */
+/*                                                                       
+         
+                                                                      */
 
 typedef struct sDot11fAddBAReq{
     tDot11fFfCategory                  Category;
@@ -6088,15 +6088,15 @@ typedef struct sDot11fAddBAReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAddBAReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAddBAReq *pFrm);
 tANI_U32 dot11fPackAddBAReq(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAddBAReqSize(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAddBARsp{
     tDot11fFfCategory          Category;
@@ -6111,15 +6111,15 @@ typedef struct sDot11fAddBARsp{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAddBARsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAddBARsp *pFrm);
 tANI_U32 dot11fPackAddBARsp(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAddBARspSize(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAddTSRequest{
     tDot11fFfCategory           Category;
@@ -6140,15 +6140,15 @@ typedef struct sDot11fAddTSRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAddTSRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAddTSRequest *pFrm);
 tANI_U32 dot11fPackAddTSRequest(tpAniSirGlobal pCtx, tDot11fAddTSRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fAddTSRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAddTSResponse{
     tDot11fFfCategory       Category;
@@ -6174,15 +6174,15 @@ typedef struct sDot11fAddTSResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAddTSResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAddTSResponse *pFrm);
 tANI_U32 dot11fPackAddTSResponse(tpAniSirGlobal pCtx, tDot11fAddTSResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fAddTSResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAssocRequest{
     tDot11fFfCapabilities   Capabilities;
@@ -6216,15 +6216,15 @@ typedef struct sDot11fAssocRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAssocRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAssocRequest *pFrm);
 tANI_U32 dot11fPackAssocRequest(tpAniSirGlobal pCtx, tDot11fAssocRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAssocRequestSize(tpAniSirGlobal pCtx, tDot11fAssocRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAssocResponse{
     tDot11fFfCapabilities   Capabilities;
@@ -6262,15 +6262,15 @@ typedef struct sDot11fAssocResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAssocResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAssocResponse *pFrm);
 tANI_U32 dot11fPackAssocResponse(tpAniSirGlobal pCtx, tDot11fAssocResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAssocResponseSize(tpAniSirGlobal pCtx, tDot11fAssocResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fAuthentication{
     tDot11fFfAuthAlgo          AuthAlgo;
@@ -6289,15 +6289,15 @@ typedef struct sDot11fAuthentication{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackAuthentication(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fAuthentication *pFrm);
 tANI_U32 dot11fPackAuthentication(tpAniSirGlobal pCtx, tDot11fAuthentication *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedAuthenticationSize(tpAniSirGlobal pCtx, tDot11fAuthentication *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fBeacon{
     tDot11fFfTimeStamp            TimeStamp;
@@ -6353,15 +6353,15 @@ typedef struct sDot11fBeacon{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fBeacon *pFrm);
 tANI_U32 dot11fPackBeacon(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedBeaconSize(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fBeacon1{
     tDot11fFfTimeStamp      TimeStamp;
@@ -6377,15 +6377,15 @@ typedef struct sDot11fBeacon1{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackBeacon1(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fBeacon1 *pFrm);
 tANI_U32 dot11fPackBeacon1(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedBeacon1Size(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fBeacon2{
     tDot11fIECountry              Country;
@@ -6427,15 +6427,15 @@ typedef struct sDot11fBeacon2{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackBeacon2(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fBeacon2 *pFrm);
 tANI_U32 dot11fPackBeacon2(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedBeacon2Size(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fBeaconIEs{
     tDot11fIESSID                 SSID;
@@ -6489,15 +6489,15 @@ typedef struct sDot11fBeaconIEs{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackBeaconIEs(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fBeaconIEs *pFrm);
 tANI_U32 dot11fPackBeaconIEs(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedBeaconIEsSize(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fChannelSwitch{
     tDot11fFfCategory             Category;
@@ -6511,15 +6511,15 @@ typedef struct sDot11fChannelSwitch{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackChannelSwitch(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fChannelSwitch *pFrm);
 tANI_U32 dot11fPackChannelSwitch(tpAniSirGlobal pCtx, tDot11fChannelSwitch *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedChannelSwitchSize(tpAniSirGlobal pCtx, tDot11fChannelSwitch *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDeAuth{
     tDot11fFfReason    Reason;
@@ -6530,15 +6530,15 @@ typedef struct sDot11fDeAuth{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDeAuth(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDeAuth *pFrm);
 tANI_U32 dot11fPackDeAuth(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDeAuthSize(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDelBAInd{
     tDot11fFfCategory          Category;
@@ -6551,15 +6551,15 @@ typedef struct sDot11fDelBAInd{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDelBAInd(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDelBAInd *pFrm);
 tANI_U32 dot11fPackDelBAInd(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDelBAIndSize(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDelTS{
     tDot11fFfCategory Category;
@@ -6572,15 +6572,15 @@ typedef struct sDot11fDelTS{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDelTS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDelTS *pFrm);
 tANI_U32 dot11fPackDelTS(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDelTSSize(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDeviceDiscoverabilityReq{
     tDot11fFfCategory                    Category;
@@ -6595,15 +6595,15 @@ typedef struct sDot11fDeviceDiscoverabilityReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDeviceDiscoverabilityReq *pFrm);
 tANI_U32 dot11fPackDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDeviceDiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDeviceDiscoverabilityRes{
     tDot11fFfCategory                    Category;
@@ -6618,15 +6618,15 @@ typedef struct sDot11fDeviceDiscoverabilityRes{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDeviceDiscoverabilityRes *pFrm);
 tANI_U32 dot11fPackDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDeviceDiscoverabilityResSize(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityRes *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fDisassociation{
     tDot11fFfReason      Reason;
@@ -6637,15 +6637,15 @@ typedef struct sDot11fDisassociation{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackDisassociation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fDisassociation *pFrm);
 tANI_U32 dot11fPackDisassociation(tpAniSirGlobal pCtx, tDot11fDisassociation *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedDisassociationSize(tpAniSirGlobal pCtx, tDot11fDisassociation *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fGODiscoverabilityReq{
     tDot11fFfCategory      Category;
@@ -6658,15 +6658,15 @@ typedef struct sDot11fGODiscoverabilityReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackGODiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fGODiscoverabilityReq *pFrm);
 tANI_U32 dot11fPackGODiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fGODiscoverabilityReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedGODiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11fGODiscoverabilityReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fGONegCnf{
     tDot11fFfCategory      Category;
@@ -6681,15 +6681,15 @@ typedef struct sDot11fGONegCnf{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackGONegCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fGONegCnf *pFrm);
 tANI_U32 dot11fPackGONegCnf(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedGONegCnfSize(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fGONegReq{
     tDot11fFfCategory      Category;
@@ -6705,15 +6705,15 @@ typedef struct sDot11fGONegReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackGONegReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fGONegReq *pFrm);
 tANI_U32 dot11fPackGONegReq(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedGONegReqSize(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fGONegRes{
     tDot11fFfCategory      Category;
@@ -6729,15 +6729,15 @@ typedef struct sDot11fGONegRes{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackGONegRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fGONegRes *pFrm);
 tANI_U32 dot11fPackGONegRes(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedGONegResSize(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fInvitationReq{
     tDot11fFfCategory         Category;
@@ -6752,15 +6752,15 @@ typedef struct sDot11fInvitationReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackInvitationReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fInvitationReq *pFrm);
 tANI_U32 dot11fPackInvitationReq(tpAniSirGlobal pCtx, tDot11fInvitationReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedInvitationReqSize(tpAniSirGlobal pCtx, tDot11fInvitationReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fInvitationRes{
     tDot11fFfCategory         Category;
@@ -6775,15 +6775,15 @@ typedef struct sDot11fInvitationRes{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackInvitationRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fInvitationRes *pFrm);
 tANI_U32 dot11fPackInvitationRes(tpAniSirGlobal pCtx, tDot11fInvitationRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedInvitationResSize(tpAniSirGlobal pCtx, tDot11fInvitationRes *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fLinkMeasurementReport{
     tDot11fFfCategory    Category;
@@ -6803,15 +6803,15 @@ typedef struct sDot11fLinkMeasurementReport{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackLinkMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fLinkMeasurementReport *pFrm);
 tANI_U32 dot11fPackLinkMeasurementReport(tpAniSirGlobal pCtx, tDot11fLinkMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedLinkMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fLinkMeasurementReport *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fLinkMeasurementRequest{
     tDot11fFfCategory    Category;
@@ -6825,15 +6825,15 @@ typedef struct sDot11fLinkMeasurementRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackLinkMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fLinkMeasurementRequest *pFrm);
 tANI_U32 dot11fPackLinkMeasurementRequest(tpAniSirGlobal pCtx, tDot11fLinkMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedLinkMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fLinkMeasurementRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fMeasurementReport{
     tDot11fFfCategory          Category;
@@ -6846,15 +6846,15 @@ typedef struct sDot11fMeasurementReport{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fMeasurementReport *pFrm);
 tANI_U32 dot11fPackMeasurementReport(tpAniSirGlobal pCtx, tDot11fMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fMeasurementReport *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fMeasurementRequest{
     tDot11fFfCategory           Category;
@@ -6868,15 +6868,15 @@ typedef struct sDot11fMeasurementRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fMeasurementRequest *pFrm);
 tANI_U32 dot11fPackMeasurementRequest(tpAniSirGlobal pCtx, tDot11fMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fMeasurementRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fNeighborReportRequest{
     tDot11fFfCategory    Category;
@@ -6889,15 +6889,15 @@ typedef struct sDot11fNeighborReportRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackNeighborReportRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fNeighborReportRequest *pFrm);
 tANI_U32 dot11fPackNeighborReportRequest(tpAniSirGlobal pCtx, tDot11fNeighborReportRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedNeighborReportRequestSize(tpAniSirGlobal pCtx, tDot11fNeighborReportRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fNeighborReportResponse{
     tDot11fFfCategory       Category;
@@ -6911,15 +6911,15 @@ typedef struct sDot11fNeighborReportResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackNeighborReportResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fNeighborReportResponse *pFrm);
 tANI_U32 dot11fPackNeighborReportResponse(tpAniSirGlobal pCtx, tDot11fNeighborReportResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedNeighborReportResponseSize(tpAniSirGlobal pCtx, tDot11fNeighborReportResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fNoticeOfAbs{
     tDot11fFfCategory           Category;
@@ -6933,15 +6933,15 @@ typedef struct sDot11fNoticeOfAbs{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackNoticeOfAbs(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fNoticeOfAbs *pFrm);
 tANI_U32 dot11fPackNoticeOfAbs(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedNoticeOfAbsSize(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fOperatingMode{
     tDot11fFfCategory      Category;
@@ -6953,15 +6953,15 @@ typedef struct sDot11fOperatingMode{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackOperatingMode(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fOperatingMode *pFrm);
 tANI_U32 dot11fPackOperatingMode(tpAniSirGlobal pCtx, tDot11fOperatingMode *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedOperatingModeSize(tpAniSirGlobal pCtx, tDot11fOperatingMode *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fPresenceReq{
     tDot11fFfCategory           Category;
@@ -6975,15 +6975,15 @@ typedef struct sDot11fPresenceReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackPresenceReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fPresenceReq *pFrm);
 tANI_U32 dot11fPackPresenceReq(tpAniSirGlobal pCtx, tDot11fPresenceReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedPresenceReqSize(tpAniSirGlobal pCtx, tDot11fPresenceReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fPresenceRes{
     tDot11fFfCategory            Category;
@@ -6997,15 +6997,15 @@ typedef struct sDot11fPresenceRes{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackPresenceRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fPresenceRes *pFrm);
 tANI_U32 dot11fPackPresenceRes(tpAniSirGlobal pCtx, tDot11fPresenceRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedPresenceResSize(tpAniSirGlobal pCtx, tDot11fPresenceRes *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fProbeRequest{
     tDot11fIESSID          SSID;
@@ -7024,15 +7024,15 @@ typedef struct sDot11fProbeRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackProbeRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fProbeRequest *pFrm);
 tANI_U32 dot11fPackProbeRequest(tpAniSirGlobal pCtx, tDot11fProbeRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedProbeRequestSize(tpAniSirGlobal pCtx, tDot11fProbeRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fProbeResponse{
     tDot11fFfTimeStamp        TimeStamp;
@@ -7084,15 +7084,15 @@ typedef struct sDot11fProbeResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackProbeResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fProbeResponse *pFrm);
 tANI_U32 dot11fPackProbeResponse(tpAniSirGlobal pCtx, tDot11fProbeResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedProbeResponseSize(tpAniSirGlobal pCtx, tDot11fProbeResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fProvisionDiscoveryReq{
     tDot11fFfCategory                 Category;
@@ -7107,15 +7107,15 @@ typedef struct sDot11fProvisionDiscoveryReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackProvisionDiscoveryReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fProvisionDiscoveryReq *pFrm);
 tANI_U32 dot11fPackProvisionDiscoveryReq(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedProvisionDiscoveryReqSize(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fProvisionDiscoveryRes{
     tDot11fFfCategory                    Category;
@@ -7130,15 +7130,15 @@ typedef struct sDot11fProvisionDiscoveryRes{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackProvisionDiscoveryRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fProvisionDiscoveryRes *pFrm);
 tANI_U32 dot11fPackProvisionDiscoveryRes(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedProvisionDiscoveryResSize(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryRes *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fRadioMeasurementReport{
     tDot11fFfCategory          Category;
@@ -7152,15 +7152,15 @@ typedef struct sDot11fRadioMeasurementReport{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackRadioMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fRadioMeasurementReport *pFrm);
 tANI_U32 dot11fPackRadioMeasurementReport(tpAniSirGlobal pCtx, tDot11fRadioMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedRadioMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fRadioMeasurementReport *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fRadioMeasurementRequest{
     tDot11fFfCategory           Category;
@@ -7175,15 +7175,15 @@ typedef struct sDot11fRadioMeasurementRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackRadioMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fRadioMeasurementRequest *pFrm);
 tANI_U32 dot11fPackRadioMeasurementRequest(tpAniSirGlobal pCtx, tDot11fRadioMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedRadioMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fRadioMeasurementRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fReAssocRequest{
     tDot11fFfCapabilities       Capabilities;
@@ -7225,15 +7225,15 @@ typedef struct sDot11fReAssocRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackReAssocRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fReAssocRequest *pFrm);
 tANI_U32 dot11fPackReAssocRequest(tpAniSirGlobal pCtx, tDot11fReAssocRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedReAssocRequestSize(tpAniSirGlobal pCtx, tDot11fReAssocRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fReAssocResponse{
     tDot11fFfCapabilities       Capabilities;
@@ -7272,15 +7272,15 @@ typedef struct sDot11fReAssocResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackReAssocResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fReAssocResponse *pFrm);
 tANI_U32 dot11fPackReAssocResponse(tpAniSirGlobal pCtx, tDot11fReAssocResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedReAssocResponseSize(tpAniSirGlobal pCtx, tDot11fReAssocResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fSMPowerSave{
     tDot11fFfCategory       Category;
@@ -7292,15 +7292,15 @@ typedef struct sDot11fSMPowerSave{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackSMPowerSave(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fSMPowerSave *pFrm);
 tANI_U32 dot11fPackSMPowerSave(tpAniSirGlobal pCtx, tDot11fSMPowerSave *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedSMPowerSaveSize(tpAniSirGlobal pCtx, tDot11fSMPowerSave *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fSaQueryRsp{
     tDot11fFfCategory      Category;
@@ -7312,15 +7312,15 @@ typedef struct sDot11fSaQueryRsp{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackSaQueryRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fSaQueryRsp *pFrm);
 tANI_U32 dot11fPackSaQueryRsp(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedSaQueryRspSize(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSDisReq{
     tDot11fFfCategory       Category;
@@ -7333,15 +7333,15 @@ typedef struct sDot11fTDLSDisReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSDisReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSDisReq *pFrm);
 tANI_U32 dot11fPackTDLSDisReq(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSDisReqSize(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSDisRsp{
     tDot11fFfCategory          Category;
@@ -7365,15 +7365,15 @@ typedef struct sDot11fTDLSDisRsp{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSDisRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSDisRsp *pFrm);
 tANI_U32 dot11fPackTDLSDisRsp(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSDisRspSize(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSPeerTrafficInd{
     tDot11fFfCategory       Category;
@@ -7388,15 +7388,15 @@ typedef struct sDot11fTDLSPeerTrafficInd{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSPeerTrafficInd(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSPeerTrafficInd *pFrm);
 tANI_U32 dot11fPackTDLSPeerTrafficInd(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficInd *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSPeerTrafficIndSize(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficInd *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSPeerTrafficRsp{
     tDot11fFfCategory       Category;
@@ -7409,15 +7409,15 @@ typedef struct sDot11fTDLSPeerTrafficRsp{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSPeerTrafficRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSPeerTrafficRsp *pFrm);
 tANI_U32 dot11fPackTDLSPeerTrafficRsp(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSPeerTrafficRspSize(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficRsp *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSSetupCnf{
     tDot11fFfCategory          Category;
@@ -7439,15 +7439,15 @@ typedef struct sDot11fTDLSSetupCnf{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSSetupCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSSetupCnf *pFrm);
 tANI_U32 dot11fPackTDLSSetupCnf(tpAniSirGlobal pCtx, tDot11fTDLSSetupCnf *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSSetupCnfSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupCnf *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSSetupReq{
     tDot11fFfCategory          Category;
@@ -7475,15 +7475,15 @@ typedef struct sDot11fTDLSSetupReq{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSSetupReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSSetupReq *pFrm);
 tANI_U32 dot11fPackTDLSSetupReq(tpAniSirGlobal pCtx, tDot11fTDLSSetupReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSSetupReqSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupReq *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSSetupRsp{
     tDot11fFfCategory          Category;
@@ -7513,15 +7513,15 @@ typedef struct sDot11fTDLSSetupRsp{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSSetupRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSSetupRsp *pFrm);
 tANI_U32 dot11fPackTDLSSetupRsp(tpAniSirGlobal pCtx, tDot11fTDLSSetupRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSSetupRspSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupRsp *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTDLSTeardown{
     tDot11fFfCategory       Category;
@@ -7535,15 +7535,15 @@ typedef struct sDot11fTDLSTeardown{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTDLSTeardown(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTDLSTeardown *pFrm);
 tANI_U32 dot11fPackTDLSTeardown(tpAniSirGlobal pCtx, tDot11fTDLSTeardown *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTDLSTeardownSize(tpAniSirGlobal pCtx, tDot11fTDLSTeardown *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTPCReport{
     tDot11fFfCategory    Category;
@@ -7556,15 +7556,15 @@ typedef struct sDot11fTPCReport{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTPCReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTPCReport *pFrm);
 tANI_U32 dot11fPackTPCReport(tpAniSirGlobal pCtx, tDot11fTPCReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTPCReportSize(tpAniSirGlobal pCtx, tDot11fTPCReport *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fTPCRequest{
     tDot11fFfCategory    Category;
@@ -7577,15 +7577,15 @@ typedef struct sDot11fTPCRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackTPCRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fTPCRequest *pFrm);
 tANI_U32 dot11fPackTPCRequest(tpAniSirGlobal pCtx, tDot11fTPCRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedTPCRequestSize(tpAniSirGlobal pCtx, tDot11fTPCRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fWMMAddTSRequest{
     tDot11fFfCategory           Category;
@@ -7600,15 +7600,15 @@ typedef struct sDot11fWMMAddTSRequest{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackWMMAddTSRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fWMMAddTSRequest *pFrm);
 tANI_U32 dot11fPackWMMAddTSRequest(tpAniSirGlobal pCtx, tDot11fWMMAddTSRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedWMMAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fWMMAddTSRequest *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fWMMAddTSResponse{
     tDot11fFfCategory       Category;
@@ -7623,15 +7623,15 @@ typedef struct sDot11fWMMAddTSResponse{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackWMMAddTSResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fWMMAddTSResponse *pFrm);
 tANI_U32 dot11fPackWMMAddTSResponse(tpAniSirGlobal pCtx, tDot11fWMMAddTSResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedWMMAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fWMMAddTSResponse *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 typedef struct sDot11fWMMDelTS{
     tDot11fFfCategory    Category;
@@ -7645,14 +7645,14 @@ typedef struct sDot11fWMMDelTS{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 tANI_U32 dot11fUnpackWMMDelTS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tDot11fWMMDelTS *pFrm);
 tANI_U32 dot11fPackWMMDelTS(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed);
 tANI_U32 dot11fGetPackedWMMDelTSSize(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm, tANI_U32 *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
-#endif /* DOT11F_H */
+#endif /*          */

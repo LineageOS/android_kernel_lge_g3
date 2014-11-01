@@ -53,15 +53,15 @@
 
   ==========================================================================*/
 
-/* Packet Types. */
+/*               */
 #define WLAN_KEEP_ALIVE_UNSOLICIT_ARP_RSP     2
 #define WLAN_KEEP_ALIVE_NULL_PKT              1
 
-/* Enable or disable offload. */
+/*                            */
 #define WLAN_KEEP_ALIVE_DISABLE     0
 #define WLAN_KEEP_ALIVE_ENABLE    0x1
 
-/* Offload request. */
+/*                  */
 typedef struct
 {
     v_U8_t packetType;
@@ -72,5 +72,5 @@ typedef struct
     v_U8_t  bssIdx;
 } tKeepAliveRequest, *tpKeepAliveRequest;
 
-#endif // __WLAN_HDD_KEEP_ALIVE_H__
+#endif //                          
 

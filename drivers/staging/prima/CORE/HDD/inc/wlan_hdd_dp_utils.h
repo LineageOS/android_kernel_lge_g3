@@ -58,11 +58,11 @@
 
 >>>>>>> 009551c... wlan: hdd: remove obsolete "WLAN_SOFTAP_FEATURE" featurization:prima/CORE/HDD/inc/wlan_hdd_dp_utils.h
   ==============================================================================**/
-/* $HEADER$ */
+/*          */
 
-/**-----------------------------------------------------------------------------
-  Include files
-  ----------------------------------------------------------------------------*/
+/*                                                                              
+               
+                                                                              */
 #include <linux/list.h>
 #include <vos_types.h>
 #include <linux/kernel.h>
@@ -72,13 +72,13 @@
 #include <vos_trace.h>
 #include <vos_list.h>
 
-/**-----------------------------------------------------------------------------
-  Preprocessor definitions and constants
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                             */
 
-/**-----------------------------------------------------------------------------
-  Type declarations
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                   
+                                                                             */
 
 typedef struct list_head hdd_list_node_t;
 
@@ -97,11 +97,11 @@ typedef struct
    int userPriority;
 } skb_list_node_t;
 
-//FIXME Need a helper function to cleanup skbs in a queue. Required for cleanup/shutdown
+//                                                                                      
   
-/**-----------------------------------------------------------------------------
-  Function declarations and documenation
- ----------------------------------------------------------------------------*/
+/*                                                                              
+                                        
+                                                                             */
 VOS_INLINE_FN v_VOID_t hdd_list_init( hdd_list_t *pList, v_SIZE_t max_size)
 {
    INIT_LIST_HEAD( &pList->anchor );
@@ -138,4 +138,4 @@ VOS_STATUS hdd_list_peek_front( hdd_list_t *pList, hdd_list_node_t **ppNode );
 VOS_STATUS hdd_list_peek_next( hdd_list_t *pList, hdd_list_node_t *pNode,
                                hdd_list_node_t **ppNode );
 VOS_STATUS hdd_string_to_hex( char *pSrcMac, int length, char *pDescMac );
-#endif //__WLAN_HDD_DP_UTILS_H
+#endif //                     

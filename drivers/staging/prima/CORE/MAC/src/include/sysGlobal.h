@@ -24,7 +24,7 @@
 
 typedef struct sAniSirSys
 {
-    tANI_U32 abort; /* system is aborting and will be unloaded, only MMH thread is running */
+    tANI_U32 abort; /*                                                                     */
 
     tANI_U32 gSysFrameCount[4][16];
     tANI_U32 gSysBbtReceived;

@@ -40,19 +40,19 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limSecurityUtils.h contains the utility definitions
- * related to WEP encryption/decryption etc.
- * Author:        Chandra Modumudi
- * Date:          02/13/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                                
+                                            
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 #ifndef __LIM_SECURITY_UTILS_H
 #define __LIM_SECURITY_UTILS_H
-#include "sirMacProtDef.h" //for tSirMacAuthFrameBody
+#include "sirMacProtDef.h" //                        
 
 #define LIM_ENCR_AUTH_BODY_LEN  (sizeof(tSirMacAuthFrameBody) + \
                                 SIR_MAC_WEP_IV_LENGTH + \
@@ -61,7 +61,7 @@ struct tLimPreAuthNode;
 
 tANI_U8        limIsAuthAlgoSupported(tpAniSirGlobal, tAniAuthType, tpPESession);
 
-// MAC based authentication related functions
+//                                           
 void               limInitPreAuthList(tpAniSirGlobal);
 void               limDeletePreAuthList(tpAniSirGlobal);
 struct tLimPreAuthNode    *limSearchPreAuthList(tpAniSirGlobal, tSirMacAddr);
@@ -71,7 +71,7 @@ void               limReleasePreAuthNode(tpAniSirGlobal pMac, tpLimPreAuthNode p
 void               limRestoreFromAuthState(tpAniSirGlobal,
                                            tSirResultCodes, tANI_U16,tpPESession);
 
-// Encryption/Decryption related functions
+//                                        
 tCfgWepKeyEntry    *limLookUpKeyMappings(tSirMacAddr);
 void               limComputeCrc32(tANI_U8 *, tANI_U8 *, tANI_U8);
 void               limRC4(tANI_U8 *, tANI_U8 *, tANI_U8 *, tANI_U32, tANI_U16);
@@ -92,7 +92,7 @@ static inline tANI_U32
 limCrcUpdate(tANI_U32 crc, tANI_U8 x)
 {
 
-    // Update CRC computation for 8 bits contained in x
+    //                                                 
     //
     tANI_U32 z;
     tANI_U32 fb;
@@ -107,4 +107,4 @@ limCrcUpdate(tANI_U32 crc, tANI_U8 x)
     return z;
 }
 
-#endif /* __LIM_SECURITY_UTILS_H */
+#endif /*                        */

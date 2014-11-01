@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * limSendMessages.h: Provides functions to send messages or Indications to HAL.
- * Author:    Sunit Bhatia
- * Date:       09/21/2006
- * History:-
- * Date        Modified by            Modification Information
- *
- * --------------------------------------------------------------------------
- *
+  
+                                                        
+                                                                                
+                          
+                         
+            
+                                                              
+  
+                                                                             
+  
  */
 #ifndef __LIM_SEND_MESSAGES_H
 #define __LIM_SEND_MESSAGES_H
@@ -62,7 +62,7 @@ tSirRetStatus limSendCFParams(tpAniSirGlobal pMac, tANI_U8 bssIdx, tANI_U8 cfpCo
 tSirRetStatus limSendBeaconParams(tpAniSirGlobal pMac, 
                                   tpUpdateBeaconParams pUpdatedBcnParams,
                                   tpPESession  psessionEntry );
-//tSirRetStatus limSendBeaconParams(tpAniSirGlobal pMac, tpUpdateBeaconParams pUpdatedBcnParams);
+//                                                                                               
 #ifdef WLAN_FEATURE_11AC
 tSirRetStatus limSendModeUpdate(tpAniSirGlobal pMac, 
                                 tUpdateVHTOpMode *tempParam,

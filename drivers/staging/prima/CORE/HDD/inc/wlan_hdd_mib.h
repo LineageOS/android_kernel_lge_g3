@@ -55,9 +55,9 @@ typedef enum
 } eMib_dot11DesiredBssType;
 
 
-/** This is the maximum number of BSSIDs supported in the 
-      dot11DesiredBssidList.  All the code operates off of 
-      this maximum BSSID list count.  */
+/*                                                        
+                                                           
+                                      */
 #define MIB_DOT11_DESIRED_BSSID_LIST_MAX_COUNT ( 1 )
 
 typedef struct
@@ -70,9 +70,9 @@ typedef struct
 
 
 
-/** This is the maximum number of SSIDs supported in the 
-     dot11DesiredSsidList.  All the code operates off of 
-     this maximum SSID list count.  */
+/*                                                       
+                                                         
+                                    */
      
 #define MIB_DOT11_DESIRED_SSID_LIST_MAX_COUNT ( 1 )
 
@@ -97,7 +97,7 @@ typedef struct
 
 typedef enum
 {
-    // these are bitmasks....
+    //                       
     eMib_dot11AutoConfigEnabled_None = 0U,
     eMib_dot11AutoConfigEnabled_Phy  = 0x00000001U,
     eMib_dot11AutoConfigEnabled_Mac  = 0x00000002U
@@ -211,19 +211,19 @@ typedef struct sHddMib_s
 
     eMib_dot11AutoConfigEnabled mibDot11AutoConfigEnabled;
 
-    // the device power state for the device (the D-state... you know D0, D1, D2, etc.
+    //                                                                                
     eMib_DevicePowerState      mibDevicePowerState;
 
-    // dot11NICPowerState is really the on/off state of the PHY.  This can be
-    // mamipulated through OIDs like a software control for radio on/off.
+    //                                                                       
+    //                                                                   
     eMib_dot11NICPowerState    mibDot11NICPowerState;
 
-    // Hardware PHY state is the on/off state of the hardware PHY.
+    //                                                            
     eMib_dot11HardwarePHYState mibDot11HardwarePHYState;
 
-    // dot11 Power Saving level is the 802.11 power saving level/state for the 802.11
-    // NIC.  Typically this is mapped to 802.11 BMPS in some fashion.  We are not going
-    // to disappoint; the Libra NIC maps these to different BMPS settings.
+    //                                                                               
+    //                                                                                 
+    //                                                                    
     eMib_dot11PowerSavingLevel mibDot11PowerSavingLevel;
 
     sMib_dot11MacExcludeList mibDot11MacExcludeList;

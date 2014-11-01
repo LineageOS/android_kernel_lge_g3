@@ -39,10 +39,10 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-/******************************************************************************
- * wlan_btc_svc.c
- *
- ******************************************************************************/
+/*                                                                             
+                 
+  
+                                                                              */
 #include <wlan_nlink_srv.h>
 #include <wlan_btc_svc.h>
 #include <halTypes.h>
@@ -50,19 +50,19 @@
 #include <btcApi.h>
 #include <wlan_hdd_includes.h>
 #include <vos_trace.h>
-// Global variables
+//                 
 static struct hdd_context_s *pHddCtx;
 
-static int gWiFiChannel;  /* WiFi associated channel 1-13, or 0 (none) */
-static int gAmpChannel;   /* AMP associated channel 1-13, or 0 (none) */
-static int gBtcDriverMode = WLAN_HDD_INFRA_STATION;  /* Driver mode in BTC */
+static int gWiFiChannel;  /*                                           */
+static int gAmpChannel;   /*                                          */
+static int gBtcDriverMode = WLAN_HDD_INFRA_STATION;  /*                    */
 
 
-// Forward declrarion
+//                   
 static int btc_msg_callback (struct sk_buff * skb);
 /*
- * Send a netlink message to the user space. 
- * Destination pid as zero implies broadcast
+                                             
+                                            
  */
 void send_btc_nlink_msg (int type, int dest_pid)
 {
@@ -77,22 +77,22 @@ void send_btc_nlink_msg (int type, int dest_pid)
       return;
    }   
    nlh = (struct nlmsghdr *)skb->data;
-   nlh->nlmsg_pid = 0;  /* from kernel */
+   nlh->nlmsg_pid = 0;  /*             */
    nlh->nlmsg_flags = 0;
    nlh->nlmsg_seq = 0;
    nlh->nlmsg_type = WLAN_NL_MSG_BTC;
    aniHdr = NLMSG_DATA(nlh);
    aniHdr->type = type;
 
-  /* Set BTC driver mode correctly based on received events type */
+  /*                                                             */
   if(type == WLAN_BTC_SOFTAP_BSS_START)
   {
-     /* Event is SoftAP BSS Start set BTC driver mode to SoftAP */
+     /*                                                         */
      gBtcDriverMode = WLAN_HDD_SOFTAP;
   }
   if(type == WLAN_STA_ASSOC_DONE_IND)
   {
-     /* Event is STA Assoc done set BTC driver mode to INFRA STA*/
+     /*                                                         */
      gBtcDriverMode = WLAN_HDD_INFRA_STATION;
   }
 
@@ -102,10 +102,10 @@ void send_btc_nlink_msg (int type, int dest_pid)
          VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO_LOW,
                     "WiFi unassociated; gAmpChannel %d gWiFiChannel %d", gAmpChannel, gWiFiChannel);
 
-         /* If AMP is using a channel (non-zero), no message sent.
-            Or, if WiFi wasn't using a channel before, no message sent.
-            Logic presumes same channel has to be used for WiFi and AMP if both are active.
-            In any case, track the WiFi channel in use (none) */
+         /*                                                       
+                                                                       
+                                                                                           
+                                                              */
          if((gAmpChannel != 0) || (gWiFiChannel == 0))
          {
            VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO_LOW,
@@ -116,7 +116,7 @@ void send_btc_nlink_msg (int type, int dest_pid)
          }
          gWiFiChannel = 0;
 
-         /* No Break: Fall into next cases */
+         /*                                */
 
       case WLAN_MODULE_UP_IND:
       case WLAN_MODULE_DOWN_IND:
@@ -137,13 +137,13 @@ void send_btc_nlink_msg (int type, int dest_pid)
                     "New WiFi channel %d gAmpChannel %d gWiFiChannel %d",
                     assocData->channel, gAmpChannel, gWiFiChannel);
 
-         /* If WiFi has finished associating */
+         /*                                  */
          if(type == WLAN_STA_ASSOC_DONE_IND)
          {
-           /* If AMP is using a channel (non-zero), no message sent.
-              Or, if the WiFi channel did not change, no message sent.
-              Logic presumes same channel has to be used for WiFi and AMP if both are active.
-              In any case, track the WiFi channel in use (1-13 or none, in assocData->channel) */
+           /*                                                       
+                                                                      
+                                                                                             
+                                                                                               */
            if((gAmpChannel != 0) || (assocData->channel == gWiFiChannel))
            {
              VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO_LOW,
@@ -155,7 +155,7 @@ void send_btc_nlink_msg (int type, int dest_pid)
          }
          if(type == WLAN_BTC_SOFTAP_BSS_START)
          {
-             /*Replace WLAN_BTC_SOFTAP_BSS_START by WLAN_STA_ASSOC_DONE_IND*/
+             /*                                                            */
              aniHdr->type = WLAN_STA_ASSOC_DONE_IND;
          }
          gWiFiChannel = assocData->channel;
@@ -164,15 +164,15 @@ void send_btc_nlink_msg (int type, int dest_pid)
 
       case WLAN_AMP_ASSOC_DONE_IND:
 
-         /* This is an overloaded type. It means that AMP is connected (dest_pid is channel 1-13),
-            or it means AMP is now disconnected (dest_pid is 0) */
+         /*                                                                                       
+                                                                */
 
          VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO_LOW,
                     "New AMP channel %d gAmpChannel %d gWiFiChannel %d", dest_pid, gAmpChannel, gWiFiChannel);
-         /* If WiFi is using a channel (non-zero), no message sent.
-            Or, if the AMP channel did not change, no message sent.
-            Logic presumes same channel has to be used for WiFi and AMP if both are active.
-            In any case, track the AMP channel in use (1-13 or none, in dest_pid) */
+         /*                                                        
+                                                                   
+                                                                                           
+                                                                                  */
          if((gWiFiChannel != 0) || (dest_pid == gAmpChannel))
          {
            VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO_LOW,
@@ -184,7 +184,7 @@ void send_btc_nlink_msg (int type, int dest_pid)
 
          gAmpChannel = dest_pid;
 
-         /* Fix overloaded parameters and finish message formatting */
+         /*                                                         */
          if(dest_pid != 0)
          {
            aniHdr->type = WLAN_STA_ASSOC_DONE_IND;
@@ -216,20 +216,20 @@ void send_btc_nlink_msg (int type, int dest_pid)
       (void)nl_srv_ucast(skb, dest_pid);
 }
 /*
- * Activate BTC handler. This will register a handler to receive
- * netlink messages addressed to WLAN_NL_MSG_BTC from user space
+                                                                
+                                                                
  */
 int btc_activate_service(void *pAdapter)
 {
    pHddCtx = (struct hdd_context_s*)pAdapter;  
 
-   //Register the msg handler for msgs addressed to ANI_NL_MSG_BTC
+   //                                                             
    nl_srv_register(WLAN_NL_MSG_BTC, btc_msg_callback);
    return 0;
 }
 /*
- * Callback function invoked by Netlink service for all netlink
- * messages (from user space) addressed to WLAN_NL_MSG_BTC
+                                                               
+                                                          
  */
 int btc_msg_callback (struct sk_buff * skb)
 {
@@ -239,7 +239,7 @@ int btc_msg_callback (struct sk_buff * skb)
    nlh = (struct nlmsghdr *)skb->data;
    msg_hdr = NLMSG_DATA(nlh);
    
-   /* Continue with parsing payload. */
+   /*                                */
    switch(msg_hdr->type)
    {
       case WLAN_BTC_QUERY_STATE_REQ:

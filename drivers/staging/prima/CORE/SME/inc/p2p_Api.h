@@ -96,32 +96,32 @@ typedef struct sRemainOnChn{
 #define P2P_MAX_GROUP_LIMIT 5
 #define P2P_MAC_ADDRESS_LEN 6
 #define MAX_LISTEN_SEARCH_CYCLE 3
-#define P2P_LISTEN_TIMEOUT_AUTO    500 //0.5 sec
-#define P2P_LISTEN_TIMEOUT_HIGH    200 //0.4 sec
-#define P2P_LISTEN_TIMEOUT         1000  //1 sec
+#define P2P_LISTEN_TIMEOUT_AUTO    500 //       
+#define P2P_LISTEN_TIMEOUT_HIGH    200 //       
+#define P2P_LISTEN_TIMEOUT         1000  //     
 #define P2P_REMAIN_ON_CHAN_TIMEOUT 300
 #define P2P_REMAIN_ON_CHAN_TIMEOUT_HIGH 1000
 #define P2P_REMAIN_ON_CHAN_TIMEOUT_LOW 100
 #define ACTION_FRAME_RETRY_TIMEOUT 50
 #define P2P_COUNTRY_CODE_LEN 3
 
-/* Wi-Fi Direct Device Discovery Type */
+/*                                    */
 typedef enum ep2pDiscoverType {
-   /** Driver must perform device discovery only using the scan phase*/
+   /*                                                                */
    WFD_DISCOVER_TYPE_SCAN_ONLY = 1,
-   /** Driver must perform device discovery only using the find phase*/
+   /*                                                                */
    WFD_DISCOVER_TYPE_FIND_ONLY = 2,
-   /** Driver can use either use scan phase or find phase to discovery 
-   P2P devices. In our case Driver uses scan phase */
+   /*                                                                  
+                                                   */
    WFD_DISCOVER_TYPE_AUTO = 3,
-   /*Scan only social channel*/
+   /*                        */
    WFD_DISCOVER_SCAN_ONLY_SOCIAL_CHN,
-   /** If it is set, driver must perform a complete discovery, 
-   If it is false, it can do partial discovery.*/
+   /*                                                          
+                                               */
    WFD_DISCOVER_TYPE_FORCED = 0x80000000
 } ep2pDiscoverType, *ePp2pDiscoverType;
 
-//bit mask for what to discover
+//                             
 #define QCWLAN_P2P_DISCOVER_DEVICE     0x1
 #define QCWLAN_P2P_DISCOVER_GO         0x2
 #define QCWLAN_P2P_DISCOVER_ANY        0x8
@@ -129,19 +129,19 @@ typedef enum ep2pDiscoverType {
 #define P2P_DISCOVER_SCAN_ONLY(t) ( (WFD_DISCOVER_TYPE_SCAN_ONLY == (t)) \
                                     || (WFD_DISCOVER_SCAN_ONLY_SOCIAL_CHN == (t)) )
 
-/* Scan Type */
+/*           */
 typedef enum ep2pScanType {
-   P2P_SCAN_TYPE_ACTIVE = 1,  /**  device should perform active scans for the scan phase of device discovery */
-   P2P_SCAN_TYPE_PASSIVE = 2, /** device should perform passive scanning for the scan phase of device discovery  */
-   P2P_SCAN_TYPE_AUTO = 3     /** The selection of the scan type is upto the driver */
+   P2P_SCAN_TYPE_ACTIVE = 1,  /*                                                                             */
+   P2P_SCAN_TYPE_PASSIVE = 2, /*                                                                                 */
+   P2P_SCAN_TYPE_AUTO = 3     /*                                                    */
 } ep2pScanType, * ePp2pScanType;
 
-/** Listen State Discoverability */
+/*                               */
 typedef enum ep2pListenStateDiscoverability {
-   P2P_DEVICE_NOT_DISCOVERABLE, /**  Wi-Fi Direct Device Port must not make itself discoverable */
-   P2P_DEVICE_AUTO_AVAILABILITY, /** Wi-Fi Direct Device Port must periodically put itself in the listen state to become discoverable*/
-   P2P_DEVICE_HIGH_AVAILABILITY  /** Wi-Fi Direct Device Port must be frequently put itself in the listen state 
-                                 to increase the speed and reliability of remote devices discovering it */
+   P2P_DEVICE_NOT_DISCOVERABLE, /*                                                              */
+   P2P_DEVICE_AUTO_AVAILABILITY, /*                                                                                                  */
+   P2P_DEVICE_HIGH_AVAILABILITY  /*                                                                             
+                                                                                                        */
 } ep2pListenStateDiscoverability, * ePp2pListenStateDiscoverability;
 
 typedef enum ep2pOperatingMode {
@@ -198,7 +198,7 @@ typedef struct sP2PChannel {
    tANI_U8 channel;
 } tP2P_OperatingChannel, tP2P_ListenChannel;
 
-/** Structure contains parameters required for Wi-Fi Direct Device functionality such as device discovery, Group Owner Negotiation */
+/*                                                                                                                                 */
 typedef enum P2PFrameType {
    eP2P_INVALID_FRM,
    eP2P_PROBE_REQ,
@@ -316,7 +316,7 @@ typedef struct p2p_go_response {
    tANI_U8 *IEdata;
 } tP2P_go_response;
 
-//Invitation Req parameters
+//                         
 typedef struct p2p_invitation_request {
     tANI_U8 DialogToken;
     tANI_U8 PeerDeviceAddress[P2P_MAC_ADDRESS_LEN];
@@ -332,7 +332,7 @@ typedef struct p2p_invitation_request {
 } tP2P_invitation_request;
 
 
-//Invitation Response parameters
+//                              
 typedef struct p2p_invitation_response {
     tANI_U8 ReceiverDeviceAddress[P2P_MAC_ADDRESS_LEN];
     tANI_U8 DialogToken;
@@ -375,16 +375,16 @@ typedef enum eListenDiscoverableState {
 typedef enum P2PRemainOnChnReason
 {
    eP2PRemainOnChnReasonUnknown,
-   eP2PRemainOnChnReasonDiscovery, //Part of the discovery (search and listen)
-   eP2PRemainOnChnReasonSendFrame, //Found peer and before sending request frame
-   eP2PRemainOnChnReasonListen,    //In listen-only mode
+   eP2PRemainOnChnReasonDiscovery, //                                         
+   eP2PRemainOnChnReasonSendFrame, //                                           
+   eP2PRemainOnChnReasonListen,    //                   
 }eP2PRemainOnChnReason;
 
 typedef struct sGroupFormationReq {
    tCsrBssid deviceAddress;
    tANI_U8 targetListenChannel;
    tANI_U8 persistent_group;
-   tANI_U8 group_limit; /* may be internal */
+   tANI_U8 group_limit; /*                 */
    tANI_U8 GO_config_timeout;
    tANI_U8 CL_config_timeout;
    tANI_U8 GO_intent;
@@ -410,7 +410,7 @@ typedef struct sp2pContext
 {
    v_CONTEXT_t vosContext;
    tHalHandle hHal;
-   tANI_U8 sessionId; //Session id corresponding to P2P. On windows it is same as HDD sessionid not sme sessionid.
+   tANI_U8 sessionId; //                                                                                          
    tANI_U8 SMEsessionId;
    tANI_U8 probeReqForwarding;
    tANI_U8 *probeRspIe;
@@ -450,7 +450,7 @@ typedef struct sp2pContext
    tANI_U32 uDiscoverTimeout;
    tp2pDiscoverDeviceFilter *directedDiscoveryFilter;
    tANI_U32 uNumDeviceFilters;
-   //Number of deviceFilter directedDiscoveryFilter holds
+   //                                                    
    tANI_U32 uNumDeviceFilterAllocated; 
    tGroupFormationReq formationReq;
    tANI_U8 GroupFormationPending;
@@ -553,5 +553,5 @@ tANI_U8 getP2PSessionIdFromSMESessionId(tHalHandle hHal, tANI_U8 SessionID);
 void p2pCallDiscoverCallback(tp2pContext *p2pContext, eP2PDiscoverStatus statusCode);
 eHalStatus p2pGetResultFilter(tp2pContext *pP2pContext,
                               tCsrScanResultFilter *pFilter);
-#endif//INTERNAL
-#endif //__P2P_API_H__
+#endif//        
+#endif //             

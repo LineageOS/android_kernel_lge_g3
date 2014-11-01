@@ -40,28 +40,28 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * macInitApi.c - This file has all the mac level init functions
- *                   for all the defined threads at system level.
- * Author:    Dinesh Upadhyay
- * Date:      04/23/2007
- * History:-
- * Date: 04/08/2008       Modified by: Santosh Mandiganal
- * Modification Information: Code to allocate and free the  memory for DumpTable entry.
- * --------------------------------------------------------------------------
- *
+  
+                                                        
+                                                                
+                                                                 
+                             
+                        
+            
+                                                         
+                                                                                       
+                                                                             
+  
  */
-/* Standard include files */
-#include "cfgApi.h"         // cfgCleanup
-#include "limApi.h"         // limCleanup
+/*                        */
+#include "cfgApi.h"         //           
+#include "limApi.h"         //           
 #include "sirTypes.h"
 #include "sysDebug.h"
 #include "sysEntryFunc.h"
 #include "macInitApi.h"
 #if defined(ANI_LOGDUMP)
 #include "logDump.h"
-#endif //#if defined(ANI_LOGDUMP)
+#endif //                        
 
 #ifdef TRACE_RECORD
 #include "macTrace.h"
@@ -107,9 +107,9 @@ tSirRetStatus macPreStart(tHalHandle hHal)
    }
 
 #if defined(ANI_LOGDUMP)
-   //logDumpInit must be called before any module starts
+   //                                                   
    logDumpInit(pMac);
-#endif //#if defined(ANI_LOGDUMP)
+#endif //                        
 
    return status;
 }
@@ -134,7 +134,7 @@ tSirRetStatus macStart(tHalHandle hHal, void* pHalMacStartParams)
    {
 
 #if defined(TRACE_RECORD)
-      //Enable Tracing
+      //              
       macTraceInit(pMac);
 #endif
 
@@ -162,14 +162,14 @@ tSirRetStatus macStart(tHalHandle hHal, void* pHalMacStartParams)
 }
 
 
-/** -------------------------------------------------------------
-\fn macStop
-\brief this function will be called from HDD to stop MAC. This function will stop all the mac modules.
-\       memory with global context will only be initialized not freed here.
-\param   tHalHandle hHal
-\param tHalStopType
-\return tSirRetStatus
-  -------------------------------------------------------------*/
+/*                                                               
+           
+                                                                                                      
+                                                                           
+                        
+                   
+                     
+                                                               */
 
 tSirRetStatus macStop(tHalHandle hHal, tHalStopType stopType)
 {
@@ -177,14 +177,14 @@ tSirRetStatus macStop(tHalHandle hHal, tHalStopType stopType)
     tpAniSirGlobal pMac = (tpAniSirGlobal) hHal;
     peStop(pMac);
     cfgCleanup( pMac );
-    // need to free memory if not called in reset context.
-    // in reset context this memory will be freed by HDD.
+    //                                                    
+    //                                                   
     if(false == pMac->sys.abort)
     {
         vos_mem_free(pMac->pResetMsg);
         pMac->pResetMsg = NULL;
     }
-    /* Free the DumpTableEntry */
+    /*                         */
     for(i=0; i<MAX_DUMP_TABLE_ENTRY; i++)
     {
         vos_mem_free(pMac->dumpTableEntry[i]);
@@ -193,15 +193,15 @@ tSirRetStatus macStop(tHalHandle hHal, tHalStopType stopType)
     return eSIR_SUCCESS;
 }
 
-/** -------------------------------------------------------------
-\fn macOpen
-\brief this function will be called during init. This function is suppose to allocate all the
-\       memory with the global context will be allocated here.
-\param   tHalHandle pHalHandle
-\param   tHddHandle hHdd
-\param   tHalOpenParameters* pHalOpenParams
-\return tSirRetStatus
-  -------------------------------------------------------------*/
+/*                                                               
+           
+                                                                                             
+                                                              
+                              
+                        
+                                           
+                     
+                                                               */
 
 tSirRetStatus macOpen(tHalHandle *pHalHandle, tHddHandle hHdd, tMacOpenParameters *pMacOpenParms)
 {
@@ -211,38 +211,38 @@ tSirRetStatus macOpen(tHalHandle *pHalHandle, tHddHandle hHdd, tMacOpenParameter
         return eSIR_FAILURE;
 
     /*
-     * Make sure this adapter is not already opened. (Compare pAdapter pointer in already
-     * allocated pMac structures.)
-     * If it is opened just return pointer to previously allocated pMac pointer.
-     * Or should this result in error?
+                                                                                         
+                                  
+                                                                                
+                                      
      */
 
-    /* Allocate pMac */
+    /*               */
     pMac = vos_mem_malloc(sizeof(tAniSirGlobal));
     if ( NULL == pMac )
         return eSIR_FAILURE;
 
-    /* Initialize the pMac structure */
+    /*                               */
     vos_mem_set(pMac, sizeof(tAniSirGlobal), 0);
 
-    /** Store the Driver type in pMac Global.*/
-    //pMac->gDriverType = pMacOpenParms->driverType;
+    /*                                       */
+    //                                              
 
     /*
-     * Set various global fields of pMac here
-     * (Could be platform dependant as some variables in pMac are platform
-     * dependant)
+                                             
+                                                                          
+                 
      */
     pMac->hHdd      = hHdd;
-    pMac->pAdapter  = hHdd; //This line wil be removed
+    pMac->pAdapter  = hHdd; //                        
     *pHalHandle     = (tHalHandle)pMac;
 
     {
-        /* Call various PE (and other layer init here) */
+        /*                                             */
         if( eSIR_SUCCESS != logInit(pMac))
            return eSIR_FAILURE;
 
-        /* Call routine to initialize CFG data structures */
+        /*                                                */
         if( eSIR_SUCCESS != cfgInit(pMac) )
             return eSIR_FAILURE;
 
@@ -253,13 +253,13 @@ tSirRetStatus macOpen(tHalHandle *pHalHandle, tHddHandle hHdd, tMacOpenParameter
     return peOpen(pMac, pMacOpenParms);
 }
 
-/** -------------------------------------------------------------
-\fn macClose
-\brief this function will be called in shutdown sequence from HDD. All the
-\       allocated memory with global context will be freed here.
-\param   tpAniSirGlobal pMac
-\return none
-  -------------------------------------------------------------*/
+/*                                                               
+            
+                                                                          
+                                                                
+                            
+            
+                                                               */
 
 tSirRetStatus macClose(tHalHandle hHal)
 {
@@ -268,24 +268,24 @@ tSirRetStatus macClose(tHalHandle hHal)
 
     peClose(pMac);
 
-    /* Call routine to free-up all CFG data structures */
+    /*                                                 */
     cfgDeInit(pMac);
 
     logDeinit(pMac);
 
-    // Finally, de-allocate the global MAC datastructure:
+    //                                                   
     vos_mem_free( pMac );
 
     return eSIR_SUCCESS;
 }
 
-/** -------------------------------------------------------------
-\fn macReset
-\brief this function is called to send Reset message to HDD. Then HDD will start the reset process.
-\param   tpAniSirGlobal pMac
-\param   tANI_U32 rc
-\return    tSirRetStatus.
-  -------------------------------------------------------------*/
+/*                                                               
+            
+                                                                                                   
+                            
+                    
+                         
+                                                               */
 
 tSirRetStatus macReset(tpAniSirGlobal pMac, tANI_U32 rc)
 {
@@ -294,23 +294,23 @@ tSirRetStatus macReset(tpAniSirGlobal pMac, tANI_U32 rc)
     return status;
 }
 
-// ----------------------------------------------------------------------
-/**
- * macSysResetReq
- *
- * FUNCTION:
- *   All MAC modules use this interface in case of an exception.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- *
- * NOTE:
- *
- * @param tpAniSirGlobal MAC parameters structure
- * @param tANI_U32 reset reason code
- * @return tANI_U16 - returs the status.
+//                                                                       
+/* 
+                 
+  
+            
+                                                                
+  
+         
+  
+               
+  
+  
+        
+  
+                                                 
+                                    
+                                        
  */
 
 void
@@ -324,8 +324,8 @@ macSysResetReq(tpAniSirGlobal pMac, tANI_U32 rc)
         case eSIR_SME_BSS_RESTART:
         case eSIR_RADIO_HW_SWITCH_STATUS_IS_OFF:
         case eSIR_CFB_FLAG_STUCK_EXCEPTION:
-                // FIXME
-                //macReset(pMac, rc);
+                //      
+                //                   
                 break;
 
         case eSIR_EOF_SOF_EXCEPTION:
@@ -341,22 +341,22 @@ macSysResetReq(tpAniSirGlobal pMac, tANI_U32 rc)
     }
 }
 
-// -------------------------------------------------------------
-/**
- * macSysResetReqFromHDD
- *
- * FUNCTION:
- *   This reset function gets invoked from the HDD to request a reset.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- *
- * NOTE:
- *
- * @param tpAniSirGlobal MAC parameters structure
- * @return tANI_U16 - returs the status.
+//                                                              
+/* 
+                        
+  
+            
+                                                                      
+  
+         
+  
+               
+  
+  
+        
+  
+                                                 
+                                        
  */
 
 void

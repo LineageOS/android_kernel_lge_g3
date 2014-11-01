@@ -100,9 +100,9 @@ typedef struct sTraceData
     tANI_U32 num;
     tANI_U16 numSinceLastDump;
 
-    //Config for controlling the trace
+    //                                
     tANI_U8 enable;
-    tANI_U16 dumpCount; //will dump after number of records reach this number.
+    tANI_U16 dumpCount; //                                                    
 
 }tTraceData;
 

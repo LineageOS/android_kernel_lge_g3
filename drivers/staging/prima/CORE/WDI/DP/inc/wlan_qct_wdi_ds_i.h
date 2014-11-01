@@ -69,36 +69,36 @@
 #define WDI_802_11_MAX_HEADER_LEN 40
 
 
-/*The number of resources (BD headers) available for the HI priority DXE
-  channel
-  DXE will use 1 descriptor for the BD header and 1 for the data =>
-  This is true for LA but not EA. EA sends down 3~4 MDL chain per a packet.
-  Now we set it the same with free DXE decriptor number*/
+/*                                                                      
+         
+                                                                   
+                                                                           
+                                                       */
 #define WDI_DS_HI_PRI_RES_NUM  (WLANDXE_HI_PRI_RES_NUM)
 
-/*The number of resources (BD headers) available for the Low priority DXE
-  channel - see above
+/*                                                                       
+                     
 */
 #define WDI_DS_LO_PRI_RES_NUM  (WLANDXE_LO_PRI_RES_NUM)
 
-/*The number of BD headers available in the system for Tx must match the number
-  of DXE descriptors available for actual transmission, otherwise we have to
-  manage two diffrent level of resource pools*/
+/*                                                                             
+                                                                            
+                                             */
 
 #define WDI_MAC_ADDR_SIZE ( 6 )
-/*802.3 header definitions*/
+/*                        */
 #define  WDI_802_3_HEADER_LEN             14
-/* Offset of DA field in a 802.3 header*/
+/*                                     */
 #define  WDI_802_3_HEADER_DA_OFFSET        0
-/*802.11 header definitions - header len without QOS ctrl field*/
+/*                                                             */
 #define  WDI_802_11_HEADER_LEN            24
-/*802.11 header length + QOS ctrl field*/
+/*                                     */
 #define  WDI_MPDU_HEADER_LEN              26
-/*802.11 header definitions*/
+/*                         */
 #define  WDI_802_11_MAX_HEADER_LEN        40
-/*802.11 header definitions - qos ctrl field len*/
+/*                                              */
 #define  WDI_802_11_HEADER_QOS_CTL         2
-/*802.11 ADDR4 MAC addr field len */
+/*                                */
 #define  WDI_802_11_HEADER_ADDR4_LEN       WDI_MAC_ADDR_SIZE
 
 
@@ -116,30 +116,30 @@ typedef enum
 
 WPT_STATIC WPT_INLINE void DTI_TRACE ( DTI_TRACE_LEVEL level, ...) { };
 
-/* !!! MAX NUM STA is not identified yet, 16 is correct value,
-   but need to get from correct common def
-   This should be identified ASAP */
+/*                                                            
+                                          
+                                  */
 #ifdef WLAN_SOFTAP_VSTA_FEATURE
 #define WDI_DS_MAX_STA_ID 41
 #else
 #define WDI_DS_MAX_STA_ID 16
 #endif
-/* !!! MAX NUM SUPPORTED BSS is not identified yet, 2 is correct value,
-    but need to get from correct common def
-   This should be identified ASAP */
+/*                                                                     
+                                           
+                                  */
 #define WDI_DS_MAX_SUPPORTED_BSS   2
 
 #define WDI_DS_INDEX_INVALID       0xFF
 
-/* Mem Pool resorce count per STA data type */
+/*                                          */
 typedef struct {
   wpt_uint8    validIdx;
   wpt_uint8    STAIndex;
   wpt_uint32   numChunkReservedBySTA;
-  /* Mutex, is not needed for counter operation
-     since all TX Data frame operations will happen only TX thread
-     All of the TX data frame operations are serialized, no pre-emption will happen
-     This is just for place holder */
+  /*                                           
+                                                                  
+                                                                                   
+                                   */
   wpt_mutex    resourceCountLock;
 } WDI_DS_BdMemPoolSTAType;
 
@@ -153,7 +153,7 @@ typedef struct {
   WDI_DS_BdMemPoolSTAType numChunkSTA[WDI_DS_MAX_STA_ID + 1];
 } WDI_DS_BdMemPoolType;
 
-/* STA index associated with BSS index data type */
+/*                                               */
 typedef struct
 {
    wpt_uint8   isUsed;
@@ -200,71 +200,71 @@ WDI_DS_PrepareBDHeader (
   wpt_uint8       alignment
 );
 
-/**
- @brief Returns the available number of resources (BD headers)
-        available for TX
+/* 
+                                                              
+                        
 
- @param  pMemPool:         pointer to the BD memory pool
+                                                        
 
- @see
- @return Result of the function call
+     
+                                    
 */
 wpt_uint32 WDI_DS_GetAvailableResCount(WDI_DS_BdMemPoolType *pMemPool);
 
-/**
- @brief WDI_DS_GetreservedResCountPerSTA
-        Returns the Reserved number of resources (BD headers)
-        available for TX
+/* 
+                                        
+                                                             
+                        
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
+                                                        
+                                 
 
- @see
- @return Result of the function call
+     
+                                    
 */
 wpt_uint32 WDI_DS_MemPoolGetRsvdResCountPerSTA(WDI_DS_BdMemPoolType *pMemPool, wpt_uint8  staId);
 
-/**
- @brief WDI_DS_MemPoolAddSTA
-        Add NEW STA into mempool
+/* 
+                            
+                                
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
+                                                        
+                                 
 
- @see
- @return Result of the function call
+     
+                                    
 */
 WDI_Status WDI_DS_MemPoolAddSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staIndex);
 
-/**
- @brief WDI_DS_MemPoolAddSTA
-        Remove STA from mempool
+/* 
+                            
+                               
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
+                                                        
+                                 
 
- @see
- @return Result of the function call
+     
+                                    
 */
 WDI_Status WDI_DS_MemPoolDelSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staIndex);
 
-/**
- @brief Increase reserved TX resource count by specific STA
+/* 
+                                                           
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
- @see
- @return Result of the function call
+                                                        
+                                 
+     
+                                    
 */
 void WDI_DS_MemPoolIncreaseReserveCount(WDI_DS_BdMemPoolType *memPool, wpt_uint8  staId);
 
-/**
- @brief Decrease reserved TX resource count by specific STA
+/* 
+                                                           
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
- @see
- @return Result of the function call
+                                                        
+                                 
+     
+                                    
 */
 void WDI_DS_MemPoolDecreaseReserveCount(WDI_DS_BdMemPoolType *memPool, wpt_uint8  staId);
 #endif

@@ -40,14 +40,14 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- *
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+  
+                            
+                        
+            
+                                                          
+                                                                       
+  
  */
 
 #ifndef __PMM_GLOBAL_H__
@@ -57,17 +57,17 @@
 
 typedef struct sPmmStaState
 {
-    /// Whether this STA is in powersave or not
+    //                                         
     tANI_U8 powerSave : 1;
-    /// Whether this STA is CF-pollable or not
+    //                                        
     tANI_U8 cfPollable : 1;
-    /// counter to indicate PS state update due to asynchronous PS Poll
+    //                                                                 
     tANI_U8 psPollUpdate:2;
 
-    /// Reserved
+    //          
     tANI_U8 rsvd : 4;
 
-    /// Index of the next STA in PS closest to this one
+    //                                                 
     tANI_U8 nextPS;
 } tPmmStaState, *tpPmmStaState;
 
@@ -78,23 +78,23 @@ typedef enum ePmmState
 {
     ePMM_STATE_INVALID,
     ePMM_STATE_READY,
-    //BMPS
+    //    
     ePMM_STATE_BMPS_WT_INIT_RSP,
     ePMM_STATE_BMPS_WT_SLEEP_RSP,
     ePMM_STATE_BMPS_SLEEP,
     ePMM_STATE_BMPS_WT_WAKEUP_RSP,
     ePMM_STATE_BMPS_WAKEUP,
-    //IMPS
+    //    
     ePMM_STATE_IMPS_WT_SLEEP_RSP,
     ePMM_STATE_IMPS_SLEEP,
     ePMM_STATE_IMPS_WT_WAKEUP_RSP,
     ePMM_STATE_IMPS_WAKEUP,
-    //UAPSD
+    //     
     ePMM_STATE_UAPSD_WT_SLEEP_RSP,
     ePMM_STATE_UAPSD_SLEEP,
     ePMM_STATE_UAPSD_WT_WAKEUP_RSP,
 
-    //WOWLAN
+    //      
     ePMM_STATE_WOWLAN,
 
     ePMM_STATE_ERROR,
@@ -109,25 +109,25 @@ typedef struct sPmmStaInfo
 
 typedef struct sPmmTim
 {
-    tANI_U8 *pTim;                    /** Tim Bit Array*/
+    tANI_U8 *pTim;                    /*               */
     tANI_U8 minAssocId;
     tANI_U8 maxAssocId;
     tANI_U8 dtimCount;
-    /** Remaining Members are needed for LinkMonitaring of the STA in PS*/
-    tANI_U8 numStaWithData;  /** Number of stations in power save, who have data pending*/
-    tpPmmStaInfo    pStaInfo;   /** Points to 1st Instant of the Array of MaxSTA StaInfo */
+    /*                                                                  */
+    tANI_U8 numStaWithData;  /*                                                         */
+    tpPmmStaInfo    pStaInfo;   /*                                                       */
 } tPmmTim, *tpPmmTim;
 
 typedef struct sAniSirPmm
 {
 
 
-    //tANI_U32 disModeBeforeSleeping;
-    //tANI_U32 txMCastCtrl;
-    //tANI_U32 nListenBeforeSleeping;
-    //tANI_U32 txTrafficIdleThreshold;
-    //tANI_U32 rxTrafficIdleThreshold;
-    //tANI_U32 ledInfoBeforeSleeping;
+    //                               
+    //                     
+    //                               
+    //                                
+    //                                
+    //                               
 
 
     tANI_U64 BmpsmaxSleepTime;
@@ -143,7 +143,7 @@ typedef struct sAniSirPmm
     tANI_U64 BmpsWakeupTimeStamp;
     tANI_U64 BmpsSleepTimeStamp;
 
-    // debug statistics
+    //                 
     tANI_U64 BmpsPktDrpInSleepMode;
     tANI_U64 BmpsInitFailCnt;
     tANI_U64 BmpsSleeReqFailCnt;
@@ -153,7 +153,7 @@ typedef struct sAniSirPmm
     tANI_U64 BmpsHalReqFailCnt;
     tANI_U64 BmpsReqInInvalidRoleCnt;
 
-    /* Add wakeup and sleep time stamps here */
+    /*                                       */
     tANI_U64 ImpsWakeupTimeStamp;
     tANI_U64 ImpsSleepTimeStamp;
 
@@ -175,37 +175,37 @@ typedef struct sAniSirPmm
     tANI_U64 ImpsPktDrpInSleepMode;
 
 
-   /// Next STA to be serviced in PS state
+   //                                     
     tANI_U16 gPmmNextSta;
 
-    /// Next CF-pollable STA to be serviced in PS state
+    //                                                 
     tANI_U16 gPmmNextCFPSta;
 
-    /// Number of STAs in PS state
+    //                            
     tANI_U16 gPmmNumSta;
 
-    tANI_U8  gPmmPsPollUpdate:1; // set when any sta state is update due to PS-Poll
+    tANI_U8  gPmmPsPollUpdate:1; //                                                
     tANI_U8  rsvd: 7;
 
-   /// STA Power management state array
-    /**
-     * An entry in this array records the power save state for an STA
-     * It also points to the next closest STA in power save state.
+   //                                  
+    /* 
+                                                                     
+                                                                  
      */
 
-    tANI_U32 gPmmBeaconInterval;     //pmm keeps its won copy of beacon interval, default to 100ms
-    tSirPowerSaveCfg gPmmCfg;  //pmm keeps a copy of Power Save config parameters sent to softmac.
-    /// Current PM state of the station
+    tANI_U32 gPmmBeaconInterval;     //                                                           
+    tSirPowerSaveCfg gPmmCfg;  //                                                                 
+    //                                 
     tPmmState gPmmState;
-    /// Flag to track if we are in a missed beacon scenario
+    //                                                     
     tANI_U8 inMissedBeaconScenario;
 
     tPmmTim gPmmTim;
 
 
-    //Reason for which PMC is sending an EXIT_BMPS_REQ to PE
+    //                                                      
     tExitBmpsReason   gPmmExitBmpsReasonCode;
-    tANI_U8  sessionId;      //This sessio Id is added to know the bsstype , infra/btamp .......in power save mode
+    tANI_U8  sessionId;      //                                                                                   
 
 } tAniSirPmm, *tpAniSirPmm;
 

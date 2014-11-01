@@ -115,105 +115,105 @@
   Qualcomm Confidential and Proprietary
 
 ============================================================================*/
-/* $Header$ */
+/*          */
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                
+                                                                            */
 #include <vos_types.h>
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Type Declarations
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                    
+                                                                            */
 
-/**============================================================================
-  @brief hdd_add_wowl_ptrn() - Function which will add the WoWL pattern to be
-  used when PBM filtering is enabled
+/*                                                                             
+                                                                             
+                                    
 
-  @param ptrn : [in]  pointer to the pattern string to be added
+                                                               
 
-  @return     : FALSE if any errors encountered
-              : TRUE otherwise
-  ===========================================================================*/
+                                               
+                              
+                                                                             */
 v_BOOL_t hdd_add_wowl_ptrn (hdd_adapter_t *pAdapter, const char * ptrn);
 
-/**============================================================================
-  @brief hdd_del_wowl_ptrn() - Function which will remove a WoWL pattern
+/*                                                                             
+                                                                        
 
-  @param ptrn : [in]  pointer to the pattern string to be removed
+                                                                 
 
-  @return     : FALSE if any errors encountered
-              : TRUE otherwise
-  ===========================================================================*/
+                                               
+                              
+                                                                             */
 v_BOOL_t hdd_del_wowl_ptrn (hdd_adapter_t *pAdapter, const char * ptrn);
 
-/**============================================================================
-  @brief hdd_add_wowl_ptrn_debugfs() - Function which will add a WoW pattern
-  sent from debugfs interface
+/*                                                                             
+                                                                            
+                             
 
-  @param pAdapter       : [in] pointer to the adapter
-         pattern_idx    : [in] index of the pattern to be added
-         pattern_offset : [in] offset of the pattern in the frame payload
-         pattern_buf    : [in] pointer to the pattern hex string to be added
-         pattern_mask   : [in] pointer to the pattern mask hex string
+                                                     
+                                                               
+                                                                         
+                                                                            
+                                                                     
 
-  @return               : FALSE if any errors encountered
-                        : TRUE otherwise
-  ===========================================================================*/
+                                                         
+                                        
+                                                                             */
 v_BOOL_t hdd_add_wowl_ptrn_debugfs(hdd_adapter_t *pAdapter, v_U8_t pattern_idx,
                                    v_U8_t pattern_offset, char *pattern_buf,
                                    char *pattern_mask);
 
-/**============================================================================
-  @brief hdd_del_wowl_ptrn_debugfs() - Function which will remove a WoW pattern
-  sent from debugfs interface
+/*                                                                             
+                                                                               
+                             
 
-  @param pAdapter    : [in] pointer to the adapter
-         pattern_idx : [in] index of the pattern to be removed
+                                                  
+                                                              
 
-  @return            : FALSE if any errors encountered
-                     : TRUE otherwise
-  ===========================================================================*/
+                                                      
+                                     
+                                                                             */
 v_BOOL_t hdd_del_wowl_ptrn_debugfs(hdd_adapter_t *pAdapter, v_U8_t pattern_idx);
 
-/**============================================================================
-  @brief hdd_enter_wowl() - Function which will enable WoWL. Atleast one
-  of MP and PBM must be enabled
+/*                                                                             
+                                                                        
+                               
 
-  @param enable_mp  : [in] Whether to enable magic packet WoWL mode
-  @param enable_pbm : [in] Whether to enable pattern byte matching WoWL mode
+                                                                   
+                                                                            
 
-  @return           : FALSE if any errors encountered
-                    : TRUE otherwise
-  ===========================================================================*/
+                                                     
+                                    
+                                                                             */
 v_BOOL_t hdd_enter_wowl (hdd_adapter_t *pAdapter, v_BOOL_t enable_mp, v_BOOL_t enable_pbm);
 
-/**============================================================================
-  @brief hdd_exit_wowl() - Function which will disable WoWL
+/*                                                                             
+                                                           
 
-  @return           : FALSE if any errors encountered
-                    : TRUE otherwise
-  ===========================================================================*/
+                                                     
+                                    
+                                                                             */
 v_BOOL_t hdd_exit_wowl (hdd_adapter_t*pAdapter);
 
-/**============================================================================
-  @brief hdd_init_wowl() - Init function which will initialize the WoWL module
-  and perform any required intial configuration 
+/*                                                                             
+                                                                              
+                                                
 
-  @return           : FALSE if any errors encountered
-                    : TRUE otherwise
-  ===========================================================================*/
+                                                     
+                                    
+                                                                             */
 v_BOOL_t hdd_init_wowl (hdd_adapter_t* pAdapter);
 
-/**============================================================================
-  @brief hdd_parse_hex() - function returns integer equivalent of hexa decimal
+/*                                                                             
+                                                                              
 
-  @return           : integer equivalent of hexa decimal
-  ===========================================================================*/
+                                                        
+                                                                             */
 int hdd_parse_hex(unsigned char c);
 
-#endif /* #ifndef _WLAN_HDD_WOWL_H */
+#endif /*                          */

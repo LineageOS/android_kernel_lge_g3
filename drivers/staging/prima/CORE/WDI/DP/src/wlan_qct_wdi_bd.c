@@ -66,25 +66,25 @@
 
 
 
-/*==========================================================================
- *
- FUNCTION    WDI_DS_PrepareBDHeader
+/*                                                                          
+  
+                                   
 
- DESCRIPTION
- function for preparing BD header before HAL processing.
+            
+                                                        
 
- PARAMETERS
+           
 
- IN
-palPacket:     PAL packet pointer
+   
+                                 
 
 
-RETURN VALUE
-No return.
+            
+          
 
-SIDE EFFECTS
+            
 
-============================================================================*/
+                                                                            */
 void
 WDI_DS_PrepareBDHeader (wpt_packet* palPacket,
                         wpt_uint8 ucDisableHWFrmXtl, wpt_uint8 alignment)
@@ -99,7 +99,7 @@ WDI_DS_PrepareBDHeader (wpt_packet* palPacket,
   WDI_DS_TxMetaInfoType     *pTxMetadata;
 
 
-  /* Extract reuqired information from Metadata */
+  /*                                            */
   pvBDHeader = WPAL_PACKET_GET_BD_POINTER(palPacket);
   pTxMetadata = WDI_DS_ExtractTxMetaData(palPacket);
   ucQosEnabled = pTxMetadata->qosEnabled;
@@ -107,13 +107,13 @@ WDI_DS_PrepareBDHeader (wpt_packet* palPacket,
 
   WPAL_PACKET_SET_BD_LENGTH(palPacket, WDI_TX_BD_HEADER_SIZE);
 
-  /*---------------------------------------------------------------------
-    Fill MPDU info fields:
-    - MPDU data start offset
-    - MPDU header start offset
-    - MPDU header length
-    - MPDU length - this is a 16b field - needs swapping
-    --------------------------------------------------------------------*/
+  /*                                                                     
+                          
+                            
+                              
+                        
+                                                        
+                                                                        */
 
   if ( ucDisableHWFrmXtl ) {
     ucHeaderOffset = WDI_TX_BD_HEADER_SIZE;
@@ -134,10 +134,10 @@ WDI_DS_PrepareBDHeader (wpt_packet* palPacket,
   WDI_TX_BD_SET_MPDU_DATA_OFFSET( pvBDHeader,
       ucHeaderOffset + ucHeaderLen + alignment);
 
-  // pkt length from PAL API. Need to change in case of HW FT used
-  ucPktLen  = wpalPacketGetLength( palPacket ); // This includes BD length
-  /** This is the length (in number of bytes) of the entire MPDU
-      (header and data). Note that the length INCLUDES FCS field. */
+  //                                                              
+  ucPktLen  = wpalPacketGetLength( palPacket ); //                        
+  /*                                                            
+                                                                  */
   ucMpduLen = ucPktLen - WPAL_PACKET_GET_BD_LENGTH( palPacket );
   WDI_TX_BD_SET_MPDU_LEN( pvBDHeader, ucMpduLen );
 
@@ -147,32 +147,32 @@ WDI_DS_PrepareBDHeader (wpt_packet* palPacket,
       (ucHeaderOffset + ucHeaderLen + alignment),
       pTxMetadata->fPktlen, alignment);
 
-}/* WDI_DS_PrepareBDHeader */
+}/*                        */
 
-/*==========================================================================
- *
- FUNCTIONS    WDI_DS_MemPoolXXX
+/*                                                                          
+  
+                               
 
- DESCRIPTION
-  APIs for managing the BD header memory pool
- PARAMETERS
+            
+                                             
+           
 
- IN
-WDI_DS_BdMemPoolType:     Memory pool pointer
+   
+                                             
 
 
 
-============================================================================*/
+                                                                            */
 
 /*
- * Create a memory pool which is DMA capabale
+                                             
  */
 WDI_Status WDI_DS_MemPoolCreate(WDI_DS_BdMemPoolType *memPool, wpt_uint8 chunkSize,
                                                                   wpt_uint8 numChunks)
 {
   wpt_uint8 staLoop;
 
-  //Allocate all the max size and align them to a double word boundary. The first 8 bytes are control bytes.
+  //                                                                                                        
   memPool->numChunks = 0;
   memPool->chunkSize = chunkSize + 16 - (chunkSize%8);
   memPool->pVirtBaseAddress = wpalDmaMemoryAllocate((numChunks * memPool->chunkSize),
@@ -186,7 +186,7 @@ WDI_Status WDI_DS_MemPoolCreate(WDI_DS_BdMemPoolType *memPool, wpt_uint8 chunkSi
      return WDI_STATUS_E_FAILURE;
   wpalMemoryZero(memPool->AllocationBitmap, (numChunks/32+1)*sizeof(wpt_uint32));
 
-  //Initialize resource infor per STA
+  //                                 
   for(staLoop = 0; staLoop < WDI_DS_MAX_STA_ID; staLoop++)
   {
     memPool->numChunkSTA[staLoop].STAIndex = 0xFF;
@@ -198,17 +198,17 @@ WDI_Status WDI_DS_MemPoolCreate(WDI_DS_BdMemPoolType *memPool, wpt_uint8 chunkSi
 }
 
 /*
- * Destroy the memory pool
+                          
  */
 void WDI_DS_MemPoolDestroy(WDI_DS_BdMemPoolType *memPool)
 {
-  //Allocate all the max size.
+  //                          
   wpalDmaMemoryFree(memPool->pVirtBaseAddress);
   wpalMemoryFree(memPool->AllocationBitmap);
   wpalMemoryZero(memPool, sizeof(*memPool));
 }
 /*
- * Allocate chunk memory
+                        
  */
 WPT_STATIC WPT_INLINE int find_leading_zero_and_setbit(wpt_uint32 *bitmap, wpt_uint32 maxNumPool)
 {
@@ -251,17 +251,17 @@ void *WDI_DS_MemPoolAlloc(WDI_DS_BdMemPoolType *memPool, void **pPhysAddress,
   {
      return NULL;
   }
-  //Find the leading 0 in the allocation bitmap
+  //                                           
 
   if((index = find_leading_zero_and_setbit(memPool->AllocationBitmap, maxNumPool)) == -EPERM)
   {
-     //DbgBreakPoint();
+     //                
      DTI_TRACE(  DTI_TRACE_LEVEL_INFO, "WDI_DS_MemPoolAlloc: index:%d(NULL), numChunks:%d",
                   index, memPool->numChunks );
      return NULL;
   }
   memPool->numChunks++;
-  // The first 8 bytes are reserved for internal use for control bits and hash.
+  //                                                                           
   pVirtAddress  = (wpt_uint8 *)memPool->pVirtBaseAddress + (memPool->chunkSize * index) + 8;
   *pPhysAddress = (wpt_uint8 *)memPool->pPhysBaseAddress + (memPool->chunkSize * index) + 8;
 
@@ -272,7 +272,7 @@ void *WDI_DS_MemPoolAlloc(WDI_DS_BdMemPoolType *memPool, void **pPhysAddress,
 }
 
 /*
- * Free chunk memory
+                    
  */
 void  WDI_DS_MemPoolFree(WDI_DS_BdMemPoolType *memPool, void *pVirtAddress, void *pPhysAddress)
 {
@@ -283,39 +283,39 @@ void  WDI_DS_MemPoolFree(WDI_DS_BdMemPoolType *memPool, void *pVirtAddress, void
   memPool->AllocationBitmap[index/32] = word;
   memPool->numChunks--;
 
-  //DbgPrint( "WDI_DS_MemPoolFree: index:%d, numChunks:%d", index, memPool->numChunks );
+  //                                                                                    
 }
 
 
-/**
- @brief Returns the available number of resources (BD headers)
-        available for TX
+/* 
+                                                              
+                        
 
- @param  pMemPool:         pointer to the BD memory pool
+                                                        
 
- @see
- @return Result of the function call
+     
+                                    
 */
 wpt_uint32 WDI_DS_GetAvailableResCount(WDI_DS_BdMemPoolType *pMemPool)
 {
   return pMemPool->numChunks;
 }
 
-/**
- @brief WDI_DS_MemPoolAddSTA
-        Add NEW STA into mempool
+/* 
+                            
+                                
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
+                                                        
+                                 
 
- @see
- @return Result of the function call
+     
+                                    
 */
 WDI_Status WDI_DS_MemPoolAddSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staIndex)
 {
   if(memPool->numChunkSTA[staIndex].STAIndex != 0xFF)
   {
-    /* Already using this slot? Do nothing */
+    /*                                     */
     return WDI_STATUS_SUCCESS;
   }
 
@@ -325,21 +325,21 @@ WDI_Status WDI_DS_MemPoolAddSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staInde
   return WDI_STATUS_SUCCESS;
 }
 
-/**
- @brief WDI_DS_MemPoolAddSTA
-        Remove STA from mempool
+/* 
+                            
+                               
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
+                                                        
+                                 
 
- @see
- @return Result of the function call
+     
+                                    
 */
 WDI_Status WDI_DS_MemPoolDelSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staIndex)
 {
   if(memPool->numChunkSTA[staIndex].STAIndex == 0xFF)
   {
-    /* Empty this slot? error, bad argument */
+    /*                                      */
       return WDI_STATUS_E_FAILURE;
   }
 
@@ -349,27 +349,27 @@ WDI_Status WDI_DS_MemPoolDelSTA(WDI_DS_BdMemPoolType *memPool, wpt_uint8 staInde
   return WDI_STATUS_SUCCESS;
 }
 
-/**
- @brief Returns the reserved number of resources (BD headers) per STA
-        available for TX
+/* 
+                                                                     
+                        
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
- @see
- @return Result of the function call
+                                                        
+                                 
+     
+                                    
 */
 wpt_uint32 WDI_DS_MemPoolGetRsvdResCountPerSTA(WDI_DS_BdMemPoolType *pMemPool, wpt_uint8  staId)
 {
   return pMemPool->numChunkSTA[staId].numChunkReservedBySTA;
 }
 
-/**
- @brief Increase reserved TX resource count by specific STA
+/* 
+                                                           
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
- @see
- @return Result of the function call
+                                                        
+                                 
+     
+                                    
 */
 void WDI_DS_MemPoolIncreaseReserveCount(WDI_DS_BdMemPoolType *memPool, wpt_uint8  staId)
 {
@@ -381,13 +381,13 @@ void WDI_DS_MemPoolIncreaseReserveCount(WDI_DS_BdMemPoolType *memPool, wpt_uint8
   return;
 }
 
-/**
- @brief Decrease reserved TX resource count by specific STA
+/* 
+                                                           
 
- @param  pMemPool:         pointer to the BD memory pool
- @param  staId             STA ID
- @see
- @return Result of the function call
+                                                        
+                                 
+     
+                                    
 */
 void WDI_DS_MemPoolDecreaseReserveCount(WDI_DS_BdMemPoolType *memPool, wpt_uint8  staId)
 {

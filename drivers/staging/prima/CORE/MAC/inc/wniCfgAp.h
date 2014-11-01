@@ -40,11 +40,11 @@
  */
 
 /*
- * DO NOT EDIT - This file is generated automatically
+                                                     
  */
 
 /*
- * IMPORTANT:  This file is for system that supports both STA and AP mode.
+                                                                          
  */
 
 
@@ -52,7 +52,7 @@
 #define __WNICFGAP_H
 
 /*
- * Configuration Parameter ID for STA and AP
+                                            
  */
 
 #define WNI_CFG_STA_ID    0
@@ -372,7 +372,7 @@
 #define WNI_CFG_GO_LINK_MONITOR_TIMEOUT    311
 
 /*
- * String parameter lengths 
+                            
  */
 
 #define WNI_CFG_STA_ID_LEN    6
@@ -438,7 +438,7 @@
 #define WNI_CFG_WPS_UUID_LEN    16
 
 /*
- * Integer parameter min/max/default values 
+                                            
  */
 
 #define WNI_CFG_CF_POLLABLE_APMIN    0

@@ -54,11 +54,11 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include <vos_types.h>
 #include <vos_memory.h>
 
@@ -66,30 +66,30 @@
 #include <log_codes.h>
 #endif
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
-//FIXME To be removed when DIAG support is added. This definiton should be
-//picked from log.h file above. 
+/*                                                                           
+                                        
+                                                                          */
+//                                                                        
+//                              
 typedef struct
 {
-  /* Specifies the length, in bytes of the entry, including this header. */
+  /*                                                                     */
     v_U16_t len;
   
-  /* Specifies the log code for the entry*/
+  /*                                     */
     v_U16_t code; 
 
-  /*Time Stamp lo*/
+  /*             */
     v_U32_t ts_lo;
   
-   /*Time Stamp hi*/
+   /*             */
     v_U32_t ts_hi;
 }__packed log_hdr_type;
 
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /*             */
 
 #ifdef FEATURE_WLAN_DIAG_SUPPORT
 void vos_log_set_code (v_VOID_t *ptr, v_U16_t code);
@@ -97,9 +97,9 @@ void vos_log_set_length (v_VOID_t *ptr, v_U16_t length);
 void vos_log_set_timestamp (v_VOID_t *plog_hdr_ptr);
 void vos_log_submit(v_VOID_t *plog_hdr_ptr);
 
-/*---------------------------------------------------------------------------
-  Allocate an event payload holder
----------------------------------------------------------------------------*/
+/*                                                                           
+                                  
+                                                                           */
 
 #define WLAN_VOS_DIAG_LOG_ALLOC( payload_ptr, payload_type, log_code ) \
            do \
@@ -114,9 +114,9 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr);
               }                                                                \
            } while (0)
 
-/*---------------------------------------------------------------------------
-  Report the event
----------------------------------------------------------------------------*/
+/*                                                                           
+                  
+                                                                           */
 #define WLAN_VOS_DIAG_LOG_REPORT( payload_ptr ) \
     do                                          \
     {                               \
@@ -127,9 +127,9 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr);
        }                             \
     } while (0)
     
-/*---------------------------------------------------------------------------
-  Free the payload
----------------------------------------------------------------------------*/
+/*                                                                           
+                  
+                                                                           */
 #define WLAN_VOS_DIAG_LOG_FREE( payload_ptr ) \
     do                                          \
     {                               \
@@ -140,21 +140,21 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr);
     } while (0)
     
 
-#else /* FEATURE_WLAN_DIAG_SUPPORT */
+#else /*                           */
 
 #define WLAN_VOS_DIAG_LOG_ALLOC( payload_ptr, payload_type, log_code ) 
 #define WLAN_VOS_DIAG_LOG_REPORT( payload_ptr ) 
 #define WLAN_VOS_DIAG_LOG_FREE( payload_ptr )
 
-#endif /* FEATURE_WLAN_DIAG_SUPPORT */
+#endif /*                           */
 
 
-/*------------------------------------------------------------------------- 
-  Function declarations and documenation
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                                        
+                                                                          */
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif /*             */
 
-#endif // __I_VOS_DIAG_CORE_LOG_H
+#endif //                        

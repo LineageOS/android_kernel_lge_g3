@@ -41,14 +41,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Sandesh Goel
- * Date:        02/09/03
- * History:-
- * 04/09/02        Created.
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                            
+                        
+            
+                           
+                                                                       
+  
  */
 
 #ifndef __CFGGLOBAL_H
@@ -60,11 +60,11 @@
 
 #define CFG_MAX_NUM_STA      SIR_MAX_NUM_STA_IN_IBSS
 
-#define CFG_MAX_STR_LEN       256    // as the number of channels grows, 128 is not big enough
+#define CFG_MAX_STR_LEN       256    //                                                       
 
-/*--------------------------------------------------------------------*/
-/* Configuration Control Structure                                    */
-/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*                                                                    */
+/*                                                                    */
 typedef struct
 {
     tANI_U32   control;
@@ -73,7 +73,7 @@ typedef struct
 
 typedef struct sAniSirCfg
 {
-    // CFG module status
+    //                  
     tANI_U8    gCfgStatus;
 
     tCfgCtl    *gCfgEntry;
@@ -85,10 +85,10 @@ typedef struct sAniSirCfg
     tANI_U16    gCfgMaxIBufSize;
     tANI_U16    gCfgMaxSBufSize;
 
-    // Static buffer for string parameter (must be word-aligned)
+    //                                                          
     tANI_U8    *gSBuffer;
 
-    // Message parameter list buffer (enough for largest possible response)
+    //                                                                     
     tANI_U32   *gParamList;
 } tAniSirCfg,  *tpAniSirCfg;
 

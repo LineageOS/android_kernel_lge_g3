@@ -54,11 +54,11 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include <vos_types.h>
 #include <vos_status.h>
 #include <vos_packet.h>
@@ -66,16 +66,16 @@
 #include <linux/mutex.h>
 #include <linux/kernel.h>
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                          */
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
-/*-------------------------------------------------------------------------- 
-  Type declarations
-  ------------------------------------------------------------------------*/
+#endif /*             */
+/*                                                                           
+                   
+                                                                          */
 typedef struct vos_linux_list_s
 {
    struct list_head anchor;
@@ -89,6 +89,6 @@ typedef struct list_head vos_list_node_t;
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif /*             */
 
-#endif // __I_VOS_LIST_H
+#endif //               

@@ -59,7 +59,7 @@
 #define WLAN_DICT_FILE             ""
 #define WLAN_COUNTRY_INFO_FILE     "wlan/volans/WCN1314_wlan_country_info.dat"
 #define WLAN_HO_CFG_FILE           "wlan/volans/WCN1314_wlan_ho_config"
-#endif // ANI_CHIPSET
+#endif //            
 #else
 #define WLAN_INI_FILE              "wlan/qcom_cfg.ini"
 #define WLAN_CFG_FILE              "wlan/cfg.dat"
@@ -68,7 +68,7 @@
 #define WLAN_DICT_FILE             ""
 #define WLAN_COUNTRY_INFO_FILE     "wlan/wlan_country_info.dat"
 #define WLAN_HO_CFG_FILE           "wlan/wlan_ho_config"
-#endif // MSM_PLATFORM
+#endif //             
 
 
 VOS_STATUS hdd_request_firmware(char *pfileName,v_VOID_t *pCtx,v_VOID_t **ppfw_data, v_SIZE_t *pSize);
@@ -90,5 +90,5 @@ VOS_STATUS hdd_read_cfg_file(v_VOID_t *pCtx, char *pFileName, v_VOID_t *pBuffer,
 
 tVOS_CONCURRENCY_MODE hdd_get_concurrency_mode ( void );
 
-#endif /* WLAN_HDD_MISC_H */
+#endif /*                 */
 

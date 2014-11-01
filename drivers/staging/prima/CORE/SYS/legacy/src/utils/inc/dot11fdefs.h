@@ -58,18 +58,18 @@
 
 #include "parserApi.h"
 
-// This controls how the "dot11f" code copies memory
+//                                                  
 #define DOT11F_MEMCPY(ctx, dst, src, len) \
     vos_mem_copy( ( tANI_U8* )( dst ), ( tANI_U8* )( src ), ( len ) )
 
-// This controls how the "dot11f" code compares memory
+//                                                    
 #define DOT11F_MEMCMP(ctx, lhs, rhs, len) \
     ( ! vos_mem_compare( ( tANI_U8* )( lhs ), ( tANI_U8* )( rhs ), ( len ) ) )
 
 #   if defined ( DBG ) && ( DBG != 0 )
 
-#       //define DOT11F_ENABLE_LOGGING
-#       //define DOT11F_DUMP_FRAMES
+#       //                            
+#       //                         
 #       define DOT11F_LOG_GATE ( 4 )
 #       define FRAMES_SEV_FOR_FRAME(ctx, sig) \
             ( DOT11F_ASSOCREQUEST == (sig) ? 3 : 5 )
@@ -93,7 +93,7 @@
 #       define FRAMES_DUMP(ctx, sev, p, n) \
             sirDumpBuf((pCtx), SIR_DBG_MODULE_ID, (sev), (p), (n));
 
-        #endif //#if defined( DOT11F_ENABLE_LOGGING )
+        #endif //                                    
 
 #   else
 
@@ -104,12 +104,12 @@
 #   endif
 
 
-// #define DOT11F_ENABLE_DBG_BREAK ( 1 )
+//                                      
 
-// Local Variables:
-// fill-column: 72
-// indent-tabs-mode: nil
-// show-trailing-whitespace: t
-// End:
+//                 
+//                
+//                      
+//                            
+//     
 
-#endif // DOT11FDEFS_H_82A7B72E_C36C_465D_82A7_139EA5322582
+#endif //                                                  

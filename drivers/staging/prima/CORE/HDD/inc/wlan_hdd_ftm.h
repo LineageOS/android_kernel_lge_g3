@@ -62,7 +62,7 @@
 #define QUALCOMM_MODULE_TYPE     2
 #define WLAN_FTM_COMMAND_TIME_OUT 1000
 #define PHYDBG_PREAMBLE_NOT_SUPPORTED 0xFF
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_INT_GET_NONE    (SIOCIWFIRSTPRIV + 0)
 #define WE_FTM_ON_OFF         1
 #define WE_TX_PKT_GEN         2
@@ -78,25 +78,25 @@
 #define WE_ENABLE_DPD        12
 #define WE_SET_CB            13
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_NONE_GET_INT    (SIOCIWFIRSTPRIV + 1)
 #define WE_GET_CHANNEL      1
 #define WE_GET_TX_POWER     2
 #define WE_GET_RX_PKT_CNT   3
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_INT_GET_INT     (SIOCIWFIRSTPRIV + 2)
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_CHAR_GET_NONE   (SIOCIWFIRSTPRIV + 3)
 #define WE_SET_MAC_ADDRESS   1
 #define WE_SET_TX_RATE       2
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_THREE_INT_GET_NONE   (SIOCIWFIRSTPRIV + 4)
 #define WE_SET_WLAN_DBG      1
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_GET_CHAR_SET_NONE   (SIOCIWFIRSTPRIV + 5)
 #define WE_GET_MAC_ADDRESS   1
 #define WE_GET_TX_RATE        2
@@ -104,7 +104,7 @@
 #define WE_GET_FTM_STATUS    4
 #define WE_GET_RX_RSSI       5
 
-/* Private ioctls and their sub-ioctls */
+/*                                     */
 #define WLAN_FTM_PRIV_SET_NONE_GET_NONE   (SIOCIWFIRSTPRIV + 6)
 #define WE_SET_NV_DEFAULTS    1
 
@@ -123,13 +123,13 @@ typedef struct ftm_hdr_s {
     v_U16_t respPktSize;
 } ftm_hdr_t;
 
-/* The request buffer of FTM which contains a byte of command and the request */
+/*                                                                            */
 typedef struct wlan_hdd_ftm_payload_s {
     v_U16_t    ftm_cmd_type;
     v_U8_t    pFtmCmd[1];
 }wlan_hdd_ftm_payload;
 #define SIZE_OF_FTM_DIAG_HEADER_LEN 12
-/* the FTM command/response structure */
+/*                                    */
 typedef struct wlan_hdd_ftm_request_s
 {
     v_U8_t    cmd_code;
@@ -161,15 +161,15 @@ typedef struct wlan_hdd_ftm_status_s
     wlan_hdd_ftm_request_t    *pRequestBuf;
     wlan_hdd_ftm_response_t   *pResponseBuf;
     tAniNlHdr *wnl;
-        /**vos event */
+        /*           */
     vos_event_t  ftm_vos_event;
     
-   /** completion variable for ftm command to complete*/
+   /*                                                 */
     struct completion ftm_comp_var;
     v_BOOL_t  IsCmdPending;
     v_BOOL_t  cmd_iwpriv;
 
-    /** Large size of NV Table Handle **/
+    /*                                 */
     eNvTable  processingNVTable;
     v_U32_t   targetNVTableSize;
     v_U8_t   *targetNVTablePointer;
@@ -179,11 +179,11 @@ typedef struct wlan_hdd_ftm_status_s
 } wlan_hdd_ftm_status_t;
 typedef struct ftm_msg_s
 {
-    /* This field can be used as sequence 
-        number/dialogue token for matching request/response */
+    /*                                    
+                                                            */
     v_U16_t type;
     
-    /* This guy carries the command buffer along with command id */
+    /*                                                           */
     void *cmd_ptr;
     v_U32_t bodyval;
 } ftm_msg_t;

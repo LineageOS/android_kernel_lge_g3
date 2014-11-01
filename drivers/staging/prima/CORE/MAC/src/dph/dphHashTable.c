@@ -40,17 +40,17 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file dphHashTable.cc implements the member functions of
- * DPH hash table class.
- *
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                               
+                        
+  
+                            
+                        
+            
+                                                          
+                                                                       
+  
  */
 #include "palTypes.h"
 #include "cfgApi.h"
@@ -61,21 +61,21 @@
 
 #include "halMsgApi.h" 
 
-// ---------------------------------------------------------------------
-/**
- * dphHashTableClass()
- *
- * FUNCTION:
- * Constructor function
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param None
- * @return None
+//                                                                      
+/* 
+                      
+  
+            
+                       
+  
+         
+  
+               
+  
+        
+  
+              
+               
  */
 
 void dphHashTableClassInit(tpAniSirGlobal pMac, dphHashTableClass* pDphHashTable)
@@ -96,21 +96,21 @@ void dphHashTableClassInit(tpAniSirGlobal pMac, dphHashTableClass* pDphHashTable
     
 }
 
-// ---------------------------------------------------------------------
-/**
- * hashFunction
- *
- * FUNCTION:
- * Hashing function
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param staAddr MAC address of the station
- * @return None
+//                                                                      
+/* 
+               
+  
+            
+                   
+  
+         
+  
+               
+  
+        
+  
+                                            
+               
  */
 
 tANI_U16 hashFunction(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 numSta)
@@ -124,23 +124,23 @@ tANI_U16 hashFunction(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 numSta)
   return (sum % numSta);
 }
 
-// ---------------------------------------------------------------------
-/**
- * dphLookupHashEntry
- *
- * FUNCTION:
- * Look up an entry in hash table
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param staAddr MAC address of the station
- * @param pStaId pointer to the Station ID assigned to the station
- * @return pointer to STA hash entry if lookup was a success \n
- *         NULL if lookup was a failure
+//                                                                      
+/* 
+                     
+  
+            
+                                 
+  
+         
+  
+               
+  
+        
+  
+                                            
+                                                                  
+                                                               
+                                       
  */
 
 tpDphHashNode dphLookupHashEntry(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U16 *pAssocId, 
@@ -160,22 +160,22 @@ tpDphHashNode dphLookupHashEntry(tpAniSirGlobal pMac, tANI_U8 staAddr[], tANI_U1
     return ptr;
 }
 
-// ---------------------------------------------------------------------
-/**
- * dphGetHashEntry
- *
- * FUNCTION:
- * Get a pointer to the hash node
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param staId Station ID
- * @return pointer to STA hash entry if lookup was a success \n
- *         NULL if lookup was a failure
+//                                                                      
+/* 
+                  
+  
+            
+                                 
+  
+         
+  
+               
+  
+        
+  
+                          
+                                                               
+                                       
  */
 
 tpDphHashNode dphGetHashEntry(tpAniSirGlobal pMac, tANI_U16 peerIdx, dphHashTableClass* pDphHashTable)
@@ -200,23 +200,23 @@ static inline tpDphHashNode getNode(tpAniSirGlobal pMac, tANI_U8 assocId, dphHas
 
 
 
-// ---------------------------------------------------------------------
-/**
- * dphLookupAssocId
- *
- * FUNCTION:
- * This function looks up assocID given the station Id. It traverses the complete table to do this.
- * Need to find an efficient way to do this.
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pMac pointer to global Mac structure.
- * @param staIdx station ID
- * @param *assocId pointer to associd to be returned by this function.
- * @return pointer to the dph node.
+//                                                                      
+/* 
+                   
+  
+            
+                                                                                                   
+                                            
+         
+  
+               
+  
+        
+  
+                                               
+                           
+                                                                      
+                                   
  */
 tpDphHashNode dphLookupAssocId(tpAniSirGlobal pMac,  tANI_U16 staIdx, tANI_U16* assocId, dphHashTableClass* pDphHashTable)
 {
@@ -241,17 +241,17 @@ tpDphHashNode dphLookupAssocId(tpAniSirGlobal pMac,  tANI_U16 staIdx, tANI_U16* 
 
 
 
-/** -------------------------------------------------------------
-\fn dphInitStaState
-\brief Initialize STA state. this function saves the staId from the current entry in the DPH table with given assocId
-\ if validStaIdx flag is set. Otherwise it sets the staId to invalid.
-\param  tpAniSirGlobal    pMac
-\param  tSirMacAddr staAddr
-\param  tANI_U16 assocId
-\param  tANI_U8 validStaIdx -   true ==> the staId in the DPH entry with given assocId is valid and restore it back.
-\                                              false ==> set the staId to invalid.
-\return tpDphHashNode - DPH hash node if found.
-  -------------------------------------------------------------*/
+/*                                                               
+                   
+                                                                                                                     
+                                                                     
+                              
+                           
+                        
+                                                                                                                    
+                                                                                  
+                                               
+                                                               */
 
 tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
       tANI_U16 assocId, tANI_U8 validStaIdx, dphHashTableClass* pDphHashTable)
@@ -272,20 +272,20 @@ tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
 
     PELOG1(limLog(pMac, LOG1, FL("Assoc Id %d, Addr %08X"), assocId, pStaDs);)
 
-    // Clear the STA node except for the next pointer (last 4 bytes)
+    //                                                              
     vos_mem_set( (tANI_U8 *) pStaDs, sizeof(tDphHashNode) - sizeof(tpDphHashNode), 0);
 
-    // Initialize the assocId
+    //                       
     pStaDs->assocId = assocId;
     if(true == validStaIdx)
       pStaDs->staIndex = staIdx;
     else
       pStaDs->staIndex = HAL_STA_INVALID_IDX;
 
-    // Initialize STA mac address
+    //                           
     vos_mem_copy( pStaDs->staAddr, staAddr, sizeof(tSirMacAddr));
 
-    // Initialize fragmentation threshold
+    //                                   
     if (wlan_cfgGetInt(pMac, WNI_CFG_FRAGMENTATION_THRESHOLD, &val) != eSIR_SUCCESS)
         limLog(pMac, LOGP, FL("could not retrieve fragmentation threshold"));
     else
@@ -299,27 +299,27 @@ tpDphHashNode dphInitStaState(tpAniSirGlobal pMac, tSirMacAddr staAddr,
     pStaDs->spStatus = 0;
     pStaDs->apsdMaxSpLen = 0;
     pStaDs->acMode[0] = pStaDs->acMode[1] = pStaDs->acMode[2] = pStaDs->acMode[3] =  0;
-#endif /* WMM_APSD */
+#endif /*          */
     pStaDs->valid = 1;
     return pStaDs;
 }
 
-// ---------------------------------------------------------------------
-/**
- * dphAddHashEntry
- *
- * FUNCTION:
- * Add entry to hash table
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param staAddr MAC address of the station
- * @param staId Station ID assigned to the station
- * @return Pointer to STA hash entry
+//                                                                      
+/* 
+                  
+  
+            
+                          
+  
+         
+  
+               
+  
+        
+  
+                                            
+                                                  
+                                    
  */
 
 tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16 assocId, dphHashTableClass* pDphHashTable)
@@ -357,7 +357,7 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
 
     if (ptr)
     {
-        // Duplicate entry
+        //                
         limLog(pMac, LOGE, FL("assocId %d hashIndex %d entry exists"),
                      assocId, index);
         return NULL;
@@ -370,7 +370,7 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
                     return NULL;
         }
 
-        // Add the node to the link list
+        //                              
         pDphHashTable->pDphNodeArray[assocId].next = pDphHashTable->pHashTable[index];
         pDphHashTable->pHashTable[index] = &pDphHashTable->pDphNodeArray[assocId];
 
@@ -379,23 +379,23 @@ tpDphHashNode dphAddHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16
     }
 }
 
-// ---------------------------------------------------------------------
-/**
- * dphDeleteHashEntry
- *
- * FUNCTION:
- * Delete entry from hash table
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param staAddr MAC address of the station
- * @param staId Station ID assigned to the station
- * @return eSIR_SUCCESS if successful,\n
- *         eSIR_FAILURE otherwise
+//                                                                      
+/* 
+                     
+  
+            
+                               
+  
+         
+  
+               
+  
+        
+  
+                                            
+                                                  
+                                        
+                                 
  */
 
 tSirRetStatus dphDeleteHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_U16 assocId, dphHashTableClass* pDphHashTable)
@@ -436,7 +436,7 @@ tSirRetStatus dphDeleteHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_
 
   if (ptr)
     {
-      /// Delete the entry after invalidating it
+      //                                        
       ptr->valid = 0;
       memset(ptr->staAddr, 0, sizeof(ptr->staAddr));
       if (prev == 0)
@@ -448,7 +448,7 @@ tSirRetStatus dphDeleteHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_
     }
   else
     {
-      /// Entry not present
+      //                   
       PELOGE(limLog(pMac, LOGE, FL("Entry not present STA addr"));
       dphPrintMacAddr(pMac, staAddr, LOGE);)
       return eSIR_FAILURE;
@@ -457,21 +457,21 @@ tSirRetStatus dphDeleteHashEntry(tpAniSirGlobal pMac, tSirMacAddr staAddr, tANI_
   return eSIR_SUCCESS;
 }
 
-// ---------------------------------------------------------------------
-/**
- * dphPrintMacAddr
- *
- * FUNCTION:
- * Print a MAC address
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param addr MAC address
- * @return None
+//                                                                      
+/* 
+                  
+  
+            
+                      
+  
+         
+  
+               
+  
+        
+  
+                          
+               
  */
 
 void
@@ -481,4 +481,4 @@ dphPrintMacAddr(tpAniSirGlobal pMac, tANI_U8 addr[], tANI_U32 level)
            addr[0], addr[1], addr[2], addr[3], addr[4], addr[5]);
 }
 
-// ---------------------------------------------------------------------
+//                                                                      

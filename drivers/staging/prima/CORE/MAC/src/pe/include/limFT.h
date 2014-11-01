@@ -60,9 +60,9 @@
 #include <limSerDesUtils.h>
 
 
-/*------------------------------------------------------------------------- 
-  Function declarations and documenation
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                                        
+                                                                          */
 extern void limFTOpen(tpAniSirGlobal pMac);
 extern void limFTCleanup(tpAniSirGlobal pMac);
 extern void limFTInit(tpAniSirGlobal pMac);
@@ -86,6 +86,6 @@ tANI_BOOLEAN   limProcessFTUpdateKey(tpAniSirGlobal pMac, tANI_U32 *pMsgBuf );
 tSirRetStatus  limProcessFTAggrQosReq(tpAniSirGlobal pMac, tANI_U32 *pMsgBuf );
 void        limProcessFTAggrQoSRsp(tpAniSirGlobal pMac, tpSirMsgQ limMsg);
 
-#endif /* __LIMFT_H__ */ 
+#endif /*             */ 
 
-#endif /* WLAN_FEATURE_VOWIFI_11R */
+#endif /*                         */

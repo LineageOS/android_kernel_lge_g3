@@ -40,15 +40,15 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file utilsParser.cc contains the code for parsing
- * 802.11 messages.
- * Author:        Pierre Vandwalle
- * Date:          03/18/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+                                                         
+                   
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 
 #include "aniGlobal.h"
@@ -111,8 +111,8 @@ tSirRetStatus ConvertWPA(tpAniSirGlobal  pMac,
                                tSirMacWpaInfo *pOld,
                                tDot11fIEWPA      *pNew)
 {
-    // This is awful, I know, but the old code just rammed the IE into an
-    // array...
+    //                                                                   
+    //         
     tANI_U8 buffer[257];
     tANI_U32 status, written = 0, nbuffer = 257;
     status = dot11fPackIeWPA( pMac, pNew, buffer, nbuffer, &written );
@@ -133,8 +133,8 @@ tSirRetStatus ConvertWPAOpaque( tpAniSirGlobal      pMac,
                                 tSirMacWpaInfo     *pOld,
                                 tDot11fIEWPAOpaque *pNew )
 {
-    // This is awful, I know, but the old code just rammed the IE into
-    // an opaque array.  Note that we need to explicitly add the OUI!
+    //                                                                
+    //                                                               
     pOld->length    = pNew->num_data + 4;
     pOld->info[ 0 ] = 0x00;
     pOld->info[ 1 ] = 0x50;
@@ -149,8 +149,8 @@ tSirRetStatus ConvertWscOpaque( tpAniSirGlobal      pMac,
                                 tSirAddie           *pOld,
                                 tDot11fIEWscIEOpaque *pNew )
 {
-    // This is awful, I know, but the old code just rammed the IE into
-    // an opaque array.  Note that we need to explicitly add the vendorIE and OUI !
+    //                                                                
+    //                                                                             
     tANI_U8 curAddIELen = pOld->length; 
 
     pOld->length    = curAddIELen + pNew->num_data + 6;
@@ -169,8 +169,8 @@ tSirRetStatus ConvertP2POpaque( tpAniSirGlobal      pMac,
                                 tSirAddie           *pOld,
                                 tDot11fIEP2PIEOpaque *pNew )
 {
-    // This is awful, I know, but the old code just rammed the IE into
-    // an opaque array.  Note that we need to explicitly add the vendorIE and OUI !
+    //                                                                
+    //                                                                             
     tANI_U8 curAddIELen = pOld->length; 
 
     pOld->length    = curAddIELen + pNew->num_data + 6;
@@ -190,8 +190,8 @@ tSirRetStatus ConvertWFDOpaque( tpAniSirGlobal      pMac,
                                 tSirAddie           *pOld,
                                 tDot11fIEWFDIEOpaque *pNew )
 {
-    // This is awful, I know, but the old code just rammed the IE into
-    // an opaque array.  Note that we need to explicitly add the vendorIE and OUI !
+    //                                                                
+    //                                                                             
     tANI_U8 curAddIELen = pOld->length; 
 
     pOld->length    = curAddIELen + pNew->num_data + 6;
@@ -231,8 +231,8 @@ tSirRetStatus ConvertRSNOpaque( tpAniSirGlobal      pMac,
                                 tSirMacRsnInfo     *pOld,
                                 tDot11fIERSNOpaque *pNew )
 {
-    // This is awful, I know, but the old code just rammed the IE into
-    // an opaque array.
+    //                                                                
+    //                 
     pOld->length = pNew->num_data;
     vos_mem_copy( pOld->info, pNew->data, pOld->length );
 
@@ -628,11 +628,11 @@ void ConvertWMMSchedule(tpAniSirGlobal        pMac,
     pOld->specInterval     = pNew->spec_interval;
 }
 
-/**
-    @brief   :    This functions converts the given buffer till given size to Big endian format assuming the 
-                     bus is 32 bit. The size should be four byte aligned.
-    @param :    ptr to be converted, size
-    @return  :    void
+/* 
+                                                                                                             
+                                                                         
+                                         
+                      
 */
 
 void ConverttoBigEndian(void *ptr, tANI_U16    size)
@@ -707,10 +707,10 @@ void CreateScanCtsFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, tSirMac
 
 
 
-/**
-    @brief    :    This functions creates a DATA_NULL/CTS2SELF frame in Big endian format 
-    @param    :    Global MAC structure, pointer to return the created packet, role which is Station/AP
-    @return    :    void
+/* 
+                                                                                          
+                                                                                                       
+                        
 */
 
 void CreateInitScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, tBssSystemRole role)
@@ -726,7 +726,7 @@ void CreateInitScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, tBs
         macMgmtHdr->fc.order = 0;
         macMgmtHdr->fc.wep = 0;
         macMgmtHdr->fc.moreData =0;
-        macMgmtHdr->fc.powerMgmt = 1;  // Needed for station
+        macMgmtHdr->fc.powerMgmt = 1;  //                   
         macMgmtHdr->fc.retry = 0;
         macMgmtHdr->fc.moreFrag = 0;
         macMgmtHdr->fc.fromDS = 0;
@@ -747,7 +747,7 @@ void CreateInitScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, tBs
         macMgmtHdr->fc.order = 0;
         macMgmtHdr->fc.wep = 0;
         macMgmtHdr->fc.moreData =0;
-        macMgmtHdr->fc.powerMgmt = 0;  // Needed for station
+        macMgmtHdr->fc.powerMgmt = 0;  //                   
         macMgmtHdr->fc.retry = 0;
         macMgmtHdr->fc.moreFrag = 0;
         macMgmtHdr->fc.fromDS = 0;
@@ -760,10 +760,10 @@ void CreateInitScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, tBs
 #endif
 }
 
-/**
-    @brief    :    This functions creates a DATA_NULL frame in Big endian format 
-    @param    :    Global MAC structure, pointer to return the created packet, role which is Station/AP
-    @return    :    void
+/* 
+                                                                                 
+                                                                                                       
+                        
 */
 
 
@@ -780,7 +780,7 @@ void CreateFinishScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, t
         macMgmtHdr->fc.order = 0;
         macMgmtHdr->fc.wep = 0;
         macMgmtHdr->fc.moreData =0;
-        macMgmtHdr->fc.powerMgmt = 0;     // Needed for station
+        macMgmtHdr->fc.powerMgmt = 0;     //                   
         macMgmtHdr->fc.retry = 0;
         macMgmtHdr->fc.moreFrag = 0;
         macMgmtHdr->fc.fromDS = 0;
@@ -801,4 +801,4 @@ void CreateFinishScanRawFrame(tpAniSirGlobal pMac, tSirMacMgmtHdr *macMgmtHdr, t
 }
 
 
-// utilsParser.c ends here.
+//                         

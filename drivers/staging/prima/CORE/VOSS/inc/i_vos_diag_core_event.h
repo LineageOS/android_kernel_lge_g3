@@ -54,36 +54,36 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include <vos_types.h>
 #ifdef FEATURE_WLAN_DIAG_SUPPORT
 #include <event_defs.h>
 #endif
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                          */
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* __cplusplus */
+#endif /*             */
 
 #ifdef FEATURE_WLAN_DIAG_SUPPORT
 
 void vos_event_report_payload(v_U16_t event_Id, v_U16_t length, v_VOID_t *pPayload);
-/*---------------------------------------------------------------------------
-  Allocate an event payload holder
----------------------------------------------------------------------------*/
+/*                                                                           
+                                  
+                                                                           */
 #define WLAN_VOS_DIAG_EVENT_DEF( payload_name, payload_type ) \
            payload_type(payload_name)                         
 
-/*---------------------------------------------------------------------------
-  Report the event
----------------------------------------------------------------------------*/
+/*                                                                           
+                  
+                                                                           */
 #define WLAN_VOS_DIAG_EVENT_REPORT( payload_ptr, ev_id ) \
    do                                                    \
    {                                                     \
@@ -93,20 +93,20 @@ void vos_event_report_payload(v_U16_t event_Id, v_U16_t length, v_VOID_t *pPaylo
                                                        \
    } while (0)
 
-#else /* FEATURE_WLAN_DIAG_SUPPORT */
+#else /*                           */
 
 #define WLAN_VOS_DIAG_EVENT_DEF( payload_name, payload_type ) 
 #define WLAN_VOS_DIAG_EVENT_REPORT( payload_ptr, ev_id ) 
 
-#endif /* FEATURE_WLAN_DIAG_SUPPORT */
+#endif /*                           */
 
 
-/*------------------------------------------------------------------------- 
-  Function declarations and documenation
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                                        
+                                                                          */
 
 #ifdef __cplusplus
 }
-#endif /* __cplusplus */
+#endif /*             */
 
-#endif // __I_VOS_DIAG_CORE_EVENT_H
+#endif //                          

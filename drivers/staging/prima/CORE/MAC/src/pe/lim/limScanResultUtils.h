@@ -41,14 +41,14 @@
 
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limScanResultUtils.h contains the utility definitions
- * LIM uses for maintaining and accessing scan results on STA.
- * Author:        Chandra Modumudi
- * Date:          02/13/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+                                                        
+                                                                  
+                                                              
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 #ifndef __LIM_SCAN_UTILS_H
 #define __LIM_SCAN_UTILS_H
@@ -56,7 +56,7 @@
 #include "parserApi.h"
 #include "limTypes.h"
 
-// Scan result hash related functions
+//                                   
 tANI_U8 limScanHashFunction(tSirMacAddr);
 void    limInitHashTable(tpAniSirGlobal);
 eHalStatus    
@@ -89,4 +89,4 @@ eHalStatus    limCollectBssDescription(tpAniSirGlobal,
                                  tANI_U8 *);
 #endif
 
-#endif /* __LIM_SCAN_UTILS_H */
+#endif /*                    */

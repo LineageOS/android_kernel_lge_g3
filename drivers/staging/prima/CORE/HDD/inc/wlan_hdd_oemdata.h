@@ -87,6 +87,6 @@ struct iw_oem_data_rsp
     tANI_U8           oemDataRsp[OEM_DATA_RSP_SIZE];
 };
 
-#endif //__WLAN_HDD_OEM_DATA_H__
+#endif //                       
 
-#endif //FEATURE_OEM_DATA_SUPPORT
+#endif //                        

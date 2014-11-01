@@ -39,14 +39,14 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limUtils.h contains the utility definitions
- * LIM uses.
- * Author:        Chandra Modumudi
- * Date:          02/13/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+                                                        
+                                                        
+            
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 #ifndef __LIM_UTILS_H
 #define __LIM_UTILS_H
@@ -73,7 +73,7 @@ typedef enum
 #define LIM_MAX_REASSOC_RETRY_LIMIT            2
 #endif
 
-// classifier ID is coded as 0-3: tsid, 4-5:direction
+//                                                   
 #define LIM_MAKE_CLSID(tsid, dir) (((tsid) & 0x0F) | (((dir) & 0x03) << 4))
 
 #define LIM_SET_STA_BA_STATE(pSta, tid, newVal) \
@@ -99,7 +99,7 @@ typedef struct sAddBaCandidate
     tAddBaInfo baInfo[STACFG_MAX_TC];
 }tAddBaCandidate, *tpAddBaCandidate;
 
-// LIM utility functions
+//                      
 void limGetBssidFromPkt(tpAniSirGlobal, tANI_U8 *, tANI_U8 *, tANI_U32 *);
 char * limMlmStateStr(tLimMlmStates state);
 char * limSmeStateStr(tLimSmeStates state);
@@ -124,10 +124,10 @@ tANI_U32            limPostMsgApiNoWait(tpAniSirGlobal, tSirMsgQ *);
 tANI_U8           limIsAddrBC(tSirMacAddr);
 tANI_U8           limIsGroupAddr(tSirMacAddr);
 
-// check for type of scan allowed
+//                               
 tANI_U8 limActiveScanAllowed(tpAniSirGlobal, tANI_U8);
 
-// AID pool management functions
+//                              
 void    limInitPeerIdxpool(tpAniSirGlobal,tpPESession);
 tANI_U16     limAssignPeerIdx(tpAniSirGlobal,tpPESession);
 
@@ -137,8 +137,8 @@ void limUpdateShortPreamble(tpAniSirGlobal pMac, tSirMacAddr peerMacAddr, tpUpda
 void limUpdateShortSlotTime(tpAniSirGlobal pMac, tSirMacAddr peerMacAddr, tpUpdateBeaconParams pBeaconParams, tpPESession psessionEntry);
 
 /*
- * The below 'product' check tobe removed if 'Association' is
- * allowed in IBSS.
+                                                             
+                   
  */
 void    limReleasePeerIdx(tpAniSirGlobal, tANI_U16, tpPESession);
 
@@ -160,17 +160,17 @@ extern tSirRetStatus limEnableHtOBSSProtection (tpAniSirGlobal pMac, tANI_U8 ena
 void limDecideStaProtection(tpAniSirGlobal pMac, tpSchBeaconStruct pBeaconStruct, tpUpdateBeaconParams pBeaconParams, tpPESession psessionEntry);
 void limDecideStaProtectionOnAssoc(tpAniSirGlobal pMac, tpSchBeaconStruct pBeaconStruct, tpPESession psessionEntry);
 void limUpdateStaRunTimeHTSwitchChnlParams(tpAniSirGlobal pMac, tDot11fIEHTInfo * pHTInfo, tANI_U8 bssIdx, tpPESession psessionEntry);
-// Print MAC address utility function
+//                                   
 void    limPrintMacAddr(tpAniSirGlobal, tSirMacAddr, tANI_U8);
 
 
 
-// Deferred Message Queue read/write
+//                                  
 tANI_U8 limWriteDeferredMsgQ(tpAniSirGlobal pMac, tpSirMsgQ limMsg);
 tSirMsgQ* limReadDeferredMsgQ(tpAniSirGlobal pMac);
 void limHandleDeferMsgError(tpAniSirGlobal pMac, tpSirMsgQ pLimMsg);
 
-// Deferred Message Queue Reset
+//                             
 void limResetDeferredMsgQ(tpAniSirGlobal pMac);
 
 tSirRetStatus limSysProcessMmhMsgApi(tpAniSirGlobal, tSirMsgQ*, tANI_U8);
@@ -181,7 +181,7 @@ tANI_U8 limIsNullSsid( tSirMacSSid *pSsid );
 
 void limProcessAddtsRspTimeout(tpAniSirGlobal pMac, tANI_U32 param);
 
-// 11h Support
+//            
 void limStopTxAndSwitchChannel(tpAniSirGlobal pMac, tANI_U8 sessionId);
 void limProcessChannelSwitchTimeout(tpAniSirGlobal);
 tSirRetStatus limStartChannelSwitch(tpAniSirGlobal pMac, tpPESession psessionEntry);
@@ -255,24 +255,24 @@ static inline tANI_U8
     return FALSE;
 }
 
-/// ANI peer station count management and associated actions
+//                                                          
 void limUtilCountStaAdd(tpAniSirGlobal pMac, tpDphHashNode pSta, tpPESession psessionEntry);
 void limUtilCountStaDel(tpAniSirGlobal pMac, tpDphHashNode pSta, tpPESession psessionEntry);
 
 tANI_U8 limGetHTCapability( tpAniSirGlobal, tANI_U32, tpPESession);
 void limTxComplete( tHalHandle hHal, void *pData );
 
-/**********Admit Control***************************************/
+/*                                                            */
 
-//callback function for HAL to issue DelTS request to PE.
-//This function will be registered with HAL for callback when TSPEC inactivity timer fires.
+//                                                       
+//                                                                                         
 
 void limProcessDelTsInd(tpAniSirGlobal pMac, tpSirMsgQ limMsg);
 tSirRetStatus limProcessHalIndMessages(tpAniSirGlobal pMac, tANI_U32 mesgId, void *mesgParam );
 tSirRetStatus limValidateDeltsReq(tpAniSirGlobal pMac, tpSirDeltsReq pDeltsReq, tSirMacAddr peerMacAddr,tpPESession psessionEntry);
-/**********************************************************/
+/*                                                        */
 
-//callback function registration to HAL for any indication.
+//                                                         
 void limRegisterHalIndCallBack(tpAniSirGlobal pMac);
 void limPktFree (
     tpAniSirGlobal  pMac,
@@ -284,18 +284,18 @@ void limPktFree (
 
 void limGetBDfromRxPacket(tpAniSirGlobal pMac, void *body, tANI_U32 **pBD);
 
-/**
- * \brief Given a base(X) and power(Y), this API will return
- * the result of base raised to power - (X ^ Y)
- *
- * \sa utilsPowerXY
- *
- * \param base Base value
- *
- * \param power Base raised to this Power value
- *
- * \return Result of X^Y
- *
+/* 
+                                                            
+                                               
+  
+                   
+  
+                         
+  
+                                               
+  
+                        
+  
  */
 static inline tANI_U32 utilsPowerXY( tANI_U16 base, tANI_U16 power )
 {
@@ -363,7 +363,7 @@ void limSetTspecUapsdMask(tpAniSirGlobal pMac, tSirMacTSInfo *pTsInfo, tANI_U32 
 void limHandleHeartBeatTimeout(tpAniSirGlobal pMac);
 void limHandleHeartBeatTimeoutForSession(tpAniSirGlobal pMac, tpPESession psessionEntry);
 
-//void limProcessBtampAddBssRsp(tpAniSirGlobal pMac,tpSirMsgQ pMsgQ,tpPESession peSession);
+//                                                                                         
 void limProcessAddStaRsp(tpAniSirGlobal pMac,tpSirMsgQ pMsgQ);
 
 void limUpdateBeacon(tpAniSirGlobal pMac);
@@ -471,22 +471,22 @@ typedef enum
 }WLAN_PE_DIAG_EVENT_TYPE;
 
 void limDiagEventReport(tpAniSirGlobal pMac, tANI_U16 eventType, tpPESession pSessionEntry, tANI_U16 status, tANI_U16 reasonCode);
-#endif /* FEATURE_WLAN_DIAG_SUPPORT */
+#endif /*                           */
 
 void peSetResumeChannel(tpAniSirGlobal pMac, tANI_U16 channel, ePhyChanBondState cbState);
-/*--------------------------------------------------------------------------
+/*                                                                          
   
-  \brief peGetResumeChannel() - Returns the  channel number for scanning, from a valid session.
+                                                                                               
 
-  This function returns the channel to resume to during link resume. channel id of 0 means HAL will
-  resume to previous channel before link suspend
+                                                                                                   
+                                                
     
-  \param pMac                   - pointer to global adapter context
-  \return                            - channel to scan from valid session else zero.
+                                                                   
+                                                                                    
   
-  \sa
+     
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 void peGetResumeChannel(tpAniSirGlobal pMac, tANI_U8* resumeChannel, ePhyChanBondState* resumePhyCbState);
 
 #ifdef FEATURE_WLAN_TDLS_INTERNAL
@@ -501,4 +501,4 @@ void limCleanUpDisassocDeauthReq(tpAniSirGlobal pMac, tANI_U8 *staMac, tANI_BOOL
 
 tANI_BOOLEAN limCheckDisassocDeauthAckPending(tpAniSirGlobal pMac, tANI_U8 *staMac);
 
-#endif /* __LIM_UTILS_H */
+#endif /*               */

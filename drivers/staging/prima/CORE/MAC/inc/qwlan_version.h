@@ -64,5 +64,5 @@ BRIEF DESCRIPTION:
 
 #define QWLAN_VERSIONSTR               "3.2.3.172"
 
-#endif /* QWLAN_VERSION_H */
+#endif /*                 */
 

@@ -39,15 +39,15 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limTypes.h contains the definitions used by all
- * all LIM modules.
- * Author:        Chandra Modumudi
- * Date:          02/11/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+                                                            
+                   
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 #ifndef __LIM_TYPES_H
 #define __LIM_TYPES_H
@@ -74,7 +74,7 @@
 #define TRACE_EVENT_AUTH_RSP_TIMER_DEACT   0x6602
 #define TRACE_EVENT_AUTH_RSP_TIMER_ACT     0x6603
 
-// MLM message types
+//                  
 #define LIM_MLM_MSG_START           1000
 #define LIM_MLM_SCAN_REQ            LIM_MLM_MSG_START
 #define LIM_MLM_SCAN_CNF            (LIM_MLM_MSG_START + 1)
@@ -127,18 +127,18 @@
 
 #define LIM_DECRYPT_ICV_FAIL    1
 
-/// Definitions to distinquish between Association/Reassociaton
+//                                                             
 #define LIM_ASSOC    0
 #define LIM_REASSOC  1
 
-/// Minimum Memory blocks require for different scenario
+//                                                      
 #define LIM_MIN_MEM_ASSOC       4
 
-/// Verifies whether given mac addr matches the CURRENT Bssid
+//                                                           
 #define IS_CURRENT_BSSID(pMac, addr,psessionEntry)  (palEqualMemory(pMac->hHdd, addr, \
                                                                                                 psessionEntry->bssId, \
                                                                                                 sizeof(psessionEntry->bssId)))
-/// Verifies whether given addr matches the REASSOC Bssid
+//                                                       
 #define IS_REASSOC_BSSID(pMac, addr,psessionEntry)  (palEqualMemory(pMac->hHdd, addr, \
                                                                                                 psessionEntry->limReAssocbssId, \
                                                                                                 sizeof(psessionEntry->limReAssocbssId)))
@@ -153,7 +153,7 @@
 #define LIM_TX_FRAMES_THRESHOLD_ON_CHIP       300
 
 
-// enums used by LIM are as follows
+//                                 
 
 enum eLimDisassocTrigger
 {
@@ -168,14 +168,14 @@ enum eLimDisassocTrigger
     eLIM_REASSOC_REJECT
 };
 
-/* Reason code to determine the channel change context while sending 
- * WDA_CHNL_SWITCH_REQ message to HAL
+/*                                                                   
+                                     
  */
 enum eChannelChangeReasonCodes
 {
     LIM_SWITCH_CHANNEL_REASSOC,
     LIM_SWITCH_CHANNEL_JOIN,
-    LIM_SWITCH_CHANNEL_OPERATION, // Generic change channel
+    LIM_SWITCH_CHANNEL_OPERATION, //                       
 };
 
 typedef struct sLimAuthRspTimeout
@@ -195,9 +195,9 @@ typedef struct sLimMlmStartReq
     ePhyChanBondState     cbMode;
     tANI_U16              atimWindow;
     tSirMacRateSet        rateSet;
-    tANI_U8               sessionId; //Added For BT-AMP Support   
+    tANI_U8               sessionId; //                           
 
-    // Parameters reqd for new HAL (message) interface
+    //                                                
     tSirNwType            nwType;
     tANI_U8               htCapable;
     tSirMacHTOperatingMode     htOperMode;
@@ -246,8 +246,8 @@ typedef struct sLimMlmAssocReq
 
 typedef struct sLimMlmAssocCnf
 {
-    tSirResultCodes resultCode; //Internal status code.
-    tANI_U16 protStatusCode; //Protocol Status code.
+    tSirResultCodes resultCode; //                     
+    tANI_U16 protStatusCode; //                     
     tANI_U8  sessionId;
 } tLimMlmAssocCnf, *tpLimMlmAssocCnf;
 
@@ -258,7 +258,7 @@ typedef struct sLimMlmAssocInd
     tAniAuthType         authType;
     tAniSSID             ssId;
     tSirRSNie            rsnIE;
-    tSirAddie            addIE; // additional IE received from the peer, which possibly includes WSC IE and/or P2P IE.
+    tSirAddie            addIE; //                                                                                    
     tSirMacCapabilityInfo capabilityInfo;
     tAniBool                spectrumMgtIndicator;
     tSirMacPowerCapInfo     powerCap;
@@ -268,7 +268,7 @@ typedef struct sLimMlmAssocInd
 
     tAniBool               WmmStaInfoPresent;
 
-    // Required for indicating the frames to upper layer
+    //                                                  
     tANI_U32             beaconLength;
     tANI_U8*             beaconPtr;
     tANI_U32             assocReqLength;
@@ -287,7 +287,7 @@ typedef struct sLimMlmReassocReq
 typedef struct sLimMlmReassocCnf
 {
     tSirResultCodes resultCode;
-    tANI_U16 protStatusCode; //Protocol Status code.
+    tANI_U16 protStatusCode; //                     
     tANI_U8  sessionId;
 } tLimMlmReassocCnf, *tpLimMlmReassocCnf;
 
@@ -299,7 +299,7 @@ typedef struct sLimMlmReassocInd
     tAniAuthType         authType;
     tAniSSID             ssId;
     tSirRSNie            rsnIE;
-    tSirAddie            addIE; // additional IE received from the peer, which can be WSC IE and/or P2P IE.
+    tSirAddie            addIE; //                                                                         
     tSirMacCapabilityInfo capabilityInfo;
     tAniBool                spectrumMgtIndicator;
     tSirMacPowerCapInfo     powerCap;
@@ -307,7 +307,7 @@ typedef struct sLimMlmReassocInd
 
     tAniBool               WmmStaInfoPresent;
 
-    // Required for indicating the frames to upper layer
+    //                                                  
     tANI_U32             beaconLength;
     tANI_U8*             beaconPtr;
     tANI_U32             assocReqLength;
@@ -336,7 +336,7 @@ typedef struct sLimMlmDeauthReq
     tANI_U16         reasonCode;
     tANI_U16         deauthTrigger;
     tANI_U16         aid;
-    tANI_U8         sessionId; //Added for BT-AMP SUPPORT
+    tANI_U8         sessionId; //                        
     
 } tLimMlmDeauthReq, *tpLimMlmDeauthReq;
 
@@ -388,7 +388,7 @@ typedef struct sLimMlmPurgeStaReq
 {
     tSirMacAddr     peerMacAddr;
     tANI_U16        aid;
-    tANI_U8         sessionId;//Added For BT-AMP Support
+    tANI_U8         sessionId;//                        
 } tLimMlmPurgeStaReq, *tpLimMlmPurgeStaReq;
 
 typedef struct sLimMlmPurgeStaInd
@@ -403,9 +403,9 @@ typedef struct sLimMlmPurgeStaInd
 typedef struct sLimMlmSetKeysReq
 {
     tSirMacAddr     peerMacAddr;
-    tANI_U8         sessionId;      //Added For BT-AMP Support
+    tANI_U8         sessionId;      //                        
     tANI_U16        aid;
-    tAniEdType      edType;    // Encryption/Decryption type
+    tAniEdType      edType;    //                           
     tANI_U8         numKeys;
     tSirKeys        key[SIR_MAC_MAX_NUM_OF_DEFAULT_KEYS];
 } tLimMlmSetKeysReq, *tpLimMlmSetKeysReq;
@@ -421,10 +421,10 @@ typedef struct sLimMlmSetKeysCnf
 typedef struct sLimMlmRemoveKeyReq
 {
     tSirMacAddr     peerMacAddr;
-    tANI_U8         sessionId; //Added FOr BT-AMP Support
-    tAniEdType      edType;    // Encryption/Decryption type
-    tANI_U8         wepType; //STATIC / DYNAMIC specifier
-    tANI_U8         keyId; //Key Id To be removed.
+    tANI_U8         sessionId; //                        
+    tAniEdType      edType;    //                           
+    tANI_U8         wepType; //                          
+    tANI_U8         keyId; //                     
     tANI_BOOLEAN    unicast;
 } tLimMlmRemoveKeyReq, *tpLimMlmRemoveKeyReq;
 
@@ -459,38 +459,38 @@ typedef struct sLimMlmLinkTestStopReq
 
 
 //
-// Block ACK related MLME data structures
+//                                       
 //
 
 typedef struct sLimMlmAddBAReq
 {
 
-  // ADDBA recipient
+  //                
   tSirMacAddr peerMacAddr;
 
-  // ADDBA Action Frame dialog token
+  //                                
   tANI_U8 baDialogToken;
 
-  // ADDBA requested for TID
+  //                        
   tANI_U8 baTID;
 
-  // BA policy
-  // 0 - Delayed BA (Not supported)
-  // 1 - Immediate BA
+  //          
+  //                               
+  //                 
   tANI_U8 baPolicy;
 
-  // BA buffer size - (0..127) max size MSDU's
+  //                                          
   tANI_U16 baBufferSize;
 
-  // BA timeout in TU's
-  // 0 means no timeout will occur
+  //                   
+  //                              
   tANI_U16 baTimeout;
 
-  // ADDBA failure timeout in TU's
-  // Greater than or equal to 1
+  //                              
+  //                           
   tANI_U16 addBAFailureTimeout;
 
-  // BA Starting Sequence Number
+  //                            
   tANI_U16 baSSN;
 
   tANI_U8       sessionId;
@@ -500,33 +500,33 @@ typedef struct sLimMlmAddBAReq
 typedef struct sLimMlmAddBACnf
 {
 
-  // ADDBA recipient
+  //                
   tSirMacAddr peerMacAddr;
 
-  // ADDBA Action Frame dialog token
+  //                                
   tANI_U8 baDialogToken;
 
-  // ADDBA requested for TID
+  //                        
   tANI_U8 baTID;
 
-  // BA status code
+  //               
   tSirMacStatusCodes addBAResultCode;
 
-  // BA policy
-  // 0 - Delayed BA (Not supported)
-  // 1 - Immediate BA
+  //          
+  //                               
+  //                 
   tANI_U8 baPolicy;
 
-  // BA buffer size - (0..127) max size MSDU's
+  //                                          
   tANI_U16 baBufferSize;
 
-  // BA timeout in TU's
-  // 0 means no timeout will occur
+  //                   
+  //                              
   tANI_U16 baTimeout;
 
-  // ADDBA direction
-  // 1 - Originator
-  // 0 - Recipient
+  //                
+  //               
+  //              
   tANI_U8 baDirection;
   tANI_U8 sessionId;
 
@@ -536,25 +536,25 @@ typedef struct sLimMlmAddBACnf
 typedef struct sLimMlmAddBAInd
 {
 
-  // ADDBA recipient
+  //                
   tSirMacAddr peerMacAddr;
 
-  // ADDBA Action Frame dialog token
+  //                                
   tANI_U8 baDialogToken;
 
-  // ADDBA requested for TID
+  //                        
   tANI_U8 baTID;
 
-  // BA policy
-  // 0 - Delayed BA (Not supported)
-  // 1 - Immediate BA
+  //          
+  //                               
+  //                 
   tANI_U8 baPolicy;
 
-  // BA buffer size - (0..127) max size MSDU's
+  //                                          
   tANI_U16 baBufferSize;
 
-  // BA timeout in TU's
-  // 0 means no timeout will occur
+  //                   
+  //                              
   tANI_U16 baTimeout;
 
 } tLimMlmAddBAInd, *tpLimMlmAddBAInd;
@@ -562,65 +562,65 @@ typedef struct sLimMlmAddBAInd
 typedef struct sLimMlmAddBARsp
 {
 
-  // ADDBA recipient
+  //                
   tSirMacAddr peerMacAddr;
 
-  // ADDBA Action Frame dialog token
+  //                                
   tANI_U8 baDialogToken;
 
-  // ADDBA requested for TID
+  //                        
   tANI_U8 baTID;
 
-  // BA status code
+  //               
   tSirMacStatusCodes addBAResultCode;
 
-  // BA policy
-  // 0 - Delayed BA (Not supported)
-  // 1 - Immediate BA
+  //          
+  //                               
+  //                 
   tANI_U8 baPolicy;
   
-  // BA buffer size - (0..127) max size MSDU's
+  //                                          
   tANI_U16 baBufferSize;
 
-  // BA timeout in TU's
-  // 0 means no timeout will occur
+  //                   
+  //                              
   tANI_U16 baTimeout;
 
-  //reserved for alignment
+  //                      
   tANI_U8 rsvd[2];
 
-  /* PE session id*/  
+  /*              */  
   tANI_U8    sessionId;
 
  } tLimMlmAddBARsp, *tpLimMlmAddBARsp;
 
 //
-// NOTE - Overloading DELBA IND and DELBA CNF
-// to use the same data structure as DELBA REQ
-// as the parameters do not vary too much.
+//                                           
+//                                            
+//                                        
 //
 typedef struct sLimMlmDelBAReq
 {
 
-  // ADDBA recipient
+  //                
   tSirMacAddr peerMacAddr;
 
-  // DELBA direction
-  // 1 - Originator
-  // 0 - Recipient
+  //                
+  //               
+  //              
   tANI_U8 baDirection;
 
-  // DELBA requested for TID
+  //                        
   tANI_U8 baTID;
 
-  // DELBA reason code
+  //                  
   tSirMacReasonCodes delBAReasonCode;
 
   tANI_U8       sessionId;
 
 } tLimMlmDelBAReq, *tpLimMlmDelBAReq, tLimMlmDelBAInd, *tpLimMlmDelBAInd, tLimMlmDelBACnf, *tpLimMlmDelBACnf;
 
-// Function templates
+//                   
 
 tANI_BOOLEAN limProcessSmeReqMessages(tpAniSirGlobal, tpSirMsgQ);
 void limProcessMlmReqMessages(tpAniSirGlobal, tpSirMsgQ);
@@ -630,28 +630,28 @@ void limProcessSmeDelBssRsp( tpAniSirGlobal , tANI_U32,tpPESession);
 
 void limGetRandomBssid(tpAniSirGlobal pMac ,tANI_U8 *data);
 
-// Function to handle HT and HT IE CFG parameter intializations
+//                                                             
 void handleHTCapabilityandHTInfo(struct sAniSirGlobal *pMac, tpPESession psessionEntry);
 
-// Function to handle CFG parameter updates
+//                                         
 void limHandleCFGparamUpdate(tpAniSirGlobal, tANI_U32);
 
-// Function to apply CFG parameters before join/reassoc/start BSS
+//                                                               
 void limApplyConfiguration(tpAniSirGlobal,tpPESession);
 
 void limSetCfgProtection(tpAniSirGlobal pMac, tpPESession pesessionEntry);
 
 
-// Function to Initialize MLM state machine on STA
+//                                                
 void limInitMlm(tpAniSirGlobal);
 
-// Function to cleanup MLM state machine
+//                                      
 void limCleanupMlm(tpAniSirGlobal);
 
-// Function to cleanup LMM state machine
+//                                      
 void limCleanupLmm(tpAniSirGlobal);
 
-// Management frame handling functions
+//                                    
 void limProcessBeaconFrame(tpAniSirGlobal, tANI_U8 *,tpPESession);
 void limProcessBeaconFrameNoSession(tpAniSirGlobal, tANI_U8 *);
 void limProcessProbeReqFrame(tpAniSirGlobal, tANI_U8 *, tpPESession);
@@ -660,7 +660,7 @@ void limProcessProbeRspFrameNoSession(tpAniSirGlobal, tANI_U8 *);
 void limProcessProbeReqFrame_multiple_BSS(tpAniSirGlobal, tANI_U8 *,tpPESession);
 
 
-// Process Auth frame when we have a session in progress.
+//                                                       
 void limProcessAuthFrame(tpAniSirGlobal, tANI_U8 *,tpPESession);
 #ifdef WLAN_FEATURE_VOWIFI_11R
 tSirRetStatus limProcessAuthFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *, void *body);
@@ -758,56 +758,56 @@ tSirRetStatus limSendTdlsTeardownFrame(tpAniSirGlobal pMac,
            tANI_U8 *addIe, tANI_U16 addIeLen); 
 #endif
 
-// Algorithms & Link Monitoring related functions
+//                                               
 tSirBackgroundScanMode limSelectsBackgroundScanMode(tpAniSirGlobal);
 void limTriggerBackgroundScan(tpAniSirGlobal);
 void limAbortBackgroundScan(tpAniSirGlobal);
 
-/// Function that handles heartbeat failure
+//                                         
 void limHandleHeartBeatFailure(tpAniSirGlobal,tpPESession);
 
-/// Function that triggers link tear down with AP upon HB failure
+//                                                               
 void limTearDownLinkWithAp(tpAniSirGlobal,tANI_U8, tSirMacReasonCodes);
 
 
-/// Function that sends keep alive message to peer(s)
+//                                                   
 void limSendKeepAliveToPeer(tpAniSirGlobal);
 
-/// Function that processes Max retries interrupt from TFP
+//                                                        
 void limHandleMaxRetriesInterrupt(tANI_U32);
 
-/// Function that processes messages deferred during Learn mode
+//                                                             
 void limProcessDeferredMessageQueue(tpAniSirGlobal);
 
-/// Function that defers the messages received
+//                                            
 tANI_U32 limDeferMsg(tpAniSirGlobal, tSirMsgQ *);
 
-/// Function that sets system into scan mode
+//                                          
 void limSetScanMode(tpAniSirGlobal pMac);
 
-/// Function that Switches the Channel and sets the CB Mode 
+//                                                          
 void limSetChannel(tpAniSirGlobal pMac, tANI_U8 channel, tANI_U8 secChannelOffset, tPowerdBm maxTxPower, tANI_U8 peSessionId);
 
-/// Function that completes channel scan
+//                                      
 void limCompleteMlmScan(tpAniSirGlobal, tSirResultCodes);
 
 #ifdef FEATURE_OEM_DATA_SUPPORT
-/// Funtion that sets system into meas mode for oem data req
+//                                                          
 void limSetOemDataReqMode(tpAniSirGlobal pMac, eHalStatus status, tANI_U32* data);
 #endif
 
 #ifdef ANI_SUPPORT_11H
-/// Function that sends Measurement Report action frame
+//                                                     
 tSirRetStatus limSendMeasReportFrame(tpAniSirGlobal, tpSirMacMeasReqActionFrame, tSirMacAddr);
 
-/// Function that sends TPC Report action frame
+//                                             
 tSirRetStatus limSendTpcReportFrame(tpAniSirGlobal, tpSirMacTpcReqActionFrame, tSirMacAddr);
 #endif
 
-/// Function that sends TPC Request action frame
+//                                              
 void limSendTpcRequestFrame(tpAniSirGlobal, tSirMacAddr);
 
-// Function(s) to handle responses received from HAL
+//                                                  
 void limProcessMlmAddBssRsp( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ );
 void limProcessMlmAddStaRsp( tpAniSirGlobal pMac, tpSirMsgQ limMsgQt,tpPESession psessionEntry);
 void limProcessMlmDelStaRsp( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ );
@@ -821,19 +821,19 @@ void limProcessMlmSetBssKeyRsp( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ );
 
 
 #ifdef GEN4_SCAN
-// Function to process WDA_INIT_SCAN_RSP message
+//                                              
 void limProcessInitScanRsp(tpAniSirGlobal,  void * );
 
-// Function to process WDA_START_SCAN_RSP message
+//                                               
 void limProcessStartScanRsp(tpAniSirGlobal,  void * );
 
-// Function to process WDA_END_SCAN_RSP message
+//                                             
 void limProcessEndScanRsp(tpAniSirGlobal, void * );
 
-// Function to process WDA_FINISH_SCAN_RSP message
+//                                                
 void limProcessFinishScanRsp(tpAniSirGlobal,  void * );
 
-// Function to process WDA_SWITCH_CHANNEL_RSP message
+//                                                   
 void limProcessSwitchChannelRsp(tpAniSirGlobal pMac,  void * );
   
 void limSendHalInitScanReq( tpAniSirGlobal, tLimLimHalScanState, tSirLinkTrafficCheck);
@@ -845,12 +845,12 @@ void limContinuePostChannelScan(tpAniSirGlobal pMac);
 void limCovertChannelScanType(tpAniSirGlobal pMac,tANI_U8 channelNum, tANI_BOOLEAN passiveToActive);
 void limSetDFSChannelList(tpAniSirGlobal pMac,tANI_U8 channelNum, tSirDFSChannelList *dfsChannelList);
 void limContinueChannelLearn( tpAniSirGlobal );
-//WLAN_SUSPEND_LINK Related
+//                         
 tANI_U8 limIsLinkSuspended(tpAniSirGlobal pMac);
 void limSuspendLink(tpAniSirGlobal, tSirLinkTrafficCheck, SUSPEND_RESUME_LINK_CALLBACK, tANI_U32*);
 void limResumeLink(tpAniSirGlobal, SUSPEND_RESUME_LINK_CALLBACK, tANI_U32*);
-//end WLAN_SUSPEND_LINK Related
-#endif // GEN4_SCAN
+//                             
+#endif //          
 
 tSirRetStatus limSendAddBAReq( tpAniSirGlobal pMac,
     tpLimMlmAddBAReq pMlmAddBAReq,tpPESession);
@@ -875,34 +875,34 @@ void limProcessMlmRemoveKeyRsp( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ );
 
 void limProcessLearnIntervalTimeout(tpAniSirGlobal pMac);
 #ifdef WLAN_FEATURE_11W
-//11w SA query request action frame handler
+//                                         
 tSirRetStatus limSendSaQueryResponseFrame( tpAniSirGlobal pMac, 
                    tANI_U8 *transId, tSirMacAddr peer,tpPESession psessionEntry);
 #endif
-// Inline functions
+//                 
 
-/**
- * limPostSmeMessage()
- *
- *FUNCTION:
- * This function is called by limProcessMlmMessages(). In this
- * function MLM sub-module invokes MLM ind/cnf primitives.
- *
- *LOGIC:
- * Initially MLM makes an SME function call to invoke MLM ind/cnf
- * primitive. In future this can be enhanced to 'post' messages to SME.
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * NA
- *
- * @param pMac      Pointer to Global MAC structure
- * @param msgType   Indicates the MLM primitive message type
- * @param *pMsgBuf  A pointer to the MLM message buffer
- *
- * @return None
+/* 
+                      
+  
+           
+                                                              
+                                                          
+  
+        
+                                                                 
+                                                                       
+  
+              
+     
+  
+       
+     
+  
+                                                   
+                                                            
+                                                       
+  
+               
  */
 static inline void
 limPostSmeMessage(tpAniSirGlobal pMac, tANI_U32 msgType, tANI_U32 *pMsgBuf)
@@ -922,32 +922,32 @@ limPostSmeMessage(tpAniSirGlobal pMac, tANI_U32 msgType, tANI_U32 *pMsgBuf)
         limProcessSmeReqMessages(pMac, &msg);
     else
         limProcessMlmRspMessages(pMac, msgType, pMsgBuf);
-} /*** end limPostSmeMessage() ***/
+} /*                             */
 
-/**
- * limPostMlmMessage()
- *
- *FUNCTION:
- * This function is called by limProcessSmeMessages(). In this
- * function SME invokes MLME primitives.
- *
- *PARAMS:
- *
- *LOGIC:
- * Initially SME makes an MLM function call to invoke MLM primitive.
- * In future this can be enhanced to 'post' messages to MLM.
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * NA
- *
- * @param pMac      Pointer to Global MAC structure
- * @param msgType   Indicates the MLM primitive message type
- * @param *pMsgBuf  A pointer to the MLM message buffer
- *
- * @return None
+/* 
+                      
+  
+           
+                                                              
+                                        
+  
+         
+  
+        
+                                                                    
+                                                            
+  
+              
+     
+  
+       
+     
+  
+                                                   
+                                                            
+                                                       
+  
+               
  */
 static inline void
 limPostMlmMessage(tpAniSirGlobal pMac, tANI_U32 msgType, tANI_U32 *pMsgBuf)
@@ -963,29 +963,29 @@ limPostMlmMessage(tpAniSirGlobal pMac, tANI_U32 msgType, tANI_U32 *pMsgBuf)
     msg.bodyptr = pMsgBuf;
     msg.bodyval = 0;
     limProcessMlmReqMessages(pMac, &msg);
-} /*** end limPostMlmMessage() ***/
+} /*                             */
 
 
 
-/**
- * limGetCurrentScanChannel()
- *
- *FUNCTION:
- * This function is called in various places to get current channel
- * number being scanned.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * NA
- *
- * @param  pMac      Pointer to Global MAC structure
- * @return Channel number
+/* 
+                             
+  
+           
+                                                                   
+                        
+  
+         
+  
+        
+  
+              
+     
+  
+       
+     
+  
+                                                    
+                         
  */
 static inline tANI_U8
 limGetCurrentScanChannel(tpAniSirGlobal pMac)
@@ -993,30 +993,30 @@ limGetCurrentScanChannel(tpAniSirGlobal pMac)
     tANI_U8 *pChanNum = pMac->lim.gpLimMlmScanReq->channelList.channelNumber;
 
     return (*(pChanNum + pMac->lim.gLimCurrentScanChannelId));
-} /*** end limGetCurrentScanChannel() ***/
+} /*                                    */
 
 
 
-/**
- * limGetIElenFromBssDescription()
- *
- *FUNCTION:
- * This function is called in various places to get IE length
- * from tSirBssDescription structure
- * number being scanned.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * NA
- *
- * @param     pBssDescr
- * @return    Total IE length
+/* 
+                                  
+  
+           
+                                                             
+                                    
+                        
+  
+         
+  
+        
+  
+              
+     
+  
+       
+     
+  
+                       
+                             
  */
 
 static inline tANI_U16
@@ -1027,20 +1027,20 @@ limGetIElenFromBssDescription(tpSirBssDescription pBssDescr)
 
     return ((tANI_U16) (pBssDescr->length + sizeof(tANI_U16) +
                    sizeof(tANI_U32) - sizeof(tSirBssDescription)));
-} /*** end limGetIElenFromBssDescription() ***/
+} /*                                         */
 
-/**
- * limSendBeaconInd()
- *
- *FUNCTION:
- * This function is called  to send the beacon indication
- * number being scanned.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
+/* 
+                     
+  
+           
+                                                         
+                        
+  
+         
+  
+        
+  
+              
 */
 
 void 
@@ -1084,13 +1084,13 @@ void limProcessTdlsFrame(tpAniSirGlobal, tANI_U32 *);
 void limProcessTdlsPublicActionFrame(tpAniSirGlobal pMac, tANI_U32 *pBd, 
                                                                tpPESession) ;
 #ifdef FEATURE_WLAN_TDLS_NEGATIVE
-#define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_DSCV_REQ   0x1 /* 5.1.4-5 */
-#define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_SETUP_REQ  0x2 /* 5.2.4-16 */
-#define LIM_TDLS_NEGATIVE_STATUS_37_IN_SETUP_CNF    0x4 /* 5.2.4-10 */
-#define LIM_TDLS_NEGATIVE_SEND_REQ_TO_SETUP_REQ     0x8 /* 5.2.4-20/32 */
-#define LIM_TDLS_NEGATIVE_RSP_TIMEOUT_TO_SETUP_REQ  0x10 /* 5.2.3.4 */
-#define LIM_TDLS_NEGATIVE_TREAT_TDLS_PROHIBIT_AP    0x20 /* 5.2.4-49 */
-   /* following is not paticularily tested in WFA test plan, but will help to validate our TDLS behavior in-house */
+#define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_DSCV_REQ   0x1 /*         */
+#define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_SETUP_REQ  0x2 /*          */
+#define LIM_TDLS_NEGATIVE_STATUS_37_IN_SETUP_CNF    0x4 /*          */
+#define LIM_TDLS_NEGATIVE_SEND_REQ_TO_SETUP_REQ     0x8 /*             */
+#define LIM_TDLS_NEGATIVE_RSP_TIMEOUT_TO_SETUP_REQ  0x10 /*         */
+#define LIM_TDLS_NEGATIVE_TREAT_TDLS_PROHIBIT_AP    0x20 /*          */
+   /*                                                                                                             */
 #define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_DSCV_RSP   0x40
 #define LIM_TDLS_NEGATIVE_WRONG_BSSID_IN_SETUP_RSP  0x80
 
@@ -1114,5 +1114,5 @@ void limProcessRxScanEvent(tpAniSirGlobal mac, void *buf);
 
 int limProcessRemainOnChnlReq(tpAniSirGlobal pMac, tANI_U32 *pMsg);
 void limRemainOnChnRsp(tpAniSirGlobal pMac, eHalStatus status, tANI_U32 *data);
-#endif /* __LIM_TYPES_H */
+#endif /*               */
 

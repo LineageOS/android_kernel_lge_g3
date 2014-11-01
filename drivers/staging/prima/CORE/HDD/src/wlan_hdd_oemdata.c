@@ -60,15 +60,15 @@
 #include <wlan_hdd_includes.h>
 #include <net/arp.h>
 
-/*---------------------------------------------------------------------------------------------
+/*                                                                                             
 
-  \brief hdd_OemDataReqCallback() - 
+                                    
 
-  This function also reports the results to the user space
+                                                          
 
-  \return - 0 for success, non zero for failure
+                                               
 
------------------------------------------------------------------------------------------------*/
+                                                                                               */
 static eHalStatus hdd_OemDataReqCallback(tHalHandle hHal, 
         void *pContext,
         tANI_U32 oemDataReqID,
@@ -82,9 +82,9 @@ static eHalStatus hdd_OemDataReqCallback(tHalHandle hHal,
     memset(&wrqu, '\0', sizeof(wrqu));
     memset(buffer, '\0', sizeof(buffer));
 
-    //now if the status is success, then send an event up
-    //so that the application can request for the data
-    //else no need to send the event up
+    //                                                   
+    //                                                
+    //                                 
     if(oemDataReqStatus == eOEM_DATA_REQ_FAILURE)
     {
         snprintf(buffer, IW_CUSTOM_MAX, "QCOM: OEM-DATA-REQ-FAILED");
@@ -98,7 +98,7 @@ static eHalStatus hdd_OemDataReqCallback(tHalHandle hHal,
     else
     {
         snprintf(buffer, IW_CUSTOM_MAX, "QCOM: OEM-DATA-REQ-SUCCESS");
-        //everything went alright
+        //                       
     }
     
     wrqu.data.pointer = buffer;
@@ -109,22 +109,22 @@ static eHalStatus hdd_OemDataReqCallback(tHalHandle hHal,
     return status;
 }
 
-/**--------------------------------------------------------------------------------------------
+/*                                                                                             
 
-  \brief iw_get_oem_data_rsp() - 
+                                 
 
-  This function gets the oem data response. This invokes
-  the respective sme functionality. Function for handling the oem data rsp 
-  IOCTL 
+                                                        
+                                                                           
+        
 
-  \param - dev  - Pointer to the net device
-         - info - Pointer to the iw_oem_data_req
-         - wrqu - Pointer to the iwreq data
-         - extra - Pointer to the data
+                                           
+                                                
+                                           
+                                      
 
-  \return - 0 for success, non zero for failure
+                                               
 
------------------------------------------------------------------------------------------------*/
+                                                                                               */
 int iw_get_oem_data_rsp(
         struct net_device *dev, 
         struct iw_request_info *info,
@@ -146,7 +146,7 @@ int iw_get_oem_data_rsp(
 
     do
     {
-        //get the oem data response from sme
+        //                                  
         status = sme_getOemDataRsp(WLAN_HDD_GET_HAL_CTX(pAdapter), &pSmeOemDataRsp);
         if(status != eHAL_STATUS_SUCCESS)
         {
@@ -172,22 +172,22 @@ int iw_get_oem_data_rsp(
     return eHAL_STATUS_SUCCESS;
 }
 
-/**--------------------------------------------------------------------------------------------
+/*                                                                                             
 
-  \brief iw_set_oem_data_req() - 
+                                 
 
-  This function sets the oem data req configuration. This invokes
-  the respective sme oem data req functionality. Function for 
-  handling the set IOCTL for the oem data req configuration
+                                                                 
+                                                              
+                                                           
 
-  \param - dev  - Pointer to the net device
-     - info - Pointer to the iw_oem_data_req
-     - wrqu - Pointer to the iwreq data
-     - extra - Pointer to the data
+                                           
+                                            
+                                       
+                                  
 
-  \return - 0 for success, non zero for failure
+                                               
 
------------------------------------------------------------------------------------------------*/
+                                                                                               */
 int iw_set_oem_data_req(
         struct net_device *dev, 
         struct iw_request_info *info,

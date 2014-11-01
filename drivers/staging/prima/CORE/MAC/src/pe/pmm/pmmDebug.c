@@ -63,10 +63,10 @@ void pmmLog(tpAniSirGlobal pMac, tANI_U32 loglevel, const char *pString, ...)
        char    logBuffer[LOG_SIZE];
        va_list marker;
 
-       /*  getting proper Debug level  */
+       /*                              */
        vosDebugLevel = getVosDebugLevel(loglevel);
 
-       /* extracting arguments from pstring */
+       /*                                   */
        va_start( marker, pString );
        vsnprintf(logBuffer, LOG_SIZE, pString, marker);
 

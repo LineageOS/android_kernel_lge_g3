@@ -59,9 +59,9 @@
 #include "vos_event.h"
 #include "vos_lock.h"
 
-/*Reuse the vos lock and vos event*/
+/*                                */
 typedef vos_lock_t  wpt_mutex;
 typedef vos_event_t wpt_event;
 
 
-#endif // __WLAN_QCT_OS_SYNC_H
+#endif //                     

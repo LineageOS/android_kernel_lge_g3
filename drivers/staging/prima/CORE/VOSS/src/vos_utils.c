@@ -62,14 +62,14 @@
                 Qualcomm Confidential and Proprietary
 ============================================================================*/
 
-/*============================================================================
-  EDIT HISTORY FOR MODULE
+/*                                                                            
+                         
 
-============================================================================*/
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                
+                                                                            */
 
 #include "vos_trace.h"
 #include "vos_utils.h"
@@ -82,16 +82,16 @@
 #include <linux/completion.h>
 #include <crypto/hash.h>
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Type Declarations
- * -------------------------------------------------------------------------*/
-/*----------------------------------------------------------------------------
- * Global Data Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                    
+                                                                            */
+/*                                                                            
+                          
+                                                                            */
 extern struct crypto_ahash *wcnss_wlan_crypto_alloc_ahash(const char *alg_name,
                                                           unsigned int type,
                                                           unsigned int mask);
@@ -105,40 +105,40 @@ extern struct crypto_ablkcipher *wcnss_wlan_crypto_alloc_ablkcipher(const char *
 extern void wcnss_wlan_ablkcipher_request_free(struct ablkcipher_request *req);
 extern void wcnss_wlan_crypto_free_ablkcipher(struct crypto_ablkcipher *tfm);
 
-/*----------------------------------------------------------------------------
- * Static Variable Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                              
+                                                                            */
 
-/*----------------------------------------------------------------------------
-   Function Definitions and Documentation
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
-/*--------------------------------------------------------------------------
+/*                                                                          
 
-  \brief vos_crypto_init() - Initializes Crypto module
+                                                      
 
-  The vos_crypto_init() function initializes Crypto module.
+                                                           
 
-  \param phCryptProv - pointer to the Crypt handle
+                                                  
 
-  \return VOS_STATUS_SUCCESS - Successfully generated random memory.
+                                                                    
 
-          VOS_STATUS_E_FAULT  - pbBuf is an invalid pointer.
+                                                            
 
-          VOS_STATUS_E_FAILURE - default return value if it fails due to
-          unknown reasons
+                                                                        
+                         
 
-       ***VOS_STATUS_E_RESOURCES - System resources (other than memory)
-          are unavailable
-  \sa
+                                                                       
+                         
+     
 
-    ( *** return value not considered yet )
-  --------------------------------------------------------------------------*/
+                                           
+                                                                            */
 VOS_STATUS vos_crypto_init( v_U32_t *phCryptProv )
 {
     VOS_STATUS uResult = VOS_STATUS_E_FAILURE;
 
-    // This implementation doesn't require a crypto context
+    //                                                     
     *phCryptProv  = (v_U32_t)NULL;
     uResult = VOS_STATUS_SUCCESS;
     return ( uResult );
@@ -148,83 +148,83 @@ VOS_STATUS vos_crypto_deinit( v_U32_t hCryptProv )
 {
     VOS_STATUS uResult = VOS_STATUS_E_FAILURE;
 
-    // CryptReleaseContext succeeded
+    //                              
     uResult = VOS_STATUS_SUCCESS;
 
     return ( uResult );
 }
 
-/*--------------------------------------------------------------------------
+/*                                                                          
 
-  \brief vos_rand_get_bytes() - Generates random byte
+                                                     
 
-  The vos_rand_get_bytes() function generate random bytes.
+                                                          
 
-  Buffer should be allocated before calling vos_rand_get_bytes().
+                                                                 
 
-  Attempting to initialize an already initialized lock results in
-  a failure.
+                                                                 
+            
 
-  \param lock - pointer to the opaque lock object to initialize
+                                                               
 
-  \return VOS_STATUS_SUCCESS - Successfully generated random memory.
+                                                                    
 
-          VOS_STATUS_E_FAULT  - pbBuf is an invalid pointer.
+                                                            
 
-          VOS_STATUS_E_FAILURE - default return value if it fails due to
-          unknown reasons
+                                                                        
+                         
 
-       ***VOS_STATUS_E_RESOURCES - System resources (other than memory)
-          are unavailable
-  \sa
+                                                                       
+                         
+     
 
-    ( *** return value not considered yet )
-  --------------------------------------------------------------------------*/
+                                           
+                                                                            */
 VOS_STATUS vos_rand_get_bytes( v_U32_t cryptHandle, v_U8_t *pbBuf, v_U32_t numBytes )
 {
    VOS_STATUS uResult = VOS_STATUS_E_FAILURE;
-   //v_UINT_t uCode;
-//   HCRYPTPROV hCryptProv = (HCRYPTPROV) cryptHandle;
+   //               
+//                                                    
 
-   //check for invalid pointer
+   //                         
    if ( NULL == pbBuf )
    {
       uResult = VOS_STATUS_E_FAULT;
       return ( uResult );
    }
 
-//#if 0
-   // get_random_bytes() is a void procedure
+//     
+   //                                       
    get_random_bytes( pbBuf, numBytes);
-   // "Random sequence generated."
+   //                             
    uResult = VOS_STATUS_SUCCESS;
-//#endif
+//      
 
    return ( uResult );
 }
 
 
-/**
- * vos_sha1_hmac_str
- *
- * FUNCTION:
- * Generate the HMAC-SHA1 of a string given a key.
- *
- * LOGIC:
- * Standard HMAC processing from RFC 2104. The code is provided in the
- * appendix of the RFC.
- *
- * ASSUMPTIONS:
- * The RFC is correct.
- *
- * @param text text to be hashed
- * @param textLen length of text
- * @param key key to use for HMAC
- * @param keyLen length of key
- * @param digest holds resultant SHA1 HMAC (20B)
- *
- * @return VOS_STATUS_SUCCSS if the operation succeeds
- *
+/* 
+                    
+  
+            
+                                                  
+  
+         
+                                                                      
+                       
+  
+               
+                      
+  
+                                
+                                
+                                 
+                              
+                                                
+  
+                                                      
+  
  */
 
 struct hmac_sha1_result {
@@ -334,22 +334,22 @@ err_tfm:
     return ret;
 }
 
-VOS_STATUS vos_sha1_hmac_str(v_U32_t cryptHandle, /* Handle */
-           v_U8_t *pText, /* pointer to data stream */
-           v_U32_t textLen, /* length of data stream */
-           v_U8_t *pKey, /* pointer to authentication key */
-           v_U32_t keyLen, /* length of authentication key */
-           v_U8_t digest[VOS_DIGEST_SHA1_SIZE])/* caller digest to be filled in */
+VOS_STATUS vos_sha1_hmac_str(v_U32_t cryptHandle, /*        */
+           v_U8_t *pText, /*                        */
+           v_U32_t textLen, /*                       */
+           v_U8_t *pKey, /*                               */
+           v_U32_t keyLen, /*                              */
+           v_U8_t digest[VOS_DIGEST_SHA1_SIZE])/*                               */
 {
     int ret = 0;
 
     ret = hmac_sha1(
-            pKey,                   //v_U8_t *key,
-            (v_U8_t) keyLen,        //v_U8_t ksize,
-            (char *)pText,          //char *plaintext,
-            (v_U8_t) textLen,       //v_U8_t psize,
-            digest,                 //v_U8_t *output,
-            VOS_DIGEST_SHA1_SIZE    //v_U8_t outlen
+            pKey,                   //            
+            (v_U8_t) keyLen,        //             
+            (char *)pText,          //                
+            (v_U8_t) textLen,       //             
+            digest,                 //               
+            VOS_DIGEST_SHA1_SIZE    //             
             );
 
     if (ret != 0) {
@@ -360,27 +360,27 @@ VOS_STATUS vos_sha1_hmac_str(v_U32_t cryptHandle, /* Handle */
     return VOS_STATUS_SUCCESS;
 }
 
-/**
- * vos_md5_hmac_str
- *
- * FUNCTION:
- * Generate the HMAC-MD5 of a string given a key.
- *
- * LOGIC:
- * Standard HMAC processing from RFC 2104. The code is provided in the
- * appendix of the RFC.
- *
- * ASSUMPTIONS:
- * The RFC is correct.
- *
- * @param text text to be hashed
- * @param textLen length of text
- * @param key key to use for HMAC
- * @param keyLen length of key
- * @param digest holds resultant MD5 HMAC (20B)
- *
- * @return VOS_STATUS_SUCCSS if the operation succeeds
- *
+/* 
+                   
+  
+            
+                                                 
+  
+         
+                                                                      
+                       
+  
+               
+                      
+  
+                                
+                                
+                                 
+                              
+                                               
+  
+                                                      
+  
  */
 struct hmac_md5_result {
     struct completion completion;
@@ -489,22 +489,22 @@ err_tfm:
         return ret;
 }
 
-VOS_STATUS vos_md5_hmac_str(v_U32_t cryptHandle, /* Handle */
-           v_U8_t *pText, /* pointer to data stream */
-           v_U32_t textLen, /* length of data stream */
-           v_U8_t *pKey, /* pointer to authentication key */
-           v_U32_t keyLen, /* length of authentication key */
-           v_U8_t digest[VOS_DIGEST_MD5_SIZE])/* caller digest to be filled in */
+VOS_STATUS vos_md5_hmac_str(v_U32_t cryptHandle, /*        */
+           v_U8_t *pText, /*                        */
+           v_U32_t textLen, /*                       */
+           v_U8_t *pKey, /*                               */
+           v_U32_t keyLen, /*                              */
+           v_U8_t digest[VOS_DIGEST_MD5_SIZE])/*                               */
 {
     int ret = 0;
 
     ret = hmac_md5(
-            pKey,                   //v_U8_t *key,
-            (v_U8_t) keyLen,        //v_U8_t ksize,
-            (char *)pText,          //char *plaintext,
-            (v_U8_t) textLen,       //v_U8_t psize,
-            digest,                 //v_U8_t *output,
-            VOS_DIGEST_MD5_SIZE     //v_U8_t outlen
+            pKey,                   //            
+            (v_U8_t) keyLen,        //             
+            (char *)pText,          //                
+            (v_U8_t) textLen,       //             
+            digest,                 //               
+            VOS_DIGEST_MD5_SIZE     //             
             );
 
     if (ret != 0) {
@@ -531,43 +531,43 @@ static void ecb_aes_complete(struct crypto_async_request *req, int err)
 }
 
 
-/*--------------------------------------------------------------------------
+/*                                                                          
 
-  \brief vos_encrypt_AES() - Generate AES Encrypted byte stream
+                                                               
 
-  The vos_encrypt_AES() function generates the encrypted byte stream for given text.
+                                                                                    
 
-  Buffer should be allocated before calling vos_rand_get_bytes().
+                                                                 
 
-  Attempting to initialize an already initialized lock results in
-  a failure.
+                                                                 
+            
 
-  \param lock - pointer to the opaque lock object to initialize
+                                                               
 
-  \return VOS_STATUS_SUCCESS - Successfully generated random memory.
+                                                                    
 
-          VOS_STATUS_E_FAULT  - pbBuf is an invalid pointer.
+                                                            
 
-          VOS_STATUS_E_FAILURE - default return value if it fails due to
-          unknown reasons
+                                                                        
+                         
 
-       ***VOS_STATUS_E_RESOURCES - System resources (other than memory)
-          are unavailable
-  \sa
+                                                                       
+                         
+     
 
-    ( *** return value not considered yet )
-  --------------------------------------------------------------------------*/
+                                           
+                                                                            */
 
 #define IV_SIZE_AES_128 16
 #define KEY_SIZE_AES_128 16
 #define AES_BLOCK_SIZE 16
 
-VOS_STATUS vos_encrypt_AES(v_U32_t cryptHandle, /* Handle */
-                           v_U8_t *pPlainText, /* pointer to data stream */
+VOS_STATUS vos_encrypt_AES(v_U32_t cryptHandle, /*        */
+                           v_U8_t *pPlainText, /*                        */
                            v_U8_t *pCiphertext,
-                           v_U8_t *pKey) /* pointer to authentication key */
+                           v_U8_t *pKey) /*                               */
 {
-//    VOS_STATUS uResult = VOS_STATUS_E_FAILURE;
+//                                              
     struct ecb_aes_result result;
     struct ablkcipher_request *req;
     struct crypto_ablkcipher *tfm;
@@ -616,13 +616,13 @@ VOS_STATUS vos_encrypt_AES(v_U32_t cryptHandle, /* Handle */
 
 
 
-// -------------------------------------
+//                                      
 err_setkey:
     wcnss_wlan_ablkcipher_request_free(req);
 err_req:
     wcnss_wlan_crypto_free_ablkcipher(tfm);
 err_tfm:
-    //return ret;
+    //           
     if (ret != 0) {
         VOS_TRACE(VOS_MODULE_ID_VOSS,VOS_TRACE_LEVEL_ERROR,"%s() call failed", __func__);
         return VOS_STATUS_E_FAULT;
@@ -631,39 +631,39 @@ err_tfm:
     return VOS_STATUS_SUCCESS;
 }
 
-/*--------------------------------------------------------------------------
+/*                                                                          
 
-  \brief vos_decrypt_AES() - Decrypts an AES Encrypted byte stream
+                                                                  
 
-  The vos_decrypt_AES() function decrypts the encrypted byte stream.
+                                                                    
 
-  Buffer should be allocated before calling vos_rand_get_bytes().
+                                                                 
 
-  Attempting to initialize an already initialized lock results in
-  a failure.
+                                                                 
+            
 
-  \param lock - pointer to the opaque lock object to initialize
+                                                               
 
-  \return VOS_STATUS_SUCCESS - Successfully generated random memory.
+                                                                    
 
-          VOS_STATUS_E_FAULT  - pbBuf is an invalid pointer.
+                                                            
 
-          VOS_STATUS_E_FAILURE - default return value if it fails due to
-          unknown reasons
+                                                                        
+                         
 
-       ***VOS_STATUS_E_RESOURCES - System resources (other than memory)
-          are unavailable
-  \sa
+                                                                       
+                         
+     
 
-    ( *** return value not considered yet )
-  --------------------------------------------------------------------------*/
+                                           
+                                                                            */
 
-VOS_STATUS vos_decrypt_AES(v_U32_t cryptHandle, /* Handle */
-                           v_U8_t *pText, /* pointer to data stream */
+VOS_STATUS vos_decrypt_AES(v_U32_t cryptHandle, /*        */
+                           v_U8_t *pText, /*                        */
                            v_U8_t *pDecrypted,
-                           v_U8_t *pKey) /* pointer to authentication key */
+                           v_U8_t *pKey) /*                               */
 {
-//    VOS_STATUS uResult = VOS_STATUS_E_FAILURE;
+//                                              
     struct ecb_aes_result result;
     struct ablkcipher_request *req;
     struct crypto_ablkcipher *tfm;
@@ -712,13 +712,13 @@ VOS_STATUS vos_decrypt_AES(v_U32_t cryptHandle, /* Handle */
 
 
 
-// -------------------------------------
+//                                      
 err_setkey:
     wcnss_wlan_ablkcipher_request_free(req);
 err_req:
     wcnss_wlan_crypto_free_ablkcipher(tfm);
 err_tfm:
-    //return ret;
+    //           
     if (ret != 0) {
         VOS_TRACE(VOS_MODULE_ID_VOSS,VOS_TRACE_LEVEL_ERROR,"%s() call failed", __func__);
         return VOS_STATUS_E_FAULT;

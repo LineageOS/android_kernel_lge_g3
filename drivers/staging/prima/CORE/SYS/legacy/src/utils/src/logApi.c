@@ -40,15 +40,15 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * logApi.cc - Handles log messages for all the modules.
- * Author:        Kevin Nguyen
- * Date:          02/27/02
- * History:-
- * 02/11/02       Created.
- * 03/12/02       Rearrange logDebug parameter list and add more params.
- * --------------------------------------------------------------------
- *
+                                                        
+                                                        
+                              
+                          
+            
+                          
+                                                                        
+                                                                       
+  
  */
 
 #include <sirCommon.h>
@@ -68,30 +68,30 @@
 #endif
 
 
-// ---------------------------------------------------------------------
-/**
- * logInit()
- *
- * FUNCTION:
- * This function is called to prepare the logging utility.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- * None.
- *
- * NOTE:
- *
- * @param tpAniSirGlobal Sirius software parameter strucutre pointer
- * @return None
+//                                                                      
+/* 
+            
+  
+            
+                                                          
+  
+         
+  
+               
+        
+  
+        
+  
+                                                                    
+               
  */
 tSirRetStatus
 logInit(tpAniSirGlobal pMac)
 {
     tANI_U32    i;
 
-    // Add code to initialize debug level from CFG module
-    // For now, enable all logging
+    //                                                   
+    //                            
     for (i = 0; i < LOG_ENTRY_NUM; i++)
     {
 #ifdef SIR_DEBUG
@@ -102,7 +102,7 @@ logInit(tpAniSirGlobal pMac)
     }
     return eSIR_SUCCESS;
 
-} /*** logInit() ***/
+} /*               */
 
 void
 logDeinit(tpAniSirGlobal pMac)
@@ -110,26 +110,26 @@ logDeinit(tpAniSirGlobal pMac)
     return;
 }
 
-/**
- * logDbg()
- *
- *FUNCTION:
- * This function is called to log a debug message.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * None.
- *
- *NOTE:
- *
- * @param tpAniSirGlobal Sirius software parameter strucutre pointer
- * @param ModId        8-bit modID
- * @param debugLevel   debugging level for this message
- * @param pStr         string parameter pointer
- * @return None
+/* 
+           
+  
+           
+                                                  
+  
+         
+  
+        
+  
+              
+        
+  
+       
+  
+                                                                    
+                                  
+                                                       
+                                               
+               
  */
 
 
@@ -142,11 +142,11 @@ void logDbg(tpAniSirGlobal pMac, tANI_U8 modId, tANI_U32 debugLevel, const char 
     {
         va_list marker;
 
-        va_start( marker, pStr );     /* Initialize variable arguments. */
+        va_start( marker, pStr );     /*                                */
 
         logDebug(pMac, modId, debugLevel, pStr, marker);
 
-        va_end( marker );              /* Reset variable arguments.      */
+        va_end( marker );              /*                                */
     }
 #endif
 }
@@ -216,6 +216,6 @@ void logDebug(tpAniSirGlobal pMac, tANI_U8 modId, tANI_U32 debugLevel, const cha
     vsnprintf(logBuffer, LOG_SIZE - 1, pStr, marker);
     VOS_TRACE(vosModuleId, vosDebugLevel, "%s", logBuffer);
 
-    // The caller must check loglevel
+    //                               
     VOS_ASSERT( ( debugLevel <= pMac->utils.gLogDbgLevel[LOG_INDEX_FOR_MODULE( modId )] ) && ( LOGP != debugLevel ) );
-} /*** end logDebug() ***/
+} /*                    */

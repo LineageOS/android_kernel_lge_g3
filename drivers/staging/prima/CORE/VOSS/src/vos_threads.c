@@ -51,11 +51,11 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include <vos_threads.h>
 #include <vos_trace.h>
 #include <linux/jiffies.h>
@@ -63,35 +63,35 @@
 #include <linux/delay.h>
 #include <linux/interrupt.h>
 
-/*-------------------------------------------------------------------------- 
-  Preprocessor definitions and constants
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                                        
+                                                                          */
 
 
-/*-------------------------------------------------------------------------- 
-  Type declarations
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                   
+                                                                          */
 
 
-/*------------------------------------------------------------------------- 
-  Function declarations and documenation
-  ------------------------------------------------------------------------*/
+/*                                                                          
+                                        
+                                                                          */
 
-/*----------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_sleep() - sleep
+                            
 
-  The \a vos_sleep() function suspends the execution of the current thread
-  until the specified time out interval elapses.
+                                                                          
+                                                
      
-  \param msInterval - the number of milliseconds to suspend the current thread.
-  A value of 0 may or may not cause the current thread to yield.
+                                                                               
+                                                                
   
-  \return Nothing.
+                  
     
-  \sa
+     
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 v_VOID_t vos_sleep( v_U32_t msInterval )
 {
    if (in_interrupt())
@@ -102,21 +102,21 @@ v_VOID_t vos_sleep( v_U32_t msInterval )
    msleep_interruptible(msInterval);
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_sleep_us() - sleep
+                               
 
-  The \a vos_sleep_us() function suspends the execution of the current thread
-  until the specified time out interval elapses.
+                                                                             
+                                                
      
-  \param usInterval - the number of microseconds to suspend the current thread.
-  A value of 0 may or may not cause the current thread to yield.
+                                                                               
+                                                                
   
-  \return Nothing.
+                  
     
-  \sa
+     
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 v_VOID_t vos_sleep_us( v_U32_t usInterval )
 {
    unsigned long timeout = usecs_to_jiffies(usInterval) + 1;
@@ -130,21 +130,21 @@ v_VOID_t vos_sleep_us( v_U32_t usInterval )
 }
 
 
-/*----------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_busy_wait() - busy wait
+                                    
 
-  The \a vos_busy_wait() function places the current thread in busy wait
-  until the specified time out interval elapses. If the interval is greater
-  than 50us on WM, the behaviour is undefined.
+                                                                        
+                                                                           
+                                              
      
-  \param usInterval - the number of microseconds to busy wait. 
+                                                               
   
-  \return Nothing.
+                  
     
-  \sa
+     
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 v_VOID_t vos_busy_wait( v_U32_t usInterval )
 {
     udelay(usInterval);

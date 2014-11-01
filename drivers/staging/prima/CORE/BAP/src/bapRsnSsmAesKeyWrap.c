@@ -40,17 +40,17 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * $File: //depot/software/projects/feature_branches/gen5_phase1/os/linux/classic/ap/apps/ssm/lib/aniSsmAesKeyWrap.c $
- *
- * Contains definitions for the AES Key Wrap algorithm from RFC 3394.
- *
- * Author:      Mayank D. Upadhyay
- * Date:        31-March-2003
- * History:-
- * Date         Modified by     Modification Information
- * ------------------------------------------------------
- *
+                                                        
+                                                                                                                      
+  
+                                                                     
+  
+                                  
+                             
+            
+                                                        
+                                                         
+  
  */
 
 #include "vos_types.h"
@@ -107,24 +107,24 @@ aes_1(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
 static int
 xor(tANI_U8 a[ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE], tANI_U32 t);
 
-/**
- * Implements the AES Key Wrap algorithm described in RFC 3394.
- * If n is the number of blocks in plainText, of size
- * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, then the output value is (n+1)
- * blocks. The first block is the IV from section 2.2.3 o the
- * RFC. Note: It is the caller's responsibility to free the returned
- * value.
- * 
- * @param plainText the plaintext data to wrap
- * @param len the length of the plaintext, which must be a multiple of
- * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE.
- * @param keyEncKey the encryption key
- * @param keyEncKeyLen the length of keyEncKey
- * @param cipherTextPtr is set to a newly allocated array containing
- * the result if the operation succeeds. It is the caller's
- * responsibility to free this.
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                                                               
+                                                     
+                                                                  
+                                                             
+                                                                    
+         
+   
+                                              
+                                                                      
+                                   
+                                      
+                                              
+                                                                    
+                                                           
+                               
+  
+                                           
  */
 int
 aniSsmAesKeyWrap(v_U32_t cryptHandle, tANI_U8 *plainText, tANI_U32 len,
@@ -147,7 +147,7 @@ aniSsmAesKeyWrap(v_U32_t cryptHandle, tANI_U8 *plainText, tANI_U32 len,
         return ANI_E_ILLEGAL_ARG;
     }
 
-    // Allocate enough storage for 'A' as well as 'R'
+    //                                               
     r = vos_mem_malloc((n + 1) * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
     if (r == NULL) {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -190,24 +190,24 @@ aniSsmAesKeyWrap(v_U32_t cryptHandle, tANI_U8 *plainText, tANI_U32 len,
 
 }
 
-/**
- * Implements the AES Key Unwrap algorithm described in RFC 3394.
- * If (n+1) is the number of blocks in cipherText, of size
- * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, then the output value is (n+1)
- * blocks. The actual plaintext consists of n blocks that start at the
- * second block. Note: It is the caller's responsibility to free the
- * returned value.
- *
- * @param cipherText the cipertext data to unwrap
- * @param len the length of the ciphertext, which must be a multiple of
- * ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE.
- * @param keyEncKey the encryption key
- * @param keyEncKeyLen the length of keyEncKey
- * @param plainTextPtr is set to a newly allocated array containing
- * the result if the operation succeeds. It is the caller's
- * responsibility to free this.
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                                                                 
+                                                          
+                                                                  
+                                                                      
+                                                                    
+                  
+  
+                                                 
+                                                                       
+                                   
+                                      
+                                              
+                                                                   
+                                                           
+                               
+  
+                                           
  */
 int
 aniSsmAesKeyUnwrap(v_U32_t cryptHandle, tANI_U8 *cipherText, tANI_U32 len,
@@ -231,7 +231,7 @@ aniSsmAesKeyUnwrap(v_U32_t cryptHandle, tANI_U8 *cipherText, tANI_U32 len,
         return ANI_E_ILLEGAL_ARG;
     }
 
-    // Allocate enough storage for 'A' as well as 'R'
+    //                                               
     r = vos_mem_malloc((n + 1) *  ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
     if (r == NULL) {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -286,14 +286,14 @@ aes(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
 
     int retVal = 0;
 
-//    AES_KEY aesKey;
+//                   
 
     tANI_U8 in[AES_BLOCK_SIZE];
     tANI_U8 *out;
 
     VOS_ASSERT (AES_BLOCK_SIZE == ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE*2);
 
-    // Concatenate A and R[i]
+    //                       
     vos_mem_copy(in, a, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
     vos_mem_copy(in + ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, 
            ri, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
@@ -308,11 +308,11 @@ aes(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
     }
 
     AES_encrypt(in, out, &aesKey);
-#else // Enable to use VOS function
-    retVal = vos_encrypt_AES(cryptHandle, /* Handle */
-                             in, /* input */
-                             out, /* output */
-                             keyBytes); /* key */
+#else //                           
+    retVal = vos_encrypt_AES(cryptHandle, /*        */
+                             in, /*       */
+                             out, /*        */
+                             keyBytes); /*     */
     if (retVal != 0) {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
                    "vos_encrypt_AES returned %d", retVal);
@@ -330,14 +330,14 @@ aes_1(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
 
     int retVal;
 
-//    AES_KEY aesKey;
+//                   
 
     tANI_U8 in[AES_BLOCK_SIZE];
     tANI_U8 *out;
 
     VOS_ASSERT (AES_BLOCK_SIZE == ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE*2);
 
-    // Concatenate A and R[i]
+    //                       
     vos_mem_copy(in, at, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
     vos_mem_copy(in + ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE, 
            ri, ANI_SSM_AES_KEY_WRAP_BLOCK_SIZE);
@@ -353,10 +353,10 @@ aes_1(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
 
     AES_decrypt(in, out, &aesKey);
 #else
-    retVal = vos_decrypt_AES(cryptHandle, /* Handle */
-                             in, /* input */
-                             out, /* output */
-                             keyBytes); /* key */
+    retVal = vos_decrypt_AES(cryptHandle, /*        */
+                             in, /*       */
+                             out, /*        */
+                             keyBytes); /*     */
     if (retVal != 0) {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
                    "vos_decrypt_AES returned %d", retVal);
@@ -365,13 +365,13 @@ aes_1(v_U32_t cryptHandle, tANI_U8 *keyBytes, tANI_U32 keyLen,
     return ANI_OK;
 }
 
-// From File : aniAsfHdr.h
+//                        
 
 
 
 /*
- * Put a long in host order into a char array in network order. 
- * 
+                                                                
+   
  */
 static inline char *aniAsfWr32(char *cp, tANI_U32 x)
 {
@@ -388,11 +388,11 @@ static inline char *aniAsfWr32(char *cp, tANI_U32 x)
     return (cp + sizeof(tANI_U32));
 }
 
-// From file : aniAsfMisc.c
+//                         
 
 /*
- * Put a long in host order into a char array in network order. 
- * 
+                                                                
+   
  */
 char *aniAsfPut32(char *cp, tANI_U32 x)
 {

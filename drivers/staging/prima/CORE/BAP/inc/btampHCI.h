@@ -68,74 +68,74 @@
   */
 
 
-#define WLANBAP_MAX_LOG_LINKS 16  /* Logical links are assigned by BAP */
+#define WLANBAP_MAX_LOG_LINKS 16  /*                                   */
 
 
 #if 0
 
-/*  Calling conventions: The General format of the Unpack and Pack routines */
+/*                                                                          */
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    Unpack_XxxMessage
+                               
 
-  DESCRIPTION 
-    Unpack from a Message buffer into a structured type. 
-
-
-  DEPENDENCIES 
+              
+                                                         
 
 
-  PARAMETERS 
+               
+
+
+             
  
 
-    IN
-    void * :       halHandle (passed down to the MAC layer and below)
-    v_U8_t* :      Pointer to the source message buffer
-    v_U16_t :      Length in bytes of the contents of the message buffer.
-    tXxxMessage* : Pointer to the structure in which to return the unpacked values.
+      
+                                                                     
+                                                       
+                                                                         
+                                                                                   
    
-  RETURN VALUE
+              
 
-    The result code associated with performing the operation  
+                                                              
  
 
-  SIDE EFFECTS 
+               
 
-============================================================================*/
+                                                                            */
 v_U32_t Unpack_XxxMessage(void *, v_U8_t*,v_U16_t, tXxxMessage*);
 
 
-/*==========================================================================
+/*                                                                          
 
-  FUNCTION    Pack_XxxMessage
+                             
 
-  DESCRIPTION 
-    Pack the data from a structure into a Message buffer. 
-
-
-  DEPENDENCIES 
+              
+                                                          
 
 
-  PARAMETERS 
+               
 
 
-    IN
-    void * :       halHandle (passed down to the MAC layer and below)
-    tXxxMessage* : Pointer to the structure from which to obtain values.
-    v_U8_t* :      Pointer to the destination message buffer.
-    v_U32_t :      Length in bytes of the destination message buffer.
-    v_U32_t* :     Pointer to return the actual length of the encoded message buffer in.
+             
 
 
-  RETURN VALUE
+      
+                                                                     
+                                                                        
+                                                             
+                                                                     
+                                                                                        
 
-    The result code associated with performing the operation  
 
-  SIDE EFFECTS 
+              
+
+                                                              
+
+               
 
 
-============================================================================*/
+                                                                            */
 v_U32_t Pack_XxxMessage(void *, tXxxMessage*, v_U8_t*, v_U32_t, v_U32_t*);
 
 #endif
@@ -144,22 +144,22 @@ v_U32_t Pack_XxxMessage(void *, tXxxMessage*, v_U8_t*, v_U32_t, v_U32_t*);
 typedef v_U32_t tBTAMP_U64[2];
 
 #if defined ( _MSC_VER )
-#   pragma warning (disable: 4214) /* nonstandard extension used */
-#endif /* Microsoft C/C++             bit field types other than int */
+#   pragma warning (disable: 4214) /*                            */
+#endif /*                                                            */
 
 /*
- * Frames Return Codes:
- *
- * Success is indicated by a return value of zero.  Failure is indicated
- * by the presence of the high bit.  Warnings encountered in the course
- * of a successful parse are indicated by various bits in the lower 31
- * being turned on.
- *
- * For instance, a return value of 0x0000000a would indicate that the
- * parse succeeded, but that a mandatory IE wasn't present, and some IE
- * was found to be corrupt.
- *
- *
+                       
+  
+                                                                        
+                                                                       
+                                                                      
+                   
+  
+                                                                     
+                                                                       
+                           
+  
+  
  */
 
 #define BTAMP_PARSE_SUCCESS         ( 0x00000000 )
@@ -185,15 +185,15 @@ typedef v_U32_t tBTAMP_U64[2];
 #define BTAMP_WARNED(code)          ( ( ( 0 == (code) ) & 0x10000000 ) && code)
 #define BTAMP_SUCCEEDED(code)       ( (code) == 0 )
 
-/*********************************************************************
- * Fixed Fields                                                      *
- ********************************************************************/
+/*                                                                    
+                                                                      
+                                                                    */
 
-/*********************************************************************
- * TLVs                                                              *
- ********************************************************************/
+/*                                                                    
+                                                                      
+                                                                    */
 
-// ID 3 (0x0003)
+//              
 typedef struct sBtampTLVAMP_Assoc_Connected_Channel {
     v_U8_t       present;
     v_U8_t       country[3];
@@ -203,14 +203,14 @@ typedef struct sBtampTLVAMP_Assoc_Connected_Channel {
 
 #define BTAMP_TLV_AMP_ASSOC_CONNECTED_CHANNEL ( 3 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_AMP_ASSOC_CONNECTED_CHANNEL_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_AMP_ASSOC_CONNECTED_CHANNEL_MAX_LEN ( 11 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvAMP_Assoc_Connected_Channel(void *, v_U8_t*,v_U16_t, tBtampTLVAMP_Assoc_Connected_Channel*);
 
 v_U32_t btampPackTlvAMP_Assoc_Connected_Channel(void *, tBtampTLVAMP_Assoc_Connected_Channel*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -218,9 +218,9 @@ v_U32_t btampPackTlvAMP_Assoc_Connected_Channel(void *, tBtampTLVAMP_Assoc_Conne
 v_U32_t btampGetPackedTlvAMP_Assoc_Connected_Channel(void *, tBtampTLVAMP_Assoc_Connected_Channel*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1 (0x0001)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sBtampTLVAMP_Assoc_MAC_Addr {
     v_U8_t       present;
     v_U8_t       mac_addr[6];
@@ -228,14 +228,14 @@ typedef struct sBtampTLVAMP_Assoc_MAC_Addr {
 
 #define BTAMP_TLV_AMP_ASSOC_MAC_ADDR ( 1 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_AMP_ASSOC_MAC_ADDR_MIN_LEN ( 8 )
 
 #define BTAMP_TLV_AMP_ASSOC_MAC_ADDR_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvAMP_Assoc_MAC_Addr(void *, v_U8_t*,v_U16_t, tBtampTLVAMP_Assoc_MAC_Addr*);
 
 v_U32_t btampPackTlvAMP_Assoc_MAC_Addr(void *, tBtampTLVAMP_Assoc_MAC_Addr*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -243,9 +243,9 @@ v_U32_t btampPackTlvAMP_Assoc_MAC_Addr(void *, tBtampTLVAMP_Assoc_MAC_Addr*, v_U
 v_U32_t btampGetPackedTlvAMP_Assoc_MAC_Addr(void *, tBtampTLVAMP_Assoc_MAC_Addr*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4 (0x0004)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sBtampTLVAMP_Assoc_PAL_Capabilities {
     v_U8_t       present;
     v_U32_t      pal_capabilities;
@@ -253,14 +253,14 @@ typedef struct sBtampTLVAMP_Assoc_PAL_Capabilities {
 
 #define BTAMP_TLV_AMP_ASSOC_PAL_CAPABILITIES ( 4 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_AMP_ASSOC_PAL_CAPABILITIES_MIN_LEN ( 6 )
 
 #define BTAMP_TLV_AMP_ASSOC_PAL_CAPABILITIES_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvAMP_Assoc_PAL_Capabilities(void *, v_U8_t*,v_U16_t, tBtampTLVAMP_Assoc_PAL_Capabilities*);
 
 v_U32_t btampPackTlvAMP_Assoc_PAL_Capabilities(void *, tBtampTLVAMP_Assoc_PAL_Capabilities*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -268,9 +268,9 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Capabilities(void *, tBtampTLVAMP_Assoc_PAL_Ca
 v_U32_t btampGetPackedTlvAMP_Assoc_PAL_Capabilities(void *, tBtampTLVAMP_Assoc_PAL_Capabilities*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5 (0x0005)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sBtampTLVAMP_Assoc_PAL_Version {
     v_U8_t       present;
     v_U8_t       pal_version;
@@ -280,14 +280,14 @@ typedef struct sBtampTLVAMP_Assoc_PAL_Version {
 
 #define BTAMP_TLV_AMP_ASSOC_PAL_VERSION ( 5 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_AMP_ASSOC_PAL_VERSION_MIN_LEN ( 7 )
 
 #define BTAMP_TLV_AMP_ASSOC_PAL_VERSION_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvAMP_Assoc_PAL_Version(void *, v_U8_t*,v_U16_t, tBtampTLVAMP_Assoc_PAL_Version*);
 
 v_U32_t btampPackTlvAMP_Assoc_PAL_Version(void *, tBtampTLVAMP_Assoc_PAL_Version*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -295,9 +295,9 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Version(void *, tBtampTLVAMP_Assoc_PAL_Version
 v_U32_t btampGetPackedTlvAMP_Assoc_PAL_Version(void *, tBtampTLVAMP_Assoc_PAL_Version*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 2 (0x0002)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sBtampTLVAMP_Assoc_Preferred_Channel_List {
     v_U8_t       present;
     v_U8_t       country[3];
@@ -307,14 +307,14 @@ typedef struct sBtampTLVAMP_Assoc_Preferred_Channel_List {
 
 #define BTAMP_TLV_AMP_ASSOC_PREFERRED_CHANNEL_LIST ( 2 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_AMP_ASSOC_PREFERRED_CHANNEL_LIST_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_AMP_ASSOC_PREFERRED_CHANNEL_LIST_MAX_LEN ( 20 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvAMP_Assoc_Preferred_Channel_List(void *, v_U8_t*,v_U16_t, tBtampTLVAMP_Assoc_Preferred_Channel_List*);
 
 v_U32_t btampPackTlvAMP_Assoc_Preferred_Channel_List(void *, tBtampTLVAMP_Assoc_Preferred_Channel_List*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -322,9 +322,9 @@ v_U32_t btampPackTlvAMP_Assoc_Preferred_Channel_List(void *, tBtampTLVAMP_Assoc_
 v_U32_t btampGetPackedTlvAMP_Assoc_Preferred_Channel_List(void *, tBtampTLVAMP_Assoc_Preferred_Channel_List*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 6 (0x0006)
+}; /*                 */
+#endif /*     */
+//              
 typedef struct sBtampTLVFlow_Spec {
     v_U8_t       present;
     v_U8_t       flow_spec_id;
@@ -337,14 +337,14 @@ typedef struct sBtampTLVFlow_Spec {
 
 #define BTAMP_TLV_FLOW_SPEC ( 6 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_FLOW_SPEC_MIN_LEN ( 18 )
 
 #define BTAMP_TLV_FLOW_SPEC_MAX_LEN ( 18 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvFlow_Spec(void *, v_U8_t*,v_U16_t, tBtampTLVFlow_Spec*);
 
 v_U32_t btampPackTlvFlow_Spec(void *, tBtampTLVFlow_Spec*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -352,9 +352,9 @@ v_U32_t btampPackTlvFlow_Spec(void *, tBtampTLVFlow_Spec*, v_U8_t*, v_U32_t, v_U
 v_U32_t btampGetPackedTlvFlow_Spec(void *, tBtampTLVFlow_Spec*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1081 (0x0439)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Accept_Logical_Link_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -364,14 +364,14 @@ typedef struct sBtampTLVHCI_Accept_Logical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_ACCEPT_LOGICAL_LINK_CMD ( 1081 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_ACCEPT_LOGICAL_LINK_CMD_MIN_LEN ( 39 )
 
 #define BTAMP_TLV_HCI_ACCEPT_LOGICAL_LINK_CMD_MAX_LEN ( 39 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Accept_Logical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Accept_Logical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Accept_Logical_Link_Cmd(void *, tBtampTLVHCI_Accept_Logical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -379,9 +379,9 @@ v_U32_t btampPackTlvHCI_Accept_Logical_Link_Cmd(void *, tBtampTLVHCI_Accept_Logi
 v_U32_t btampGetPackedTlvHCI_Accept_Logical_Link_Cmd(void *, tBtampTLVHCI_Accept_Logical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1078 (0x0436)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Accept_Physical_Link_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -392,14 +392,14 @@ typedef struct sBtampTLVHCI_Accept_Physical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_ACCEPT_PHYSICAL_LINK_CMD ( 1078 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_ACCEPT_PHYSICAL_LINK_CMD_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_ACCEPT_PHYSICAL_LINK_CMD_MAX_LEN ( 37 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Accept_Physical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Accept_Physical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Accept_Physical_Link_Cmd(void *, tBtampTLVHCI_Accept_Physical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -407,9 +407,9 @@ v_U32_t btampPackTlvHCI_Accept_Physical_Link_Cmd(void *, tBtampTLVHCI_Accept_Phy
 v_U32_t btampGetPackedTlvHCI_Accept_Physical_Link_Cmd(void *, tBtampTLVHCI_Accept_Physical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 65 (0x0041)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Channel_Selected_Event {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -417,14 +417,14 @@ typedef struct sBtampTLVHCI_Channel_Selected_Event {
 
 #define BTAMP_TLV_HCI_CHANNEL_SELECTED_EVENT ( 65 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_CHANNEL_SELECTED_EVENT_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_CHANNEL_SELECTED_EVENT_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Channel_Selected_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Channel_Selected_Event*);
 
 v_U32_t btampPackTlvHCI_Channel_Selected_Event(void *, tBtampTLVHCI_Channel_Selected_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -432,9 +432,9 @@ v_U32_t btampPackTlvHCI_Channel_Selected_Event(void *, tBtampTLVHCI_Channel_Sele
 v_U32_t btampGetPackedTlvHCI_Channel_Selected_Event(void *, tBtampTLVHCI_Channel_Selected_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 14 (0x000e)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Command_Complete_Event {
     v_U8_t       present;
     v_U8_t       num_hci_command_packets;
@@ -444,88 +444,88 @@ typedef struct sBtampTLVHCI_Command_Complete_Event {
         struct
         {
             v_U8_t status;
-        } Reset; /* command_opcode = c03 */
+        } Reset; /*                      */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
-        } Flush; /* command_opcode = c08 */
+        } Flush; /*                      */
         struct
         {
             v_U8_t status;
             v_U8_t phy_link_handle;
             v_U8_t tx_flow_spec_id;
-        } Logical_Link_Cancel; /* command_opcode = 43b */
+        } Logical_Link_Cancel; /*                      */
         struct
         {
             v_U8_t status;
-        } Set_Event_Mask; /* command_opcode = c05 */
+        } Set_Event_Mask; /*                      */
         struct
         {
             v_U8_t status;
             v_U16_t connection_accept_timeout;
-        } Read_Connection_Accept_TO; /* command_opcode = c15 */
+        } Read_Connection_Accept_TO; /*                      */
         struct
         {
             v_U8_t status;
-        } Write_Connection_Accept_TO; /* command_opcode = c16 */
+        } Write_Connection_Accept_TO; /*                      */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
             v_U16_t link_supervision_timeout;
-        } Read_Link_Supervision_TO; /* command_opcode = c36 */
+        } Read_Link_Supervision_TO; /*                      */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
-        } Write_Link_Supervision_TO; /* command_opcode = c37 */
+        } Write_Link_Supervision_TO; /*                      */
         struct
         {
             v_U8_t status;
             v_U16_t logical_link_accept_timeout;
-        } Read_Logical_Link_Accept_TO; /* command_opcode = c61 */
+        } Read_Logical_Link_Accept_TO; /*                      */
         struct
         {
             v_U8_t status;
-        } Write_Logical_Link_Accept_TO; /* command_opcode = c62 */
+        } Write_Logical_Link_Accept_TO; /*                      */
         struct
         {
             v_U8_t status;
-        } Set_Event_Mask_Page_2; /* command_opcode = c63 */
+        } Set_Event_Mask_Page_2; /*                      */
         struct
         {
             v_U8_t status;
             v_U8_t loc_domain_aware;
             v_U8_t loc_domain[3];
             v_U8_t loc_options;
-        } Read_Location_Data; /* command_opcode = 3172 */
+        } Read_Location_Data; /*                       */
         struct
         {
             v_U8_t status;
-        } Write_Location_Data; /* command_opcode = 3173 */
+        } Write_Location_Data; /*                       */
         struct
         {
             v_U8_t status;
             v_U8_t flow_control_mode;
-        } Read_Flow_Control_Mode; /* command_opcode = 3174 */
+        } Read_Flow_Control_Mode; /*                       */
         struct
         {
             v_U8_t status;
-        } Write_Flow_Control_Mode; /* command_opcode = 3175 */
+        } Write_Flow_Control_Mode; /*                       */
         struct
         {
             v_U8_t status;
             v_U32_t best_effort_flush_timeout;
-        } Read_BE_Flush_TO; /* command_opcode = 3177 */
+        } Read_BE_Flush_TO; /*                       */
         struct
         {
             v_U8_t status;
-        } Write_BE_Flush_TO; /* command_opcode = 3178 */
+        } Write_BE_Flush_TO; /*                       */
         struct
         {
             v_U8_t status;
-        } Set_Short_Range_Mode; /* command_opcode = 3179 */
+        } Set_Short_Range_Mode; /*                       */
         struct
         {
             v_U8_t status;
@@ -534,12 +534,12 @@ typedef struct sBtampTLVHCI_Command_Complete_Event {
             v_U8_t HC_PAL_Version;
             v_U16_t HC_Manufac_Name;
             v_U16_t HC_PAL_Sub_Version;
-        } Read_Local_Version_Info; /* command_opcode = 4097 */
+        } Read_Local_Version_Info; /*                       */
         struct
         {
             v_U8_t status;
             v_U8_t HC_Support_Cmds[64];
-        } Read_Local_Supported_Cmds; /* command_opcode = 4098 */
+        } Read_Local_Supported_Cmds; /*                       */
         struct
         {
             v_U8_t status;
@@ -547,38 +547,38 @@ typedef struct sBtampTLVHCI_Command_Complete_Event {
             v_U8_t HC_SCO_Packet_Length;
             v_U16_t HC_Total_Num_ACL_Packets;
             v_U16_t HC_Total_Num_SCO_Packets;
-        } Read_Buffer_Size; /* command_opcode = 4101 */
+        } Read_Buffer_Size; /*                       */
         struct
         {
             v_U8_t status;
             v_U16_t HC_Max_ACL_Data_Packet_Length;
             v_U16_t HC_Data_Block_Length;
             v_U16_t HC_Total_Num_Data_Blocks;
-        } Read_Data_Block_Size; /* command_opcode = 4106 */
+        } Read_Data_Block_Size; /*                       */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
             v_U16_t failed_contact_counter;
-        } Read_Failed_Contact_Counter; /* command_opcode = 5121 */
+        } Read_Failed_Contact_Counter; /*                       */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
-        } Reset_Failed_Contact_Counter; /* command_opcode = 5122 */
+        } Reset_Failed_Contact_Counter; /*                       */
         struct
         {
             v_U8_t status;
             v_U16_t log_link_handle;
             v_U8_t link_quality;
-        } Read_Link_Quality; /* command_opcode = 5123 */
+        } Read_Link_Quality; /*                       */
         struct
         {
             v_U8_t status;
-            /* 2 bytes handle to comply with spec, (lower byte valid) */
+            /*                                                        */
             v_U16_t phy_link_handle;
             v_S7_t rssi;
-        } Read_RSSI; /* command_opcode = 5125 */
+        } Read_RSSI; /*                       */
         struct
         {
             v_U8_t status;
@@ -592,49 +592,49 @@ typedef struct sBtampTLVHCI_Command_Complete_Event {
             v_U16_t HC_AMP_Assoc_Length;
             v_U32_t HC_Max_Flush_Timeout;
             v_U32_t HC_BE_Flush_Timeout;
-        } Read_Local_AMP_Info; /* command_opcode = 5129 */
+        } Read_Local_AMP_Info; /*                       */
         struct
         {
             v_U8_t status;
             v_U8_t phy_link_handle;
             v_U16_t remaining_length;
             v_U8_t AMP_assoc_fragment[248];
-        } Read_Read_Local_AMP_Assoc; /* command_opcode = 5130 */
+        } Read_Read_Local_AMP_Assoc; /*                       */
         struct
         {
             v_U8_t status;
             v_U8_t phy_link_handle;
-        } Write_Remote_AMP_Assoc; /* command_opcode = 5131 */
+        } Write_Remote_AMP_Assoc; /*                       */
         struct
         {
             v_U8_t status;
             v_U8_t loopback_mode;
-        } Read_Loopback_Mode; /* command_opcode = 6145 */
+        } Read_Loopback_Mode; /*                       */
         struct
         {
             v_U8_t status;
-        } Write_Loopback_Mode; /* command_opcode = 6146 */
+        } Write_Loopback_Mode; /*                       */
         struct
         {
             v_U8_t status;
-        } Vendor_Specific_Cmd_0; /* command_opcode = fc00 */
+        } Vendor_Specific_Cmd_0; /*                       */
         struct
         {
             v_U8_t status;
-        } Vendor_Specific_Cmd_1; /* command_opcode = fc01 */
+        } Vendor_Specific_Cmd_1; /*                       */
     } cc_event;
 } tBtampTLVHCI_Command_Complete_Event;
 
 #define BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT ( 14 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT_MIN_LEN ( 6 )
 
 #define BTAMP_TLV_HCI_COMMAND_COMPLETE_EVENT_MAX_LEN ( 257 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Command_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Command_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Command_Complete_Event(void *, tBtampTLVHCI_Command_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -642,9 +642,9 @@ v_U32_t btampPackTlvHCI_Command_Complete_Event(void *, tBtampTLVHCI_Command_Comp
 v_U32_t btampGetPackedTlvHCI_Command_Complete_Event(void *, tBtampTLVHCI_Command_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 15 (0x000f)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Command_Status_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -654,14 +654,14 @@ typedef struct sBtampTLVHCI_Command_Status_Event {
 
 #define BTAMP_TLV_HCI_COMMAND_STATUS_EVENT ( 15 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_COMMAND_STATUS_EVENT_MIN_LEN ( 6 )
 
 #define BTAMP_TLV_HCI_COMMAND_STATUS_EVENT_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Command_Status_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Command_Status_Event*);
 
 v_U32_t btampPackTlvHCI_Command_Status_Event(void *, tBtampTLVHCI_Command_Status_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -669,9 +669,9 @@ v_U32_t btampPackTlvHCI_Command_Status_Event(void *, tBtampTLVHCI_Command_Status
 v_U32_t btampGetPackedTlvHCI_Command_Status_Event(void *, tBtampTLVHCI_Command_Status_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1080 (0x0438)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Create_Logical_Link_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -681,14 +681,14 @@ typedef struct sBtampTLVHCI_Create_Logical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_CREATE_LOGICAL_LINK_CMD ( 1080 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_CREATE_LOGICAL_LINK_CMD_MIN_LEN ( 39 )
 
 #define BTAMP_TLV_HCI_CREATE_LOGICAL_LINK_CMD_MAX_LEN ( 39 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Create_Logical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Create_Logical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Create_Logical_Link_Cmd(void *, tBtampTLVHCI_Create_Logical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -696,9 +696,9 @@ v_U32_t btampPackTlvHCI_Create_Logical_Link_Cmd(void *, tBtampTLVHCI_Create_Logi
 v_U32_t btampGetPackedTlvHCI_Create_Logical_Link_Cmd(void *, tBtampTLVHCI_Create_Logical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1077 (0x0435)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Create_Physical_Link_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -709,14 +709,14 @@ typedef struct sBtampTLVHCI_Create_Physical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_CREATE_PHYSICAL_LINK_CMD ( 1077 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_CREATE_PHYSICAL_LINK_CMD_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_CREATE_PHYSICAL_LINK_CMD_MAX_LEN ( 37 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Create_Physical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Create_Physical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Create_Physical_Link_Cmd(void *, tBtampTLVHCI_Create_Physical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -724,9 +724,9 @@ v_U32_t btampPackTlvHCI_Create_Physical_Link_Cmd(void *, tBtampTLVHCI_Create_Phy
 v_U32_t btampGetPackedTlvHCI_Create_Physical_Link_Cmd(void *, tBtampTLVHCI_Create_Physical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 26 (0x001a)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Data_Buffer_Overflow_Event {
     v_U8_t       present;
     v_U8_t       link_type;
@@ -734,14 +734,14 @@ typedef struct sBtampTLVHCI_Data_Buffer_Overflow_Event {
 
 #define BTAMP_TLV_HCI_DATA_BUFFER_OVERFLOW_EVENT ( 26 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_DATA_BUFFER_OVERFLOW_EVENT_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_DATA_BUFFER_OVERFLOW_EVENT_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Data_Buffer_Overflow_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Data_Buffer_Overflow_Event*);
 
 v_U32_t btampPackTlvHCI_Data_Buffer_Overflow_Event(void *, tBtampTLVHCI_Data_Buffer_Overflow_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -749,9 +749,9 @@ v_U32_t btampPackTlvHCI_Data_Buffer_Overflow_Event(void *, tBtampTLVHCI_Data_Buf
 v_U32_t btampGetPackedTlvHCI_Data_Buffer_Overflow_Event(void *, tBtampTLVHCI_Data_Buffer_Overflow_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1082 (0x043a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Disconnect_Logical_Link_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -759,14 +759,14 @@ typedef struct sBtampTLVHCI_Disconnect_Logical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_CMD ( 1082 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Disconnect_Logical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Disconnect_Logical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Cmd(void *, tBtampTLVHCI_Disconnect_Logical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -774,9 +774,9 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Cmd(void *, tBtampTLVHCI_Disconn
 v_U32_t btampGetPackedTlvHCI_Disconnect_Logical_Link_Cmd(void *, tBtampTLVHCI_Disconnect_Logical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 70 (0x0046)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Disconnect_Logical_Link_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -786,14 +786,14 @@ typedef struct sBtampTLVHCI_Disconnect_Logical_Link_Complete_Event {
 
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_COMPLETE_EVENT ( 70 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_COMPLETE_EVENT_MIN_LEN ( 6 )
 
 #define BTAMP_TLV_HCI_DISCONNECT_LOGICAL_LINK_COMPLETE_EVENT_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Complete_Event(void *, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -801,9 +801,9 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Complete_Event(void *, tBtampTLV
 v_U32_t btampGetPackedTlvHCI_Disconnect_Logical_Link_Complete_Event(void *, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1079 (0x0437)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Disconnect_Physical_Link_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -812,14 +812,14 @@ typedef struct sBtampTLVHCI_Disconnect_Physical_Link_Cmd {
 
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_CMD ( 1079 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Disconnect_Physical_Link_Cmd*);
 
 v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Cmd(void *, tBtampTLVHCI_Disconnect_Physical_Link_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -827,9 +827,9 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Cmd(void *, tBtampTLVHCI_Discon
 v_U32_t btampGetPackedTlvHCI_Disconnect_Physical_Link_Cmd(void *, tBtampTLVHCI_Disconnect_Physical_Link_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 66 (0x0042)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Disconnect_Physical_Link_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -839,14 +839,14 @@ typedef struct sBtampTLVHCI_Disconnect_Physical_Link_Complete_Event {
 
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_COMPLETE_EVENT ( 66 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_COMPLETE_EVENT_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_DISCONNECT_PHYSICAL_LINK_COMPLETE_EVENT_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Complete_Event(void *, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -854,9 +854,9 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Complete_Event(void *, tBtampTL
 v_U32_t btampGetPackedTlvHCI_Disconnect_Physical_Link_Complete_Event(void *, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1084 (0x043c)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Flow_Spec_Modify_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -867,14 +867,14 @@ typedef struct sBtampTLVHCI_Flow_Spec_Modify_Cmd {
 
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_CMD ( 1084 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_CMD_MIN_LEN ( 41 )
 
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_CMD_MAX_LEN ( 41 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Flow_Spec_Modify_Cmd*);
 
 v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Cmd(void *, tBtampTLVHCI_Flow_Spec_Modify_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -882,9 +882,9 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Cmd(void *, tBtampTLVHCI_Flow_Spec_Modi
 v_U32_t btampGetPackedTlvHCI_Flow_Spec_Modify_Cmd(void *, tBtampTLVHCI_Flow_Spec_Modify_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 71 (0x0047)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Flow_Spec_Modify_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -893,14 +893,14 @@ typedef struct sBtampTLVHCI_Flow_Spec_Modify_Complete_Event {
 
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_COMPLETE_EVENT ( 71 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_COMPLETE_EVENT_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_FLOW_SPEC_MODIFY_COMPLETE_EVENT_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Complete_Event(void *, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -908,9 +908,9 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Complete_Event(void *, tBtampTLVHCI_Flo
 v_U32_t btampGetPackedTlvHCI_Flow_Spec_Modify_Complete_Event(void *, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3080 (0x0c08)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Flush_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -918,14 +918,14 @@ typedef struct sBtampTLVHCI_Flush_Cmd {
 
 #define BTAMP_TLV_HCI_FLUSH_CMD ( 3080 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_FLUSH_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_FLUSH_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Flush_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Flush_Cmd*);
 
 v_U32_t btampPackTlvHCI_Flush_Cmd(void *, tBtampTLVHCI_Flush_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -933,9 +933,9 @@ v_U32_t btampPackTlvHCI_Flush_Cmd(void *, tBtampTLVHCI_Flush_Cmd*, v_U8_t*, v_U3
 v_U32_t btampGetPackedTlvHCI_Flush_Cmd(void *, tBtampTLVHCI_Flush_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 17 (0x0011)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Flush_Occurred_Event {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -943,14 +943,14 @@ typedef struct sBtampTLVHCI_Flush_Occurred_Event {
 
 #define BTAMP_TLV_HCI_FLUSH_OCCURRED_EVENT ( 17 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_FLUSH_OCCURRED_EVENT_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_FLUSH_OCCURRED_EVENT_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Flush_Occurred_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Flush_Occurred_Event*);
 
 v_U32_t btampPackTlvHCI_Flush_Occurred_Event(void *, tBtampTLVHCI_Flush_Occurred_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -958,9 +958,9 @@ v_U32_t btampPackTlvHCI_Flush_Occurred_Event(void *, tBtampTLVHCI_Flush_Occurred
 v_U32_t btampGetPackedTlvHCI_Flush_Occurred_Event(void *, tBtampTLVHCI_Flush_Occurred_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3167 (0x0C5F)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Enhanced_Flush_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -969,14 +969,14 @@ typedef struct sBtampTLVHCI_Enhanced_Flush_Cmd {
 
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_CMD ( 3167 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_CMD_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_CMD_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Enhanced_Flush_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Enhanced_Flush_Cmd*);
 
 v_U32_t btampPackTlvHCI_Enhanced_Flush_Cmd(void *, tBtampTLVHCI_Enhanced_Flush_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -984,9 +984,9 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Cmd(void *, tBtampTLVHCI_Enhanced_Flush_C
 v_U32_t btampGetPackedTlvHCI_Enhanced_Flush_Cmd(void *, tBtampTLVHCI_Enhanced_Flush_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 57 (0x0039)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Enhanced_Flush_Complete_Event {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -994,14 +994,14 @@ typedef struct sBtampTLVHCI_Enhanced_Flush_Complete_Event {
 
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_COMPLETE_EVENT ( 57 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_COMPLETE_EVENT_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_ENHANCED_FLUSH_COMPLETE_EVENT_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Enhanced_Flush_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Enhanced_Flush_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Enhanced_Flush_Complete_Event(void *, tBtampTLVHCI_Enhanced_Flush_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1009,10 +1009,10 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Complete_Event(void *, tBtampTLVHCI_Enhan
 v_U32_t btampGetPackedTlvHCI_Enhanced_Flush_Complete_Event(void *, tBtampTLVHCI_Enhanced_Flush_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
+}; /*                 */
+#endif /*     */
 
-// ID 62 (0x003e)
+//               
 typedef struct sBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event {
     v_U8_t       present;
     v_U8_t       bd_addr[6];
@@ -1022,14 +1022,14 @@ typedef struct sBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event {
 
 #define BTAMP_TLV_HCI_GENERIC_AMP_LINK_KEY_NOTIFICATION_EVENT ( 62 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_GENERIC_AMP_LINK_KEY_NOTIFICATION_EVENT_MIN_LEN ( 41 )
 
 #define BTAMP_TLV_HCI_GENERIC_AMP_LINK_KEY_NOTIFICATION_EVENT_MAX_LEN ( 41 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event*);
 
 v_U32_t btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void *, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1037,9 +1037,9 @@ v_U32_t btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void *, tBtampTL
 v_U32_t btampGetPackedTlvHCI_Generic_AMP_Link_Key_Notification_Event(void *, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 16 (0x0010)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Hardware_Error_Event {
     v_U8_t       present;
     v_U8_t       hardware_code;
@@ -1047,14 +1047,14 @@ typedef struct sBtampTLVHCI_Hardware_Error_Event {
 
 #define BTAMP_TLV_HCI_HARDWARE_ERROR_EVENT ( 16 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_HARDWARE_ERROR_EVENT_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_HARDWARE_ERROR_EVENT_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Hardware_Error_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Hardware_Error_Event*);
 
 v_U32_t btampPackTlvHCI_Hardware_Error_Event(void *, tBtampTLVHCI_Hardware_Error_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1062,9 +1062,9 @@ v_U32_t btampPackTlvHCI_Hardware_Error_Event(void *, tBtampTLVHCI_Hardware_Error
 v_U32_t btampGetPackedTlvHCI_Hardware_Error_Event(void *, tBtampTLVHCI_Hardware_Error_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 1083 (0x043b)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Logical_Link_Cancel_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1073,14 +1073,14 @@ typedef struct sBtampTLVHCI_Logical_Link_Cancel_Cmd {
 
 #define BTAMP_TLV_HCI_LOGICAL_LINK_CANCEL_CMD ( 1083 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_LOGICAL_LINK_CANCEL_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_LOGICAL_LINK_CANCEL_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Logical_Link_Cancel_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Logical_Link_Cancel_Cmd*);
 
 v_U32_t btampPackTlvHCI_Logical_Link_Cancel_Cmd(void *, tBtampTLVHCI_Logical_Link_Cancel_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1088,9 +1088,9 @@ v_U32_t btampPackTlvHCI_Logical_Link_Cancel_Cmd(void *, tBtampTLVHCI_Logical_Lin
 v_U32_t btampGetPackedTlvHCI_Logical_Link_Cancel_Cmd(void *, tBtampTLVHCI_Logical_Link_Cancel_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 69 (0x0045)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Logical_Link_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -1101,14 +1101,14 @@ typedef struct sBtampTLVHCI_Logical_Link_Complete_Event {
 
 #define BTAMP_TLV_HCI_LOGICAL_LINK_COMPLETE_EVENT ( 69 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_LOGICAL_LINK_COMPLETE_EVENT_MIN_LEN ( 7 )
 
 #define BTAMP_TLV_HCI_LOGICAL_LINK_COMPLETE_EVENT_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Logical_Link_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Logical_Link_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Logical_Link_Complete_Event(void *, tBtampTLVHCI_Logical_Link_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1116,9 +1116,9 @@ v_U32_t btampPackTlvHCI_Logical_Link_Complete_Event(void *, tBtampTLVHCI_Logical
 v_U32_t btampGetPackedTlvHCI_Logical_Link_Complete_Event(void *, tBtampTLVHCI_Logical_Link_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 25 (0x0019)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Loopback_Command_Event {
     v_U8_t       present;
     v_U8_t       hci_command_packet[64];
@@ -1126,14 +1126,14 @@ typedef struct sBtampTLVHCI_Loopback_Command_Event {
 
 #define BTAMP_TLV_HCI_LOOPBACK_COMMAND_EVENT ( 25 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_LOOPBACK_COMMAND_EVENT_MIN_LEN ( 66 )
 
 #define BTAMP_TLV_HCI_LOOPBACK_COMMAND_EVENT_MAX_LEN ( 66 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Loopback_Command_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Loopback_Command_Event*);
 
 v_U32_t btampPackTlvHCI_Loopback_Command_Event(void *, tBtampTLVHCI_Loopback_Command_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1141,9 +1141,9 @@ v_U32_t btampPackTlvHCI_Loopback_Command_Event(void *, tBtampTLVHCI_Loopback_Com
 v_U32_t btampGetPackedTlvHCI_Loopback_Command_Event(void *, tBtampTLVHCI_Loopback_Command_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 64 (0x0040)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Physical_Link_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -1153,14 +1153,14 @@ typedef struct sBtampTLVHCI_Physical_Link_Complete_Event {
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_COMPLETE_EVENT ( 64 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_COMPLETE_EVENT_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_COMPLETE_EVENT_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Physical_Link_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Physical_Link_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Physical_Link_Complete_Event(void *, tBtampTLVHCI_Physical_Link_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1168,9 +1168,9 @@ v_U32_t btampPackTlvHCI_Physical_Link_Complete_Event(void *, tBtampTLVHCI_Physic
 v_U32_t btampGetPackedTlvHCI_Physical_Link_Complete_Event(void *, tBtampTLVHCI_Physical_Link_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 67 (0x0043)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Physical_Link_Loss_Warning_Event {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1179,14 +1179,14 @@ typedef struct sBtampTLVHCI_Physical_Link_Loss_Warning_Event {
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_LOSS_WARNING_EVENT ( 67 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_LOSS_WARNING_EVENT_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_LOSS_WARNING_EVENT_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Physical_Link_Loss_Warning_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Physical_Link_Loss_Warning_Event*);
 
 v_U32_t btampPackTlvHCI_Physical_Link_Loss_Warning_Event(void *, tBtampTLVHCI_Physical_Link_Loss_Warning_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1194,9 +1194,9 @@ v_U32_t btampPackTlvHCI_Physical_Link_Loss_Warning_Event(void *, tBtampTLVHCI_Ph
 v_U32_t btampGetPackedTlvHCI_Physical_Link_Loss_Warning_Event(void *, tBtampTLVHCI_Physical_Link_Loss_Warning_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 68 (0x0044)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Physical_Link_Recovery_Event {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1204,14 +1204,14 @@ typedef struct sBtampTLVHCI_Physical_Link_Recovery_Event {
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_RECOVERY_EVENT ( 68 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_RECOVERY_EVENT_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_PHYSICAL_LINK_RECOVERY_EVENT_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Physical_Link_Recovery_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Physical_Link_Recovery_Event*);
 
 v_U32_t btampPackTlvHCI_Physical_Link_Recovery_Event(void *, tBtampTLVHCI_Physical_Link_Recovery_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1219,9 +1219,9 @@ v_U32_t btampPackTlvHCI_Physical_Link_Recovery_Event(void *, tBtampTLVHCI_Physic
 v_U32_t btampGetPackedTlvHCI_Physical_Link_Recovery_Event(void *, tBtampTLVHCI_Physical_Link_Recovery_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 30 (0x001e)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Qos_Violation_Event {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1229,14 +1229,14 @@ typedef struct sBtampTLVHCI_Qos_Violation_Event {
 
 #define BTAMP_TLV_HCI_QOS_VIOLATION_EVENT ( 30 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_QOS_VIOLATION_EVENT_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_QOS_VIOLATION_EVENT_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Qos_Violation_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Qos_Violation_Event*);
 
 v_U32_t btampPackTlvHCI_Qos_Violation_Event(void *, tBtampTLVHCI_Qos_Violation_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1244,9 +1244,9 @@ v_U32_t btampPackTlvHCI_Qos_Violation_Event(void *, tBtampTLVHCI_Qos_Violation_E
 v_U32_t btampGetPackedTlvHCI_Qos_Violation_Event(void *, tBtampTLVHCI_Qos_Violation_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3177 (0x0c69)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1254,14 +1254,14 @@ typedef struct sBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_READ_BEST_EFFORT_FLUSH_TIMEOUT_CMD ( 3177 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_BEST_EFFORT_FLUSH_TIMEOUT_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_READ_BEST_EFFORT_FLUSH_TIMEOUT_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1269,23 +1269,23 @@ v_U32_t btampPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI_
 v_U32_t btampGetPackedTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4101 (0x1005)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Buffer_Size_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Buffer_Size_Cmd;
 
 #define BTAMP_TLV_HCI_READ_BUFFER_SIZE_CMD ( 4101 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_BUFFER_SIZE_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_BUFFER_SIZE_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Buffer_Size_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Buffer_Size_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Buffer_Size_Cmd(void *, tBtampTLVHCI_Read_Buffer_Size_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1293,23 +1293,23 @@ v_U32_t btampPackTlvHCI_Read_Buffer_Size_Cmd(void *, tBtampTLVHCI_Read_Buffer_Si
 v_U32_t btampGetPackedTlvHCI_Read_Buffer_Size_Cmd(void *, tBtampTLVHCI_Read_Buffer_Size_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3093 (0x0c15)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd;
 
 #define BTAMP_TLV_HCI_READ_CONNECTION_ACCEPT_TIMEOUT_CMD ( 3093 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_CONNECTION_ACCEPT_TIMEOUT_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_CONNECTION_ACCEPT_TIMEOUT_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1317,23 +1317,23 @@ v_U32_t btampPackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI_
 v_U32_t btampGetPackedTlvHCI_Read_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4106 (0x100a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Data_Block_Size_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Data_Block_Size_Cmd;
 
 #define BTAMP_TLV_HCI_READ_DATA_BLOCK_SIZE_CMD ( 4106 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_DATA_BLOCK_SIZE_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_DATA_BLOCK_SIZE_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Data_Block_Size_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Data_Block_Size_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Data_Block_Size_Cmd(void *, tBtampTLVHCI_Read_Data_Block_Size_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1341,9 +1341,9 @@ v_U32_t btampPackTlvHCI_Read_Data_Block_Size_Cmd(void *, tBtampTLVHCI_Read_Data_
 v_U32_t btampGetPackedTlvHCI_Read_Data_Block_Size_Cmd(void *, tBtampTLVHCI_Read_Data_Block_Size_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5121 (0x1401)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Failed_Contact_Counter_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1351,14 +1351,14 @@ typedef struct sBtampTLVHCI_Read_Failed_Contact_Counter_Cmd {
 
 #define BTAMP_TLV_HCI_READ_FAILED_CONTACT_COUNTER_CMD ( 5121 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_FAILED_CONTACT_COUNTER_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_READ_FAILED_CONTACT_COUNTER_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Failed_Contact_Counter_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1366,23 +1366,23 @@ v_U32_t btampPackTlvHCI_Read_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Rea
 v_U32_t btampGetPackedTlvHCI_Read_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3174 (0x0c66)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Flow_Control_Mode_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Flow_Control_Mode_Cmd;
 
 #define BTAMP_TLV_HCI_READ_FLOW_CONTROL_MODE_CMD ( 3174 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_FLOW_CONTROL_MODE_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_FLOW_CONTROL_MODE_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Flow_Control_Mode_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1390,9 +1390,9 @@ v_U32_t btampPackTlvHCI_Read_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Read_Flo
 v_U32_t btampGetPackedTlvHCI_Read_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5123 (0x1403)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Link_Quality_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1400,14 +1400,14 @@ typedef struct sBtampTLVHCI_Read_Link_Quality_Cmd {
 
 #define BTAMP_TLV_HCI_READ_LINK_QUALITY_CMD ( 5123 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LINK_QUALITY_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_READ_LINK_QUALITY_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Link_Quality_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Link_Quality_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Link_Quality_Cmd(void *, tBtampTLVHCI_Read_Link_Quality_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1415,9 +1415,9 @@ v_U32_t btampPackTlvHCI_Read_Link_Quality_Cmd(void *, tBtampTLVHCI_Read_Link_Qua
 v_U32_t btampGetPackedTlvHCI_Read_Link_Quality_Cmd(void *, tBtampTLVHCI_Read_Link_Quality_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3126 (0x0c36)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1425,14 +1425,14 @@ typedef struct sBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_READ_LINK_SUPERVISION_TIMEOUT_CMD ( 3126 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LINK_SUPERVISION_TIMEOUT_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_READ_LINK_SUPERVISION_TIMEOUT_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1440,9 +1440,9 @@ v_U32_t btampPackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_R
 v_U32_t btampGetPackedTlvHCI_Read_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5130 (0x140a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Local_AMP_Assoc_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1452,14 +1452,14 @@ typedef struct sBtampTLVHCI_Read_Local_AMP_Assoc_Cmd {
 
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_ASSOC_CMD ( 5130 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_ASSOC_CMD_MIN_LEN ( 7 )
 
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_ASSOC_CMD_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Local_AMP_Assoc_Cmd(void *, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1467,23 +1467,23 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Assoc_Cmd(void *, tBtampTLVHCI_Read_Local
 v_U32_t btampGetPackedTlvHCI_Read_Local_AMP_Assoc_Cmd(void *, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5129 (0x1409)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Local_AMP_Information_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Local_AMP_Information_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_INFORMATION_CMD ( 5129 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_INFORMATION_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOCAL_AMP_INFORMATION_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Information_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Local_AMP_Information_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Local_AMP_Information_Cmd(void *, tBtampTLVHCI_Read_Local_AMP_Information_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1491,23 +1491,23 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Information_Cmd(void *, tBtampTLVHCI_Read
 v_U32_t btampGetPackedTlvHCI_Read_Local_AMP_Information_Cmd(void *, tBtampTLVHCI_Read_Local_AMP_Information_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4098 (0x1002)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Local_Supported_Cmds_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOCAL_SUPPORTED_CMDS_CMD ( 4098 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOCAL_SUPPORTED_CMDS_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOCAL_SUPPORTED_CMDS_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Local_Supported_Cmds_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Local_Supported_Cmds_Cmd(void *, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1515,23 +1515,23 @@ v_U32_t btampPackTlvHCI_Read_Local_Supported_Cmds_Cmd(void *, tBtampTLVHCI_Read_
 v_U32_t btampGetPackedTlvHCI_Read_Local_Supported_Cmds_Cmd(void *, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 4097 (0x1001)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Local_Version_Info_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Local_Version_Info_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOCAL_VERSION_INFO_CMD ( 4097 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOCAL_VERSION_INFO_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOCAL_VERSION_INFO_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Local_Version_Info_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Local_Version_Info_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Local_Version_Info_Cmd(void *, tBtampTLVHCI_Read_Local_Version_Info_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1539,23 +1539,23 @@ v_U32_t btampPackTlvHCI_Read_Local_Version_Info_Cmd(void *, tBtampTLVHCI_Read_Lo
 v_U32_t btampGetPackedTlvHCI_Read_Local_Version_Info_Cmd(void *, tBtampTLVHCI_Read_Local_Version_Info_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3172 (0x0c64)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Location_Data_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Location_Data_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOCATION_DATA_CMD ( 3172 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOCATION_DATA_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOCATION_DATA_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Location_Data_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Location_Data_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Location_Data_Cmd(void *, tBtampTLVHCI_Read_Location_Data_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1563,23 +1563,23 @@ v_U32_t btampPackTlvHCI_Read_Location_Data_Cmd(void *, tBtampTLVHCI_Read_Locatio
 v_U32_t btampGetPackedTlvHCI_Read_Location_Data_Cmd(void *, tBtampTLVHCI_Read_Location_Data_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3169 (0x0c61)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD ( 3169 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1587,23 +1587,23 @@ v_U32_t btampPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVHC
 v_U32_t btampGetPackedTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 6145 (0x1801)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_Loopback_Mode_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Read_Loopback_Mode_Cmd;
 
 #define BTAMP_TLV_HCI_READ_LOOPBACK_MODE_CMD ( 6145 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_LOOPBACK_MODE_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_READ_LOOPBACK_MODE_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_Loopback_Mode_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_Loopback_Mode_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Read_Loopback_Mode_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1611,9 +1611,9 @@ v_U32_t btampPackTlvHCI_Read_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Read_Loopbac
 v_U32_t btampGetPackedTlvHCI_Read_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Read_Loopback_Mode_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5125 (0x1405)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Read_RSSI_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1621,14 +1621,14 @@ typedef struct sBtampTLVHCI_Read_RSSI_Cmd {
 
 #define BTAMP_TLV_HCI_READ_RSSI_CMD ( 5125 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_READ_RSSI_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_READ_RSSI_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Read_RSSI_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Read_RSSI_Cmd*);
 
 v_U32_t btampPackTlvHCI_Read_RSSI_Cmd(void *, tBtampTLVHCI_Read_RSSI_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1636,23 +1636,23 @@ v_U32_t btampPackTlvHCI_Read_RSSI_Cmd(void *, tBtampTLVHCI_Read_RSSI_Cmd*, v_U8_
 v_U32_t btampGetPackedTlvHCI_Read_RSSI_Cmd(void *, tBtampTLVHCI_Read_RSSI_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3075 (0x0c03)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Reset_Cmd {
     v_U8_t       present;
 } tBtampTLVHCI_Reset_Cmd;
 
 #define BTAMP_TLV_HCI_RESET_CMD ( 3075 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_RESET_CMD_MIN_LEN ( 2 )
 
 #define BTAMP_TLV_HCI_RESET_CMD_MAX_LEN ( 2 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Reset_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Reset_Cmd*);
 
 v_U32_t btampPackTlvHCI_Reset_Cmd(void *, tBtampTLVHCI_Reset_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1660,9 +1660,9 @@ v_U32_t btampPackTlvHCI_Reset_Cmd(void *, tBtampTLVHCI_Reset_Cmd*, v_U8_t*, v_U3
 v_U32_t btampGetPackedTlvHCI_Reset_Cmd(void *, tBtampTLVHCI_Reset_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5122 (0x1402)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1670,14 +1670,14 @@ typedef struct sBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd {
 
 #define BTAMP_TLV_HCI_RESET_FAILED_CONTACT_COUNTER_CMD ( 5122 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_RESET_FAILED_CONTACT_COUNTER_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_RESET_FAILED_CONTACT_COUNTER_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd*);
 
 v_U32_t btampPackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1685,9 +1685,9 @@ v_U32_t btampPackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Re
 v_U32_t btampGetPackedTlvHCI_Reset_Failed_Contact_Counter_Cmd(void *, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3077 (0x0c05)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Set_Event_Mask_Cmd {
     v_U8_t       present;
     v_U8_t       event_mask[8];
@@ -1695,14 +1695,14 @@ typedef struct sBtampTLVHCI_Set_Event_Mask_Cmd {
 
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_CMD ( 3077 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_CMD_MIN_LEN ( 10 )
 
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_CMD_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Set_Event_Mask_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Set_Event_Mask_Cmd*);
 
 v_U32_t btampPackTlvHCI_Set_Event_Mask_Cmd(void *, tBtampTLVHCI_Set_Event_Mask_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1710,9 +1710,9 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Cmd(void *, tBtampTLVHCI_Set_Event_Mask_C
 v_U32_t btampGetPackedTlvHCI_Set_Event_Mask_Cmd(void *, tBtampTLVHCI_Set_Event_Mask_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3171 (0x0c63)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Set_Event_Mask_Page_2_Cmd {
     v_U8_t       present;
     v_U8_t       event_mask_page_2[8];
@@ -1720,14 +1720,14 @@ typedef struct sBtampTLVHCI_Set_Event_Mask_Page_2_Cmd {
 
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_PAGE_2_CMD ( 3171 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_PAGE_2_CMD_MIN_LEN ( 10 )
 
 #define BTAMP_TLV_HCI_SET_EVENT_MASK_PAGE_2_CMD_MAX_LEN ( 10 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd*);
 
 v_U32_t btampPackTlvHCI_Set_Event_Mask_Page_2_Cmd(void *, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1735,9 +1735,9 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Page_2_Cmd(void *, tBtampTLVHCI_Set_Event
 v_U32_t btampGetPackedTlvHCI_Set_Event_Mask_Page_2_Cmd(void *, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3179 (0x0c6b)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Set_Short_Range_Mode_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1746,14 +1746,14 @@ typedef struct sBtampTLVHCI_Set_Short_Range_Mode_Cmd {
 
 #define BTAMP_TLV_HCI_SET_SHORT_RANGE_MODE_CMD ( 3179 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_SET_SHORT_RANGE_MODE_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_SET_SHORT_RANGE_MODE_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Set_Short_Range_Mode_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Set_Short_Range_Mode_Cmd*);
 
 v_U32_t btampPackTlvHCI_Set_Short_Range_Mode_Cmd(void *, tBtampTLVHCI_Set_Short_Range_Mode_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1761,9 +1761,9 @@ v_U32_t btampPackTlvHCI_Set_Short_Range_Mode_Cmd(void *, tBtampTLVHCI_Set_Short_
 v_U32_t btampGetPackedTlvHCI_Set_Short_Range_Mode_Cmd(void *, tBtampTLVHCI_Set_Short_Range_Mode_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 76 (0x004c)
+}; /*                 */
+#endif /*     */
+//               
 typedef struct sBtampTLVHCI_Short_Range_Mode_Change_Complete_Event {
     v_U8_t       present;
     v_U8_t       status;
@@ -1773,14 +1773,14 @@ typedef struct sBtampTLVHCI_Short_Range_Mode_Change_Complete_Event {
 
 #define BTAMP_TLV_HCI_SHORT_RANGE_MODE_CHANGE_COMPLETE_EVENT ( 76 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_SHORT_RANGE_MODE_CHANGE_COMPLETE_EVENT_MIN_LEN ( 5 )
 
 #define BTAMP_TLV_HCI_SHORT_RANGE_MODE_CHANGE_COMPLETE_EVENT_MAX_LEN ( 5 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event*);
 
 v_U32_t btampPackTlvHCI_Short_Range_Mode_Change_Complete_Event(void *, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1788,9 +1788,9 @@ v_U32_t btampPackTlvHCI_Short_Range_Mode_Change_Complete_Event(void *, tBtampTLV
 v_U32_t btampGetPackedTlvHCI_Short_Range_Mode_Change_Complete_Event(void *, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3178 (0x0c6a)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1799,14 +1799,14 @@ typedef struct sBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_BEST_EFFORT_FLUSH_TIMEOUT_CMD ( 3178 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_BEST_EFFORT_FLUSH_TIMEOUT_CMD_MIN_LEN ( 8 )
 
 #define BTAMP_TLV_HCI_WRITE_BEST_EFFORT_FLUSH_TIMEOUT_CMD_MAX_LEN ( 8 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1814,9 +1814,9 @@ v_U32_t btampPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI
 v_U32_t btampGetPackedTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void *, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3094 (0x0c16)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      connection_accept_timeout;
@@ -1824,14 +1824,14 @@ typedef struct sBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_CMD ( 3094 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_WRITE_CONNECTION_ACCEPT_TIMEOUT_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1839,9 +1839,9 @@ v_U32_t btampPackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI
 v_U32_t btampGetPackedTlvHCI_Write_Connection_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3175 (0x0c67)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Flow_Control_Mode_Cmd {
     v_U8_t       present;
     v_U8_t       flow_control_mode;
@@ -1849,14 +1849,14 @@ typedef struct sBtampTLVHCI_Write_Flow_Control_Mode_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_FLOW_CONTROL_MODE_CMD ( 3175 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_FLOW_CONTROL_MODE_CMD_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_WRITE_FLOW_CONTROL_MODE_CMD_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Flow_Control_Mode_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1864,9 +1864,9 @@ v_U32_t btampPackTlvHCI_Write_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Write_F
 v_U32_t btampGetPackedTlvHCI_Write_Flow_Control_Mode_Cmd(void *, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3127 (0x0c37)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      log_link_handle;
@@ -1875,14 +1875,14 @@ typedef struct sBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_LINK_SUPERVISION_TIMEOUT_CMD ( 3127 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_LINK_SUPERVISION_TIMEOUT_CMD_MIN_LEN ( 6 )
 
 #define BTAMP_TLV_HCI_WRITE_LINK_SUPERVISION_TIMEOUT_CMD_MAX_LEN ( 6 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1890,9 +1890,9 @@ v_U32_t btampPackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_
 v_U32_t btampGetPackedTlvHCI_Write_Link_Supervision_Timeout_Cmd(void *, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3173 (0x0c65)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Location_Data_Cmd {
     v_U8_t       present;
     v_U8_t       loc_domain_aware;
@@ -1902,14 +1902,14 @@ typedef struct sBtampTLVHCI_Write_Location_Data_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_LOCATION_DATA_CMD ( 3173 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_LOCATION_DATA_CMD_MIN_LEN ( 7 )
 
 #define BTAMP_TLV_HCI_WRITE_LOCATION_DATA_CMD_MAX_LEN ( 7 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Location_Data_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Location_Data_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Location_Data_Cmd(void *, tBtampTLVHCI_Write_Location_Data_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1917,9 +1917,9 @@ v_U32_t btampPackTlvHCI_Write_Location_Data_Cmd(void *, tBtampTLVHCI_Write_Locat
 v_U32_t btampGetPackedTlvHCI_Write_Location_Data_Cmd(void *, tBtampTLVHCI_Write_Location_Data_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 3170 (0x0c62)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd {
     v_U8_t       present;
     v_U16_t      logical_link_accept_timeout;
@@ -1927,14 +1927,14 @@ typedef struct sBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD ( 3170 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD_MIN_LEN ( 4 )
 
 #define BTAMP_TLV_HCI_WRITE_LOGICAL_LINK_ACCEPT_TIMEOUT_CMD_MAX_LEN ( 4 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1942,9 +1942,9 @@ v_U32_t btampPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVH
 v_U32_t btampGetPackedTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void *, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 6146 (0x1802)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Loopback_Mode_Cmd {
     v_U8_t       present;
     v_U8_t       loopback_mode;
@@ -1952,14 +1952,14 @@ typedef struct sBtampTLVHCI_Write_Loopback_Mode_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_LOOPBACK_MODE_CMD ( 6146 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_LOOPBACK_MODE_CMD_MIN_LEN ( 3 )
 
 #define BTAMP_TLV_HCI_WRITE_LOOPBACK_MODE_CMD_MAX_LEN ( 3 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Loopback_Mode_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Loopback_Mode_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Write_Loopback_Mode_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1967,9 +1967,9 @@ v_U32_t btampPackTlvHCI_Write_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Write_Loopb
 v_U32_t btampGetPackedTlvHCI_Write_Loopback_Mode_Cmd(void *, tBtampTLVHCI_Write_Loopback_Mode_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 5131 (0x140b)
+}; /*                 */
+#endif /*     */
+//                 
 typedef struct sBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd {
     v_U8_t       present;
     v_U8_t       phy_link_handle;
@@ -1980,14 +1980,14 @@ typedef struct sBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd {
 
 #define BTAMP_TLV_HCI_WRITE_REMOTE_AMP_ASSOC_CMD ( 5131 )
 
-// N.B. These #defines do *not* include the ID & length
+//                                                     
 #define BTAMP_TLV_HCI_WRITE_REMOTE_AMP_ASSOC_CMD_MIN_LEN ( 7 )
 
 #define BTAMP_TLV_HCI_WRITE_REMOTE_AMP_ASSOC_CMD_MAX_LEN ( 255 )
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 v_U32_t btampUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void *, v_U8_t*,v_U16_t, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd*);
 
 v_U32_t btampPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void *, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd*, v_U8_t*, v_U32_t, v_U32_t*);
@@ -1995,29 +1995,29 @@ v_U32_t btampPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void *, tBtampTLVHCI_Write_Re
 v_U32_t btampGetPackedTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void *, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd*, v_U32_t*);
 
 #ifdef __cplusplus
-}; /* End extern "C". */
-#endif /* C++ */
-// ID 64512 (0xfc00)
+}; /*                 */
+#endif /*     */
+//                  
 typedef struct sBtampTLVHCI_Vendor_Specific_Cmd_0 {
     v_U8_t       present;
 } tBtampTLVHCI_Vendor_Specific_0_Cmd;
 
 #define BTAMP_TLV_HCI_VENDOR_SPECIFIC_CMD_0 ( 64512 )
 
-// ID 64513 (0xfc01)
+//                  
 typedef struct sBtampTLVHCI_Vendor_Specific_Cmd_1 {
     v_U8_t       present;
 } tBtampTLVHCI_Vendor_Specific_1_Cmd;
 
 #define BTAMP_TLV_HCI_VENDOR_SPECIFIC_CMD_1 ( 64513 )
 
-/*********************************************************************
- * Information Elements                                              *
- ********************************************************************/
+/*                                                                    
+                                                                      
+                                                                    */
 
-/************************************************************************
- * Frames
- **********************************************************************/
+/*                                                                       
+         
+                                                                      */
 
 typedef struct sBtampAMP_ASSOC{
     tBtampTLVAMP_Assoc_MAC_Addr AMP_Assoc_MAC_Addr;
@@ -2031,41 +2031,41 @@ typedef struct sBtampAMP_ASSOC{
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
 v_U32_t btampUnpackAMP_ASSOC(void * pCtx, v_U8_t *pBuf, v_U32_t nBuf, tBtampAMP_ASSOC *pFrm);
 v_U32_t btampPackAMP_ASSOC(void * pCtx, tBtampAMP_ASSOC *pFrm, v_U8_t *pBuf, v_U32_t nBuf, v_U32_t *pnConsumed);
 v_U32_t btampGetPackedAMP_ASSOCSize(void * pCtx, tBtampAMP_ASSOC *pFrm, v_U32_t *pnNeeded);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
-/* HCI Number of Completed Packets Event*/
+/*                                      */
 typedef struct sBtampTLVHCI_Num_Completed_Pkts_Event
 {
     v_U8_t       present;
     /* 
-      The number of Connection Handles and Num_Data_Packets
-      parameters pairs contained in this event.Range: 0-255
+                                                           
+                                                           
     */
 
     v_U8_t   num_handles;
 
     /* 
-      Size , Number of Handles * 2 Octets,Range: 0x0000-0x0EFF 
+                                                               
     */
     v_U16_t  conn_handles[WLANBAP_MAX_LOG_LINKS];  
 
     /* 
-      The number of HCI Data Packets that have been completed (transmitted
-      or flushed) for the associated Connection Handle since the previous time
-      the event was returned.Range for N: 0x0000-0xFFFF
+                                                                          
+                                                                              
+                                                       
     */
     v_U16_t  num_completed_pkts[WLANBAP_MAX_LOG_LINKS]; 
 } tBtampTLVHCI_Num_Completed_Pkts_Event;
@@ -2076,54 +2076,54 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void *, tBtampTLVHCI_Num_Comple
 
 v_U32_t btampGetPackedTlvHCI_Num_Completed_Pkts_Event(void *, tBtampTLVHCI_Num_Completed_Pkts_Event*, v_U32_t*);
 
-/*Length of the value field expected in a TLV of type Flow SPec*/
+/*                                                             */
 #define WLAN_BAP_PAL_FLOW_SPEC_TLV_LEN          16
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
 #ifdef __cplusplus
 extern "C" {
-#endif /* C++ */
+#endif /*     */
 
-/* HCI Number of Completed Data Blocks Event*/
+/*                                          */
 typedef struct sBtampTLVHCI_Num_Completed_Data_Blocks_Event
 {
     v_U8_t       present;
     /* 
-      Total number of data block buffers available in the Controller for the
-      storage of data packets scheduled for transmission. This indicates
-      the existing value is unchanged, or increased, or reduced by up to
-      the sum of the Num_Of_Completed_Blocks values in this command
+                                                                            
+                                                                        
+                                                                        
+                                                                   
     */
 
     v_U16_t   total_num_data_blocks;
 
     /* 
-      The number of Connection Handles and Num_Data_Packets
-      parameters pairs contained in this event.Range: 0-255
+                                                           
+                                                           
     */
 
     v_U8_t   num_handles;
 
     /* 
-      Size , Number of Handles * 2 Octets,Range: 0x0000-0x0EFF 
+                                                               
     */
     v_U16_t  conn_handles[WLANBAP_MAX_LOG_LINKS];  
 
     /* 
-      The number of HCI Data Packets that have been completed (transmitted
-      or flushed) for the associated Connection Handle since the previous time
-      the event was returned.Range for N: 0x0000-0xFFFF
+                                                                          
+                                                                              
+                                                       
     */
     v_U16_t  num_completed_pkts[WLANBAP_MAX_LOG_LINKS]; 
 
     /* 
-      The number of data blocks that have been freed for the associated
-      Handle since the previous time that a Number Of Completed Data
-      Blocks event provided information about this Handle.
-      Range for N: 0x0000-0xFFFF
+                                                                       
+                                                                    
+                                                          
+                                
     */
     v_U16_t  num_completed_blocks[WLANBAP_MAX_LOG_LINKS]; 
 
@@ -2136,9 +2136,9 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void *, tBtampTLVHCI_Num
 v_U32_t btampGetPackedTlvHCI_Num_Completed_Data_Blocks_Event(void *, tBtampTLVHCI_Num_Completed_Data_Blocks_Event*, v_U32_t*);
 
 #ifdef __cplusplus
-} /* End extern "C". */
-#endif /* C++ */
+} /*                 */
+#endif /*     */
 
-#endif /* BTAMPHCI_H */
+#endif /*            */
 
 

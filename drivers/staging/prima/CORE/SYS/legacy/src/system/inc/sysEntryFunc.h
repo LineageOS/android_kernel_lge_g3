@@ -40,14 +40,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file sysEntryFunc.h contains module entry functions definitions
- * Author:      V. K. Kandarpa
- * Date:        04/13/2002
- * History:-
- * Date         Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                                       
+                              
+                          
+            
+                                                       
+                                                                       
  */
 #ifndef __SYS_ENTRY_FUNC_H
 #define __SYS_ENTRY_FUNC_H
@@ -65,4 +65,4 @@ extern void sysMntEntry(tANI_U32 dummy);
 extern void sysHalEntry(tANI_U32 dummy);
 extern void sysNimPttEntry(tANI_U32 dummy);
 
-#endif // __SYS_ENTRY_FUNC_H
+#endif //                   

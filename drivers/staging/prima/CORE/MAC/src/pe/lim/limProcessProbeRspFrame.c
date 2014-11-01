@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limProcessProbeRspFrame.cc contains the code
- * for processing Probe Response Frame.
- * Author:        Chandra Modumudi
- * Date:          03/01/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                         
+                                       
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 
 #include "wniApi.h"
@@ -80,27 +80,27 @@ limValidateIEInformationInProbeRspFrame (tANI_U8 *pRxPacketInfo)
    return status;
 }
 
-/**
- * limProcessProbeRspFrame
- *
- *FUNCTION:
- * This function is called by limProcessMessageQueue() upon
- * Probe Response frame reception.
- *
- *LOGIC:
- * This function processes received Probe Response frame.
- *
- *ASSUMPTIONS:
- *
- *NOTE:
- * 1. Frames with out-of-order IEs are dropped.
- * 2. In case of IBSS, join 'success' makes MLM state machine
- *    transition into 'BSS started' state. This may have to change
- *    depending on supporting what kinda Authentication in IBSS.
- *
- * @param pMac   Pointer to Global MAC structure
- * @param  *pRxPacketInfo  A pointer to Buffer descriptor + associated PDUs
- * @return None
+/* 
+                          
+  
+           
+                                                           
+                                  
+  
+        
+                                                         
+  
+              
+  
+       
+                                               
+                                                             
+                                                                  
+                                                                
+  
+                                                
+                                                                           
+               
  */
 
 
@@ -144,7 +144,7 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
        }
    }
 
-   // Validate IE information before processing Probe Response Frame
+   //                                                               
    if (limValidateIEInformationInProbeRspFrame(pRxPacketInfo) != eSIR_SUCCESS)
    {
        PELOG1(limLog(pMac, LOG1,
@@ -153,27 +153,27 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
        return;
    }
 
-    /**
-     * Expect Probe Response only when
-     * 1. STA is in scan mode waiting for Beacon/Probe response or
-     * 2. STA is waiting for Beacon/Probe Response to announce
-     *    join success or
-     * 3. STA is in IBSS mode in BSS started state or
-     * 4. STA/AP is in learn mode
-     * 5. STA in link established state. In this state, the probe response is
-     *     expected for two scenarios:
-     *     -- As part of heart beat mechanism, probe req is sent out
-     *     -- If QoS Info IE in beacon has a different count for EDCA Params,
-     *         and EDCA IE is not present in beacon,
-     *         then probe req is sent out to get the EDCA params.
-     *
-     * Ignore Probe Response frame in all other states
+    /* 
+                                      
+                                                                  
+                                                              
+                         
+                                                     
+                                 
+                                                                             
+                                      
+                                                                    
+                                                                             
+                                                    
+                                                                 
+      
+                                                      
      */
         /*  */
-   // TO SUPPORT BT-AMP
-    if (((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||   //mlm state check should be global - 18th oct
-        (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE) ||     //mlm state check should be global - 18th oct
-        (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE) ||            //mlm state check should be global - 18th oct 
+   //                  
+    if (((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||   //                                           
+        (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE) ||     //                                           
+        (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE) ||            //                                            
         (psessionEntry->limMlmState == eLIM_MLM_WT_JOIN_BEACON_STATE) ||
         (psessionEntry->limMlmState == eLIM_MLM_LINK_ESTABLISHED_STATE) )||
         ((GET_LIM_SYSTEM_ROLE(psessionEntry) == eLIM_STA_IN_IBSS_ROLE) &&
@@ -190,11 +190,11 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                       (uint)abs((tANI_S8)WDA_GET_RX_RSSI_DB(pRxPacketInfo)));
         }
 
-        // Get pointer to Probe Response frame body
+        //                                         
         pBody = WDA_GET_RX_MPDU_DATA(pRxPacketInfo);
 
         if (sirConvertProbeFrame2Struct(pMac, pBody, frameLen, pProbeRsp) == eSIR_FAILURE ||
-            !pProbeRsp->ssidPresent) // Enforce Mandatory IEs
+            !pProbeRsp->ssidPresent) //                      
         {
             PELOG1(limLog(pMac, LOG1,
                FL("Parse error ProbeResponse, length=%d"),
@@ -209,18 +209,18 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                     eANI_BOOLEAN_FALSE, eANI_BOOLEAN_TRUE);
         }
 
-        //To Support BT-AMP
-        if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||    //mlm state check should be global - 18th oct
+        //                 
+        if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||    //                                           
             (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE))
             limCheckAndAddBssDescription(pMac, pProbeRsp, pRxPacketInfo, 
                ((pMac->lim.gLimHalScanState == eLIM_HAL_SCANNING_STATE) ? eANI_BOOLEAN_TRUE : eANI_BOOLEAN_FALSE), eANI_BOOLEAN_TRUE);
-        else if (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE)           //mlm state check should be global - 18th oct
+        else if (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE)           //                                           
         {
         }
         else if (psessionEntry->limMlmState ==
                                      eLIM_MLM_WT_JOIN_BEACON_STATE)
         {
-            if( psessionEntry->beacon != NULL )//Either Beacon/probe response is required. Hence store it in same buffer.
+            if( psessionEntry->beacon != NULL )//                                                                        
             {
                 vos_mem_free(psessionEntry->beacon);
                 psessionEntry->beacon = NULL;
@@ -235,22 +235,22 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
             }
             else
             {
-                //Store the Beacon/ProbeRsp. This is sent to csr/hdd in join cnf response. 
+                //                                                                         
                 vos_mem_copy(psessionEntry->beacon,
                              WDA_GET_RX_MPDU_DATA(pRxPacketInfo),
                              psessionEntry->bcnLen);
             }
 
-            // STA in WT_JOIN_BEACON_STATE
+            //                            
             limCheckAndAnnounceJoinSuccess(pMac, pProbeRsp, pHdr, psessionEntry);
         }
         else if(psessionEntry->limMlmState == eLIM_MLM_LINK_ESTABLISHED_STATE)
         {
             tpDphHashNode pStaDs = NULL;
-            /**
-             * Check if this Probe Response is for
-            * our Probe Request sent upon reaching
-            * heart beat threshold
+            /* 
+                                                  
+                                                  
+                                  
             */
             #if 0
             if (wlan_cfgGetStr(pMac,
@@ -258,10 +258,10 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                           currentBssId,
                           &cfg) != eSIR_SUCCESS)
             {
-                /// Could not get BSSID from CFG. Log error.
+                //                                          
                 limLog(pMac, LOGP, FL("could not retrieve BSSID"));
             }
-            #endif //TO SUPPORT BT-AMP
+            #endif //                 
             sirCopyMacAddr(currentBssId,psessionEntry->bssId);
 
             if ( !vos_mem_compare(currentBssId, pHdr->bssId, sizeof(tSirMacAddr)) )
@@ -296,12 +296,12 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
             }
         
             
-            /**
-            * Now Process EDCA Parameters, if EDCAParamSet count is different.
-            *     -- While processing beacons in link established state if it is determined that
-            *         QoS Info IE has a different count for EDCA Params,
-            *         and EDCA IE is not present in beacon,
-            *         then probe req is sent out to get the EDCA params.
+            /* 
+                                                                              
+                                                                                                
+                                                                        
+                                                           
+                                                                        
             */
 
             pStaDs = dphGetHashEntry(pMac, DPH_STA_HASH_INDEX_PEER, &psessionEntry->dph.dphHashTable);
@@ -320,7 +320,7 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
                     PELOGE(limLog(pMac, LOGE, FL("EDCA parameter processing error"));)
                 else if (pStaDs != NULL)
                 {
-                    // If needed, downgrade the EDCA parameters
+                    //                                         
                     limSetActiveEdcaParams(pMac, psessionEntry->gLimEdcaParams, psessionEntry); 
 
                     if (pStaDs->aniPeer == eANI_BOOLEAN_TRUE)
@@ -342,12 +342,12 @@ limProcessProbeRspFrame(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo,tpPESession 
         else if ((psessionEntry->limSystemRole == eLIM_STA_IN_IBSS_ROLE) &&
                  (psessionEntry->limMlmState == eLIM_MLM_BSS_STARTED_STATE))
                 limHandleIBSScoalescing(pMac, pProbeRsp, pRxPacketInfo,psessionEntry);
-    } // if ((pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) || ...
+    } //                                                                    
 
     vos_mem_free(pProbeRsp);
-    // Ignore Probe Response frame in all other states
+    //                                                
     return;
-} /*** end limProcessProbeRspFrame() ***/
+} /*                                   */
 
 
 void
@@ -394,7 +394,7 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
 #ifdef WLAN_FEATURE_ROAM_SCAN_OFFLOAD
     }
 #endif
-     // Validate IE information before processing Probe Response Frame
+     //                                                               
     if (limValidateIEInformationInProbeRspFrame(pRxPacketInfo) != eSIR_SUCCESS)
     {
        PELOG1(limLog(pMac, LOG1,FL("Parse error ProbeResponse, length=%d"),
@@ -402,15 +402,15 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
        vos_mem_free(pProbeRsp);
        return;
     }
-    /*  Since there is no psessionEntry, PE cannot be in the following states:
-     *   - eLIM_MLM_WT_JOIN_BEACON_STATE
-     *   - eLIM_MLM_LINK_ESTABLISHED_STATE
-     *   - eLIM_MLM_BSS_STARTED_STATE
-     *  Hence, expect Probe Response only when
-     *   1. STA is in scan mode waiting for Beacon/Probe response 
-     *   2. LFR logic in FW sends up candidate frames
-     *  
-     *  Ignore Probe Response frame in all other states
+    /*                                                                        
+                                        
+                                          
+                                     
+                                              
+                                                                  
+                                                     
+        
+                                                       
      */
 #ifdef WLAN_FEATURE_ROAM_SCAN_OFFLOAD
     if (WDA_GET_OFFLOADSCANLEARN(pRxPacketInfo))
@@ -425,7 +425,7 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
                       (uint)abs((tANI_S8)WDA_GET_RX_RSSI_DB(pRxPacketInfo)));
         }
 
-        // Get pointer to Probe Response frame body
+        //                                         
         pBody = WDA_GET_RX_MPDU_DATA(pRxPacketInfo);
 
         if (sirConvertProbeFrame2Struct(pMac, pBody, frameLen, pProbeRsp) == eSIR_FAILURE)
@@ -444,7 +444,7 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
     {
         frameLen = WDA_GET_RX_PAYLOAD_LEN(pRxPacketInfo);
 
-        // Get pointer to Probe Response frame body
+        //                                         
         pBody = WDA_GET_RX_MPDU_DATA(pRxPacketInfo);
 
         if (sirConvertProbeFrame2Struct(pMac, pBody, frameLen, pProbeRsp)
@@ -459,7 +459,7 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
                 eANI_BOOLEAN_FALSE, eANI_BOOLEAN_TRUE);
     }
     else if( (pMac->lim.gLimMlmState == eLIM_MLM_WT_PROBE_RESP_STATE) ||
-        (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE)  ||     //mlm state check should be global - 18th oct
+        (pMac->lim.gLimMlmState == eLIM_MLM_PASSIVE_SCAN_STATE)  ||     //                                           
         (pMac->lim.gLimMlmState == eLIM_MLM_LEARN_STATE) )
     {
         frameLen = WDA_GET_RX_PAYLOAD_LEN(pRxPacketInfo);
@@ -472,7 +472,7 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
                       (uint)abs((tANI_S8)WDA_GET_RX_RSSI_DB(pRxPacketInfo)));
         }
 
-        // Get pointer to Probe Response frame body
+        //                                         
         pBody = WDA_GET_RX_MPDU_DATA(pRxPacketInfo);
 
         if (sirConvertProbeFrame2Struct(pMac, pBody, frameLen, pProbeRsp) == eSIR_FAILURE)
@@ -491,4 +491,4 @@ limProcessProbeRspFrameNoSession(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
     } 
     vos_mem_free(pProbeRsp);
     return;
-} /*** end limProcessProbeRspFrameNew() ***/
+} /*                                      */

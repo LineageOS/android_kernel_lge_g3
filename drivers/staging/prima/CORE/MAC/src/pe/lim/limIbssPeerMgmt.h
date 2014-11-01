@@ -40,21 +40,21 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limIbssPeerMgmt.h contains prototypes for
- * the utility functions LIM uses to maintain peers in IBSS.
- * Author:        Chandra Modumudi
- * Date:          03/12/04
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+  
+                                                        
+                                                      
+                                                            
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 
 #include "sirCommon.h"
 #include "limUtils.h"
 
-#define IBSS_STATIONS_USED_DURING_INIT 4  //(broadcast + self + p2p + softap)
+#define IBSS_STATIONS_USED_DURING_INIT 4  //                                 
 
 void limIbssInit(tpAniSirGlobal);
 void limIbssDelete(tpAniSirGlobal,tpPESession psessionEntry);

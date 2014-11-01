@@ -53,27 +53,27 @@
   Qualcomm Confidential and Proprietary
 ========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-  when        who  what, where, why
-  ----------  ---  -----------------------------------------------------------
-  2011-03-01  jtj  Initial version for Linux/Android with Wcnss
+                                   
 
-===========================================================================*/
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+                                   
+                                                                              
+                                                               
+
+                                                                           */
+
+/*                                                                            
+                
+                                                                            */
 #include <linux/irqreturn.h>
 #include <linux/interrupt.h>
 #include <linux/io.h>
@@ -83,27 +83,27 @@
 #include "wlan_hdd_main.h"
 #include "linux/wcnss_wlan.h"
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
-// address in the Host physical memory map
+//                                        
 #ifdef WCN_PRONTO
 #define WCNSS_BASE_ADDRESS 0xFB000000
 #else
 #define WCNSS_BASE_ADDRESS 0x03000000
 #endif
-/*----------------------------------------------------------------------------
- * Type Declarations
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                    
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Global Data Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                          
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Static Variable Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                              
+                                                                            */
 
 typedef struct {
    struct resource *wcnss_memory;
@@ -121,25 +121,25 @@ typedef struct {
 static wcnss_env  gEnv;
 static wcnss_env *gpEnv = NULL;
 
-/*----------------------------------------------------------------------------
- * Static Function Declarations and Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                               
+                                                                            */
 
-/**
-  @brief wpalTxIsr is the interrupt service routine which handles
-         the DXE TX Complete interrupt
+/* 
+                                                                 
+                                      
   
-  wpalTxIsr is registered with the Operating System to handle the
-  DXE TX Complete interrupt during system initialization.  When a DXE
-  TX Complete interrupt occurs, it is dispatched to the handler which
-  had previously been registered via wpalRegisterInterrupt.
+                                                                 
+                                                                     
+                                                                     
+                                                           
   
-  @param  irq:    Enumeration of the interrupt that occurred
-  @param  dev_id: User-supplied data passed back via the ISR
+                                                            
+                                                            
 
-  @see    wpalRegisterInterrupt
+                               
 
-  @return IRQ_HANDLED since it is a dedicated interrupt
+                                                       
 */
 static irqreturn_t wpalTxIsr
 (
@@ -154,21 +154,21 @@ static irqreturn_t wpalTxIsr
 }
 
 
-/**
-  @brief wpalRxIsr is the interrupt service routine which handles
-         the DXE RX Available interrupt
+/* 
+                                                                 
+                                       
   
-  wpalRxIsr is registered with the Operating System to handle the
-  DXE RX Available interrupt during system initalization.  When a DXE
-  RX Available interrupt occurs, it is dispatched to the handler which
-  had previously been registered via wpalRegisterInterrupt.
+                                                                 
+                                                                     
+                                                                      
+                                                           
   
-  @param  irq:    Enumeration of the interrupt that occurred
-  @param  dev_id: User-supplied data passed back via the ISR
+                                                            
+                                                            
 
-  @see    wpalRegisterInterrupt
+                               
 
-  @return IRQ_HANDLED since it is a dedicated interrupt
+                                                       
 */
 static irqreturn_t wpalRxIsr
 (
@@ -182,26 +182,26 @@ static irqreturn_t wpalRxIsr
    return IRQ_HANDLED;
 }
 
-/*----------------------------------------------------------------------------
- * Externalized Function Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                    
+                                                                            */
 
 
-/**
-  @brief wpalRegisterInterrupt provides a mechansim for client
-         to register support for a given interrupt
+/* 
+                                                              
+                                                  
 
-  The DXE interface supports two interrupts, TX Complete and RX
-  Available.  This interface provides the mechanism whereby a client
-  can register to support one of these.  It is expected that the core
-  DXE implementation will invoke this API twice, once for each interrupt.
+                                                               
+                                                                    
+                                                                     
+                                                                         
   
-  @param  intType:          Enumeration of the interrupt type (TX or RX)
-  @param  callbackFunction: ISR function pointer
-  @param  usrCtxt:          User context passed back whenever the
-                            callbackFunction is invoked
+                                                                        
+                                                
+                                                                 
+                                                       
 
-  @return SUCCESS if the registration was successful
+                                                    
 */
 
 wpt_status wpalRegisterInterrupt
@@ -229,11 +229,11 @@ wpt_status wpalRegisterInterrupt
 
    case DXE_INTERRUPT_TX_COMPLE:
       if (NULL != gpEnv->tx_isr) {
-         /* TX complete handler already registered */
+         /*                                        */
          WPAL_TRACE(eWLAN_MODULE_DAL_DATA, eWLAN_PAL_TRACE_LEVEL_WARN,
                  "%s: TX interrupt handler already registered",
                  __func__);
-         /* fall though and accept the new values */
+         /*                                       */
       }
       gpEnv->tx_isr = callbackFunction;
       gpEnv->tx_context = usrCtxt;
@@ -241,11 +241,11 @@ wpt_status wpalRegisterInterrupt
 
    case DXE_INTERRUPT_RX_READY:
       if (NULL != gpEnv->rx_isr) {
-         /* RX complete handler already registered */
+         /*                                        */
          WPAL_TRACE(eWLAN_MODULE_DAL_DATA, eWLAN_PAL_TRACE_LEVEL_WARN,
                  "%s: RX interrupt handler already registered",
                  __func__);
-         /* fall though and accept the new values */
+         /*                                       */
       }
       gpEnv->rx_isr = callbackFunction;
       gpEnv->rx_context = usrCtxt;
@@ -261,15 +261,15 @@ wpt_status wpalRegisterInterrupt
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalUnRegisterInterrupt provides a mechansim for client
-         to un-register for a given interrupt
+/* 
+                                                                
+                                             
 
-  When DXE stop, remove registered information from PAL
+                                                       
   
-  @param  intType:          Enumeration of the interrupt type (TX or RX)
+                                                                        
 
-  @return NONE
+              
 */
 
 void wpalUnRegisterInterrupt
@@ -318,20 +318,20 @@ void wpalUnRegisterInterrupt
    return;
 }
 
-/**
-  @brief wpalEnableInterrupt provides a mechansim for a client
-         to request that a given interrupt be enabled
+/* 
+                                                              
+                                                     
 
-  The DXE interface supports two interrupts, TX Complete and RX
-  Available.  This interface provides the mechanism whereby a client
-  can request that the platform-specific adaptation layer allows a
-  given interrupt to occur.  The expectation is that if a given
-  interrupt is not enabled, if the interrupt occurs then the APPS CPU
-  will not be interrupted.
+                                                               
+                                                                    
+                                                                  
+                                                               
+                                                                     
+                          
   
-  @param  intType:          Enumeration of the interrupt type (TX or RX)
+                                                                        
 
-  @return SUCCESS if the interrupt was enabled
+                                              
 */
 wpt_status wpalEnableInterrupt
 (
@@ -361,7 +361,7 @@ wpt_status wpalEnableInterrupt
             WPAL_TRACE(eWLAN_MODULE_DAL_DATA, eWLAN_PAL_TRACE_LEVEL_ERROR,
                        "%s: enable_irq_wake failed for RX IRQ",
                        __func__);
-            /* not fatal -- keep on going */
+            /*                            */
          }
       }
       else
@@ -388,7 +388,7 @@ wpt_status wpalEnableInterrupt
             WPAL_TRACE(eWLAN_MODULE_DAL_DATA, eWLAN_PAL_TRACE_LEVEL_ERROR,
                        "%s: enable_irq_wake failed for TX IRQ",
                        __func__);
-            /* not fatal -- keep on going */
+            /*                            */
          }
       }
       else
@@ -402,25 +402,25 @@ wpt_status wpalEnableInterrupt
                     __func__, (int)intType);
       break;
    }
-   /* on the integrated platform there is no platform-specific
-      interrupt control */
+   /*                                                         
+                        */
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalDisableInterrupt provides a mechansim for a client
-         to request that a given interrupt be disabled
+/* 
+                                                               
+                                                      
 
-  The DXE interface supports two interrupts, TX Complete and RX
-  Available.  This interface provides the mechanism whereby a client
-  can request that the platform-specific adaptation layer not allow a
-  given interrupt to occur.  The expectation is that if a given
-  interrupt is not enabled, if the interrupt occurs then the APPS CPU
-  will not be interrupted.
+                                                               
+                                                                    
+                                                                     
+                                                               
+                                                                     
+                          
   
-  @param  intType:          Enumeration of the interrupt type (TX or RX)
+                                                                        
 
-  @return SUCCESS if the interrupt was disabled
+                                               
 */
 wpt_status wpalDisableInterrupt
 (
@@ -442,19 +442,19 @@ wpt_status wpalDisableInterrupt
       break;
    }
 
-   /* on the integrated platform there is no platform-specific
-      interrupt control */
+   /*                                                         
+                        */
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalWriteRegister provides a mechansim for a client
-         to write data into a hardware data register
+/* 
+                                                            
+                                                    
 
-  @param  address:  Physical memory address of the register
-  @param  data:     Data value to be written
+                                                           
+                                            
 
-  @return SUCCESS if the data was successfully written
+                                                      
 */
 wpt_status wpalWriteRegister
 (
@@ -462,8 +462,8 @@ wpt_status wpalWriteRegister
    wpt_uint32   data
 )
 {
-   /* if SSR is in progress, and WCNSS is not out of reset (re-init
-    * not invoked), then do not access WCNSS registers */
+   /*                                                              
+                                                       */
    if (NULL == gpEnv || wcnss_device_is_shutdown() ||
         (vos_is_logp_in_progress(VOS_MODULE_ID_WDI, NULL) &&
             !vos_is_reinit_in_progress(VOS_MODULE_ID_WDI, NULL))) {
@@ -495,14 +495,14 @@ wpt_status wpalWriteRegister
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalReadRegister provides a mechansim for a client
-         to read data from a hardware data register
+/* 
+                                                           
+                                                   
 
-  @param  address:  Physical memory address of the register
-  @param  data:     Return location for value that is read
+                                                           
+                                                          
 
-  @return SUCCESS if the data was successfully read
+                                                   
 */
 wpt_status wpalReadRegister
 (
@@ -510,8 +510,8 @@ wpt_status wpalReadRegister
    wpt_uint32  *data
 )
 {
-   /* if SSR is in progress, and WCNSS is not out of reset (re-init
-    * not invoked), then do not access WCNSS registers */
+   /*                                                              
+                                                       */
    if (NULL == gpEnv || wcnss_device_is_shutdown() ||
         (vos_is_logp_in_progress(VOS_MODULE_ID_WDI, NULL) &&
             !vos_is_reinit_in_progress(VOS_MODULE_ID_WDI, NULL))) {
@@ -543,16 +543,16 @@ wpt_status wpalReadRegister
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalWriteDeviceMemory provides a mechansim for a client
-         to write data into the hardware address space
+/* 
+                                                                
+                                                      
 
-  @param  address:  Start address of physical memory to be written
-  @param  s_buffer: Virtual source address from which the data will
-                    be read
-  @param  len:      Number of bytes of data to be written
+                                                                  
+                                                                   
+                           
+                                                         
 
-  @return SUCCESS if the data was successfully written
+                                                      
 */
 wpt_status wpalWriteDeviceMemory
 (
@@ -561,8 +561,8 @@ wpt_status wpalWriteDeviceMemory
   wpt_uint32 len
 )
 {
-   /* if SSR is in progress, and WCNSS is not out of reset (re-init
-    * not invoked), then do not access WCNSS registers */
+   /*                                                              
+                                                       */
    if (NULL == gpEnv || wcnss_device_is_shutdown() ||
         (vos_is_logp_in_progress(VOS_MODULE_ID_WDI, NULL) &&
             !vos_is_reinit_in_progress(VOS_MODULE_ID_WDI, NULL))) {
@@ -587,16 +587,16 @@ wpt_status wpalWriteDeviceMemory
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalReadDeviceMemory provides a mechansim for a client
-         to read data from the hardware address space
+/* 
+                                                               
+                                                     
 
-  @param  address:  Start address of physical memory to be read
-  @param  d_buffer: Virtual destination address to which the
-                    data will be written
-  @param  len:      Number of bytes of data to be read
+                                                               
+                                                            
+                                        
+                                                      
 
-  @return SUCCESS if the data was successfully read
+                                                   
 */
 wpt_status wpalReadDeviceMemory
 (
@@ -605,8 +605,8 @@ wpt_status wpalReadDeviceMemory
   wpt_uint32 len
 )
 {
-   /* if SSR is in progress, and WCNSS is not out of reset (re-init
-    * not invoked), then do not access WCNSS registers */
+   /*                                                              
+                                                       */
    if (NULL == gpEnv || wcnss_device_is_shutdown() ||
         (vos_is_logp_in_progress(VOS_MODULE_ID_WDI, NULL) &&
             !vos_is_reinit_in_progress(VOS_MODULE_ID_WDI, NULL))) {
@@ -631,15 +631,15 @@ wpt_status wpalReadDeviceMemory
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalDeviceInit provides a mechanism to initialize the DXE
-         platform adaptation
+/* 
+                                                                  
+                            
 
-  @param  deviceCB:  Implementation-specific device control block
+                                                                 
 
-  @see    wpalDeviceClose
+                         
 
-  @return SUCCESS if the DXE abstraction was opened
+                                                   
 */
 wpt_status wpalDeviceInit
 (
@@ -704,10 +704,10 @@ wpt_status wpalDeviceInit
    gpEnv->tx_irq = tx_irq;
    gpEnv->rx_irq = rx_irq;
 
-   /* note the we don't invoke request_mem_region().
-      the memory described by wcnss_memory encompases the entire
-      register space (including BT and FM) and we do not want
-      exclusive access to that memory */
+   /*                                               
+                                                                
+                                                             
+                                      */
 
    gpEnv->mmio = ioremap(wcnss_memory->start, resource_size(wcnss_memory));
    if (NULL == gpEnv->mmio) {
@@ -720,7 +720,7 @@ wpt_status wpalDeviceInit
    gpEnv->tx_registered = 0;
    gpEnv->rx_registered = 0;
 
-   /* successfully allocated environment, memory and IRQs */
+   /*                                                     */
    return eWLAN_PAL_STATUS_SUCCESS;
 
  err_ioremap:
@@ -731,15 +731,15 @@ wpt_status wpalDeviceInit
 }
 
 
-/**
-  @brief wpalDeviceClose provides a mechanism to deinitialize the DXE
-         platform adaptation
+/* 
+                                                                     
+                            
 
-  @param  deviceCB:  Implementation-specific device control block
+                                                                 
 
-  @see    wpalDeviceOpen
+                        
 
-  @return SUCCESS if the DXE abstraction was closed
+                                                   
 */
 wpt_status wpalDeviceClose
 (
@@ -767,15 +767,15 @@ wpt_status wpalDeviceClose
    return eWLAN_PAL_STATUS_SUCCESS;
 }
 
-/**
-  @brief wpalNotifySmsm provides a mechansim for a client to 
-         notify SMSM to start DXE engine and/or condition of Tx
-         ring buffer
+/* 
+                                                             
+                                                               
+                    
 
-  @param  clrSt:   bit(s) to be cleared on the MASK 
-  @param  setSt:   bit(s) to be set on the MASK
+                                                    
+                                               
 
-  @return SUCCESS if the operation is successful
+                                                
 */
 wpt_status wpalNotifySmsm
 (

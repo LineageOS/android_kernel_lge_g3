@@ -19,16 +19,16 @@
   * PERFORMANCE OF THIS SOFTWARE.
 */
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limSendSmeRspMessages.h contains the definitions for
- * sending SME response/notification messages to applications above
- * MAC software.
- * Author:        Chandra Modumudi
- * Date:          02/11/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+                                                        
+                                                                 
+                                                                   
+                
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 #ifndef __LIM_SEND_SME_RSP_H
 #define __LIM_SEND_SME_RSP_H
@@ -38,7 +38,7 @@
 #include "sirMacProtDef.h"
 
 
-// Functions for sending responses to Host
+//                                        
 void limSendSmeRsp(tpAniSirGlobal, tANI_U16, tSirResultCodes, tANI_U8 , tANI_U16);
 void limSendSmeStartBssRsp(tpAniSirGlobal, tANI_U16, tSirResultCodes,tpPESession,tANI_U8,tANI_U16);
 void limSendSmeScanRsp(tpAniSirGlobal, tANI_U16, tSirResultCodes,tANI_U8, tANI_U16);
@@ -70,7 +70,7 @@ void limHandleDeleteBssRsp(tpAniSirGlobal pMac,tpSirMsgQ MsgQ);
 void
 limSendSmeAggrQosRsp(tpAniSirGlobal pMac, tpSirAggrQosRsp aggrQosRsp, 
                      tANI_U8 smesessionId);
-#endif /*WLAN_FEATURE_VOWIFI_11R*/
+#endif /*                       */
 
 
 void limSendSmeAddtsRsp(tpAniSirGlobal pMac, tANI_U8 rspReqd, tANI_U32 status, tpPESession psessionEntry, tSirMacTspecIE tspec, tANI_U8 smesessionId, tANI_U16 smetransactionId);
@@ -111,5 +111,5 @@ void limSendSmeTdlsLinkEstablishReqRsp(tpAniSirGlobal pMac,
                                        tANI_U8 status);
 #endif
 
-#endif /* __LIM_SEND_SME_RSP_H */
+#endif /*                      */
 

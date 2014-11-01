@@ -40,14 +40,14 @@
  */
 
 /*
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limProcessCfgUpdates.cc contains the utility functions
- * to handle various CFG parameter update events
- * Author:        Chandra Modumudi
- * Date:          01/20/03
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
+                                                        
+                                                                   
+                                                
+                                  
+                          
+            
+                                                         
+                                                                       
  */
 
 #include "aniGlobal.h"
@@ -67,24 +67,24 @@
 static void limUpdateConfig(tpAniSirGlobal pMac,tpPESession psessionEntry);
 
 #if 0
-/**
- * limGetCfgIdOfDefaultKeyid()
- *
- *FUNCTION:
- * This function is called to get CFG ID of default key id
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- * NA
- *
- * @param  dkid     - Value of default key id
- * @return dkCfgId  - CFG ID of key corresponding to default key Id
+/* 
+                              
+  
+           
+                                                          
+  
+         
+  
+        
+  
+              
+     
+  
+       
+     
+  
+                                             
+                                                                   
  */
 
 static tANI_U32
@@ -96,30 +96,30 @@ limGetCfgIdOfDefaultKeyid(tANI_U32 dkid)
         return WNI_CFG_WEP_DEFAULT_KEY_2;
     else if (dkid == WNI_CFG_WEP_DEFAULT_KEYID_2)
         return WNI_CFG_WEP_DEFAULT_KEY_3;
-    else // dkid == WNI_CFG_WEP_DEFAULT_KEYID_3
+    else //                                    
         return WNI_CFG_WEP_DEFAULT_KEY_4;
-} /*** end limGetCfgIdOfDefaultKeyid() ***/
+} /*                                     */
 #endif
 
 
-/**
- * limSetDefaultKeyIdAndKeys()
- *
- *FUNCTION:
- * This function is called while applying configuration
- * during JOIN/REASSOC/START_BSS.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- *
- * @param  pMac  - Pointer to Global MAC structure
- * @return None
+/* 
+                              
+  
+           
+                                                       
+                                 
+  
+         
+  
+        
+  
+              
+     
+  
+       
+  
+                                                  
+               
  */
 
 static void
@@ -140,14 +140,14 @@ limSetDefaultKeyIdAndKeys(tpAniSirGlobal pMac)
     dkCfgId = limGetCfgIdOfDefaultKeyid(val);
 #endif
 
-} /*** end limSetDefaultKeyIdAndKeys() ***/
+} /*                                     */
 
-/** -------------------------------------------------------------
-\fn limSetCfgProtection
-\brief sets lim global cfg cache from the config.
-\param      tpAniSirGlobal    pMac
-\return      None
-  -------------------------------------------------------------*/
+/*                                                               
+                       
+                                                 
+                                  
+                 
+                                                               */
 void limSetCfgProtection(tpAniSirGlobal pMac, tpPESession pesessionEntry)
 {
     tANI_U32 val = 0;
@@ -203,16 +203,16 @@ void limSetCfgProtection(tpAniSirGlobal pMac, tpPESession pesessionEntry)
 
 
 
-/**
- * limUpdateTriggerStaBkScanFlag
- *
- * FUNCTION:
- * This function updates the lim global gLimTriggerBackgroundScanDuringQuietBss
- * based on cfg configuration.  Usually triggered after a cfgSetInt call.
- *
- * PARAMS:
- * pMac       - Pointer to Global MAC structure
- *
+/* 
+                                
+  
+            
+                                                                               
+                                                                         
+  
+          
+                                               
+  
  */
 static tSirRetStatus limUpdateTriggerStaBkScanFlag(tpAniSirGlobal pMac)
 {
@@ -228,11 +228,11 @@ static tSirRetStatus limUpdateTriggerStaBkScanFlag(tpAniSirGlobal pMac)
     flag = (val) ? 1 : 0;
     if(flag != pMac->lim.gLimTriggerBackgroundScanDuringQuietBss)
     {
-        /* Update global flag */
+        /*                    */
         pMac->lim.gLimTriggerBackgroundScanDuringQuietBss = flag;
-        /*Update beacon prop IE also if we're an AP */
+        /*                                          */
 
-        //call a wrapper and if the session role is other than the sta call this function schsetfixedbeacon fields function
+        //                                                                                                                 
         limUpdateBeacon(pMac);
 
     }
@@ -241,26 +241,26 @@ static tSirRetStatus limUpdateTriggerStaBkScanFlag(tpAniSirGlobal pMac)
 }
 
 
-/**
- * limHandleCFGparamUpdate()
- *
- *FUNCTION:
- * This function is called by limProcessMessages() to
- * whenever SIR_CFG_PARAM_UPDATE_IND message is posted
- * to LIM (due to a set operation on a CFG parameter).
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- *
- * @param  pMac  - Pointer to Global MAC structure
- * @param  cfgId - ID of CFG parameter that got updated
- * @return None
+/* 
+                            
+  
+           
+                                                     
+                                                      
+                                                      
+  
+         
+  
+        
+  
+              
+     
+  
+       
+  
+                                                  
+                                                       
+               
  */
 
 void
@@ -276,10 +276,10 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
     {
         case WNI_CFG_WEP_DEFAULT_KEYID:
 
-            // !!LAC - when the default KeyID is changed, force all of the
-            // keys and the keyID to be reprogrammed.  this allows the
-            // keys to change after the initial setting of the keys when the CFG was
-            // applied at association time through CFG changes of the keys.
+            //                                                            
+            //                                                        
+            //                                                                      
+            //                                                             
             limSetDefaultKeyIdAndKeys( pMac );
 
             break;
@@ -303,7 +303,7 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
         case WNI_CFG_ASSOCIATION_FAILURE_TIMEOUT:
             if (pMac->lim.gLimMlmState != eLIM_MLM_WT_ASSOC_RSP_STATE)
             {
-                // 'Change' timer for future activations
+                //                                      
                 limDeactivateAndChangeTimer(pMac,
                                             eLIM_ASSOC_FAIL_TIMER);
             }
@@ -329,13 +329,13 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
                  ( (pMac->lim.gLimSystemRole == eLIM_STA_IN_IBSS_ROLE) &&
                    (pMac->lim.gLimSmeState == eLIM_SME_NORMAL_STATE)))
             {
-                // Reactivate Background scan timer
+                //                                 
                 MTRACE(macTrace(pMac, TRACE_CODE_TIMER_ACTIVATE, NO_SESSION, eLIM_BACKGROUND_SCAN_TIMER));
                 if (tx_timer_activate(
                       &pMac->lim.limTimers.gLimBackgroundScanTimer) != TX_SUCCESS)
                 {
-                    /// Could not activate background scan timer.
-                    // Log error
+                    //                                           
+                    //          
                     limLog(pMac, LOGP,
                       FL("could not activate background scan timer"));
                     pMac->lim.gLimBackgroundScanStarted = FALSE;
@@ -555,7 +555,7 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
         {
             tpSirPowerSaveCfg pPowerSaveConfig;
 
-            /* Allocate and fill in power save configuration. */
+            /*                                                */
             pPowerSaveConfig = vos_mem_malloc(sizeof(tSirPowerSaveCfg));
             if ( NULL == pPowerSaveConfig )
             {
@@ -563,8 +563,8 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
                 break;
             }
 
-            /* This context should be valid if power-save configuration message has been already dispathed 
-             * during initialization process. Re-using the present configuration mask
+            /*                                                                                             
+                                                                                     
              */
             vos_mem_copy(pPowerSaveConfig, (tANI_U8 *)&pMac->pmm.gPmmCfg, sizeof(tSirPowerSaveCfg));
 
@@ -582,8 +582,8 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
             PELOGE(limLog(pMac, LOGE, FL("could not retrieve Dot11 Mode  CFG"));)
             break;
         }
-        /* TODO */
-        //psessionEntry->dot11mode = val1;    //// un comment this line ...FORBUILD -TEMPFIX.. HOW TO GET sessionEntry?????
+        /*      */
+        //                                                                                                                 
         break;
     case WNI_CFG_ADDBA_REQ_DECLINE:
         if(wlan_cfgGetInt(pMac, WNI_CFG_ADDBA_REQ_DECLINE, &val1) != eSIR_SUCCESS) {
@@ -635,28 +635,28 @@ limHandleCFGparamUpdate(tpAniSirGlobal pMac, tANI_U32 cfgId)
     default:
             break;
     }
-} /*** end limHandleCFGparamUpdate() ***/
+} /*                                   */
 
 
 
-/**
- * limApplyConfiguration()
- *
- *FUNCTION:
- * This function is called to apply the configured parameters
- * before joining or reassociating with a BSS or starting a BSS.
- *
- *PARAMS:
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- *
- * @param  pMac  - Pointer to Global MAC structure
- * @return None
+/* 
+                          
+  
+           
+                                                             
+                                                                
+  
+         
+  
+        
+  
+              
+     
+  
+       
+  
+                                                  
+               
  */
 
 void
@@ -672,7 +672,7 @@ limApplyConfiguration(tpAniSirGlobal pMac,tpPESession psessionEntry)
 
     limGetPhyMode(pMac, &phyMode, psessionEntry);
         
-    // Set default keyId and keys
+    //                           
     limSetDefaultKeyIdAndKeys(pMac);
 
     limUpdateConfig(pMac,psessionEntry);
@@ -682,14 +682,14 @@ limApplyConfiguration(tpAniSirGlobal pMac,tpPESession psessionEntry)
     limSetCfgProtection(pMac, psessionEntry);    
 
 
-    /* Added for BT - AMP Support */
+    /*                            */
     if ( (psessionEntry->limSystemRole == eLIM_AP_ROLE) ||
          (psessionEntry->limSystemRole == eLIM_BT_AMP_AP_ROLE)||
          (psessionEntry->limSystemRole == eLIM_STA_IN_IBSS_ROLE)||
          (psessionEntry->limSystemRole == eLIM_BT_AMP_STA_ROLE) )
     {
-        /* This check is required to ensure the beacon generation is not done 
-           as a part of join request for a BT-AMP station */
+        /*                                                                    
+                                                          */
 
         if(psessionEntry->statypeForBss == STA_ENTRY_SELF)
         {
@@ -709,24 +709,24 @@ limApplyConfiguration(tpAniSirGlobal pMac,tpPESession psessionEntry)
                 pMac->lim.gScanInPowersave);)
     pMac->lim.gScanInPowersave = (tANI_U8) val;
 
-} /*** end limApplyConfiguration() ***/
+} /*                                 */
 
 
-/**
- * limUpdateConfig
- *
- * FUNCTION:
- * Update the local state from CFG database
- * (This used to be dphUpdateConfig)
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param None
- * @return None
+/* 
+                  
+  
+            
+                                           
+                                    
+  
+         
+  
+               
+  
+        
+  
+              
+               
  */
 
 static void
@@ -737,14 +737,14 @@ limUpdateConfig(tpAniSirGlobal pMac,tpPESession psessionEntry)
     #if 0
     if (wlan_cfgGetStr(pMac, WNI_CFG_STA_ID, pMac->lim.gLimMyMacAddr, &len) != eSIR_SUCCESS)
         limLog(pMac, LOGP, FL("cfg get sta id failed"));
-    #endif //To SUPPORT BT-AMP
+    #endif //                 
     sirCopyMacAddr(pMac->lim.gLimMyMacAddr,psessionEntry->selfMacAddr);
 
     if (wlan_cfgGetInt(pMac, WNI_CFG_SHORT_PREAMBLE, &val) != eSIR_SUCCESS)
         limLog(pMac, LOGP, FL("cfg get short preamble failed"));
     psessionEntry->beaconParams.fShortPreamble = (val) ? 1 : 0;
 
-    /* In STA case this parameter is filled during the join request */
+    /*                                                              */
     if (psessionEntry->limSystemRole == eLIM_AP_ROLE)
     {
         if (wlan_cfgGetInt(pMac, WNI_CFG_WME_ENABLED, &val) != eSIR_SUCCESS)
@@ -761,7 +761,7 @@ limUpdateConfig(tpAniSirGlobal pMac,tpPESession psessionEntry)
         PELOGE(limLog(pMac, LOGE, FL("Can't enable WSM without WME"));)
         psessionEntry->limWsmEnabled = 0;
     }
-    /* In STA , this parameter is filled during the join request */
+    /*                                                           */
     if (psessionEntry->limSystemRole== eLIM_AP_ROLE)
     {
         if (wlan_cfgGetInt(pMac, WNI_CFG_QOS_ENABLED, &val) != eSIR_SUCCESS)
@@ -772,13 +772,13 @@ limUpdateConfig(tpAniSirGlobal pMac,tpPESession psessionEntry)
         limLog(pMac, LOGP, FL("cfg get hcf enabled failed"));
     psessionEntry->limHcfEnabled = (val) ? 1 : 0;
 
-    // Update the ADD BA Declined configuration 
+    //                                          
     if(wlan_cfgGetInt(pMac, WNI_CFG_ADDBA_REQ_DECLINE, &val) != eSIR_SUCCESS)
         limLog( pMac, LOGP, FL( "Unable to get ADDBA_REQ_DECLINE cfg" ));
     pMac->lim.gAddBA_Declined = (val) ?  0xff : 0x0;
 
-    // AP: WSM should enable HCF as well, for STA enable WSM only after
-    // association response is received
+    //                                                                 
+    //                                 
     if (psessionEntry->limWsmEnabled && psessionEntry->limSystemRole == eLIM_AP_ROLE)
         psessionEntry->limHcfEnabled = 1;
 

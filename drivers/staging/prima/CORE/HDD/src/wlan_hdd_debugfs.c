@@ -73,20 +73,20 @@ static ssize_t wcnss_wowenable_write(struct file *file,
         return -EINVAL;
     }
 
-    /* Get command from user */
+    /*                       */
     if (copy_from_user(cmd, buf, count))
         return -EFAULT;
     cmd[count] = '\0';
     sptr = cmd;
 
-    /* Get enable or disable wow */
+    /*                           */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
     if (kstrtou8(token, 0, &wow_enable))
         return -EINVAL;
 
-    /* Disable wow */
+    /*             */
     if (!wow_enable) {
         if (!hdd_exit_wowl(pAdapter))
         {
@@ -99,7 +99,7 @@ static ssize_t wcnss_wowenable_write(struct file *file,
         return count;
     }
 
-    /* Get enable or disable magic packet mode */
+    /*                                         */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
@@ -108,7 +108,7 @@ static ssize_t wcnss_wowenable_write(struct file *file,
     if (wow_mp > 1)
         wow_mp = 1;
 
-    /* Get enable or disable pattern byte matching mode */
+    /*                                                  */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
@@ -157,7 +157,7 @@ static ssize_t wcnss_wowpattern_write(struct file *file,
 
         return -EINVAL;
     }
-    /*take count as ending  into consideration*/
+    /*                                        */
     if (count >=  MAX_USER_COMMAND_SIZE_WOWL_PATTERN)
     {
         VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
@@ -167,13 +167,13 @@ static ssize_t wcnss_wowpattern_write(struct file *file,
         return -EINVAL;
     }
 
-    /* Get command from user */
+    /*                       */
     if (copy_from_user(cmd, buf, count))
         return -EFAULT;
     cmd[count] = '\0';
     sptr = cmd;
 
-    /* Get pattern idx */
+    /*                 */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
@@ -181,10 +181,10 @@ static ssize_t wcnss_wowpattern_write(struct file *file,
     if (kstrtou8(token, 0, &pattern_idx))
         return -EINVAL;
 
-    /* Get pattern offset */
+    /*                    */
     token = strsep(&sptr, " ");
 
-    /* Delete pattern if no further argument */
+    /*                                       */
     if (!token) {
         hdd_del_wowl_ptrn_debugfs(pAdapter, pattern_idx);
 
@@ -194,14 +194,14 @@ static ssize_t wcnss_wowpattern_write(struct file *file,
     if (kstrtou8(token, 0, &pattern_offset))
         return -EINVAL;
 
-    /* Get pattern */
+    /*             */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
 
     pattern_buf = token;
 
-    /* Get pattern mask */
+    /*                  */
     token = strsep(&sptr, " ");
     if (!token)
         return -EINVAL;
@@ -250,7 +250,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
         return -EINVAL;
     }
 
-    /* Get command from user */
+    /*                       */
     if (count <= MAX_USER_COMMAND_SIZE_FRAME)
         cmd = vos_mem_malloc(count + 1);
     else
@@ -278,7 +278,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
     cmd[count] = '\0';
     sptr = cmd;
 
-    /* Get pattern idx */
+    /*                 */
     token = strsep(&sptr, " ");
     if (!token)
         goto failure;
@@ -294,14 +294,14 @@ static ssize_t wcnss_patterngen_write(struct file *file,
         goto failure;
     }
 
-    /* Get pattern duration */
+    /*                      */
     token = strsep(&sptr, " ");
     if (!token)
         goto failure;
     if (kstrtou8(token, 0, &pattern_duration))
         goto failure;
 
-    /* Delete pattern using index if duration is 0 */
+    /*                                             */
     if (!pattern_duration)
     {
         delPeriodicTxPtrnParams =
@@ -320,7 +320,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
         vos_mem_copy(delPeriodicTxPtrnParams->macAddress,
                      pAdapter->macAddressCurrent.bytes, 6);
 
-        /* Delete pattern */
+        /*                */
         if (eHAL_STATUS_SUCCESS != sme_DelPeriodicTxPtrn(pHddCtx->hHal,
                                                 delPeriodicTxPtrnParams))
         {
@@ -336,7 +336,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
         return count;
     }
 
-    /* Check if it's in connected state only when adding patterns */
+    /*                                                            */
     if (!hdd_connIsConnected(WLAN_HDD_GET_STATION_CTX_PTR(pAdapter)))
     {
         VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
@@ -345,7 +345,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
         goto failure;
     }
 
-    /* Get pattern */
+    /*             */
     token = strsep(&sptr, " ");
     if (!token)
         goto failure;
@@ -354,7 +354,7 @@ static ssize_t wcnss_patterngen_write(struct file *file,
     pattern_buf[strlen(pattern_buf) - 1] = '\0';
     pattern_len = strlen(pattern_buf);
 
-    /* Since the pattern is a hex string, 2 characters represent 1 byte. */
+    /*                                                                   */
     if (pattern_len % 2)
     {
         VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
@@ -390,17 +390,17 @@ static ssize_t wcnss_patterngen_write(struct file *file,
     vos_mem_copy(addPeriodicTxPtrnParams->macAddress,
                  pAdapter->macAddressCurrent.bytes, 6);
 
-    /* Extract the pattern */
+    /*                     */
     for(i = 0; i < addPeriodicTxPtrnParams->ucPtrnSize; i++)
     {
         addPeriodicTxPtrnParams->ucPattern[i] =
         (hdd_parse_hex(pattern_buf[0]) << 4) + hdd_parse_hex(pattern_buf[1]);
 
-        /* Skip to next byte */
+        /*                   */
         pattern_buf += 2;
     }
 
-    /* Add pattern */
+    /*             */
     if (eHAL_STATUS_SUCCESS != sme_AddPeriodicTxPtrn(pHddCtx->hHal,
                                             addPeriodicTxPtrnParams))
     {
@@ -478,5 +478,5 @@ void hdd_debugfs_exit(hdd_context_t *pHddCtx)
 {
     debugfs_remove_recursive(pHddCtx->debugfs_phy);
 }
-#endif /* #ifdef WLAN_OPEN_SOURCE */
+#endif /*                         */
 

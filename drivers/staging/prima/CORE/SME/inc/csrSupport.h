@@ -62,7 +62,7 @@
 #define CSR_WAPI_MAX_CYPHERS           ( 5 )
 #define CSR_WAPI_MAX_UNICAST_CYPHERS   ( 5 )
 #define CSR_WAPI_MAX_MULTICAST_CYPHERS ( 1 )
-#endif /* FEATURE_WLAN_WAPI */
+#endif /*                   */
 
 #define CSR_RSN_OUI_SIZE              ( 4 )
 #define CSR_RSN_VERSION_SUPPORTED     ( 1 )
@@ -78,7 +78,7 @@
 #define CSR_WPA_MAX_CYPHERS           ( 5 )
 #define CSR_WPA_MAX_UNICAST_CYPHERS   ( 5 )
 #define CSR_WPA_MAX_MULTICAST_CYPHERS ( 1 )
-#define CSR_WPA_IE_MIN_SIZE           ( 6 )   // minimum size of the IE->length is the size of the Oui + Version.
+#define CSR_WPA_IE_MIN_SIZE           ( 6 )   //                                                                 
 #define CSR_WPA_IE_MIN_SIZE_W_MULTICAST ( HDD_WPA_IE_MIN_SIZE + HDD_WPA_OUI_SIZE )
 #define CSR_WPA_IE_MIN_SIZE_W_UNICAST   ( HDD_WPA_IE_MIN_SIZE + HDD_WPA_OUI_SIZE + sizeof( pWpaIe->cUnicastCyphers ) )
 
@@ -102,7 +102,7 @@
 #define CSR_DOT11_MAX_11G_RATE ( 54 * 2 )
 #define CSR_DOT11_MIN_11G_RATE (  6 * 2 )
 
-//Define the frequency ranges that need to be passive scan, MHz
+//                                                             
 #define CSR_PASSIVE_SCAN_CAT1_LOW       5250 
 #define CSR_PASSIVE_SCAN_CAT1_HIGH      5350
 #define CSR_PASSIVE_SCAN_CAT2_LOW       5470 
@@ -121,18 +121,18 @@
 #define CSR_OUI_WAPI_RESERVED_INDEX    0x00
 #define CSR_OUI_WAPI_WAI_CERT_OR_SMS4_INDEX    0x01
 #define CSR_OUI_WAPI_WAI_PSK_INDEX     0x02
-#endif /* FEATURE_WLAN_WAPI */
+#endif /*                   */
 
 
 typedef enum 
 {
-    // 11b rates
+    //          
     eCsrSuppRate_1Mbps   =   1 * 2,
     eCsrSuppRate_2Mbps   =   2 * 2,
-    eCsrSuppRate_5_5Mbps =  11,      // 5.5 * 2
+    eCsrSuppRate_5_5Mbps =  11,      //        
     eCsrSuppRate_11Mbps  =  11 * 2,
 
-    // 11a / 11g rates
+    //                
     eCsrSuppRate_6Mbps   =   6 * 2,
     eCsrSuppRate_9Mbps   =   9 * 2,
     eCsrSuppRate_12Mbps  =  12 * 2,
@@ -142,9 +142,9 @@ typedef enum
     eCsrSuppRate_48Mbps  =  48 * 2,
     eCsrSuppRate_54Mbps  =  54 * 2,
 
-    // airgo proprietary rates
+    //                        
     eCsrSuppRate_10Mbps  =  10 * 2,
-    eCsrSuppRate_10_5Mbps=  21,     // 10.5 * 2
+    eCsrSuppRate_10_5Mbps=  21,     //         
     eCsrSuppRate_20Mbps  =  20 * 2,
     eCsrSuppRate_21Mbps  =  21 * 2,
     eCsrSuppRate_40Mbps  =  40 * 2,
@@ -168,19 +168,19 @@ typedef enum
 
 typedef enum
 {
-    eCsrPassiveScanNot,     //can be scanned actively on the whole 5GHz band
-    eCsrPassiveScanCat1,    //always passive scan from 5250 to 5350MHz
-    eCsrPassiveScanCat2,    //always passive scan from 5250 to 5350MHz, and from 5470 to 5725MHz
-    eCsrPassiveScanCat3,    //always passive scan from 5250 to 5350MHz, from 5470 to 5725MHz, and from 5500 to 5560MHz
+    eCsrPassiveScanNot,     //                                              
+    eCsrPassiveScanCat1,    //                                        
+    eCsrPassiveScanCat2,    //                                                                  
+    eCsrPassiveScanCat3,    //                                                                                        
 }eCsrPassiveScanCat;
 
 
-//Please donot insert in the middle of the enum here because they tie to the indiex
+//                                                                                 
 typedef enum
 {
-    eCSR_COUNTRY_INDEX_US = 0,  //Always set US as index 0
+    eCSR_COUNTRY_INDEX_US = 0,  //                        
     eCSR_COUNTRY_INDEX_ANDORRA,
-    eCSR_COUNTRY_INDEX_UAE,     //United Arab Emirates
+    eCSR_COUNTRY_INDEX_UAE,     //                    
     eCSR_COUNTRY_INDEX_AFGHANISTAN,
     eCSR_COUNTRY_INDEX_ANTIGUA_AND_BARBUDA,
     eCSR_COUNTRY_INDEX_ANGUILLA,
@@ -431,7 +431,7 @@ typedef enum
 
     eCSR_NUM_COUNTRY_INDEX,     
 }eCsrCountryIndex;
-//Please donot insert in the middle of the enum above because they tie to the indiex
+//                                                                                  
 
 
 typedef struct tagCsrSirMBMsgHdr 
@@ -453,7 +453,7 @@ typedef struct tagCsrCfgMsgTlvHdr
 typedef struct tagCsrCfgMsgTlv
 {
     tCsrCfgMsgTlvHdr Hdr;
-    tANI_U32 variable[ 1 ];    // placeholder for the data
+    tANI_U32 variable[ 1 ];    //                         
     
 }tCsrCfgMsgTlv;
 
@@ -478,7 +478,7 @@ typedef struct tagCsrCfgSetRsp
 typedef struct tagCsrDomainChnScanInfo
 {
     tANI_U8 chnId;
-    tSirScanType scanType;  //whether this channel must be scan passively
+    tSirScanType scanType;  //                                           
 }tCsrDomainChnScanInfo;
 
 
@@ -489,7 +489,7 @@ typedef struct tagCsrDomainChnScanInfo
 #pragma pack( 1 )
 #endif
 
-// Generic Information Element Structure
+//                                      
 typedef __ani_attr_pre_packed struct sDot11IEHeader 
 {
     tANI_U8 ElementID;
@@ -499,7 +499,7 @@ typedef __ani_attr_pre_packed struct sDot11IEHeader
 typedef __ani_attr_pre_packed struct tagCsrWmeInfoIe
 {
     tDot11IEHeader IeHeader;
-    tANI_U8    Oui[ CSR_WME_OUI_SIZE ];  // includes the 3 byte OUI + 1 byte Type
+    tANI_U8    Oui[ CSR_WME_OUI_SIZE ];  //                                      
     tANI_U8    Subtype;
     tANI_U8    Version;
     tANI_U8    QoSInfo;
@@ -517,7 +517,7 @@ typedef __ani_attr_pre_packed struct tagCsrWmeAcParms
 typedef __ani_attr_pre_packed struct tagCsrWmeParmIe
 {
     tDot11IEHeader IeHeader;
-    tANI_U8    Oui[ CSR_WME_OUI_SIZE ];  // includes the 3 byte OUI + 1 byte Type
+    tANI_U8    Oui[ CSR_WME_OUI_SIZE ];  //                                      
     tANI_U8    Subtype;
     tANI_U8    Version;
     tANI_U8    QoSInfo;
@@ -656,14 +656,14 @@ typedef __ani_attr_pre_packed struct tagCsrWAPIBKIe
 
 
 } __ani_attr_packed tCsrWAPIBKIe;
-#endif /* FEATURE_WLAN_WAPI */
+#endif /*                   */
 
 #if defined(__ANI_COMPILER_PRAGMA_PACK_STACK)
 #pragma pack( pop )
 #endif
 
-// Structure used to describe a group of continuous channels and hook it into the 
-// corresponding channel list
+//                                                                                
+//                           
 typedef struct tagCsrChannelSet 
 {
   tListElem      channelListLink;
@@ -725,7 +725,7 @@ typedef struct tagRoamingTimerInfo
     ( ((pIes)->WMMParams.present && ((pIes)->WMMParams.qosInfo & SME_QOS_AP_SUPPORTS_APSD)) || \
                ((pIes)->WMMInfoAp.present && (pIes)->WMMInfoAp.uapsd) )
 
-//This macro returns the total length needed of Tlv with with len bytes of data
+//                                                                             
 #define GET_TLV_MSG_LEN(len)    GET_ROUND_UP((sizeof(tCsrCfgMsgTlvHdr) + (len)), sizeof(tANI_U32))
 
 tANI_BOOLEAN csrGetBssIdBssDesc( tHalHandle hHal, tSirBssDescription *pSirBssDesc, tCsrBssid *pBssId ); 
@@ -750,43 +750,43 @@ tANI_U8 csrConstructWpaIe( tHalHandle hHal, tCsrRoamProfile *pProfile, tSirBssDe
 #ifdef FEATURE_WLAN_WAPI
 
 tANI_BOOLEAN csrIsProfileWapi( tCsrRoamProfile *pProfile );
-#endif /* FEATURE_WLAN_WAPI */
-//If a WPAIE exists in the profile, just use it. Or else construct one from the BSS
-//Caller allocated memory for pWpaIe and guarrantee it can contain a max length WPA IE
+#endif /*                   */
+//                                                                                 
+//                                                                                    
 tANI_U8 csrRetrieveWpaIe( tHalHandle hHal, tCsrRoamProfile *pProfile, tSirBssDescription *pSirBssDesc, 
                           tDot11fBeaconIEs *pIes, tCsrWpaIe *pWpaIe );
 tANI_BOOLEAN csrIsSsidEqual( tHalHandle hHal, tSirBssDescription *pSirBssDesc1, 
                              tSirBssDescription *pSirBssDesc2, tDot11fBeaconIEs *pIes2 );
-//Null ssid means match
+//                     
 tANI_BOOLEAN csrIsSsidInList( tHalHandle hHal, tSirMacSSid *pSsid, tCsrSSIDs *pSsidList );
 tANI_BOOLEAN csrIsProfileWpa( tCsrRoamProfile *pProfile );
 tANI_BOOLEAN csrIsProfileRSN( tCsrRoamProfile *pProfile );
-//This function returns the raw byte array of WPA and/or RSN IE
+//                                                             
 tANI_BOOLEAN csrGetWpaRsnIe( tHalHandle hHal, tANI_U8 *pIes, tANI_U32 len,
                              tANI_U8 *pWpaIe, tANI_U8 *pcbWpaIe, tANI_U8 *pRSNIe, tANI_U8 *pcbRSNIe);
-//If a RSNIE exists in the profile, just use it. Or else construct one from the BSS
-//Caller allocated memory for pWpaIe and guarrantee it can contain a max length WPA IE
+//                                                                                 
+//                                                                                    
 tANI_U8 csrRetrieveRsnIe( tHalHandle hHal, tANI_U32 sessionId, tCsrRoamProfile *pProfile, tSirBssDescription *pSirBssDesc, 
                           tDot11fBeaconIEs *pIes, tCsrRSNIe *pRsnIe );
 #ifdef FEATURE_WLAN_WAPI
-//If a WAPI IE exists in the profile, just use it. Or else construct one from the BSS
-//Caller allocated memory for pWapiIe and guarrantee it can contain a max length WAPI IE
+//                                                                                   
+//                                                                                      
 tANI_U8 csrRetrieveWapiIe( tHalHandle hHal, tANI_U32 sessionId, tCsrRoamProfile *pProfile, tSirBssDescription *pSirBssDesc, 
                           tDot11fBeaconIEs *pIes, tCsrWapiIe *pWapiIe );
-#endif /* FEATURE_WLAN_WAPI */
+#endif /*                   */
 tANI_BOOLEAN csrSearchChannelListForTxPower(tHalHandle hHal, tSirBssDescription *pBssDescription, tCsrChannelSet *returnChannelGroup);
 tANI_BOOLEAN csrRatesIsDot11Rate11bSupportedRate( tANI_U8 dot11Rate );
 tANI_BOOLEAN csrRatesIsDot11Rate11aSupportedRate( tANI_U8 dot11Rate );
 tAniEdType csrTranslateEncryptTypeToEdType( eCsrEncryptionType EncryptType ); 
-//pIes shall contain IEs from pSirBssDesc. It shall be returned from function csrGetParsedBssDescriptionIEs 
+//                                                                                                          
 tANI_BOOLEAN csrIsSecurityMatch( tHalHandle hHal, tCsrAuthList *authType, tCsrEncryptionList *pUCEncryptionType, tCsrEncryptionList *pMCEncryptionType,
                                  tSirBssDescription *pSirBssDesc, tDot11fBeaconIEs *pIes, 
                                  eCsrAuthType *negotiatedAuthtype, eCsrEncryptionType *negotiatedUCCipher, eCsrEncryptionType *negotiatedMCCipher );
 tANI_BOOLEAN csrIsBSSTypeMatch(eCsrRoamBssType bssType1, eCsrRoamBssType bssType2);
 tANI_BOOLEAN csrIsBssTypeIBSS(eCsrRoamBssType bssType);
 tANI_BOOLEAN csrIsBssTypeWDS(eCsrRoamBssType bssType);
-//ppIes can be NULL. If caller want to get the *ppIes allocated by this function, pass in *ppIes = NULL
-//Caller needs to free the memory in this case
+//                                                                                                     
+//                                            
 tANI_BOOLEAN csrMatchBSS( tHalHandle hHal, tSirBssDescription *pBssDesc, tCsrScanResultFilter *pFilter, 
                           eCsrAuthType *pNegAuth, eCsrEncryptionType *pNegUc, eCsrEncryptionType *pNegMc,
                           tDot11fBeaconIEs **ppIes);
@@ -798,10 +798,10 @@ tANI_BOOLEAN csrRatesIsDot11RateSupported( tHalHandle hHal, tANI_U8 rate );
 tANI_U16 csrRatesFindBestRate( tSirMacRateSet *pSuppRates, tSirMacRateSet *pExtRates, tSirMacPropRateSet *pPropRates );
 tSirBssType csrTranslateBsstypeToMacType(eCsrRoamBssType csrtype);
                             
-//Caller allocates memory for pIEStruct
+//                                     
 eHalStatus csrParseBssDescriptionIEs(tHalHandle hHal, tSirBssDescription *pBssDesc, tDot11fBeaconIEs *pIEStruct);
-//This function will allocate memory for the parsed IEs to the caller. Caller must free the memory
-//after it is done with the data only if this function succeeds
+//                                                                                                
+//                                                             
 eHalStatus csrGetParsedBssDescriptionIEs(tHalHandle hHal, tSirBssDescription *pBssDesc, tDot11fBeaconIEs **ppIEStruct);
 
 tANI_BOOLEAN csrValidateCountryString( tHalHandle hHal, tANI_U8 *pCountryString );
@@ -811,10 +811,10 @@ tANI_U8 csrToUpper( tANI_U8 ch );
 eHalStatus csrGetPhyModeFromBss(tpAniSirGlobal pMac, tSirBssDescription *pBSSDescription, 
                                 eCsrPhyMode *pPhyMode, tDot11fBeaconIEs *pIes);
 
-//fForce -- force reassoc regardless of whether there is any change
-//The reason is that for UAPSD-bypass, the code underneath this call determine whether
-//to allow UAPSD. The information in pModProfileFields reflects what the user wants.
-//There may be discrepency in it. UAPSD-bypass logic should decide if it needs to reassoc
+//                                                                 
+//                                                                                    
+//                                                                                  
+//                                                                                       
 eHalStatus csrReassoc(tpAniSirGlobal pMac, tANI_U32 sessionId,
                       tCsrRoamModifyProfileFields *pModProfileFields,
                       tANI_U32 *pRoamId, v_BOOL_t fForce);
@@ -823,10 +823,10 @@ eHalStatus
 csrIsconcurrentsessionValid(tpAniSirGlobal pMac,tANI_U32 cursessionId,
                                  tVOS_CON_MODE currBssPersona);
 
-//Update beaconInterval for P2P-GO case if it is different 
+//                                                         
 eHalStatus csrUpdatep2pBeaconInterval(tpAniSirGlobal pMac);
 
-//BeaconInterval validation for MCC support
+//                                         
 eHalStatus csrValidateMCCBeaconInterval(tpAniSirGlobal pMac, tANI_U8 channelId,
                                      tANI_U16 *beaconInterval, tANI_U32 cursessionId,
                                      tVOS_CON_MODE currBssPersona);

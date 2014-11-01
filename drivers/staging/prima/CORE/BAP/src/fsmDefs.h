@@ -39,12 +39,12 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-// Project/System dependant defines and typedefs
+//                                              
 
 #ifndef __FSMDEFS_H__
 #define __FSMDEFS_H__
 
-/* Temporary fix until I clean up all the type names */
+/*                                                   */
 #define BTAMPFSM_INSTANCEDATA_T tWLAN_BAPbapPhysLinkMachine 
 
 typedef unsigned char BTAMPFSM_ENTRY_FLAG_T;

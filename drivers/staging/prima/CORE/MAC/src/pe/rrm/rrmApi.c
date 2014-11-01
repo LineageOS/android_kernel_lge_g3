@@ -42,22 +42,22 @@
 
 
 
-/**=========================================================================
+/*                                                                          
   
-  \file  rrmApi.c
+                 
   
-  \brief implementation for PE RRM APIs
+                                       
   
   
-  ========================================================================*/
+                                                                          */
 
-/* $Header$ */
+/*          */
 
 #if defined WLAN_FEATURE_VOWIFI
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include "palTypes.h"
 #include "wniApi.h"
 #include "sirApi.h"
@@ -86,20 +86,20 @@ rrmGetMinOfMaxTxPower(tPowerdBm regMax, tPowerdBm apTxPower)
     return maxTxPower;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmCacheMgmtTxPower
- **
- * FUNCTION:  Store Tx power for management frames.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                      
+   
+                                                   
+  
+         
+  
+               
+  
+        
+  
+                                      
+               
  */
 void
 rrmCacheMgmtTxPower ( tpAniSirGlobal pMac, tPowerdBm txPower, tpPESession pSessionEntry )
@@ -113,20 +113,20 @@ rrmCacheMgmtTxPower ( tpAniSirGlobal pMac, tPowerdBm txPower, tpPESession pSessi
        pSessionEntry->txMgmtPower = txPower;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmGetMgmtTxPower
- *
- * FUNCTION:  Get the Tx power for management frames.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pSessionEntry session entry.
- * @return txPower
+//                                                                     
+/* 
+                    
+  
+                                                     
+  
+         
+  
+               
+  
+        
+  
+                                      
+                  
  */
 tPowerdBm
 rrmGetMgmtTxPower ( tpAniSirGlobal pMac, tpPESession pSessionEntry )
@@ -144,21 +144,21 @@ rrmGetMgmtTxPower ( tpAniSirGlobal pMac, tpPESession pSessionEntry )
    return pSessionEntry->txMgmtPower;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmSendSetMaxTxPowerReq
- *
- * FUNCTION:  Send WDA_SET_MAX_TX_POWER_REQ message to change the max tx power.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param txPower txPower to be set.
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                          
+  
+                                                                               
+  
+         
+  
+               
+  
+        
+  
+                                    
+                                      
+               
  */
 tSirRetStatus
 rrmSendSetMaxTxPowerReq ( tpAniSirGlobal pMac, tPowerdBm txPower, tpPESession pSessionEntry )
@@ -205,21 +205,21 @@ rrmSendSetMaxTxPowerReq ( tpAniSirGlobal pMac, tPowerdBm txPower, tpPESession pS
 }
 
 
-// --------------------------------------------------------------------
-/**
- * rrmSetMaxTxPowerRsp
- *
- * FUNCTION:  Process WDA_SET_MAX_TX_POWER_RSP message.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param txPower txPower to be set.
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                      
+  
+                                                       
+  
+         
+  
+               
+  
+        
+  
+                                    
+                                      
+               
  */
 tSirRetStatus
 rrmSetMaxTxPowerRsp ( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ )
@@ -258,22 +258,22 @@ rrmSetMaxTxPowerRsp ( tpAniSirGlobal pMac, tpSirMsgQ limMsgQ )
    limMsgQ->bodyptr = NULL;
    return retCode;
 }
-// --------------------------------------------------------------------
-/**
- * rrmProcessLinkMeasurementRequest
- *
- * FUNCTION:  Processes the Link measurement request and send the report.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pBd pointer to BD to extract RSSI and SNR
- * @param pLinkReq pointer to the Link request frame structure.
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                                   
+  
+                                                                         
+  
+         
+  
+               
+  
+        
+  
+                                                   
+                                                               
+                                      
+               
  */
 tSirRetStatus
 rrmProcessLinkMeasurementRequest( tpAniSirGlobal pMac, 
@@ -356,7 +356,7 @@ rrmProcessLinkMeasurementRequest( tpAniSirGlobal pMac,
    PELOG1(limLog( pMac, LOG1, "Received Link report frame with %d", currentRSSI);)
 #endif
 
-   // 2008 11k spec reference: 18.4.8.5 RCPI Measurement
+   //                                                   
    if ((currentRSSI) <= RCPI_LOW_RSSI_VALUE)
        LinkReport.rcpi = 0; 
    else if ((currentRSSI > RCPI_LOW_RSSI_VALUE) && (currentRSSI <= 0))
@@ -374,21 +374,21 @@ rrmProcessLinkMeasurementRequest( tpAniSirGlobal pMac,
 
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmProcessNeighborReportResponse
- *
- * FUNCTION:  Processes the Neighbor Report response from the peer AP.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pNeighborRep pointer to the Neighbor report frame structure.
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                                   
+  
+                                                                      
+  
+         
+  
+               
+  
+        
+  
+                                                                      
+                                      
+               
  */
 tSirRetStatus
 rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
@@ -411,7 +411,7 @@ rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
    PELOGE(limLog( pMac, LOGE, FL("Neighbor report response received ") );)
 #endif
 
-   // Dialog token
+   //             
    if( pMac->rrm.rrmPEContext.DialogToken != pNeighborRep->DialogToken.token )
    {
       PELOGE(limLog( pMac, LOGE, "Dialog token mismatch in the received Neighbor report");)
@@ -425,7 +425,7 @@ rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
    length = (sizeof( tSirNeighborReportInd )) +
             (sizeof( tSirNeighborBssDescription ) * (pNeighborRep->num_NeighborReport - 1) ) ; 
             
-   //Prepare the request to send to SME.
+   //                                   
    pSmeNeighborRpt = vos_mem_malloc(length);
    if( NULL == pSmeNeighborRpt )
    {
@@ -440,7 +440,7 @@ rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
 
    for( i = 0 ; i < pNeighborRep->num_NeighborReport ; i++ )
    {
-      pSmeNeighborRpt->sNeighborBssDescription[i].length = sizeof( tSirNeighborBssDescription ); /*+ any optional ies */
+      pSmeNeighborRpt->sNeighborBssDescription[i].length = sizeof( tSirNeighborBssDescription ); /*                   */
       vos_mem_copy(pSmeNeighborRpt->sNeighborBssDescription[i].bssId,
                    pNeighborRep->NeighborReport[i].bssid,
                    sizeof(tSirMacAddr));
@@ -465,7 +465,7 @@ rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
    pSmeNeighborRpt->numNeighborReports = pNeighborRep->num_NeighborReport;
    vos_mem_copy(pSmeNeighborRpt->bssId, pSessionEntry->bssId, sizeof(tSirMacAddr));
 
-   //Send request to SME.
+   //                    
    mmhMsg.type    = pSmeNeighborRpt->messageType;
    mmhMsg.bodyptr = pSmeNeighborRpt;
    MTRACE(macTraceMsgTx(pMac, pSessionEntry->peSessionId, mmhMsg.type));
@@ -475,20 +475,20 @@ rrmProcessNeighborReportResponse( tpAniSirGlobal pMac,
 
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmProcessNeighborReportReq
- *
- * FUNCTION:  
- *
- * LOGIC: Create a Neighbor report request and send it to peer.
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pNeighborReq Neighbor report request params .
- * @return None
+//                                                                     
+/* 
+                              
+  
+              
+  
+                                                               
+  
+               
+  
+        
+  
+                                                       
+               
  */
 tSirRetStatus
 rrmProcessNeighborReportReq( tpAniSirGlobal pMac,
@@ -533,22 +533,22 @@ rrmProcessNeighborReportReq( tpAniSirGlobal pMac,
 }
 
 #define ABS(x)      ((x < 0) ? -x : x)
-// --------------------------------------------------------------------
-/**
- * rrmProcessBeaconReportReq
- *
- * FUNCTION:  Processes the Beacon report request from the peer AP.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pCurrentReq pointer to the current Req comtext.
- * @param pBeaconReq pointer to the beacon report request IE from the peer.
- * @param pSessionEntry session entry.
- * @return None
+//                                                                     
+/* 
+                            
+  
+                                                                   
+  
+         
+  
+               
+  
+        
+  
+                                                         
+                                                                           
+                                      
+               
  */
 static tRrmRetStatus
 rrmProcessBeaconReportReq( tpAniSirGlobal pMac, 
@@ -566,23 +566,23 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
    if( pBeaconReq->measurement_request.Beacon.BeaconReporting.present && 
        (pBeaconReq->measurement_request.Beacon.BeaconReporting.reportingCondition != 0) )
    {
-      //Repeated measurement is not supported. This means number of repetitions should be zero.(Already checked)
-      //All test case in VoWifi(as of version 0.36)  use zero for number of repetitions.
-      //Beacon reporting should not be included in request if number of repetitons is zero.
-      // IEEE Std 802.11k-2008 Table 7-29g and section 11.10.8.1
+      //                                                                                                        
+      //                                                                                
+      //                                                                                   
+      //                                                        
 
       PELOGE(limLog( pMac, LOGE, "Dropping the request: Reporting condition included in beacon report request and it is not zero");)
       return eRRM_INCAPABLE;
    }
 
-   /* The logic here is to check the measurement duration passed in the beacon request. Following are the cases handled.
-      Case 1: If measurement duration received in the beacon request is greater than the max measurement duration advertised 
-                in the RRM capabilities(Assoc Req), and Duration Mandatory bit is set to 1, REFUSE the beacon request
-      Case 2: If measurement duration received in the beacon request is greater than the max measurement duration advertised 
-                in the RRM capabilities(Assoc Req), and Duration Mandatory bit is set to 0, perform measurement for 
-                the duration advertised in the RRM capabilities
+   /*                                                                                                                   
+                                                                                                                             
+                                                                                                                     
+                                                                                                                             
+                                                                                                                    
+                                                               
       
-      maxMeasurementDuration = 2^(nonOperatingChanMax - 4) * BeaconInterval
+                                                                           
     */
    maxDuration = pMac->rrm.rrmPEContext.rrmEnabledCaps.nonOperatingChanMax - 4;
    sign = (maxDuration < 0) ? 1 : 0;
@@ -610,7 +610,7 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
          measDuration = maxMeasduration;
    }
 
-   //Cache the data required for sending report.
+   //                                           
    pCurrentReq->request.Beacon.reportingDetail = pBeaconReq->measurement_request.Beacon.BcnReportingDetail.present ?
       pBeaconReq->measurement_request.Beacon.BcnReportingDetail.reportingDetail :
       BEACON_REPORTING_DETAIL_ALL_FF_IE ;
@@ -640,7 +640,7 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
          num_channels += pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].num_channelList;
    }
 
-   //Prepare the request to send to SME.
+   //                                   
    pSmeBcnReportReq = vos_mem_malloc(sizeof( tSirBeaconReportReqInd ));
    if ( NULL == pSmeBcnReportReq )
    {
@@ -687,37 +687,37 @@ rrmProcessBeaconReportReq( tpAniSirGlobal pMac,
           pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].num_channelList);
 
          pChanList += pBeaconReq->measurement_request.Beacon.APChannelReport[num_APChanReport].num_channelList;
-         pSmeBcnReportReq->measurementDuration[num_APChanReport] = SYS_TU_TO_MS(measDuration /*pBeaconReq->measurement_request.Beacon.meas_duration*/);
+         pSmeBcnReportReq->measurementDuration[num_APChanReport] = SYS_TU_TO_MS(measDuration /*                                                    */);
          pSmeBcnReportReq->fMeasurementtype[num_APChanReport] = pBeaconReq->measurement_request.Beacon.meas_mode;
       }
    }
 
-   //Send request to SME.
+   //                    
    mmhMsg.type    = eWNI_SME_BEACON_REPORT_REQ_IND;
    mmhMsg.bodyptr = pSmeBcnReportReq;
    MTRACE(macTraceMsgTx(pMac, pSessionEntry->peSessionId, mmhMsg.type));
    return limSysProcessMmhMsgApi(pMac, &mmhMsg, ePROT);
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmFillBeaconIes
- *
- * FUNCTION:  
- *
- * LOGIC: Fills Fixed fields and Ies in bss description to an array of tANI_U8.
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pIes - pointer to the buffer that should be populated with ies.
- * @param pNumIes - returns the num of ies filled in this param.
- * @param pIesMaxSize - Max size of the buffer pIes.
- * @param eids - pointer to array of eids. If NULL, all ies will be populated.
- * @param numEids - number of elements in array eids.
- * @param pBssDesc - pointer to Bss Description.
- * @return None
+//                                                                     
+/* 
+                   
+  
+              
+  
+                                                                               
+  
+               
+  
+        
+  
+                                                                         
+                                                                
+                                                    
+                                                                              
+                                                     
+                                                
+               
  */
 static void
 rrmFillBeaconIes( tpAniSirGlobal pMac, 
@@ -733,7 +733,7 @@ rrmFillBeaconIes( tpAniSirGlobal pMac,
       return;
    }
 
-   //Make sure that if eid is null, numEids is set to zero.
+   //                                                      
    numEids = (eids == NULL) ? 0 : numEids;
 
    pBcnIes = (tANI_U8*) &pBssDesc->ieFields[0];
@@ -752,7 +752,7 @@ rrmFillBeaconIes( tpAniSirGlobal pMac,
 
    while ( BcnNumIes > 0 ) 
    {
-      len = *(pBcnIes + 1) + 2; //element id + length.
+      len = *(pBcnIes + 1) + 2; //                    
 #if defined WLAN_VOWIFI_DEBUG
       PELOGE(limLog( pMac, LOGE, "EID = %d, len = %d total = %d", *pBcnIes, *(pBcnIes+1), len );)
 #endif
@@ -783,20 +783,20 @@ rrmFillBeaconIes( tpAniSirGlobal pMac,
 #endif
 }
       
-// --------------------------------------------------------------------
-/**
- * rrmProcessBeaconReportXmit
- *
- * FUNCTION:  
- *
- * LOGIC: Create a Radio measurement report action frame and send it to peer.
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pBcnReport Data for beacon report IE from SME.
- * @return None
+//                                                                     
+/* 
+                             
+  
+              
+  
+                                                                             
+  
+               
+  
+        
+  
+                                                        
+               
  */
 tSirRetStatus
 rrmProcessBeaconReportXmit( tpAniSirGlobal pMac,
@@ -853,21 +853,21 @@ rrmProcessBeaconReportXmit( tpAniSirGlobal pMac,
 
    for (bssDescCnt = 0; bssDescCnt < pBcnReport->numBssDesc; bssDescCnt++)
    {
-       //Prepare the beacon report and send it to the peer.
+       //                                                  
        pReport[bssDescCnt].token = pBcnReport->uDialogToken;
        pReport[bssDescCnt].refused = 0;
        pReport[bssDescCnt].incapable = 0;
        pReport[bssDescCnt].type = SIR_MAC_RRM_BEACON_TYPE;
 
-       //If the scan result is NULL then send report request with
-       //option subelement as NULL..
+       //                                                        
+       //                           
        if ( NULL != pBcnReport->pBssDescription[bssDescCnt] )
        {
            flagBSSPresent = TRUE;
        }
 
-       //Valid response is included if the size of beacon xmit
-       //is == size of beacon xmit ind + ies
+       //                                                     
+       //                                   
        if ( pBcnReport->length >= sizeof( tSirBeaconReportXmitInd ) )
        {
            pReport[bssDescCnt].report.beaconReport.regClass =  pBcnReport->regClass;
@@ -899,13 +899,13 @@ rrmProcessBeaconReportXmit( tpAniSirGlobal pMac,
            switch ( pCurrentReq->request.Beacon.reportingDetail )
            {
                case BEACON_REPORTING_DETAIL_NO_FF_IE:
-               //0 No need to include any elements.
+               //                                  
 #if defined WLAN_VOWIFI_DEBUG
                PELOGE(limLog(pMac, LOGE, "No reporting detail requested");)
 #endif
                break;
                case BEACON_REPORTING_DETAIL_ALL_FF_REQ_IE:
-               //1: Include all FFs and Requested Ies.
+               //                                     
 #if defined WLAN_VOWIFI_DEBUG
                PELOGE(limLog(pMac, LOGE,
                "Only requested IEs in reporting detail requested");)
@@ -924,7 +924,7 @@ rrmProcessBeaconReportXmit( tpAniSirGlobal pMac,
 
                break;
                case BEACON_REPORTING_DETAIL_ALL_FF_IE:
-               //2 / default - Include all FFs and all Ies.
+               //                                          
                default:
 #if defined WLAN_VOWIFI_DEBUG
                PELOGE(limLog(pMac, LOGE, "Default all IEs and FFs");)
@@ -1007,24 +1007,24 @@ void rrmProcessBeaconRequestFailure(tpAniSirGlobal pMac, tpPESession pSessionEnt
     return;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmProcessRadioMeasurementRequest
- *
- * FUNCTION:  Processes the Radio Resource Measurement request.
- *
- * LOGIC:
+//                                                                     
+/* 
+                                    
+  
+                                                               
+  
+         
  
 
-*
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param peer Macaddress of the peer requesting the radio measurement.
- * @param pRRMReq Array of Measurement request IEs
- * @param pSessionEntry session entry.
- * @return None
+ 
+               
+  
+        
+  
+                                                                       
+                                                  
+                                      
+               
  */
 tSirRetStatus
 rrmProcessRadioMeasurementRequest( tpAniSirGlobal pMac,
@@ -1041,7 +1041,7 @@ rrmProcessRadioMeasurementRequest( tpAniSirGlobal pMac,
 
    if( !pRRMReq->num_MeasurementRequest )
    {
-      //No measurement requests....
+      //                           
       //
       pReport = vos_mem_malloc(sizeof( tSirMacRadioMeasureReport ));
       if ( NULL ==  pReport )
@@ -1063,10 +1063,10 @@ rrmProcessRadioMeasurementRequest( tpAniSirGlobal pMac,
       return eSIR_FAILURE;
    }
 
-   // PF Fix
+   //       
    if( pRRMReq->NumOfRepetitions.repetitions > 0 )
    {
-      //Send a report with incapable bit set. Not supporting repetitions.
+      //                                                                 
       pReport = vos_mem_malloc(sizeof( tSirMacRadioMeasureReport ));
       if ( NULL == pReport )
       {
@@ -1090,10 +1090,10 @@ rrmProcessRadioMeasurementRequest( tpAniSirGlobal pMac,
       switch( pRRMReq->MeasurementRequest[i].measurement_type )
       {
          case SIR_MAC_RRM_BEACON_TYPE:
-            //Process beacon request.
+            //                       
             if( pCurrentReq )
             {
-               if ( pReport == NULL ) //Allocate memory to send reports for any subsequent requests.
+               if ( pReport == NULL ) //                                                            
                {
                   pReport = vos_mem_malloc(sizeof( tSirMacRadioMeasureReport )
                                            * (pRRMReq->num_MeasurementRequest - i));
@@ -1144,8 +1144,8 @@ rrmProcessRadioMeasurementRequest( tpAniSirGlobal pMac,
             }
             break;            
          default:
-            //Send a report with incapabale bit set.
-            if ( pReport == NULL ) //Allocate memory to send reports for any subsequent requests.
+            //                                      
+            if ( pReport == NULL ) //                                                            
             {
                pReport = vos_mem_malloc(sizeof( tSirMacRadioMeasureReport )
                                          * (pRRMReq->num_MeasurementRequest - i));
@@ -1187,71 +1187,71 @@ end:
 
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmUpdateStartTSF
- **
- * FUNCTION:  Store start TSF of measurement.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param startTSF - TSF value at the start of measurement.
- * @return None
+//                                                                     
+/* 
+                    
+   
+                                             
+  
+         
+  
+               
+  
+        
+  
+                                                           
+               
  */
 void
 rrmUpdateStartTSF ( tpAniSirGlobal pMac, tANI_U32 startTSF[2] )
 {
-#if 0 //defined WLAN_VOWIFI_DEBUG
+#if 0 //                         
    limLog( pMac, LOGE, "Update Start TSF = %d %d", startTSF[0], startTSF[1] );
 #endif
    pMac->rrm.rrmPEContext.startTSF[0] = startTSF[0];
    pMac->rrm.rrmPEContext.startTSF[1] = startTSF[1];
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmGetStartTSF
- *
- * FUNCTION:  Get the Start TSF.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param startTSF - store star TSF in this buffer.
- * @return txPower
+//                                                                     
+/* 
+                 
+  
+                                
+  
+         
+  
+               
+  
+        
+  
+                                                   
+                  
  */
 void
 rrmGetStartTSF ( tpAniSirGlobal pMac, tANI_U32 *pStartTSF )
 {
-#if 0 //defined WLAN_VOWIFI_DEBUG
+#if 0 //                         
    limLog( pMac, LOGE, "Get the start TSF, TSF = %d %d ", pMac->rrm.rrmPEContext.startTSF[0], pMac->rrm.rrmPEContext.startTSF[1] );
 #endif
    pStartTSF[0] = pMac->rrm.rrmPEContext.startTSF[0];
    pStartTSF[1] = pMac->rrm.rrmPEContext.startTSF[1];
    
 }
-// --------------------------------------------------------------------
-/**
- * rrmGetCapabilities
- *
- * FUNCTION:
- * Returns a pointer to tpRRMCaps with all the caps enabled in RRM
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pSessionEntry
- * @return pointer to tRRMCaps
+//                                                                     
+/* 
+                     
+  
+            
+                                                                  
+  
+         
+  
+               
+  
+        
+  
+                       
+                              
  */
 tpRRMCaps rrmGetCapabilities ( tpAniSirGlobal pMac,
                                tpPESession pSessionEntry )
@@ -1259,21 +1259,21 @@ tpRRMCaps rrmGetCapabilities ( tpAniSirGlobal pMac,
    return &pMac->rrm.rrmPEContext.rrmEnabledCaps;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmUpdateConfig
- *
- * FUNCTION:
- * Update the configuration. This is called from limUpdateConfig.
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param pSessionEntry
- * @return pointer to tRRMCaps
+//                                                                     
+/* 
+                  
+  
+            
+                                                                 
+  
+         
+  
+               
+  
+        
+  
+                       
+                              
  */
 void rrmUpdateConfig ( tpAniSirGlobal pMac,
                                tpPESession pSessionEntry )
@@ -1307,20 +1307,20 @@ void rrmUpdateConfig ( tpAniSirGlobal pMac,
                      pRRMCaps->operatingChanMax, pRRMCaps->nonOperatingChanMax );)
 #endif
 }
-// --------------------------------------------------------------------
-/**
- * rrmInitialize
- *
- * FUNCTION:
- * Initialize RRM module
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @return None
+//                                                                     
+/* 
+                
+  
+            
+                        
+  
+         
+  
+               
+  
+        
+  
+               
  */
 
 tSirRetStatus
@@ -1342,30 +1342,30 @@ rrmInitialize(tpAniSirGlobal pMac)
    pRRMCaps->BeaconTable = 1;
    pRRMCaps->APChanReport = 1;
 
-   //pRRMCaps->TCMCapability = 1;
-   //pRRMCaps->triggeredTCM = 1;
+   //                            
+   //                           
    pRRMCaps->operatingChanMax = 3;
    pRRMCaps->nonOperatingChanMax = 3;
 
    return eSIR_SUCCESS;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmCleanup
- *
- * FUNCTION:
- * cleanup RRM module
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param mode
- * @param rate
- * @return None
+//                                                                     
+/* 
+             
+  
+            
+                     
+  
+         
+  
+               
+  
+        
+  
+              
+              
+               
  */
 
 tSirRetStatus
@@ -1391,20 +1391,20 @@ rrmCleanup(tpAniSirGlobal pMac)
    return eSIR_SUCCESS;
 }
 
-// --------------------------------------------------------------------
-/**
- * rrmProcessMessage
- *
- * FUNCTION:  Processes the next received Radio Resource Management message
- *
- * LOGIC:
- *
- * ASSUMPTIONS:
- *
- * NOTE:
- *
- * @param None
- * @return None
+//                                                                     
+/* 
+                    
+  
+                                                                           
+  
+         
+  
+               
+  
+        
+  
+              
+               
  */
 
 void rrmProcessMessage(tpAniSirGlobal pMac, tpSirMsgQ pMsg)

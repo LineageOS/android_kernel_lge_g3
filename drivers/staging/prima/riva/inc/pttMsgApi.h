@@ -84,14 +84,14 @@ typedef tANI_U8 tQWPTT_BOOLEAN;
 
 #define PTT_MEM_ACCESS_MAX_SIZE 256
 
-//Messages to/from socket or pttApi.c
+//                                   
 typedef enum {
    PTT_MSG_TYPES_BEGIN = 0x3000,
 
-   // Init
-   PTT_MSG_INIT = PTT_MSG_TYPES_BEGIN, //extra: internal only
+   //     
+   PTT_MSG_INIT = PTT_MSG_TYPES_BEGIN, //                    
 
-//NV Service
+//          
    PTT_MSG_GET_TPC_CAL_STATE_OBSOLETE = 0x3011,
    PTT_MSG_RESET_TPC_CAL_STATE_OBSOLETE = 0x3012,
 
@@ -108,12 +108,12 @@ typedef enum {
    PTT_MSG_STORE_NV_TABLE = 0x3022,
    PTT_MSG_SET_REG_DOMAIN = 0x3023,
 
-//new NV format Service
+//                     
    PTT_MSG_GET_NV_BIN = 0x3030,
    PTT_MSG_SET_NV_BIN = 0x3031,
    PTT_MSG_GET_DICTIONARY = 0x3032,
 
-//Device Register Access
+//                      
    PTT_MSG_DBG_READ_REGISTER = 0x3040,
    PTT_MSG_DBG_WRITE_REGISTER = 0x3041,
    PTT_MSG_API_WRITE_REGISTER_OBSOLETE = 0x3042,
@@ -121,11 +121,11 @@ typedef enum {
    PTT_MSG_DBG_READ_MEMORY = 0x3044,
    PTT_MSG_DBG_WRITE_MEMORY = 0x3045,
 
-//Device MAC Test Setup
+//                     
    PTT_MSG_ENABLE_CHAINS = 0x304F,
    PTT_MSG_SET_CHANNEL = 0x3050,
 
-//Tx Waveform Gen Service
+//                       
    PTT_MSG_SET_WAVEFORM = 0x3071,
    PTT_MSG_SET_TX_WAVEFORM_GAIN = 0x3072,
    PTT_MSG_GET_WAVEFORM_POWER_ADC = 0x3073,
@@ -134,7 +134,7 @@ typedef enum {
    PTT_MSG_SET_RX_WAVEFORM_GAIN = 0x3076,
    PTT_MSG_SET_TX_WAVEFORM_GAIN_PRIMA_V1 = 0x3077,
 
-//Tx Frame Gen Service
+//                    
    PTT_MSG_CONFIG_TX_PACKET_GEN = 0x3081,
    PTT_MSG_START_STOP_TX_PACKET_GEN = 0x3082,
    PTT_MSG_POLL_TX_PACKET_PROGRESS_OBSOLETE = 0x3083,
@@ -142,15 +142,15 @@ typedef enum {
    PTT_MSG_QUERY_TX_STATUS = 0x3089,
 
 
-//Tx Frame Power Service
+//                      
    PTT_MSG_CLOSE_TPC_LOOP = 0x30A0,
 
-//open loop service
+//                 
    PTT_MSG_SET_PACKET_TX_GAIN_TABLE = 0x30A1,
    PTT_MSG_SET_PACKET_TX_GAIN_INDEX = 0x30A2,
    PTT_MSG_FORCE_PACKET_TX_GAIN = 0x30A3,
 
-//closed loop(CLPC) service
+//                         
    PTT_MSG_SET_PWR_INDEX_SOURCE = 0x30A4,
    PTT_MSG_SET_TX_POWER = 0x30A5,
    PTT_MSG_GET_TX_POWER_REPORT = 0x30A7,
@@ -161,25 +161,25 @@ typedef enum {
    PTT_MSG_SAVE_TX_PWR_FREQ_TABLE_OBSOLETE = 0x30AC,
    PTT_MSG_CLPC_TEMP_COMPENSATION_OBSOLETE = 0x30AD,
 
-//Rx Gain Service
+//               
    PTT_MSG_DISABLE_AGC_TABLES = 0x30D0,
    PTT_MSG_ENABLE_AGC_TABLES = 0x30D1,
    PTT_MSG_SET_AGC_TABLES_OBSOLETE = 0x30D2,
    PTT_MSG_GET_RX_RSSI = 0x30D3,
    PTT_MSG_GET_AGC_TABLE_OBSOLETE = 0x30D5,
 
-//Rx Frame Catcher Service
+//                        
    PTT_MSG_SET_RX_DISABLE_MODE = 0x30D4,
    PTT_MSG_GET_RX_PKT_COUNTS = 0x30E0,
    PTT_MSG_RESET_RX_PACKET_STATISTICS = 0x30E2,
    PTT_MSG_GET_UNI_CAST_MAC_PKT_RX_RSSI = 0x30E3,
    PTT_MSG_GET_UNI_CAST_MAC_PKT_RX_RSSI_CONFIG = 0x30E4,
 
-//Rx Symbol Service
+//                 
    PTT_MSG_GRAB_RAM = 0x30F0,
    PTT_MSG_GRAB_RAM_ONE_CHAIN_OBSOLETE = 0x30F1,
 
-//Phy Calibration Service
+//                       
    PTT_MSG_RX_IQ_CAL = 0x3100,
    PTT_MSG_RX_DCO_CAL = 0x3101,
    PTT_MSG_TX_CARRIER_SUPPRESS_CAL = 0x3102,
@@ -188,7 +188,7 @@ typedef enum {
    PTT_MSG_HDET_CAL = 0x3105,
    PTT_MSG_VCO_LINEARITY_CAL_OBSOLETE = 0x3106,
 
-//Phy Calibration Override Service
+//                                
    PTT_MSG_SET_TX_CARRIER_SUPPRESS_CORRECT = 0x3110,
    PTT_MSG_GET_TX_CARRIER_SUPPRESS_CORRECT = 0x3111,
    PTT_MSG_SET_TX_IQ_CORRECT = 0x3112,
@@ -200,25 +200,25 @@ typedef enum {
    PTT_MSG_SET_TX_IQ_PHASE_NV_TABLE_OBSOLETE = 0x3118,
    PTT_MSG_GET_HDET_CORRECT_OBSOLETE = 0x3119,
 
-//RF Chip Access
+//              
    PTT_MSG_GET_TEMP_ADC = 0x3202,
    PTT_MSG_READ_RF_REG = 0x3203,
    PTT_MSG_WRITE_RF_REG = 0x3204,
    PTT_MSG_GET_RF_VERSION = 0x3205,
 
-//Deep sleep support
+//                  
    PTT_MSG_DEEP_SLEEP = 0x3220,
    PTT_MSG_READ_SIF_BAR4_REGISTER = 0x3221,
    PTT_MSG_WRITE_SIF_BAR4_REGISTER = 0x3222,
    PTT_MSG_ENTER_FULL_POWER = 0x3223,
 
-//Misc
-   PTT_MSG_SYSTEM_RESET = 0x32A0,   //is there any meaning for this in Gen6?
+//    
+   PTT_MSG_SYSTEM_RESET = 0x32A0,   //                                      
    PTT_MSG_LOG_DUMP = 0x32A1,
    PTT_MSG_GET_BUILD_RELEASE_NUMBER = 0x32A2,
 
 
-//Messages for Socket App
+//                       
    PTT_MSG_ADAPTER_DISABLED_RSP_OBSOLETE = 0x32A3,
    PTT_MSG_ENABLE_ADAPTER = 0x32A4,
    PTT_MSG_DISABLE_ADAPTER = 0x32A5,
@@ -232,10 +232,10 @@ typedef enum {
    PTT_MSG_RX_IM2_CAL = 0x32AC,
    PTT_MSG_SET_RX_IM2_CORRECT = 0x31AD,
    PTT_MSG_GET_RX_IM2_CORRECT = 0x31AE,
-   PTT_MSG_TEST_DPD_CAL = 0x32AF,  // not handle
+   PTT_MSG_TEST_DPD_CAL = 0x32AF,  //           
    PTT_MSG_SET_CALCONTROL_BITMAP = 0x32B0,
 
-//[RY] specific new messages for PRIMA
+//                                    
    PTT_MSG_START_WAVEFORM_RF = 0x32B1,
    PTT_MSG_STOP_WAVEFORM_RF = 0x32B2,
    PTT_MSG_HKDAC_TX_IQ_CAL = 0x32B3,
@@ -249,8 +249,8 @@ typedef enum {
    PTT_MSG_SET_LNA_BAND_CORRECT = 0x32BB,
    PTT_MSG_DPD_CAL = 0x32BC,
 
-// Suffix'ed Message ID to differential from existing Message name.
-// ===============================================================
+//                                                                 
+//                                                                
    PTT_MSG_GET_NV_TABLE_PRIMA_V1 = 0x32BD,
    PTT_MSG_SET_NV_TABLE_PRIMA_V1 = 0x32BE,
    PTT_MSG_RX_IQ_CAL_PRIMA_V1 = 0x32BF,
@@ -282,7 +282,7 @@ enum
 #define PTT_MSG_TYPES_BEGIN_31          PTT_MSG_TYPES_BEGIN + 0x100
 #define PTT_MSG_TYPES_BEGIN_32          PTT_MSG_TYPES_BEGIN + 0x200
 
-// for FTM PER feature
+//                    
 enum {
 Legacy_FTM = 0,
 FTM_PER_TX = 1,
@@ -295,10 +295,10 @@ FTM_PER_RX = 2,
 
 
 
-/******************************************************************************************************************
-    PTT MESSAGES
-******************************************************************************************************************/
-//Init
+/*                                                                                                                 
+                
+                                                                                                                 */
+//    
 typedef PACKED_PRE struct PACKED_POST {
    tPttModuleVariables ptt;
 } tMsgPttMsgInit;
@@ -355,7 +355,7 @@ typedef PACKED_PRE struct PACKED_POST {
 	tANI_U8 nvData[MAX_NV_BIN_SIZE];
 } tMsgPttSetNvBin;
 
-//Device Register Access
+//                      
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 regAddr;
    tANI_U32 regValue;
@@ -370,7 +370,7 @@ typedef PACKED_PRE struct PACKED_POST {
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 memAddr;
    tANI_U32 nBytes;
-   tANI_U32 pMemBuf[PTT_READ_MEM_MAX]; //caller should allocate space
+   tANI_U32 pMemBuf[PTT_READ_MEM_MAX]; //                            
 } tMsgPttDbgReadMemory;
 
 typedef PACKED_PRE struct PACKED_POST {
@@ -379,7 +379,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 pMemBuf[PTT_READ_MEM_MAX];
 } tMsgPttDbgWriteMemory;
 
-//Device MAC Test Setup
+//                     
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 chId;
    ePhyChanBondState cbState;
@@ -391,7 +391,7 @@ typedef PACKED_PRE struct PACKED_POST {
 
 typedef tIQSamples tWaveformSample;
 
-//Tx Waveform Gen Service
+//                       
 typedef PACKED_PRE struct PACKED_POST {
    tWaveformSample waveform[MAX_TEST_WAVEFORM_SAMPLES];
    tANI_U16 numSamples;
@@ -448,7 +448,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 numSamples;
 } tMsgPttStartWaveform_PRIMA_V1;
 
-// Added for PRIMA
+//                
 typedef PACKED_PRE struct PACKED_POST {
    tWaveformSample waveform[MAX_TEST_WAVEFORM_SAMPLES];
    tANI_U16 numSamples;
@@ -465,7 +465,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 notUsed;
 } tMsgPttStopWaveformRF;
 
-//Tx Frame Gen Service
+//                    
 typedef PACKED_PRE struct PACKED_POST {
    sPttFrameGenParams frameParams;
 } tMsgPttConfigTxPacketGen;
@@ -481,7 +481,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U8 reserved[3];
 } tMsgPttQueryTxStatus;
 
-//Tx Frame Power Service
+//                      
 typedef PACKED_PRE struct PACKED_POST {
    tANI_BOOLEAN tpcClose;
    tANI_U8 reserved[3];
@@ -492,7 +492,7 @@ typedef PACKED_PRE struct PACKED_POST {
 } tMsgPttCloseTpcLoop_PRIMA_V1;
 
 
-    //open loop service
+    //                 
 typedef PACKED_PRE struct PACKED_POST {
 
    ePhyTxChains txChain;
@@ -552,7 +552,7 @@ typedef PACKED_PRE struct PACKED_POST {
 } tMsgPttGetPowerLut;
 
 
-//Rx Gain Service
+//               
 typedef PACKED_PRE struct PACKED_POST {
    sRxChainsAgcDisable gains;
 } tMsgPttDisableAgcTables;
@@ -574,7 +574,7 @@ typedef PACKED_PRE struct PACKED_POST {
     tANI_U32 conf;
 }tMsgPttGetUnicastMacPktRxRssiConf_PRIMA_V1;
 
-//Rx Frame Catcher Service
+//                        
 typedef PACKED_PRE struct PACKED_POST {
    sRxTypesDisabled disabled;
 } tMsgPttSetRxDisableMode;
@@ -592,16 +592,16 @@ typedef PACKED_PRE struct PACKED_POST {
 
 
 
-//ADC Sample Service
+//                  
 typedef PACKED_PRE struct PACKED_POST {
-   tANI_U32 startSample;        //index of first requested sample, 0 causes new capture
-   tANI_U32 numSamples;         //number of samples to transfer to host
+   tANI_U32 startSample;        //                                                     
+   tANI_U32 numSamples;         //                                     
    eGrabRamSampleType sampleType;
    tGrabRamSample grabRam[MAX_REQUESTED_GRAB_RAM_SAMPLES];
 } tMsgPttGrabRam;
 
 
-//Phy Calibration Service
+//                       
 typedef PACKED_PRE struct PACKED_POST {
    sRxChainsIQCalValues calValues;
    eGainSteps gain;
@@ -652,7 +652,7 @@ typedef PACKED_PRE struct PACKED_POST {
 } tMsgPttClpcSwCal_PRIMA_V1;
 
 
-//Phy Calibration Override Service
+//                                
 typedef PACKED_PRE struct PACKED_POST {
    sTxChainsLoCorrections calValues;
    tANI_U8 reserve[2];
@@ -737,7 +737,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 value;
 } tMsgPttWriteRfField;
 
-//SIF bar4 Register Access
+//                        
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 sifRegAddr;
    tANI_U32 sifRegValue;
@@ -756,7 +756,7 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 notUsed;
 } tMsgPttEnterFullPower;
 
-//Misc.
+//     
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U32 notUsed;
 } tMsgPttSystemReset;
@@ -778,18 +778,18 @@ typedef PACKED_PRE struct PACKED_POST {
 } tMsgPttGetRFVersion;
 
 typedef PACKED_PRE struct PACKED_POST {
-   tANI_U32 option;             //dummy variable
+   tANI_U32 option;             //              
 } tMsgPttCalControlBitmap;
 
-//#ifdef VERIFY_HALPHY_SIMV_MODEL
+//                               
 
 
 typedef PACKED_PRE struct PACKED_POST {
-   tANI_U32 option;             //dummy variable
+   tANI_U32 option;             //              
 } tMsgPttHalPhyInit;
 
 typedef PACKED_PRE struct PACKED_POST {
-   tANI_U32 option;             //dummy variable
+   tANI_U32 option;             //              
 } tMsgPttRxIQTest;
 
 typedef PACKED_PRE struct PACKED_POST {
@@ -803,7 +803,7 @@ typedef PACKED_PRE struct PACKED_POST {
 } tMsgPttStartToneGen;
 
 typedef PACKED_PRE struct PACKED_POST {
-   tANI_U32 option;             //dummy variable
+   tANI_U32 option;             //              
 } tMsgPttStopToneGen;
 
 typedef PACKED_PRE struct PACKED_POST {
@@ -843,14 +843,14 @@ typedef PACKED_PRE struct PACKED_POST {
    tANI_U16 testID;
    tANI_U16 result;
 } tMsgPttPinConnTestRes;
-//#endif
+//      
 
-/******************************************************************************************************************
-    END OF PTT MESSAGES
-******************************************************************************************************************/
+/*                                                                                                                 
+                       
+                                                                                                                 */
 
 typedef PACKED_PRE union PACKED_POST pttMsgUnion{
-//typedef union pttMsgUnion {
+//                           
    tMsgPttMsgInit MsgInit;
    tMsgPttGetNvTable GetNvTable;
    tMsgPttSetNvTable SetNvTable;
@@ -931,14 +931,14 @@ typedef PACKED_PRE union PACKED_POST pttMsgUnion{
    tMsgPttWriteRfField WriteRfField;
    tMsgPttCalControlBitmap SetCalControlBitmap;
 
-//#ifdef VERIFY_HALPHY_SIMV_MODEL
+//                               
 
    tMsgPttHalPhyInit InitOption;
    tMsgPttRxIQTest RxIQTest;
    tMsgPttDpdCal DpdCal;
    tMsgPttStartToneGen StartToneGen;
    tMsgPttStopToneGen StopToneGen;
-//#endif
+//      
    tMsgPttDeepSleep DeepSleep;
    tMsgPttReadSifBar4Register ReadSifBar4Register;
    tMsgPttWriteSifBar4Register WriteSifBar4Register;
@@ -948,7 +948,7 @@ typedef PACKED_PRE union PACKED_POST pttMsgUnion{
    tMsgPttGetBuildReleaseNumber GetBuildReleaseNumber;
    tMsgPttGetRFVersion GetRFVersion;
 
-//[RY] added for PRIMA
+//                    
    tMsgPttSetWaveformRF SetWaveformRF;
    tMsgPttStopWaveformRF StopWaveformRF;
    tMsgPttStartWaveformRF StartWaveformRF;
@@ -964,7 +964,7 @@ typedef PACKED_PRE union PACKED_POST pttMsgUnion{
 
 typedef PACKED_PRE struct PACKED_POST {
    tANI_U16 msgId;
-   tANI_U16 msgBodyLength;      //actually, the length of all the fields in this structure
+   tANI_U16 msgBodyLength;      //                                                        
    eQWPttStatus msgResponse;
    uPttMsgs msgBody;
 } tPttMsgbuffer, *tpPttMsgbuffer;
@@ -972,12 +972,12 @@ typedef PACKED_PRE struct PACKED_POST {
 
 typedef PACKED_PRE struct PACKED_POST {
    /*
-    * success or failure
+                        
     */
    tANI_U32 status;
    tPttMsgbuffer pttMsgBuffer;
 } tProcessPttRspParams, *tpProcessPttRspParams;
 
-/* End of Ptt Parameters */
+/*                       */
 
 #endif

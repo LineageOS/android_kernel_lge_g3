@@ -40,23 +40,23 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This is the private header file for CFG module.
- *
- * Author:        Kevin Nguyen
- * Date:        03/20/02
- * History:-
- * 03/20/02        Created.
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                  
+  
+                              
+                        
+            
+                           
+                                                                       
+  
  */
 
 #ifndef __CFGDEF_H
 #define __CFGDEF_H
 
 /*
- * CFG Control Flag definitions
+                               
  */
 #define CFG_CTL_VALID         0x00010000
 #define CFG_CTL_RE            0x00020000
@@ -87,7 +87,7 @@
 #define CFG_SEM_INDX_SHIFT    12
 
 
-#endif /* __CFGDEF_H */
+#endif /*            */
 
 
 

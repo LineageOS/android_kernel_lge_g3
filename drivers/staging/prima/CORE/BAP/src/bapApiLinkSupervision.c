@@ -61,66 +61,66 @@
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
+                                                                       
+                                                                
 
-  when        who     what, where, why
-----------    ---    --------------------------------------------------------
-2008-03-25    arulv     Created module
 
-===========================================================================*/
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
-//#include "wlan_qct_tl.h"
+                                      
+                                                                             
+                                      
+
+                                                                           */
+
+/*                                                                            
+                
+                                                                            */
+//                        
 #include "vos_trace.h"
-//I need the TL types and API
+//                           
 #include "wlan_qct_tl.h"
 
-/* BT-AMP PAL API header file */ 
+/*                            */ 
 #include "bapApi.h" 
 #include "bapInternal.h"
 #include "bapApiTimer.h"
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
 #if 1
-//*BT-AMP packet LLC OUI value*/
+//                              
 static const v_U8_t WLANBAP_BT_AMP_OUI[] =  {0x00, 0x19, 0x58 };
 
-/*LLC header value*/
+/*                */
 static v_U8_t WLANBAP_LLC_HEADER[] =  {0xAA, 0xAA, 0x03, 0x00, 0x00, 0x00 };
 #endif
 
-/*----------------------------------------------------------------------------
- * Global Data Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                          
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Static Variable Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                              
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Static Function Declarations and Definitions
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                               
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Externalized Function Definitions
-* -------------------------------------------------------------------------*/
+/*                                                                            
+                                    
+                                                                           */
 
-/*----------------------------------------------------------------------------
- * Function Declarations and Documentation
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                          
+                                                                            */
 VOS_STATUS
 WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t size, tANI_BOOLEAN isLsReq )
 {
@@ -128,7 +128,7 @@ WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t
     vos_pkt_t *pPacket;
     WLANBAP_8023HeaderType   w8023Header;
     v_U8_t                   aucLLCHeader[WLANBAP_LLC_HEADER_LEN];
-    v_U16_t                  headerLength;  /* The 802.3 frame length*/
+    v_U16_t                  headerLength;  /*                       */
     v_U16_t                  protoType;
     v_U8_t                   *pData = NULL;
      
@@ -142,7 +142,7 @@ WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t
         protoType = WLANTL_BT_AMP_TYPE_LS_REP;
     }    
 
-    //If success, vosTxLsPacket is the packet and pData points to the head.
+    //                                                                     
    vosStatus = vos_pkt_get_packet( &pPacket, VOS_PKT_TYPE_TX_802_11_MGMT,size, 1, 
                                     VOS_TRUE, NULL, NULL );
    if( VOS_IS_STATUS_SUCCESS( vosStatus ) )
@@ -163,17 +163,17 @@ WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t
        return vosStatus;
    }
 
-         // Form the 802.3 header
+         //                      
    vos_mem_copy( w8023Header.vDA, pBtampCtx->peer_mac_addr, VOS_MAC_ADDR_SIZE);
    vos_mem_copy( w8023Header.vSA, pBtampCtx->self_mac_addr, VOS_MAC_ADDR_SIZE);
 
    headerLength = WLANBAP_LLC_HEADER_LEN;
-        /* Now the 802.3 length field is big-endian?! */
+        /*                                            */
    w8023Header.usLenType = vos_cpu_to_be16(headerLength); 
         
-   /* Now adjust the protocol type bytes*/
+   /*                                   */
    protoType = vos_cpu_to_be16( protoType);
-         /* Now form the LLC header */
+         /*                         */
    vos_mem_copy(aucLLCHeader, 
             WLANBAP_LLC_HEADER,  
             sizeof(WLANBAP_LLC_HEADER));
@@ -181,15 +181,15 @@ WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t
             WLANBAP_BT_AMP_OUI,  
             WLANBAP_LLC_OUI_SIZE);
    vos_mem_copy(&aucLLCHeader[WLANBAP_LLC_PROTO_TYPE_OFFSET], 
-            &protoType,  //WLANBAP_BT_AMP_TYPE_LS_REQ
+            &protoType,  //                          
             WLANBAP_LLC_PROTO_TYPE_SIZE);
  
-        /* Push on the LLC header */
+        /*                        */
    vos_pkt_push_head(pPacket, 
             aucLLCHeader, 
             WLANBAP_LLC_HEADER_LEN);  
 
-        /* Push on the 802.3 header */
+        /*                          */
    vos_pkt_push_head(pPacket, &w8023Header, sizeof(w8023Header));
    *ppPacket = pPacket;
    return vosStatus;
@@ -197,29 +197,29 @@ WLANBAP_AcquireLSPacket( ptBtampContext pBtampCtx, vos_pkt_t **ppPacket, v_U16_t
 
 
 
-/*===========================================================================
+/*                                                                           
 
-  FUNCTION    WLANBAP_InitLinkSupervision
+                                         
 
-  DESCRIPTION 
+              
 
-    This API will be called when Link Supervision module is to be initialized when connected at BAP
+                                                                                                   
 
-  PARAMETERS 
+             
 
-    btampHandle: The BT-AMP PAL handle returned in WLANBAP_GetNewHndl.
+                                                                      
    
-  RETURN VALUE
+              
 
-    The result code associated with performing the operation  
+                                                              
 
-    VOS_STATUS_E_INVAL:  Input parameters are invalid 
-    VOS_STATUS_E_FAULT:  BAP handle is NULL  
-    VOS_STATUS_SUCCESS:  Everything is good :) 
+                                                      
+                                             
+                                               
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 #define TX_LS_DATALEN   32
 
 VOS_STATUS
@@ -242,13 +242,13 @@ WLANBAP_InitLinkSupervision
     }
 
 #if 0    
-    /* Initialize Link supervision data structure */
+    /*                                            */
     vos_mem_set(pLsInfo, sizeof(tBtampLS),0);
 
-    /* Allocate memory for Static Tx Data */
+    /*                                    */
     pLsInfo->pTxPktData = vos_mem_malloc(sizeof(tBtampLsPktData)+TX_LS_DATALEN);
 
-    /* Initialize Static data for LS pkt Tx */
+    /*                                      */
     pLsInfo->pTxPktData->BufLen = TX_LS_DATALEN;
     vos_mem_copy (&pLsInfo->pTxPktData->pBuf, LsTxData, pLsInfo->pTxPktData->BufLen);
 #endif
@@ -291,7 +291,7 @@ WLANBAP_InitLinkSupervision
     }
     pBtampCtx->lsPktln = lsPktln;
 
-    /* Start Link Supervision Timer if not configured for infinite */
+    /*                                                             */
     if (pBtampCtx->bapLinkSupervisionTimerInterval)
     {
         vosStatus = WLANBAP_StartLinkSupervisionTimer (pBtampCtx,
@@ -306,29 +306,29 @@ WLANBAP_InitLinkSupervision
     return vosStatus;
 }
 
-/*===========================================================================
+/*                                                                           
 
-  FUNCTION    WLANBAP_DeInitLinkSupervision
+                                           
 
-  DESCRIPTION 
+              
 
-    This API will be called when Link Supervision module is to be stopped after disconnected at BAP 
+                                                                                                    
 
-  PARAMETERS 
+             
 
-    btampHandle: The BT-AMP PAL handle returned in WLANBAP_GetNewHndl.
+                                                                      
    
-  RETURN VALUE
+              
 
-    The result code associated with performing the operation  
+                                                              
 
-    VOS_STATUS_E_INVAL:  Input parameters are invalid 
-    VOS_STATUS_E_FAULT:  BAP handle is NULL  
-    VOS_STATUS_SUCCESS:  Everything is good :) 
+                                                      
+                                             
+                                               
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANBAP_DeInitLinkSupervision
 ( 
@@ -350,7 +350,7 @@ WLANBAP_DeInitLinkSupervision
    vosStatus = WLANBAP_StopLinkSupervisionTimer(pBtampCtx);
 
    
-    /*Free the vos packet*/
+    /*                   */
     if ( pBtampCtx->lsRepPacket )
     {
       vosStatus = vos_pkt_return_packet(pBtampCtx->lsRepPacket);
@@ -367,38 +367,38 @@ WLANBAP_DeInitLinkSupervision
     return vosStatus;
 }
 
-/*===========================================================================
+/*                                                                           
 
-  FUNCTION    WLANBAP_RxProcLsPkt
+                                 
 
-  DESCRIPTION 
+              
 
-    This API will be called when Link Supervision frames are received at BAP
+                                                                            
 
-  PARAMETERS 
+             
 
-    btampHandle: The BT-AMP PAL handle returned in WLANBAP_GetNewHndl.
-    pucAC:       Pointer to return the access category 
-    vosDataBuff: The data buffer containing the 802.3 frame to be 
-                 translated to BT HCI Data Packet
+                                                                      
+                                                       
+                                                                  
+                                                 
    
-  RETURN VALUE
+              
 
-    The result code associated with performing the operation  
+                                                              
 
-    VOS_STATUS_E_INVAL:  Input parameters are invalid 
-    VOS_STATUS_E_FAULT:  BAP handle is NULL  
-    VOS_STATUS_SUCCESS:  Everything is good :) 
+                                                      
+                                             
+                                               
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANBAP_RxProcLsPkt
 ( 
   ptBtampHandle     btampHandle, 
-  v_U8_t            phy_link_handle,  /* Used by BAP to indentify the WLAN assoc. (StaId) */
-  v_U16_t            RxProtoType,     /* Protocol Type from the frame received */
+  v_U8_t            phy_link_handle,  /*                                                  */
+  v_U16_t            RxProtoType,     /*                                       */
   vos_pkt_t         *vosRxLsBuff
 )
 {
@@ -408,9 +408,9 @@ WLANBAP_RxProcLsPkt
     v_SIZE_t                 HeaderLen = sizeof(w8023Header);
 
 
-    /*------------------------------------------------------------------------
-        Sanity check params
-      ------------------------------------------------------------------------*/
+    /*                                                                        
+                           
+                                                                              */
     if ( NULL == pBtampCtx) 
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -431,7 +431,7 @@ WLANBAP_RxProcLsPkt
         return VOS_STATUS_E_FAULT;
     }
 
-    /*Free the vos packet*/
+    /*                   */
     vosStatus = vos_pkt_return_packet( vosRxLsBuff );
     if ( VOS_STATUS_SUCCESS != vosStatus)
     {
@@ -441,14 +441,14 @@ WLANBAP_RxProcLsPkt
     }
 
    
-    /* Reset Link Supervision timer */
+    /*                              */
     if (RxProtoType ==  WLANTL_BT_AMP_TYPE_LS_REP)
     { 
         pBtampCtx->lsReqPktPending = FALSE;
         pBtampCtx->retries = 0;
         if (pBtampCtx->bapLinkSupervisionTimerInterval)
         {
-            /* Restart the LS timer */
+            /*                      */
             WLANBAP_StopLinkSupervisionTimer(pBtampCtx);
             vosStatus = WLANBAP_StartLinkSupervisionTimer (pBtampCtx,
                    pBtampCtx->bapLinkSupervisionTimerInterval * WLANBAP_BREDR_BASEBAND_SLOT_TIME);
@@ -458,13 +458,13 @@ WLANBAP_RxProcLsPkt
     {
         if (pBtampCtx->bapLinkSupervisionTimerInterval)
         {
-            /* Restart the LS timer */
+            /*                      */
             WLANBAP_StopLinkSupervisionTimer(pBtampCtx);
             vosStatus = WLANBAP_StartLinkSupervisionTimer (pBtampCtx,
                    pBtampCtx->bapLinkSupervisionTimerInterval * WLANBAP_BREDR_BASEBAND_SLOT_TIME);
         }
         pBtampCtx->pPacket = pBtampCtx->lsRepPacket;
-        // Handle LS rep frame
+        //                    
         vosStatus = WLANBAP_TxLinkSupervision( btampHandle, phy_link_handle, pBtampCtx->pPacket, WLANTL_BT_AMP_TYPE_LS_REP);
     }
    
@@ -472,7 +472,7 @@ WLANBAP_RxProcLsPkt
 
 }
 
-/* Tx callback function for LS packet */
+/*                                    */
 static VOS_STATUS WLANBAP_TxLinkSupervisionCB
 (
     v_PVOID_t   pvosGCtx,
@@ -481,13 +481,13 @@ static VOS_STATUS WLANBAP_TxLinkSupervisionCB
 )
 {
     VOS_STATUS     vosStatus;
-    ptBtampContext bapContext; /* Holds the btampContext value returned */ 
+    ptBtampContext bapContext; /*                                       */ 
     vos_pkt_t                *pLSPacket; 
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_INFO,
              "TxCompCB reached for LS Pkt");
 
-    /* Get the BT AMP context from the global */
+    /*                                        */
     bapContext = gpBtampCtx;
 
     if (!VOS_IS_STATUS_SUCCESS (retStatus))
@@ -504,7 +504,7 @@ static VOS_STATUS WLANBAP_TxLinkSupervisionCB
     }
 
 
-    /* Return the packet & reallocate */
+    /*                                */
     
     if( pPacket == bapContext->lsReqPacket )
     {
@@ -544,37 +544,37 @@ static VOS_STATUS WLANBAP_TxLinkSupervisionCB
     return (VOS_STATUS_SUCCESS );
 }
 
-/*===========================================================================
+/*                                                                           
 
-  FUNCTION    WLANBAP_TxLinkSupervision
+                                       
 
-  DESCRIPTION 
+              
 
-    This API will be called to process Link Supervision Request received
+                                                                        
 
-  PARAMETERS 
+             
 
-    btampHandle: The BT-AMP PAL handle returned in WLANBAP_GetNewHndl.
-    pucAC:       Pointer to return the access category 
-    vosDataBuff: The data buffer containing the 802.3 frame to be 
-                 translated to BT HCI Data Packet
+                                                                      
+                                                       
+                                                                  
+                                                 
    
-  RETURN VALUE     
+                   
 
-    The result code associated with performing the operation  
+                                                              
 
-    VOS_STATUS_E_INVAL:  Input parameters are invalid 
-    VOS_STATUS_E_FAULT:  BAP handle is NULL  
-    VOS_STATUS_SUCCESS:  Everything is good :) 
+                                                      
+                                             
+                                               
 
-  SIDE EFFECTS 
+               
   
-============================================================================*/
+                                                                            */
 VOS_STATUS
 WLANBAP_TxLinkSupervision
 ( 
   ptBtampHandle     btampHandle, 
-  v_U8_t            phy_link_handle,  /* Used by BAP to indentify the WLAN assoc. (StaId) */
+  v_U8_t            phy_link_handle,  /*                                                  */
   vos_pkt_t         *pPacket,
   v_U16_t           protoType
 )
@@ -582,24 +582,24 @@ WLANBAP_TxLinkSupervision
     ptBtampContext             pBtampCtx = (ptBtampContext)btampHandle;
     VOS_STATUS                 vosStatus = VOS_STATUS_E_FAILURE;
     v_PVOID_t                  pvosGCtx;
-    v_U8_t                     ucSTAId;  /* The StaId (used by TL, PE, and HAL) */
-    v_PVOID_t                  pHddHdl; /* Handle to return BSL context in */
+    v_U8_t                     ucSTAId;  /*                                     */
+    v_PVOID_t                  pHddHdl; /*                                 */
     WLANTL_MetaInfoType        metaInfo;
 
 
     VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
                          "In  : %s protoType=%x", __func__,protoType);
 
-        // Retrieve the VOSS context
+        //                          
     pvosGCtx = pBtampCtx->pvosGCtx;
 
-    /* Lookup the StaId using the phy_link_handle and the BAP context */ 
+    /*                                                                */ 
 
     vosStatus = WLANBAP_GetStaIdFromLinkCtx ( 
-            btampHandle,  /* btampHandle value in  */ 
-            phy_link_handle,  /* phy_link_handle value in */
-            &ucSTAId,  /* The StaId (used by TL, PE, and HAL) */
-            &pHddHdl); /* Handle to return BSL context */
+            btampHandle,  /*                       */ 
+            phy_link_handle,  /*                          */
+            &ucSTAId,  /*                                     */
+            &pHddHdl); /*                              */
     
     if ( VOS_STATUS_SUCCESS != vosStatus ) 
     {
@@ -612,7 +612,7 @@ WLANBAP_TxLinkSupervision
     
     metaInfo.ucTID = 0x00 ;
     metaInfo.ucUP = 0x00;
-    metaInfo.ucIsEapol =  VOS_FALSE;//Notify TL that this is NOT an EAPOL frame
+    metaInfo.ucIsEapol =  VOS_FALSE;//                                         
     metaInfo.ucDisableFrmXtl = VOS_FALSE;
     metaInfo.ucType = 0x00;
     pBtampCtx->metaInfo = metaInfo;
@@ -633,7 +633,7 @@ WLANBAP_TxLinkSupervision
    
     if (pBtampCtx->bapLinkSupervisionTimerInterval)
     {
-        /* Restart the LS timer */
+        /*                      */
         WLANBAP_StopLinkSupervisionTimer(pBtampCtx);
         vosStatus = WLANBAP_StartLinkSupervisionTimer (pBtampCtx,
                pBtampCtx->bapLinkSupervisionTimerInterval * WLANBAP_BREDR_BASEBAND_SLOT_TIME);
@@ -647,7 +647,7 @@ WLANBAP_TxLinkSupervision
    }
    
    return vosStatus;
-} /* WLANBAP_RxLinkSupervisionReq */
+} /*                              */
 
 
 

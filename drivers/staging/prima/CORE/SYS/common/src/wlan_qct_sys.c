@@ -53,36 +53,36 @@ DESCRIPTION
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-when        who         what, where, why
---------    ---         -----------------------------------------------------
-12/15/08    sho         Resolved AMSS compiler errors and warnings when this
-                        is being ported from WM
-07/02/08    lac         Added support for eWNI_SME_START_REQ/RSP in init seq
-06/26/08    hba         Added implementation of mbReceiveMBMsg()
-06/26/08    lac         Created module.
+                                   
 
-===========================================================================*/
+
+                                        
+                                                                             
+                                                                            
+                                               
+                                                                            
+                                                                
+                                       
+
+                                                                           */
 
 
 #include <wlan_qct_sys.h>
 #include <vos_api.h>
 
-#include <sirTypes.h>   // needed for tSirRetStatus
-#include <sirParams.h>  // needed for tSirMbMsg
-#include <sirApi.h>     // needed for SIR_... message types
-#include <wniApi.h>     // needed for WNI_... message types
+#include <sirTypes.h>   //                         
+#include <sirParams.h>  //                     
+#include <sirApi.h>     //                                 
+#include <wniApi.h>     //                                 
 #include "aniGlobal.h"
 #include "wlan_qct_wda.h"
 #include "sme_Api.h"
@@ -92,21 +92,21 @@ VOS_STATUS WLANFTM_McProcessMsg (v_VOID_t *message);
 
 
 
-// Cookie for SYS messages.  Note that anyone posting a SYS Message has to
-// write the COOKIE in the reserved field of the message.  The SYS Module
-// relies on this COOKIE
+//                                                                        
+//                                                                       
+//                      
 #define FTM_SYS_MSG_COOKIE      0xFACE
 
 #define SYS_MSG_COOKIE ( 0xFACE )
 
-// need to define FIELD_OFFSET for non-WM platforms
+//                                                 
 #ifndef FIELD_OFFSET
 #define FIELD_OFFSET(x,y) offsetof(x,y)
 #endif
 
 VOS_STATUS sys_SendSmeStartReq( v_CONTEXT_t pVosContext );
 
-// add this to the sys Context data... ?
+//                                      
 typedef struct
 {
    sysResponseCback mcStartCB;
@@ -140,12 +140,12 @@ v_VOID_t sysStopCompleteCb
 {
   vos_event_t* pStopEvt = (vos_event_t *) pUserData;
   VOS_STATUS vosStatus;
-/*-------------------------------------------------------------------------*/
+/*                                                                         */
 
   vosStatus = vos_event_set( pStopEvt );
   VOS_ASSERT( VOS_IS_STATUS_SUCCESS ( vosStatus ) );
 
-} /* vos_sys_stop_complete_cback() */
+} /*                               */
 
 VOS_STATUS sysStop( v_CONTEXT_t pVosContext )
 {
@@ -153,7 +153,7 @@ VOS_STATUS sysStop( v_CONTEXT_t pVosContext )
    vos_msg_t sysMsg;
    v_U8_t evtIndex;
 
-   /* Initialize the stop event */
+   /*                           */
    vosStatus = vos_event_init( &gStopEvt );
 
    if(! VOS_IS_STATUS_SUCCESS( vosStatus ))
@@ -161,16 +161,16 @@ VOS_STATUS sysStop( v_CONTEXT_t pVosContext )
       return vosStatus;
    }
 
-   /* post a message to SYS module in MC to stop SME and MAC */
+   /*                                                        */
    sysBuildMessageHeader( SYS_MSG_ID_MC_STOP, &sysMsg );
 
-   // Save the user callback and user data to callback in the body pointer
-   // and body data portion of the message.
-   // finished.
+   //                                                                     
+   //                                      
+   //          
    sysMsg.bodyptr = (void *)sysStopCompleteCb;
    sysMsg.bodyval = (v_U32_t) &gStopEvt;
 
-   // post the message..
+   //                   
    vosStatus = vos_mq_post_message( VOS_MQ_ID_SYS, &sysMsg );
    if ( !VOS_IS_STATUS_SUCCESS(vosStatus) )
    {
@@ -258,8 +258,8 @@ static unsigned short polFileChkSum( unsigned short *FileData, unsigned long Num
     Sum += *FileData++;
   }
 
-  Sum  = (Sum >> 16) + (Sum & 0xffff); // add carry
-  Sum += (Sum >> 16);                  // maybe last unsigned short
+  Sum  = (Sum >> 16) + (Sum & 0xffff); //          
+  Sum += (Sum >> 16);                  //                          
 
   return( (unsigned short)( ~Sum ) );
 }
@@ -274,7 +274,7 @@ v_BOOL_t sys_validateStaConfig( void *pImage, unsigned long cbFile,
 
    do
    {
-      // Compute the checksum before bothering to copy...
+      //                                                 
       if ( polFileChkSum( ( v_U16_t *)pImage, cbFile / sizeof( v_U16_t ) ) )
       {
          VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
@@ -300,7 +300,7 @@ v_BOOL_t sys_validateStaConfig( void *pImage, unsigned long cbFile,
             break;
          }
 
-      } // End iteration over the header's entries
+      } //                                        
 
       if ( NULL != *ppStaConfig  )
       {
@@ -344,20 +344,20 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
       return VOS_STATUS_E_INVAL;
    }
 
-   // All 'new' SYS messages are identified by a cookie in the reserved
-   // field of the message as well as the message type.  This prevents
-   // the possibility of overlap in the message types defined for new
-   // SYS messages with the 'legacy' message types.  The legacy messages
-   // will not have this cookie in the reserved field
+   //                                                                  
+   //                                                                 
+   //                                                                
+   //                                                                   
+   //                                                
    if ( SYS_MSG_COOKIE == pMsg->reserved )
    {
-      // Process all the new SYS messages..
+      //                                   
       switch( pMsg->type )
       {
          case SYS_MSG_ID_MC_START:
          {
-            /* Handling for this message is not needed now so adding 
-             *debug print and VOS_ASSERT*/
+            /*                                                       
+                                        */
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        " Received SYS_MSG_ID_MC_START message msgType= %d [0x%08lx]",
                        pMsg->type, pMsg->type );
@@ -370,7 +370,7 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_INFO,
                        "Processing SYS MC STOP" );
 
-            // get the HAL context...
+            //                       
             hHal = vos_get_context( VOS_MODULE_ID_PE, pVosContext );
             if (NULL == hHal)
             {
@@ -392,8 +392,8 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             break;
          }
 
-         // Process MC thread probe.  Just callback to the
-         // function that is in the message.
+         //                                               
+         //                                 
          case SYS_MSG_ID_MC_THR_PROBE:
          {
             VOS_TRACE(VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
@@ -405,13 +405,13 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
          case SYS_MSG_ID_MC_TIMER:
          {
             vos_timer_callback_t timerCB;
-            // hummmm... note says...
-            // invoke the timer callback and the user data stick
-            // into the bodyval; no body to free.    I think this is
-            // what that means.
+            //                       
+            //                                                  
+            //                                                      
+            //                 
             timerCB = (vos_timer_callback_t)pMsg->bodyptr;
 
-            // make the callback to the timer routine...
+            //                                          
             timerCB( (v_VOID_t *)pMsg->bodyval );
 
             break;
@@ -430,12 +430,12 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             break;
         }
 
-      }   // end switch on message type
+      }   //                           
 
-   }   // end if cookie set
+   }   //                  
    else
    {
-      // Process all 'legacy' messages
+      //                              
       switch( pMsg->type )
       {
 
@@ -452,8 +452,8 @@ VOS_STATUS sysMcProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
                vos_mem_free(pMsg->bodyptr);
             break;
          }
-      }   // end switch on pMsg->type
-   }   // end else
+      }   //                         
+   }   //         
 
    return( vosStatus );
 }
@@ -473,22 +473,22 @@ VOS_STATUS sysTxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
       return VOS_STATUS_E_INVAL;
    }
 
-   // All 'new' SYS messages are identified by a cookie in the reserved
-   // field of the message as well as the message type.  This prevents
-   // the possibility of overlap in the message types defined for new
-   // SYS messages with the 'legacy' message types.  The legacy messages
-   // will not have this cookie in the reserved field
+   //                                                                  
+   //                                                                 
+   //                                                                
+   //                                                                   
+   //                                                
    if ( SYS_MSG_COOKIE == pMsg->reserved )
    {
-      // Process all the new SYS messages..
+      //                                   
       switch( pMsg->type )
       {
-         // Process TX thread probe.  Just callback to the
-         // function that is in the message.
+         //                                               
+         //                                 
          case SYS_MSG_ID_TX_THR_PROBE:
          {
-           /* Handling for this message is not needed now so adding 
-            * debug print and VOS_ASSERT*/
+           /*                                                       
+                                        */
             VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
                        " Received SYS_MSG_ID_TX_THR_PROBE message msgType= %d [0x%08lx]",
                        pMsg->type, pMsg->type );
@@ -501,13 +501,13 @@ VOS_STATUS sysTxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
          {
             vos_timer_callback_t timerCB;
 
-            // hummmm... note says...
-            // invoke the timer callback and the user data stick
-            // into the bodyval; no body to free.    I think this is
-            // what that means.
+            //                       
+            //                                                  
+            //                                                      
+            //                 
             timerCB = (vos_timer_callback_t)pMsg->bodyptr;
 
-            // make the callback to the timer routine...
+            //                                          
             timerCB( (v_VOID_t *)pMsg->bodyval );
 
             break;
@@ -521,8 +521,8 @@ VOS_STATUS sysTxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             break;
         }
 
-      }   // end switch on message type
-   }   // end if cookie set
+      }   //                           
+   }   //                  
    else
    {
       VOS_ASSERT( 0 );
@@ -532,7 +532,7 @@ VOS_STATUS sysTxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
                  " type= %d [0x%08lX]", pMsg->type, pMsg->type );
 
       vosStatus = VOS_STATUS_E_BADMSG;
-   }   // end else
+   }   //         
 
    return( vosStatus );
 }
@@ -550,27 +550,27 @@ VOS_STATUS sysRxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
       return VOS_STATUS_E_INVAL;
    }
 
-   // All 'new' SYS messages are identified by a cookie in the reserved
-   // field of the message as well as the message type.  This prevents
-   // the possibility of overlap in the message types defined for new
-   // SYS messages with the 'legacy' message types.  The legacy messages
-   // will not have this cookie in the reserved field
+   //                                                                  
+   //                                                                 
+   //                                                                
+   //                                                                   
+   //                                                
    if ( SYS_MSG_COOKIE == pMsg->reserved )
    {
-      // Process all the new SYS messages..
+      //                                   
       switch( pMsg->type )
       {
          case SYS_MSG_ID_RX_TIMER:
          {
             vos_timer_callback_t timerCB;
 
-            // hummmm... note says...
-            // invoke the timer callback and the user data stick
-            // into the bodyval; no body to free.    I think this is
-            // what that means.
+            //                       
+            //                                                  
+            //                                                      
+            //                 
             timerCB = (vos_timer_callback_t)pMsg->bodyptr;
 
-            // make the callback to the timer routine...
+            //                                          
             timerCB( (v_VOID_t *)pMsg->bodyval );
 
             break;
@@ -584,8 +584,8 @@ VOS_STATUS sysRxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
             break;
         }
 
-      }   // end switch on message type
-   }   // end if cookie set
+      }   //                           
+   }   //                  
    else
    {
       VOS_ASSERT( 0 );
@@ -595,7 +595,7 @@ VOS_STATUS sysRxProcessMsg( v_CONTEXT_t pVosContext, vos_msg_t *pMsg )
                  " type= %d [0x%08lX]", pMsg->type, pMsg->type );
 
       vosStatus = VOS_STATUS_E_BADMSG;
-   }   // end else
+   }   //         
 
    return( vosStatus );
 }
@@ -621,11 +621,11 @@ SysProcessMmhMsg
 )
 {
   VOS_MQ_ID   targetMQ = VOS_MQ_ID_SYS;
-/*-------------------------------------------------------------------------*/
+/*                                                                         */
   /*
-  ** The body of this pMsg is a tSirMbMsg
-  ** Contrary to Gen4, we cannot free it here!
-  ** It is up to the callee to free it
+                                         
+                                              
+                                      
   */
 
 
@@ -641,7 +641,7 @@ SysProcessMmhMsg
   switch (pMsg->type)
   {
     /*
-    ** Following messages are routed to SYS
+                                           
     */
     case WNI_CFG_DNLD_REQ:
     case WNI_CFG_DNLD_CNF:
@@ -650,7 +650,7 @@ SysProcessMmhMsg
     case WDA_RESET_REQ:
     case eWNI_SME_START_RSP:
     {
-      /* Forward this message to the SYS module */
+      /*                                        */
       targetMQ = VOS_MQ_ID_SYS;
 
       VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
@@ -663,12 +663,12 @@ SysProcessMmhMsg
 
 
     /*
-    ** Following messages are routed to HAL
+                                           
     */
     case WNI_CFG_DNLD_RSP:
     case WDA_INIT_START_REQ:
     {
-      /* Forward this message to the HAL module */
+      /*                                        */
       targetMQ = VOS_MQ_ID_WDA;
 
       VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
@@ -685,7 +685,7 @@ SysProcessMmhMsg
     case WNI_CFG_SET_REQ_NO_RSP:
     case eWNI_SME_SYS_READY_IND:
     {
-       /* Forward this message to the PE module */
+       /*                                       */
       targetMQ = VOS_MQ_ID_PE;
       break;
     }
@@ -693,23 +693,23 @@ SysProcessMmhMsg
 
     case WNI_CFG_GET_RSP:
     case WNI_CFG_SET_CNF:
-/*   case eWNI_SME_DISASSOC_RSP:
-    case eWNI_SME_STA_STAT_RSP:
-    case eWNI_SME_AGGR_STAT_RSP:
-    case eWNI_SME_GLOBAL_STAT_RSP:
-    case eWNI_SME_STAT_SUMM_RSP:
-    case eWNI_PMC_ENTER_BMPS_RSP:
-    case eWNI_PMC_EXIT_BMPS_RSP:
-    case eWNI_PMC_EXIT_BMPS_IND:
-    case eWNI_PMC_ENTER_IMPS_RSP:
-    case eWNI_PMC_EXIT_IMPS_RSP:
-    case eWNI_PMC_ENTER_UAPSD_RSP:
-    case eWNI_PMC_EXIT_UAPSD_RSP:
-    case eWNI_PMC_ENTER_WOWL_RSP:
-    case eWNI_PMC_EXIT_WOWL_RSP:
-    case eWNI_SME_SWITCH_CHL_REQ: */ //Taken care by the check in default case
+/*                              
+                               
+                                
+                                  
+                                
+                                 
+                                
+                                
+                                 
+                                
+                                  
+                                 
+                                 
+                                
+                                  */ //                                       
     {
-       /* Forward this message to the SME module */
+       /*                                        */
       targetMQ = VOS_MQ_ID_SME;
       break;
     }
@@ -734,46 +734,46 @@ SysProcessMmhMsg
 
 
   /*
-  ** Post now the message to the appropriate module for handling
+                                                                
   */
   if(VOS_STATUS_SUCCESS != vos_mq_post_message(targetMQ, (vos_msg_t*)pMsg))
   {
-    //Caller doesn't allocate memory for the pMsg. It allocate memory for bodyptr
-    /* free the mem and return */
+    //                                                                           
+    /*                         */
     if(pMsg->bodyptr)
     {
       vos_mem_free( pMsg->bodyptr);
     }
   }
 
-} /* SysProcessMmhMsg() */
+} /*                    */
 
-/*==========================================================================
-  FUNCTION    WLAN_FTM_SYS_FTM
+/*                                                                          
+                              
 
-  DESCRIPTION
-    Called by VOSS to free a given FTM message on the Main thread when there
-    are messages pending in the queue when the whole system is been reset.
+             
+                                                                            
+                                                                          
 
-  DEPENDENCIES
-     FTM  must be initialized before this function can be called.
+              
+                                                                 
 
-  PARAMETERS
+            
 
-    IN
-    pvosGCtx:       pointer to the global vos context; a handle to FTM's
-                    control block can be extracted from its context
-    message:        type and content of the message
+      
+                                                                        
+                                                                   
+                                                   
 
 
-  RETURN VALUE
-    The result code associated with performing the operation
+              
+                                                            
 
-    VOS_STATUS_SUCCESS:
+                       
 
-  SIDE EFFECTS
-      NONE
-============================================================================*/
+              
+          
+                                                                            */
 
 void wlan_sys_ftm(void *pMsgPtr)
 {

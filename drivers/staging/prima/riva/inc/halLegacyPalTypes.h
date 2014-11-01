@@ -57,7 +57,7 @@
 
 #include "qwlanfw_defs.h"
 
-/* Common type definitions */
+/*                         */
 typedef uint8     tANI_U8;
 typedef int8      tANI_S8;
 typedef uint16    tANI_U16;
@@ -73,4 +73,4 @@ typedef byte      tANI_BYTE;
 typedef boolean   tANI_BOOLEAN;
 typedef uint32    tANI_TIMESTAMP;
 
-#endif /*__LEGACYPALTYPES_H__*/
+#endif /*                    */

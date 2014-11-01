@@ -40,7 +40,7 @@
  */
 
 /*
- * */
+   */
 #if !defined( __SMERRMINTERNAL_H )
 #define __SMERRMINTERNAL_H
 
@@ -57,11 +57,11 @@
   
   ========================================================================*/
 
-/* $Header$ */
+/*          */
 
-/*--------------------------------------------------------------------------
-  Include Files
-  ------------------------------------------------------------------------*/
+/*                                                                          
+               
+                                                                          */
 #include "vos_lock.h"
 #include "vos_trace.h"
 #include "vos_memory.h"
@@ -69,9 +69,9 @@
 #include "palTimer.h"
 #include "rrmGlobal.h"
 
-/*-------------------------------------------------------------------------- 
-  Type declarations
-  ------------------------------------------------------------------------*/
+/*                                                                           
+                   
+                                                                          */
 typedef struct sRrmConfigParam
 {
    tANI_U8 rrmEnabled;
@@ -90,14 +90,14 @@ typedef void (*NeighborReportRspCallback) (void *context, VOS_STATUS vosStatus);
 
 typedef struct sRrmNeighborRspCallbackInfo
 {
-    tANI_U32                  timeout;  //in ms.. min value is 10 (10ms)
+    tANI_U32                  timeout;  //                              
     NeighborReportRspCallback neighborRspCallback;
     void                      *neighborRspCallbackContext;
 } tRrmNeighborRspCallbackInfo, *tpRrmNeighborRspCallbackInfo;
 
 typedef struct sRrmNeighborRequestControlInfo
 {
-    tANI_BOOLEAN    isNeighborRspPending;   //To check whether a neighbor req is already sent and response pending
+    tANI_BOOLEAN    isNeighborRspPending;   //                                                                    
     vos_timer_t     neighborRspWaitTimer;
     tRrmNeighborRspCallbackInfo neighborRspCallbackInfo;
 } tRrmNeighborRequestControlInfo, *tpRrmNeighborRequestControlInfo;
@@ -107,11 +107,11 @@ typedef struct sRrmSMEContext
    tANI_U16 token;
    tCsrBssid sessionBssId;
    tANI_U8 regClass;
-   tCsrChannelInfo channelList; //list of all channels to be measured.
+   tCsrChannelInfo channelList; //                                    
    tANI_U8 currentIndex;
-   tAniSSID ssId;  //SSID used in the measuring beacon report.
-   tSirMacAddr bssId; //bssid used for beacon report measurement.
-   tANI_U16 randnIntvl; //Randomization interval to be used in subsequent measurements.
+   tAniSSID ssId;  //                                         
+   tSirMacAddr bssId; //                                         
+   tANI_U16 randnIntvl; //                                                             
    tANI_U16 duration[SIR_CCX_MAX_MEAS_IE_REQS];
    tANI_U8 measMode[SIR_CCX_MAX_MEAS_IE_REQS];
    tRrmConfigParam rrmConfig;
@@ -121,7 +121,7 @@ typedef struct sRrmSMEContext
 
 #if defined(FEATURE_WLAN_CCX) && defined(FEATURE_WLAN_CCX_UPLOAD)
    tCsrCcxBeaconReq  ccxBcnReqInfo;
-#endif /* FEATURE_WLAN_CCX && FEATURE_WLAN_CCX_UPLOAD */
+#endif /*                                             */
 }tRrmSMEContext, *tpRrmSMEContext; 
 
 typedef struct sRrmNeighborReq
@@ -130,4 +130,4 @@ typedef struct sRrmNeighborReq
    tSirMacSSid ssid;
 }tRrmNeighborReq, *tpRrmNeighborReq;
 
-#endif //#if !defined( __SMERRMINTERNAL_H )
+#endif //                                  

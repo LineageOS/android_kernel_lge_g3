@@ -61,67 +61,67 @@
 #include "smeInternal.h"
 
 
-//Change PMC_ABORT to no-op for now. We need to define it as VOS_ASSERT(0) once we 
-//cleanup the usage.
+//                                                                                 
+//                  
 #define PMC_ABORT  
 
-/* Host power sources. */
+/*                     */
 typedef enum ePowerSource
 {
-    AC_POWER,  /* host is operating from AC power */
-    BATTERY_POWER  /* host is operating from battery power */
+    AC_POWER,  /*                                 */
+    BATTERY_POWER  /*                                      */
 } tPowerSource;
 
 
-/* Power save check routine list entry. */
+/*                                      */
 typedef struct sPowerSaveCheckEntry
 {
-    tListElem link;  /* list links */
-    tANI_BOOLEAN (*checkRoutine) (void *checkContext);  /* power save check routine */
-    void *checkContext;  /* value to be passed as parameter to routine specified above */
+    tListElem link;  /*            */
+    tANI_BOOLEAN (*checkRoutine) (void *checkContext);  /*                          */
+    void *checkContext;  /*                                                            */
 } tPowerSaveCheckEntry, *tpPowerSaveCheckEntry;
 
 
-/* Device Power State update indication list entry. */
+/*                                                  */
 typedef struct sDeviceStateUpdateIndEntry
 {
-    tListElem link;  /* list links */
-    void (*callbackRoutine) (void *callbackContext, tPmcState pmcState); /* Callback routine to be invoked when pmc changes device state */
-    void *callbackContext;  /* value to be passed as parameter to routine specified above */
+    tListElem link;  /*            */
+    void (*callbackRoutine) (void *callbackContext, tPmcState pmcState); /*                                                              */
+    void *callbackContext;  /*                                                            */
 } tDeviceStateUpdateIndEntry, *tpDeviceStateUpdateIndEntry;
 
-/* Request full power callback routine list entry. */
+/*                                                 */
 typedef struct sRequestFullPowerEntry
 {
-    tListElem link;  /* list links */
-    void (*callbackRoutine) (void *callbackContext, eHalStatus status);  /* routine to call when full power is restored */
-    void *callbackContext;  /* value to be passed as parameter to routine specified above */
+    tListElem link;  /*            */
+    void (*callbackRoutine) (void *callbackContext, eHalStatus status);  /*                                             */
+    void *callbackContext;  /*                                                            */
 } tRequestFullPowerEntry, *tpRequestFullPowerEntry;
 
 
-/* Request BMPS callback routine list entry. */
+/*                                           */
 typedef struct sRequestBmpsEntry
 {
-   tListElem link;  /* list links */
+   tListElem link;  /*            */
 
-   /* routine to call when BMPS request succeeded/failed */
+   /*                                                    */
    void (*callbackRoutine) (void *callbackContext, eHalStatus status);
 
-   /* value to be passed as parameter to routine specified above */
+   /*                                                            */
    void *callbackContext;  
 
 } tRequestBmpsEntry, *tpRequestBmpsEntry;
 
 
-/* Start U-APSD callback routine list entry. */
+/*                                           */
 typedef struct sStartUapsdEntry
 {
-   tListElem link;  /* list links */
+   tListElem link;  /*            */
 
-   /* routine to call when Uapsd Start succeeded/failed*/
+   /*                                                  */
    void (*callbackRoutine) (void *callbackContext, eHalStatus status);
 
-   /* value to be passed as parameter to routine specified above */
+   /*                                                            */
    void *callbackContext;  
 
 } tStartUapsdEntry, *tpStartUapsdEntry;
@@ -131,91 +131,91 @@ typedef struct sPmcDeferredMsg
     tListElem link;
     tpAniSirGlobal pMac;
     tANI_U16 messageType;
-    tANI_U16 size;  //number of bytes in u.data
+    tANI_U16 size;  //                         
     union
     {
         tSirPowerSaveCfg powerSaveConfig;
         tSirWowlAddBcastPtrn wowlAddPattern;
         tSirWowlDelBcastPtrn wowlDelPattern;
-        tANI_U8 data[1];    //a place holder
+        tANI_U8 data[1];    //              
     }u;
 } tPmcDeferredMsg;
 
 
 
-/* Current PMC information for a particular device. */
+/*                                                  */
 typedef struct sPmcInfo
 {
-    tPowerSource powerSource;  /* host power source */
-    tPmcSwitchState hwWlanSwitchState;  /* Hardware WLAN Switch state */
-    tPmcSwitchState swWlanSwitchState;  /* Software WLAN Switch state */
-    tPmcState pmcState;  /* PMC state */
-    tANI_BOOLEAN requestFullPowerPending;  /* TRUE if a request for full power is pending */
-    tRequestFullPowerReason requestFullPowerReason; /* reason for requesting full power */
-    tPmcImpsConfigParams impsConfig;  /* IMPS configuration */
-    tPmcBmpsConfigParams bmpsConfig;  /* BMPS configuration */
-    tPmcSmpsConfigParams smpsConfig;  /* SMPS configuration */
-    tANI_BOOLEAN impsEnabled;  /* TRUE if IMPS is enabled */
-    tANI_BOOLEAN bmpsEnabled;  /* TRUE if BMPS is enabled */
-    tANI_BOOLEAN autoBmpsEntryEnabled;  /* TRUE if auto BMPS entry is enabled. If set to TRUE, PMC will
-                                           attempt to put the device into BMPS on entry into full Power */
-    tANI_BOOLEAN bmpsRequestedByHdd; /*TRUE if BMPS mode has been requested by HDD */
-    tANI_BOOLEAN bmpsRequestQueued; /*If a enter BMPS request is queued*/
-    tANI_BOOLEAN smpsEnabled;  /* TRUE if SMPS is enabled */
-    tANI_BOOLEAN remainInPowerActiveTillDHCP;  /* Remain in Power active till DHCP completes */
-    tANI_U32 remainInPowerActiveThreshold;  /*Remain in Power active till DHCP threshold*/
-    tANI_U32 impsPeriod;  /* amount of time to remain in IMPS */
-    void (*impsCallbackRoutine) (void *callbackContext, eHalStatus status);  /* routine to call when IMPS period
-                                                                                has finished */ 
-    void *impsCallbackContext;  /* value to be passed as parameter to routine specified above */
-    vos_timer_t hImpsTimer;  /* timer to use with IMPS */
-    vos_timer_t hTrafficTimer;  /* timer to measure traffic for BMPS */
+    tPowerSource powerSource;  /*                   */
+    tPmcSwitchState hwWlanSwitchState;  /*                            */
+    tPmcSwitchState swWlanSwitchState;  /*                            */
+    tPmcState pmcState;  /*           */
+    tANI_BOOLEAN requestFullPowerPending;  /*                                             */
+    tRequestFullPowerReason requestFullPowerReason; /*                                  */
+    tPmcImpsConfigParams impsConfig;  /*                    */
+    tPmcBmpsConfigParams bmpsConfig;  /*                    */
+    tPmcSmpsConfigParams smpsConfig;  /*                    */
+    tANI_BOOLEAN impsEnabled;  /*                         */
+    tANI_BOOLEAN bmpsEnabled;  /*                         */
+    tANI_BOOLEAN autoBmpsEntryEnabled;  /*                                                             
+                                                                                                        */
+    tANI_BOOLEAN bmpsRequestedByHdd; /*                                            */
+    tANI_BOOLEAN bmpsRequestQueued; /*                                 */
+    tANI_BOOLEAN smpsEnabled;  /*                         */
+    tANI_BOOLEAN remainInPowerActiveTillDHCP;  /*                                            */
+    tANI_U32 remainInPowerActiveThreshold;  /*                                          */
+    tANI_U32 impsPeriod;  /*                                  */
+    void (*impsCallbackRoutine) (void *callbackContext, eHalStatus status);  /*                                 
+                                                                                             */ 
+    void *impsCallbackContext;  /*                                                            */
+    vos_timer_t hImpsTimer;  /*                        */
+    vos_timer_t hTrafficTimer;  /*                                   */
 #ifdef FEATURE_WLAN_DIAG_SUPPORT    
-    vos_timer_t hDiagEvtTimer;  /* timer to report PMC state through DIAG event */
+    vos_timer_t hDiagEvtTimer;  /*                                              */
 #endif
-    vos_timer_t hExitPowerSaveTimer;  /* timer for deferred exiting of power save mode */
-    tDblLinkList powerSaveCheckList; /* power save check routine list */
-    tDblLinkList requestFullPowerList; /* request full power callback routine list */
-    tANI_U32 cLastTxUnicastFrames;  /* transmit unicast frame count at last BMPS traffic timer expiration */
-    tANI_U32 cLastRxUnicastFrames;  /* receive unicast frame count at last BMPS traffic timer expiration */
+    vos_timer_t hExitPowerSaveTimer;  /*                                               */
+    tDblLinkList powerSaveCheckList; /*                               */
+    tDblLinkList requestFullPowerList; /*                                          */
+    tANI_U32 cLastTxUnicastFrames;  /*                                                                    */
+    tANI_U32 cLastRxUnicastFrames;  /*                                                                   */
 
 
-    tANI_BOOLEAN uapsdEnabled;  /* TRUE if UAPSD is enabled */
-    tANI_BOOLEAN uapsdSessionRequired; /* TRUE if device should go to UAPSD on entering BMPS*/
-    tDblLinkList requestBmpsList; /* request Bmps callback routine list */
-    tDblLinkList requestStartUapsdList; /* request start Uapsd callback routine list */
-    tANI_BOOLEAN standbyEnabled;  /* TRUE if Standby is enabled */
-    void (*standbyCallbackRoutine) (void *callbackContext, eHalStatus status); /* routine to call for standby request */ 
-    void *standbyCallbackContext;/* value to be passed as parameter to routine specified above */
-    tDblLinkList deviceStateUpdateIndList; /*update device state indication list */
-    tANI_BOOLEAN pmcReady; /*whether eWNI_SME_SYS_READY_IND has been sent to PE or not */
-    tANI_BOOLEAN wowlEnabled;  /* TRUE if WoWL is enabled */
-    tANI_BOOLEAN wowlModeRequired; /* TRUE if device should go to WOWL on entering BMPS */
-    void (*enterWowlCallbackRoutine) (void *callbackContext, eHalStatus status); /* routine to call for wowl request */ 
-    void *enterWowlCallbackContext;/* value to be passed as parameter to routine specified above */
-    tSirSmeWowlEnterParams wowlEnterParams; /* WOWL mode configuration */
-    tDblLinkList deferredMsgList;   //The message in here are deferred and DONOT expect response from PE
-    tANI_BOOLEAN rfSuppliesVotedOff;  //Whether RF supplies are voted off or not.
+    tANI_BOOLEAN uapsdEnabled;  /*                          */
+    tANI_BOOLEAN uapsdSessionRequired; /*                                                   */
+    tDblLinkList requestBmpsList; /*                                    */
+    tDblLinkList requestStartUapsdList; /*                                           */
+    tANI_BOOLEAN standbyEnabled;  /*                            */
+    void (*standbyCallbackRoutine) (void *callbackContext, eHalStatus status); /*                                     */ 
+    void *standbyCallbackContext;/*                                                            */
+    tDblLinkList deviceStateUpdateIndList; /*                                    */
+    tANI_BOOLEAN pmcReady; /*                                                          */
+    tANI_BOOLEAN wowlEnabled;  /*                         */
+    tANI_BOOLEAN wowlModeRequired; /*                                                   */
+    void (*enterWowlCallbackRoutine) (void *callbackContext, eHalStatus status); /*                                  */ 
+    void *enterWowlCallbackContext;/*                                                            */
+    tSirSmeWowlEnterParams wowlEnterParams; /*                         */
+    tDblLinkList deferredMsgList;   //                                                                  
+    tANI_BOOLEAN rfSuppliesVotedOff;  //                                         
 #ifdef FEATURE_WLAN_SCAN_PNO
-    preferredNetworkFoundIndCallback  prefNetwFoundCB; /* routine to call for Preferred Network Found Indication */ 
-    void *preferredNetworkFoundIndCallbackContext;/* value to be passed as parameter to routine specified above */
-#endif // FEATURE_WLAN_SCAN_PNO
+    preferredNetworkFoundIndCallback  prefNetwFoundCB; /*                                                        */ 
+    void *preferredNetworkFoundIndCallbackContext;/*                                                            */
+#endif //                      
 #ifdef WLAN_FEATURE_PACKET_FILTERING
-    FilterMatchCountCallback  FilterMatchCountCB; /* routine to call for Packet Coalescing Filter Match Count */ 
-    void *FilterMatchCountCBContext;/* value to be passed as parameter to routine specified above */
-#endif // WLAN_FEATURE_PACKET_FILTERING
+    FilterMatchCountCallback  FilterMatchCountCB; /*                                                          */ 
+    void *FilterMatchCountCBContext;/*                                                            */
+#endif //                              
 #ifdef WLAN_FEATURE_GTK_OFFLOAD
-    GTKOffloadGetInfoCallback  GtkOffloadGetInfoCB; /* routine to call for GTK Offload Information */ 
-    void *GtkOffloadGetInfoCBContext;        /* value to be passed as parameter to routine specified above */
-#endif // WLAN_FEATURE_GTK_OFFLOAD
+    GTKOffloadGetInfoCallback  GtkOffloadGetInfoCB; /*                                             */ 
+    void *GtkOffloadGetInfoCBContext;        /*                                                            */
+#endif //                         
 
 #ifdef WLAN_WAKEUP_EVENTS
-    void (*wakeReasonIndCB) (void *callbackContext, tpSirWakeReasonInd pWakeReasonInd);  /* routine to call for Wake Reason Indication */ 
-    void *wakeReasonIndCBContext;  /* value to be passed as parameter to routine specified above */
-#endif // WLAN_WAKEUP_EVENTS
+    void (*wakeReasonIndCB) (void *callbackContext, tpSirWakeReasonInd pWakeReasonInd);  /*                                            */ 
+    void *wakeReasonIndCBContext;  /*                                                            */
+#endif //                   
 
-/* If TRUE driver will go to BMPS only if host operatiing system asks to enter BMPS.
-* For android wlan_hdd_cfg80211_set_power_mgmt API will be used to set host powersave*/
+/*                                                                                  
+                                                                                     */
     v_BOOL_t    isHostPsEn;
     v_BOOL_t    ImpsReqFailed;
     v_BOOL_t    ImpsReqTimerFailed;
@@ -223,10 +223,10 @@ typedef struct sPmcInfo
     tANI_U8     ImpsReqTimerfailCnt;
 
 #ifdef FEATURE_WLAN_BATCH_SCAN
-   /*HDD callback to be called after receiving SET BATCH SCAN RSP from FW*/
+   /*                                                                    */
    hddSetBatchScanReqCallback setBatchScanReqCallback;
    void * setBatchScanReqCallbackContext;
-   /*HDD callback to be called after receiving BATCH SCAN iRESULT IND from FW*/
+   /*                                                                        */
    hddTriggerBatchScanResultIndCallback batchScanResultCallback;
    void * batchScanResultCallbackContext;
 #endif
@@ -235,11 +235,11 @@ typedef struct sPmcInfo
 } tPmcInfo, *tpPmcInfo;
 
 
-//MACRO
+//     
 #define PMC_IS_READY(pMac)  ( ((pMac)->pmc.pmcReady) && (STOPPED != (pMac)->pmc.pmcState) )
 
 
-/* Routine definitions. */
+/*                      */
 extern eHalStatus pmcEnterLowPowerState (tHalHandle hHal);
 extern eHalStatus pmcExitLowPowerState (tHalHandle hHal);
 extern eHalStatus pmcEnterFullPowerState (tHalHandle hHal);
@@ -279,7 +279,7 @@ extern eHalStatus pmcRequestEnterWowlState(tHalHandle hHal, tpSirSmeWowlEnterPar
 extern eHalStatus pmcEnterWowlState (tHalHandle hHal);
 extern eHalStatus pmcRequestExitWowlState(tHalHandle hHal);
 extern void pmcDoEnterWowlCallbacks (tHalHandle hHal, eHalStatus callbackStatus);
-//The function will request for full power as well in addition to defer the message
+//                                                                                 
 extern eHalStatus pmcDeferMsg( tpAniSirGlobal pMac, tANI_U16 messageType, 
                                                void *pData, tANI_U32 size);
 extern eHalStatus pmcIssueCommand( tpAniSirGlobal pMac, eSmeCommandType cmdType, void *pvParam, 

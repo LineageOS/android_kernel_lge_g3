@@ -51,7 +51,7 @@
 
 #define ANI_PCI_CFG_MIN_GNT 4
 #define ANI_PCI_CFG_MAX_LAT 32
-/// EEPROM Product Ids for different types of NICs.
+//                                                 
 #define EEP_PRODUCT_ID_MPCI_3_2    1
 #define EEP_PRODUCT_ID_MPCI_2_2    2
 #define EEP_PRODUCT_ID_CARDBUS     3
@@ -63,15 +63,15 @@
                   (((0x3416 + sizeof(tPolSystemParameters)) << 3)|1)
 
 
-/// Here is an example of a test structure
+//                                        
 typedef enum sANI_TEST_ID
 {
-    // All DVT test Ids, beginning with BMU, INT, HIF, SP, TFP, RHP,
-    // RFP, SYS, PHY, SPI, CYG, LO, and EEPROM in the order specified.
+    //                                                              
+    //                                                                
     ANI_TESTID_NONE = 0,
 
-    // PLEASE PRESERVE THE ORDER; IF YOU NEED TO CHANGE.
-    // TEST SCRIPTS DEPEND ON THIS ORDER.
+    //                                                  
+    //                                   
 
     ANI_BUS_ACCESS_TEST,
     ANI_MEMORY_TEST,
@@ -81,70 +81,70 @@ typedef enum sANI_TEST_ID
     ANI_HASH_TBL_ADD_DEL_GET_TEST_ID,
     ANI_HASH_TBL_MULT_ENTRY_TEST_ID,
 
-    // Data path tests
+    //                
     ANI_SEND_CONTINUOUS_TEST,
     ANI_PKT_ROUTING_TEST,
 
     ANI_ADD_STA_TEST_ID,
     ANI_DELETE_STA_TEST_ID,
 
-    // HIF Tests
+    //          
     ANI_BURST_READ_WRITE_TEST_ID,
     ANI_MOVE_ACK_TEST_ID,
     ANI_RESET_WQ_TEST_ID,
     ANI_HIF_LPBK_TEST_ID,
 
-    // SP Tests
+    //         
 
-    // TFP Tests
+    //          
     ANI_BCN_GEN_TEST_ID,
 
-    // RHP Tests
+    //          
 
     ANI_HASH_TBL_DELETE_TEST_ID,
     ANI_HASH_TBL_GET_TEST_ID,
 
-    // RHP Tests
+    //          
     ANI_AGING_TEST_ID,
     ANI_COUNTERS_TEST_ID,
 
-    // SYS Tests
+    //          
     ANI_SET_PROMOSCOUS_MODE_TEST_ID,
     ANI_SET_SCAN_MODE_TEST_ID,
 
-    // SPI Tests
+    //          
     ANI_SET_CYG_REG_READ_WRITE_TEST_ID,
 
-    // CYG Tests
+    //          
     ANI_SET_BB_CAL_TEST_ID,
 
-    // LO Tests
+    //         
     ANI_SET_LO_CHAN_TEST_ID,
 
-    // EEPROM Tests
+    //             
 
-    // Cal test
+    //         
     ANI_CAL_TEST_ID,
 
-    // HIF Burst DMA test
+    //                   
     ANI_HIF_BURST_DMA_TEST_ID,
 
-    // Add all your test Ids above this.
+    //                                  
     ANI_TESTS_MAX
 } tANI_TEST_ID;
 
-/// Test IDs for tests directly handled by the HDD
+//                                                
 typedef enum sANI_HDD_TEST_ID {
     ANI_HDD_TESTS_START = 0x10000,
     ANI_PCI_CFG_TEST = ANI_HDD_TESTS_START,
     ANI_EEPROM_TEST,
 
-    // Add all your HDD test Ids above this.
+    //                                      
     ANI_HDD_TESTS_MAX
 
 } tANI_HDD_TEST_ID;
 
-/// Test trigger types can be enhanced with this enumeration
+//                                                          
 typedef enum sANI_TEST_TRIG_TYPE
 {
     ANI_TRIG_TYPE_NONE = 0,
@@ -157,7 +157,7 @@ typedef enum sANI_TEST_TRIG_TYPE
     ANI_TRIG_TYPE_MAX
 } tANI_TEST_TRIG_TYPE;
 
-/// Test states
+//             
 typedef enum sANI_DBG_TEST_STATE
 {
     ANI_TEST_STATE_IDLE = 0,
@@ -166,9 +166,9 @@ typedef enum sANI_DBG_TEST_STATE
 
 } tANI_DBG_TEST_STATE;
 
-/**
- * The following CFG Types are defined for each type of a parameter that can
- * be independently set
+/* 
+                                                                            
+                       
  */
 typedef enum sANI_DBG_CFG_TYPES
 {
@@ -226,38 +226,38 @@ typedef enum sANI_DBG_CFG_TYPES
     ANI_DBG_CFG_TYPE_MAX
 } tANI_DBG_CFG_TYPES;
 
-/**
- * The following are the length definitions for each CFG TYPE defined
- * in earlier Type enum.
+/* 
+                                                                     
+                        
  */
 
-// first byte mode and second rate
+//                                
 # define ANI_DBG_CFG_PHY_MODE_RATE_LEN 2
 
-// MSN is type and LSN is sub-type in the MSB. 4 LSBs are routing flags
+//                                                                     
 # define ANI_DBG_CFG_ROUTING_FLAGS_LEN 5
 
 # define ANI_DBG_CFG_STA_ID_LEN        2
 
-// ======================================================================
+//                                                                       
 //
-// Following are the structure definitions for the config input parameters
+//                                                                        
 //
-// ======================================================================
+//                                                                       
 //
-// --------------------------------------------------------
+//                                                         
 
-// --------------------------------------------------------
-// Output Params for Read Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgGetPolarisVersionResponse
 {
-    // Output parameters
-    unsigned int rc;  // 0 - SUCCESS
+    //                  
+    unsigned int rc;  //            
     unsigned long version;
 } tAniDbgCfgGetPolarisVersionResponse, *tpAniDbgCfgGetPolarisVersionResponse;
 
-// -------------------------------------------------------------
-// Input Params for the Phy Mode Rate
+//                                                              
+//                                   
 
 typedef struct sAniDbgCfgPhyModeRateParams
 {
@@ -265,8 +265,8 @@ typedef struct sAniDbgCfgPhyModeRateParams
     unsigned int phyRate;
 } tAniDbgCfgPhyModeRateParams, *tpAniDbgCfgPhyModeRateParams;
 
-// --------------------------------------------------------
-// Input Params for the Routing Flags
+//                                                         
+//                                   
 typedef struct sAniDbgCfgRoutingFlagsParams
 {
     unsigned int type;
@@ -274,29 +274,29 @@ typedef struct sAniDbgCfgRoutingFlagsParams
     unsigned int routingFlags;
 } tAniDbgCfgRoutingFlagsParams, *tpAniDbgCfgRoutingFlagsParams;
 
-// --------------------------------------------------------
-// Input Params for the STA ID
+//                                                         
+//                            
 typedef struct sAniDbgCfgStaIdParams
 {
     unsigned int staId;
 } tAniDbgCfgStaIdParams, *tpAniDbgCfgStaIdParams;
 
-// --------------------------------------------------------
-// Input Params for "Is Infrastructure Mode"
+//                                                         
+//                                          
 typedef struct sAniDbgCfgIsInfrastructureParams
 {
     unsigned int isInfrastructureMode;
 } tAniDbgCfgIsInfrastructureParams, *tpAniDbgCfgIsInfrastructureParams;
 
-// --------------------------------------------------------
-// Input Params for the Real Phy
+//                                                         
+//                              
 typedef struct sAniDbgCfgRealPhyParams
 {
     unsigned int useRealPhy;
 } tAniDbgCfgRealPhyParams, *tpAniDbgCfgRealPhyParams;
 
-// --------------------------------------------------------
-// Input Params for Phy Drops
+//                                                         
+//                           
 typedef struct sAniDbgCfgPhyDropParams
 {
     unsigned int usePhyDrops;
@@ -305,8 +305,8 @@ typedef struct sAniDbgCfgPhyDropParams
     unsigned int mode;
 } tAniDbgCfgPhyDropParams, *tpAniDbgCfgPhyDropParams;
 
-// --------------------------------------------------------
-// Input Params for Add Sta
+//                                                         
+//                         
 typedef struct sAniDbgCfgAddStaParams
 {
     unsigned int staId;
@@ -317,32 +317,32 @@ typedef struct sAniDbgCfgAddStaParams
     unsigned int ackPolicy;
 } tAniDbgCfgAddStaParams, *tpAniDbgCfgAddStaParams;
 
-// --------------------------------------------------------
-// Input Params for Delete Sta
+//                                                         
+//                            
 typedef struct sAniDbgCfgDelStaParams
 {
     unsigned int staId;
     unsigned char macAddr[6];
 } tAniDbgCfgDelStaParams, *tpAniDbgCfgDelStaParams;
 
-// --------------------------------------------------------
-// Lowest register address allowable for the Read Register calls
+//                                                         
+//                                                              
 #define ANI_TIT_MIN_REG_ADDR 0x02000000
 
 
-// --------------------------------------------------------
-// Highest register address allowable for the Read Register call
+//                                                         
+//                                                              
 #define ANI_TIT_MAX_REG_ADDR 0x0203ffff
 
-// --------------------------------------------------------
-// Input Params for Read Register Config request
+//                                                         
+//                                              
 typedef struct sAniDbgCfgReadRegParams
 {
     unsigned long regAddr;
 } tAniDbgCfgReadRegParams, *tpAniDbgCfgReadRegParams;
 
-// --------------------------------------------------------
-// Input Params for Write Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgWriteRegParams
 {
     unsigned long regAddr;
@@ -352,66 +352,66 @@ typedef struct sAniDbgCfgWriteRegParams
 
 
 
-// --------------------------------------------------------
-// ANI_DBG_CFG_SET_CAL_TONE,
+//                                                         
+//                          
 typedef struct
 {
-    unsigned long toneID;   //0 = -28, 1 = -24, ..., 6 = -4, 7 = +4, 8 = +8, 9 = +12, ..., 13 = +28
+    unsigned long toneID;   //                                                                     
 }tAniDbgCfgSetToneId, *tpAniDbgCfgSetToneId;
 
 
-// --------------------------------------------------------
-// Output Params for Read Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgRegReadResponse
 {
-    // Output parameters
-    unsigned int rc;  // 0 - SUCCESS
+    //                  
+    unsigned int rc;  //            
     unsigned long regVal;
 } tAniDbgCfgReadRegResponse, *tpAniDbgCfgReadRegResponse;
 
-// --------------------------------------------------------
-// Output Params for getting ARQ Window
+//                                                         
+//                                     
 typedef struct sAniDbgCfgGetArqWindowResponse
 {
-    unsigned int rc;  // 0 - SUCCESS
+    unsigned int rc;  //            
     unsigned long val;
 } tAniDbgCfgGetArqWindowResponse, *tpAniDbgCfgGetArqWindowResponse;
 
-// --------------------------------------------------------
-// Input Params for Write Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgSetArqWindowParams
 {
     unsigned long windowSize;
 } tAniDbgCfgSetArqWindowRegParams, *tpAniDbgCfgSetArqWindowParams;
 
-// --------------------------------------------------------
-// Input Params for Write Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgSetChanParams
 {
     unsigned long chId;
 } tAniDbgCfgSetChanParams, *tpAniDbgCfgSetChanParams;
 
 
-// --------------------------------------------------------
-// Input Params for Write Register Config request
+//                                                         
+//                                               
 typedef struct sAniDbgCfgSetMacAddrParams
 {
     unsigned char macAddr[6];
-    unsigned int  flag;       // 0 - BSSID; 1 - MAC Address of DUT
+    unsigned int  flag;       //                                  
 } tAniDbgCfgSetMacAddrParams, *tpAniDbgCfgSetMacAddrParams;
 
-// --------------------------------------------------------
-// Input Params for Set Memory request
+//                                                         
+//                                    
 typedef struct sAniDbgCfgSetMemoryParams
 {
     unsigned int fUseBurstDma;
     unsigned int numOfWords;
     unsigned int ahbAddr;
-    unsigned int writeData; // Pattern to be written out in memory
+    unsigned int writeData; //                                    
 } tAniDbgCfgSetMemoryParams, *tpAniDbgCfgSetMemoryParams;
 
-// --------------------------------------------------------
-// Input Params for Get Memory request
+//                                                         
+//                                    
 typedef struct sAniDbgCfgGetMemoryParams
 {
     unsigned int fUseBurstDma;
@@ -419,55 +419,55 @@ typedef struct sAniDbgCfgGetMemoryParams
     unsigned int ahbAddr;
 } tAniDbgCfgGetMemoryParams, *tpAniDbgCfgGetMemoryParams;
 
-// --------------------------------------------------------
-// Response structure for the Get Memory request
+//                                                         
+//                                              
 typedef struct sAniDbgCfgGetMemoryResponse
 {
-    unsigned int rc;  // 0 - SUCCESS; Otherwise FAILED
+    unsigned int rc;  //                              
     unsigned int readData[1];
 } tAniDbgCfgGetMemoryResponse, *tpAniDbgCfgGetMemoryResponse;
 
 
-// --------------------------------------------------------
-// Input Params for Controls Enable/Disable of TX WQ
+//                                                         
+//                                                  
 typedef struct sAniDbgCfgCtrlTxWqParams
 {
     unsigned int staId;
     unsigned int wqId;
-    unsigned int action; // 0 - Disable; 1 - Enable
+    unsigned int action; //                        
 
 } tAniDbgCfgCtrlTxWqParams, *tpAniDbgCfgCtrlTxWqParams;
 
-// --------------------------------------------------------
-// Input Params for Getting TX/RX Activity Set
+//                                                         
+//                                            
 typedef struct sAniDbgCfgGetAsParams
 {
-    unsigned int id;     // 0 - tx; 1 - rx
+    unsigned int id;     //               
 
 } tAniDbgCfgGetAsParams, *tpAniDbgCfgGetAsParams;
 
-// Input Params for Getting TX/RX Activity Set
+//                                            
 typedef struct sAniDbgCfgGetAsResponse
 {
-    unsigned int rc;  // 0 - Success
+    unsigned int rc;  //            
     unsigned int nEntries;
     unsigned int entries[64];
 
 } tAniDbgCfgGetAsResponse, *tpAniDbgCfgGetAsResponse;
 
-// --------------------------------------------------------
-// Input Params for Set ACK Policy
+//                                                         
+//                                
 typedef struct sAniDbgCfgSetAckPolicyParams
 {
-    unsigned int id;     // 0 - tx; 1 - rx
+    unsigned int id;     //               
     unsigned int policy;
     unsigned int staId;
     unsigned int tcId;
 
 } tAniDbgCfgSetAckPolicyParams, *tpAniDbgCfgSetAckPolicyParams;
 
-// --------------------------------------------------------
-// Input Params to Run AGING command
+//                                                         
+//                                  
 typedef struct sAniDbgCfgAgingCmdParams
 {
     unsigned int staId;
@@ -475,41 +475,41 @@ typedef struct sAniDbgCfgAgingCmdParams
 
 } tAniDbgCfgAgingCmdParams, *tpAniDbgCfgAgingCmdParams;
 
-// --------------------------------------------------------
-// Input Params to TFP Abort command
+//                                                         
+//                                  
 typedef struct sAniDbgCfgTfpAbortParams
 {
     unsigned int staId;
 
 } tAniDbgCfgTfpAbortParams, *tpAniDbgCfgTfpAbortParams;
 
-// --------------------------------------------------------
-// Input Params to Enable/Disable Beacon command
+//                                                         
+//                                              
 typedef struct sAniDbgCfgEnableBeaconParams
 {
     unsigned int fEnableBeacons;
 
 } tAniDbgCfgEnableBeaconParams, *tpAniDbgCfgEnableBeaconParams;
 
-// --------------------------------------------------------
-// Input Params to SET WEP / AES MULTICAST KEY
+//                                                         
+//                                            
 typedef struct sAniDbgCfgSetKeyParams
 {
-    unsigned int type;  // 0 - WEP; 1 - AES
-    unsigned int keyId; // If AES, 0 - TX; 1 - RX
+    unsigned int type;  //                 
+    unsigned int keyId; //                       
     unsigned int keyLen;
     unsigned char key[16];
 
 } tAniDbgCfgSetKeyParams, *tpAniDbgCfgSetKeyParams;
 
-// --------------------------------------------------------
-// Input Params to SET per STA keys
+//                                                         
+//                                 
 typedef struct sAniDbgCfgSetPerStaKeyParams
 {
     unsigned int staId;
     unsigned int id0;
     unsigned int id1;
-    unsigned int keyValid; // 0 - Tx; Anything else Rx
+    unsigned int keyValid; //                         
     unsigned int useDefaultKey;
     unsigned int defaultKeyId;
     unsigned int edPolicy;
@@ -518,12 +518,12 @@ typedef struct sAniDbgCfgSetPerStaKeyParams
 
 } tAniDbgCfgSetPerStaKeyParams, *tpAniDbgCfgSetPerStaKeyParams;
 
-// --------------------------------------------------------
-// Cal test and Set Chan functions
+//                                                         
+//                                
 typedef struct sAniDbgCalTestParams
 {
-    unsigned int id;   // 0 - Cal; 1 - Set Channel
-    unsigned int chId; // if id == 1; then chId is 1 - 14 or 36 - end of 11a
+    unsigned int id;   //                         
+    unsigned int chId; //                                                   
 }tAniDbgCalTestParams, *tpAniDbgCalTestParams;
 
 typedef struct sAniDbgCalTestResponse
@@ -531,8 +531,8 @@ typedef struct sAniDbgCalTestResponse
     unsigned int rc;
 }tAniDbgCalTestResponse, *tpAniDbgCalTestResponse;
 
-// ---------------------------------------------------------
-// Input params to Get DCO params
+//                                                          
+//                               
 typedef struct sAniDbgCfgGetDcoParams
 {
     unsigned int chain;
@@ -545,8 +545,8 @@ typedef struct sAniDbgCfgGetDcoResponse
     unsigned int val;
 } tAniDbgCfgGetDcoResponse, *tpAniDbgCfgGetDcoResponse;
 
-// --------------------------------------------------------
-// Input params to Get DCO params
+//                                                         
+//                               
 typedef struct sAniDbgCfgSetDcoParams
 {
     unsigned int chain;
@@ -554,8 +554,8 @@ typedef struct sAniDbgCfgSetDcoParams
     unsigned int val;
 } tAniDbgCfgSetDcoParams, *tpAniDbgCfgSetDcoParams;
 
-// --------------------------------------------------------
-// Input params to setting power template
+//                                                         
+//                                       
 typedef struct sAniDbgCfgSetPwrTemplParams
 {
     unsigned int staId;
@@ -564,31 +564,31 @@ typedef struct sAniDbgCfgSetPwrTemplParams
 } tAniDbgCfgSetPwrTemplParams, *tpAniDbgCfgSetPwrTemplParams;
 
 
-// Response struct for Getting power template
+//                                           
 typedef struct sAniDbgCfgGetPwrTemplParams
 {
     unsigned int staId;
 } tAniDbgCfgGetPwrTemplParams, *tpAniDbgCfgGetPwrTemplParams;
 
-// --------------------------------------------------------
-// Request struct for Setting the init config parameters
+//                                                         
+//                                                      
 typedef struct sAniDbgCfgInitParams
 {
-    unsigned int mode; // default mode
-    unsigned int rate; // default rate
-    unsigned int fIsInfMode; // Set 1 for infrastructure mode
+    unsigned int mode; //             
+    unsigned int rate; //             
+    unsigned int fIsInfMode; //                              
     unsigned int staId;
-    unsigned char ownMacAddr[6]; // Set the configured MAC address
-    unsigned int fFwd2Host; // Set 1 to Forward data to host
-    unsigned int fUseRealPhy; // Set 1 to use the real Phy
-    unsigned int fEnablePhyDrops; // Set 1 to enable Phy drops
-    unsigned int dropModeRate; // Set this when Phy drops are enabled
-    unsigned int dropModeSize; // Set this when Phy drops are enabled
-    unsigned int dropModeMode; // Set this when Phy drops are enabled
+    unsigned char ownMacAddr[6]; //                               
+    unsigned int fFwd2Host; //                              
+    unsigned int fUseRealPhy; //                          
+    unsigned int fEnablePhyDrops; //                          
+    unsigned int dropModeRate; //                                    
+    unsigned int dropModeSize; //                                    
+    unsigned int dropModeMode; //                                    
 } tAniDbgCfgInitParams, *tpAniDbgCfgInitParams;
 
 
-// Response struct for Getting power template
+//                                           
 typedef struct sAniDbgCfgGetPwrTemplResponse
 {
     unsigned int rc;
@@ -596,8 +596,8 @@ typedef struct sAniDbgCfgGetPwrTemplResponse
 } tAniDbgCfgGetPwrTemplResponse, *tpAniDbgCfgGetPwrTemplResponse;
 
 
-// --------------------------------------------------------
-// Input params for setting a field in the EEPROM
+//                                                         
+//                                               
 
 typedef union sAniDbgCfgEepByteSetParams
 {
@@ -607,7 +607,7 @@ typedef union sAniDbgCfgEepByteSetParams
 } tAniDbgCfgEepByteSetParams, *tpAniDbgCfgEepByteSetParams;
 
 
-// Request struct for Setting the EEPROM field
+//                                            
 typedef struct sAniDbgCfgEepSetParams
 {
     unsigned int offset;
@@ -616,13 +616,13 @@ typedef struct sAniDbgCfgEepSetParams
     unsigned char setParams[1];
 } tAniDbgCfgEepSetParams, *tpAniDbgCfgEepSetParams;
 
-// The response structure for this particular request is same as
-// the generic response structure.
+//                                                              
+//                                
 
-// ------------------------------------------------------------
-// Input params for getting the value of a field in the EEPROM
+//                                                             
+//                                                            
 
-// Request struct for Getting the EEPROM field
+//                                            
 typedef struct sAniDbgCfgEepGetParams
 {
     unsigned int offset;
@@ -630,114 +630,114 @@ typedef struct sAniDbgCfgEepGetParams
 } tAniDbgCfgEepGetParams, *tpAniDbgCfgEepGetParams;
 
 
-// Response struct for Getting the EEPROM field
+//                                             
 typedef struct sAniDbgCfgEepGetResponse
 {
     unsigned int rc;
     unsigned char value[1];
 } tAniDbgCfgEepGetResponse, *tpAniDbgCfgEepGetResponse;
 
-// --------------------------------------------------------
-// Input params for setting the number of transmitters
+//                                                         
+//                                                    
 
-// Request struct for setting the number of transmitters
+//                                                      
 typedef struct sAniDbgCfgSetNumTransmitters
 {
     unsigned int numTransmitters;
 
 } tAniDbgCfgSetNumTransmitters, *tpAniDbgCfgSetNumTransmitters;
 
-// --------------------------------------------------------
-// Input params for Enabling/Disabling Rx chains
+//                                                         
+//                                              
 
-// Request struct for Enabling/Disabling Rx chains
+//                                                
 typedef struct sAniDbgCfgSetRxChains
 {
     unsigned int numChains;
     unsigned char chainIndices[3];
 } tAniDbgCfgSetRxChains, *tpAniDbgCfgSetRxChains;
 
-// --------------------------------------------------------
-// Input params for enable/disable SW closed loop TPC
+//                                                         
+//                                                   
 
-// Request struct for enable/disable SW closed loop TPC
+//                                                     
 typedef struct sAniDbgCfgSwClosedLoopTpc
 {
     unsigned int action;
 } tAniDbgCfgSwClosedLoopTpc, *tpAniDbgCfgSwClosedLoopTpc;
 
-// --------------------------------------------------------
-// Input params for setting the list of test STA MAC address,
-// that will be operating with the AP, for the Multi-NIC tests.
+//                                                         
+//                                                           
+//                                                             
 typedef struct sAniDbgCfgSetStaAddrLst
 {
     unsigned long numStas;
     unsigned char macAddrLst[MAX_NUM_TST_STAS_PER_AP][6];
 } tAniDbgCfgSetStaAddrLst, *tpAniDbgCfgSetStaAddrLst;
 
-// --------------------------------------------------------
-// Output Params for getting the current Power and Gain settings
-// for a particular STA.
+//                                                         
+//                                                              
+//                      
 typedef struct sAniDbgCfgGetPwrGainResponse
 {
-    unsigned int rc;  // 0 - SUCCESS
+    unsigned int rc;  //            
     unsigned long pwrCode;
     unsigned long gain0;
     unsigned long gain1;
 } tAniDbgCfgGetPwrGainResponse, *tpAniDbgCfgGetPwrGainResponse;
 
-// --------------------------------------------------------
-// Input Params containing the STAID for getting the current Power and Gain settings.
+//                                                         
+//                                                                                   
 typedef struct sAniDbgCfgGetPwrGainParams
 {
     unsigned long staID;
 } tAniDbgCfgGetPwrGainParams, *tpAniDbgCfgGetPwrGainParams;
 
 
-// --------------------------------------------------------
-// Output params for getting temperature
+//                                                         
+//                                      
 
-// Response struct for getting temperature of the radio card
-// NOTE:- Stop the traffic to measure temperature
+//                                                          
+//                                               
 typedef struct sAniDbgCfgGetTempRsp
 {
-    unsigned int rc;     // 0 - SUCCESS; Otherwise FAILED
-    unsigned int temp0;  // Chain 0 temperature
-    unsigned int temp1;  // Chain 1 temperature
+    unsigned int rc;     //                              
+    unsigned int temp0;  //                    
+    unsigned int temp1;  //                    
 } tAniDbgCfgGetTempRsp, *tpAniDbgCfgGetTempRsp;
 
 
-// --------------------------------------------------------
-// Generic Response structure for Config requests
+//                                                         
+//                                               
 typedef struct sAniDbgCfgResponse
 {
-    unsigned int rc;  // 0 - SUCCESS; Otherwise FAILED
+    unsigned int rc;  //                              
 } tAniDbgCfgResponse, *tpAniDbgCfgResponse;
 
-// ====================================================================
+//                                                                     
 /*
-   For each test there will be a structure defined in this file with
-   the following test descriptions of testId, test trigger type, input
-   parameters and expected output
+                                                                    
+                                                                      
+                                 
 
-   This is a template for DBG test structure
+                                            
 
-   typedef struct sANIAPI_XXXX_TEST_PARAMS
-   {
-   // Input paramters
-   int xyz;  // Test specific
-   } tANIAPI_XXXX_TEST_PARAMS;
+                                          
+    
+                     
+                             
+                              
 
-   typedef struct sANIAPI_XXXX_TEST_RESPONSE
-   {
-   // Output parameters
-   int rc;  // Must be ZERO for success and must have error code
-   // for failure
-   int zyx; // Any counters or any debug these will be test spefics
-   } tANIAPI_XXXX_TEST_RESPONSE;
+                                            
+    
+                       
+                                                                
+                 
+                                                                   
+                                
 
-   ********************************************* */
-// =====================================================================
+                                                 */
+//                                                                      
 
 #define ANI_CFG_OPER_GET    0x0
 #define ANI_CFG_OPER_SET    0x1
@@ -746,18 +746,18 @@ typedef struct sAniDbgCfgResponse
 typedef struct sAniDbgCfg
 {
     unsigned char oper;
-    unsigned char data[124]; // total parms structure must be MAX 128 bytes
+    unsigned char data[124]; //                                            
 } tAniDbgCfg;
 
-// --------------------------------------------------------------------
+//                                                                     
 
-// Response structures for InitPdu test
-// No Input Params for this test
+//                                     
+//                              
 typedef struct sAniDbgInitPduTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // Must be ZERO for success and must have error code
-                      // for failure
+    //                  
+    unsigned int rc;  //                                                  
+                      //            
 
     unsigned int expected;
     unsigned int i_current;
@@ -765,35 +765,35 @@ typedef struct sAniDbgInitPduTestResponse
 } tAniDbgInitPduTestResponse, *tpAniDbgInitPduTestResponse;
 
 
-// --------------------------------------------------------
-// Response structures for BusAccess/RegReadWrite tests
-// No Input Params for this test
+//                                                         
+//                                                     
+//                              
 
 typedef struct sAniDbgRegReadWriteTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // 0 - SUCCESS; Anything else is an ERROR
+    //                  
+    unsigned int rc;  //                                       
     unsigned int registerAddress;
     unsigned int expected;
     unsigned int i_current;
 } tAniDbgRegReadWriteTestResponse, *tpAniDbgRegReadWriteTestResponse;
 
-// --------------------------------------------------------
-// Response structures for Interrupt test
-// No Input Params for this test
+//                                                         
+//                                       
+//                              
 
 typedef struct sAniDbgIntrTestResponse
 {
-    // Output parameters
-    unsigned int rc;       // 0 - SUCCESS; Anything else is an ERROR
-    unsigned int status;   // Interrupt status register
-    unsigned int mask;     // Interrupt mask in test
-    unsigned int bmu;      // BMU MB status register contents
+    //                  
+    unsigned int rc;       //                                       
+    unsigned int status;   //                          
+    unsigned int mask;     //                       
+    unsigned int bmu;      //                                
 
 } tAniDbgIntrTestResponse, *tpAniDbgIntrTestResponse;
 
-// --------------------------------------------------------
-// No Input Params for this test
+//                                                         
+//                              
 
 typedef struct sAniDbgMemoryTestParams
 {
@@ -803,23 +803,23 @@ typedef struct sAniDbgMemoryTestParams
     unsigned int testLevel;
 } tAniDbgMemoryTestParams, *tpAniDbgMemoryTestParams;
 
-// ---------------------------------------------------------------------
+//                                                                      
 
-// Response structures for RegReadWrite test
+//                                          
 
 typedef struct sAniDbgMemoryTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // Must be ZERO for success and must have error code
-    // for failure
+    //                  
+    unsigned int rc;  //                                                  
+    //            
     unsigned int expected;
     unsigned int i_current;
     unsigned int currentAddress;
     unsigned int testAddress;
 } tAniDbgMemoryTestResponse, *tpAniDbgMemoryTestResponse;
 
-// --------------------------------------------------------
-// Input Parameters for the HIF Burst Read Write test
+//                                                         
+//                                                   
 
 typedef struct sAniDbgHIFBurstRdWrtTestParams
 {
@@ -829,117 +829,117 @@ typedef struct sAniDbgHIFBurstRdWrtTestParams
 
 } tAniDbgHIFBurstRdWrtTestParams, *tpAniDbgHIFBurstRdWrtTestParams;
 
-// ---------------------------------------------------------------------
+//                                                                      
 
-// Response structure for the HIF Burst Read Write test
+//                                                     
 
 typedef struct sAniDbgHIFBurstRdWrtTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // Must be ZERO for success and must have error code
-    // for failure
+    //                  
+    unsigned int rc;  //                                                  
+    //            
     unsigned char readData[1];
 
 } tAniDbgHIFBurstRdWrtTestResponse, *tpAniDbgHIFBurstRdWrtTestResponse;
 
 
-// --------------------------------------------------------
+//                                                         
 
-// Take the routing flags and number of frames, as Params for this test
+//                                                                     
 
 typedef struct sAniDbgSendContinuousTestParams
 {
     unsigned int  routingFlags;
 
-    // 0 - continuously send packets till it is instructed to stop.
+    //                                                             
     unsigned int  numFramesToSend;
 
-    // 1 - TM ring, otherwise the TD ring will be used.
+    //                                                 
     unsigned int  fUseTMRing;
 
-    // 1 - loopback packets through the MAC
+    //                                     
     unsigned int fLoopBkPkts;
 } tAniDbgSendContinuousTestParams, *tpAniDbgSendContinuousTestParams;
 
-// Response structures for SendContinuous test
+//                                            
 
 typedef struct sAniDbgSendContinuousTestResponse
 {
-    unsigned int rc;  // 0 - Success and anything else is a failure
+    unsigned int rc;  //                                           
 
     unsigned int numPktsSent;
     unsigned int numPktsFailed;
-    // Size of the last frame attempted to be sent, in case of a failure
+    //                                                                  
     unsigned int lastFailedPayloadSize;
 } tAniDbgSendContinuousTestResponse, *tpAniDbgSendContinuousTestResponse;
 
-// --------------------------------------------------------
-// Input parameters for the Packet Routing test
+//                                                         
+//                                             
 typedef struct sAniDbgPktRoutingTestParams
 {
-    // Routing flags for the test
+    //                           
     unsigned int  routingFlags;
 
-    // Enter 1 for Hardware Seqno
+    //                           
     unsigned int hsBit;
 
-    // Enter unicast ackPolicy(4 for random)
+    //                                      
     unsigned int  ackPolicy;
 
-    // RTS (2 for random)
+    //                   
     unsigned int  rtsFlag;
 
-    // 0 - continuously send packets till it is instructed to stop.
+    //                                                             
     unsigned int  numPktsToSend;
 
-    // 0xffffffff - For random frame types.
+    //                                     
     unsigned int  frameType;
 
-    // 0xffffffff - generates random frame sub-types.
+    //                                               
     unsigned int  frmSubType;
 
-    // 1 - TM ring; Otherwise the TD ring will be used.
+    //                                                 
     unsigned int  fUseTMRing;
 
-    // 0 - random payload sizes
+    //                         
     unsigned int  payloadSize;
 
-    // If "payloadSize" above is set to zero then this is ignored
+    //                                                           
     unsigned int  fragSize;
 
-    // This parameter specifies whether a unicast packet should be fragmented.
-    // Ignored, if "payloadSize" above is set to a non-zero value.
+    //                                                                        
+    //                                                            
     unsigned int  fragment;
 
-    // Use a value >3 for random staId generation
+    //                                           
     unsigned int staId;
 
-    // Use a value >7 for random tcId generation
+    //                                          
     unsigned int tcId;
 
-    // Enter random STA range (1 for STAs(0-1),3 for STAs(0-3))
+    //                                                         
     unsigned int staRange;
 
-    // TC range (1 for TCs(0-1),3 for TCs(0-3),7 for TCs(0-7)
+    //                                                       
     unsigned int tcRange;
 
-    // burst size (< 11)
+    //                  
     unsigned int burst;
 
-    // Enter 1 to compute CRC
+    //                       
     unsigned int crc;
 
-    // Enter 1 to loopback packets through the MAC
+    //                                            
     unsigned int fLoopBkPkts;
 
 } tAniDbgPktRoutingTestParams, *tpAniDbgPktRoutingTestParams;
 
-// Structures where response parameters are constructed by the
-// dvtSendPackets() routine
+//                                                            
+//                         
 
 typedef struct sAniDbgSendPktResponse
 {
-    // Total packets sent
+    //                   
     unsigned int pktGenCount;
 
     unsigned int fragCnt;
@@ -950,50 +950,50 @@ typedef struct sAniDbgSendPktResponse
 
     unsigned int qFullCnt;
 
-    // Specifies the size of the last frame attempted to be sent
+    //                                                          
     unsigned int lastPayloadSize;
 
-    // Specifies the size of the last frame's fragment size
+    //                                                     
     unsigned int lastFragSize;
 
-    // Immediate ACK
+    //              
     unsigned int cumImmAck;
 
-    // NoACK
+    //      
     unsigned int cumNoAck;
 
-    // RTS
+    //    
     unsigned int cumRTS;
 
-    // No ACK
+    //       
     unsigned int cumNoRTS;
 
-    // TC histogram (pkts)
+    //                    
     unsigned int cumTC[8];
 
-    //Fragments histogram (frags)
+    //                           
     unsigned int cumFrag[16];
 
-    // STA histogram (pkts,frags)
+    //                           
     unsigned int cumSTA[4];
     unsigned int cumSTAFrags[4];
 
 } tAniDbgSendPktResponse, *tpAniDbgSendPktResponse;
 
-// Response structures for the Packet Routing test
+//                                                
 typedef struct sAniDbgPktRoutingTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // Must be ZERO for success and must have error code
-    // for failure
+    //                  
+    unsigned int rc;  //                                                  
+    //            
 
-    // Field where response parameters are constructed by the
-    // dvtSendPackets() routine
+    //                                                       
+    //                         
     tAniDbgSendPktResponse sendPktsRsp;
 
 } tAniDbgPktRoutingTestResponse, *tpAniDbgPktRoutingTestResponse;
 
-// --------------------------------------------------------
+//                                                         
 
 typedef enum sPciCfgTestStatus
 {
@@ -1006,21 +1006,21 @@ typedef enum sPciCfgTestStatus
     ePCI_CFG_TEST_CIS_CONTENTS_MISMATCH
 } tPciCfgTestStatus;
 
-// Response structures for the PCI Config test
+//                                            
 typedef struct sAniDbgPciCfgTestResponse
 {
-    // Output parameters
-    unsigned int rc;  // Must be ZERO for success and must have error code
-    // for failure
+    //                  
+    unsigned int rc;  //                                                  
+    //            
 
-    // Field where the PCI config words, for Polaris are returned by the HDD
+    //                                                                      
     unsigned int pciConfig[MAX_PCI_CFG_WRDS];
 
 } tAniDbgPciCfgTestResponse, *tpAniDbgPciCfgTestResponse;
 
-// --------------------------------------------------------
+//                                                         
 
-// Various return codes returned for the EEPROM test.
+//                                                   
 typedef enum sEepromTestStatus
 {
     eEEPROM_TEST_SUCCESS,
@@ -1032,30 +1032,30 @@ typedef enum sEepromTestStatus
 } tEepromTestStatus;
 
 
-// Take the EEPROM filename, as Params for this test
+//                                                  
 
 typedef struct sAniDbgEepromTestParams
 {
-    // EEPROM File Name.
+    //                  
     char  eepromFilename[256];
 
 } tAniDbgEepromTestParams, *tpAniDbgEepromTestParams;
 
-// Response structures for SendContinuous test
+//                                            
 
 typedef struct sAniDbgEepromTestResponse
 {
-    unsigned int rc;  // 0 - Success and anything else is a failure
+    unsigned int rc;  //                                           
 
 } tAniDbgEepromTestResponse, *tpAniDbgEepromTestResponse;
 
-// ---------------------------------------------------------------------
+//                                                                      
 
-// input params for RHP HASH TBL tests
+//                                    
 
 typedef struct sAniDbgRhpHashTblMultipleEntryTestParams
 {
-    unsigned int n; // number of entries
+    unsigned int n; //                  
 
 } tAniDbgRhpHashTblMultipleEntryTestParams,
     *tpAniDbgRhpHashTblMultipleEntryTestParams;
@@ -1073,46 +1073,46 @@ typedef struct sAniDbgRhpHashTblTestParams
 
 typedef struct sAniDbgRhpHashTblTestResponse
 {
-    unsigned int rc;  // 0 For Success
+    unsigned int rc;  //              
 } tAniDbgRhpHashTblTestResponse, *tpAniDbgRhpHashTblTestResponse;
 
 
-// -----------------------------------------------------------
+//                                                            
 
-// Here both pParms and pResponse structures are interpreted by the
-// User of the API based on testId
+//                                                                 
+//                                
 
 typedef struct sANI_DBG_TEST_INFO {
 
     tANI_TEST_ID testId;
 
-    // This field indicates this test runs synchronously or not.
-    // If it is not, then, the test originator will have the
-    // ability to query for intermediate results.
-    // ANI_START = 1; ANI_GET_RESULTS = 2; ANI_STOP = 3
+    //                                                          
+    //                                                      
+    //                                           
+    //                                                 
     tANI_TEST_TRIG_TYPE testTriggerType;
 
-    // test state
+    //           
     tANI_DBG_TEST_STATE testState;
 
-    // This points to a structure which contains parameters for
-    // test defined by dvtTestId. May be NULL if no parameters
-    // are needed
+    //                                                         
+    //                                                        
+    //           
     unsigned long sizeOfParms;
     unsigned char parms[MAX_PARMS_SIZE];
 
-    // This points to a buffer to hold response from the test
-    // Response shall be there from the test and it MUST have
-    // return code ZERO for SUCCESS and error code for test
-    // failure
+    //                                                       
+    //                                                       
+    //                                                     
+    //        
     unsigned long sizeOfResponse;
     unsigned char response[MAX_RESPONSE_SIZE];
 
 } tANI_DBG_TEST_INFO;
 
-// Returns test start function pointer or stop function pointer or
-// get info on test function pointer from the function pointer array
-// that is initialized during the dvtInitGlobal routine.
+//                                                                
+//                                                                  
+//                                                      
 #ifdef __cplusplus
 extern "C" void* dvtGetFuncPtr(void *, int, int );
 #else
@@ -1120,14 +1120,14 @@ extern void* dvtGetFuncPtr(void *, int, int );
 #endif
 
 
-// declare a function prototype for 'start', 'update' and 'stop' routines
+//                                                                       
 typedef void t_DbgTestRoutine(void *);
 
-// called by the test routine when it completes
+//                                             
 extern void dbgTestCompleted(void *mpAdapterPtr);
 
 
-// DBG/DVT dump information structures & defines
+//                                              
 
 #define ANI_DBG_GRP_INFO_TYPE_MISC      0x00000001
 #define ANI_DBG_GRP_INFO_TYPE_BMU       0x00000002
@@ -1349,7 +1349,7 @@ typedef struct sANI_DBG_PWR_TEMPL {
     unsigned long retry1rate;
     unsigned long retry2rate;
 
-    unsigned long pwrTemplate; //entire value
+    unsigned long pwrTemplate; //            
 
 } tANI_DBG_PWR_TEMPL;
 
@@ -1359,7 +1359,7 @@ typedef struct sANI_DBG_STA {
     unsigned long staDescAddr;
     unsigned long staDump[256];
 
-    tANI_DBG_TC_DESC tcDesc[9]; // 8 tc Ids and 9th mgmt TC
+    tANI_DBG_TC_DESC tcDesc[9]; //                         
 
     unsigned long cbits_hcf;
     unsigned long cbits_ps;
@@ -1394,7 +1394,7 @@ typedef struct sANI_DBG_STA {
 
 typedef struct sANI_DBG_STA_INFO {
 
-    unsigned long staId;    // input
+    unsigned long staId;    //      
 
     tANI_DBG_STA sta;
 
@@ -1455,9 +1455,9 @@ typedef struct sAniDvtPhyfEntry
 
 typedef struct sANI_DBG_FPHY_FIFO {
 
-    unsigned long command; // set to either 'get' of 'clear' fifo
-    unsigned long entries; // entries to read
-    unsigned long offset; // offset to read from
+    unsigned long command; //                                    
+    unsigned long entries; //                
+    unsigned long offset; //                    
 
     unsigned long totalBytes;
     unsigned long approxEntries;
@@ -1524,37 +1524,37 @@ typedef struct sANI_DBG_RPHY_INFO {
 
 typedef struct sANI_DBG_SCH_INFO
 {
-    unsigned long curSch; // RO
-    unsigned long numSch; // RO
-    unsigned long numInt; // RO
-    unsigned long numEndInt; // RO
-    unsigned long numCFB; // RO
-    unsigned long firstCFB; // RO
+    unsigned long curSch; //   
+    unsigned long numSch; //   
+    unsigned long numInt; //   
+    unsigned long numEndInt; //   
+    unsigned long numCFB; //   
+    unsigned long firstCFB; //   
 
-    unsigned long fixedSch; // RW
-    unsigned long gDvtPoll; // RW
-    unsigned long maxTimeout; // RW
-    unsigned long minTxop; // RW
-    unsigned long maxTxop; // RW
-    unsigned long maxTcid; // RW
-    unsigned long maxSta; // RW
-    unsigned long minSta; // RW
-    unsigned long maxInst; // RW
+    unsigned long fixedSch; //   
+    unsigned long gDvtPoll; //   
+    unsigned long maxTimeout; //   
+    unsigned long minTxop; //   
+    unsigned long maxTxop; //   
+    unsigned long maxTcid; //   
+    unsigned long maxSta; //   
+    unsigned long minSta; //   
+    unsigned long maxInst; //   
 
-    unsigned long firstSch; // RO
-    unsigned long cfbStart; // RO
-    unsigned long cfbEnd; // RO
-    unsigned long cumCFB; // RO
-    unsigned long cumCP; // RO
+    unsigned long firstSch; //   
+    unsigned long cfbStart; //   
+    unsigned long cfbEnd; //   
+    unsigned long cumCFB; //   
+    unsigned long cumCP; //   
 
-    unsigned long haltSch; // RW
-    unsigned long numTim; // RO
+    unsigned long haltSch; //   
+    unsigned long numTim; //   
 } tANI_DBG_SCH_INFO;
 
 
 typedef struct sANI_DBG_HCF_INFO {
 
-    unsigned long       bSetInfo;     // 0 = read info, 1 = set info
+    unsigned long       bSetInfo;     //                            
     tANI_DBG_SCH_INFO   schInfo;
 
 } tANI_DBG_HCF_INFO;
@@ -1562,8 +1562,8 @@ typedef struct sANI_DBG_HCF_INFO {
 typedef struct sANI_DBG_AP_SWITCH_INFO {
 
 
-    // Space to hold the SSIDList and the BSSID.
-    unsigned char   SSID_BSSID_BUF[262]; // 262 == WNIAPI_MAX_SSID_LIST_STR + WNIAPI_BSSID_SIZE
+    //                                          
+    unsigned char   SSID_BSSID_BUF[262]; //                                                    
 
 
 } tANI_DBG_AP_SWITCH_INFO;
@@ -1571,7 +1571,7 @@ typedef struct sANI_DBG_AP_SWITCH_INFO {
 
 typedef struct sANI_DBG_INFO {
 
-    unsigned long dbgInfoMask; // indicates which members are valid
+    unsigned long dbgInfoMask; //                                  
 
     tANI_DBG_MISC_INFO miscInfo;
     tANI_DBG_BMU_INFO bmuInfo;
@@ -1599,4 +1599,4 @@ extern void dvtSetStopTestFlag( unsigned char stopTest );
 #endif
 
 
-#endif // _ANIDBGTEST_H_
+#endif //               

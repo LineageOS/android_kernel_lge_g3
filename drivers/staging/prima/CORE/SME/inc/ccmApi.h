@@ -58,7 +58,7 @@
 #ifndef CCMAPI_H__
 #define CCMAPI_H__
 
-//#include "wniCfgAp.h" /* CFG_PARAM_MAX_NUM */
+//                                             
 #include "wniCfgSta.h"
 #include "halTypes.h"
 
@@ -81,7 +81,7 @@ typedef enum {
     eCCM_REQ_DONE,
 } eCcmState ;
 
-/* We do not use Linux's list facility */
+/*                                     */
 typedef struct cfgreq {
     struct cfgreq       *next ;
     tANI_U16            cfgId ;
@@ -123,9 +123,9 @@ eHalStatus ccmOpen(tHalHandle hHal) ;
 eHalStatus ccmClose(tHalHandle hHal) ;
 void ccmStart(tHalHandle hHal) ;
 void ccmStop(tHalHandle hHal) ;
-//If callback is NULL, the API is not serialized for the CFGs
+//                                                           
 eHalStatus ccmCfgSetInt(tHalHandle hHal, tANI_U32 cfgId, tANI_U32 ccmValue, tCcmCfgSetCallback callback, eAniBoolean toBeSaved) ;
-//If callback is NULL, the API is not serialized for the CFGs
+//                                                           
 eHalStatus ccmCfgSetStr(tHalHandle hHal, tANI_U32 cfgId, tANI_U8 *pStr, tANI_U32 length, tCcmCfgSetCallback callback, eAniBoolean toBeSaved) ;
 eHalStatus ccmCfgUpdate(tHalHandle hHal, tCcmCfgSetCallback callback) ;
 eHalStatus ccmCfgGetInt(tHalHandle hHal, tANI_U32 cfgId, tANI_U32 *pValue) ;
@@ -133,4 +133,4 @@ eHalStatus ccmCfgGetStr(tHalHandle hHal, tANI_U32 cfgId, tANI_U8 *pBuf, tANI_U32
 
 void ccmDumpInit(tHalHandle hHal);
 
-#endif /*CCMAPI_H__*/
+#endif /*          */

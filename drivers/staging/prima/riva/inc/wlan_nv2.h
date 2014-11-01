@@ -49,12 +49,12 @@ Qualcomm Technologies Proprietary and Confidential.
 #include "halCompiler.h"
 #include "wlan_nv.h"
 
-/* From here, NV2 No CH144 support reduced structure
- * This structure will be used for NV2 backward compatibility */
+/*                                                  
+                                                              */
 
 typedef enum
 {
-    //2.4GHz Band
+    //           
     RF_CHAN_1_V2                 = 0,
     RF_CHAN_2_V2                 = 1,
     RF_CHAN_3_V2                 = 2,
@@ -70,7 +70,7 @@ typedef enum
     RF_CHAN_13_V2                = 12,
     RF_CHAN_14_V2                = 13,
 
-    //4.9GHz Band
+    //           
     RF_CHAN_240_V2               = 14,
     RF_CHAN_244_V2               = 15,
     RF_CHAN_248_V2               = 16,
@@ -79,7 +79,7 @@ typedef enum
     RF_CHAN_212_V2               = 19,
     RF_CHAN_216_V2               = 20,
 
-    //5GHz Low & Mid U-NII Band
+    //                         
     RF_CHAN_36_V2                = 21,
     RF_CHAN_40_V2                = 22,
     RF_CHAN_44_V2                = 23,
@@ -89,7 +89,7 @@ typedef enum
     RF_CHAN_60_V2                = 27,
     RF_CHAN_64_V2                = 28,
 
-    //5GHz Mid Band - ETSI & FCC
+    //                          
     RF_CHAN_100_V2               = 29,
     RF_CHAN_104_V2               = 30,
     RF_CHAN_108_V2               = 31,
@@ -102,14 +102,14 @@ typedef enum
     RF_CHAN_136_V2               = 38,
     RF_CHAN_140_V2               = 39,
 
-    //5GHz High U-NII Band
+    //                    
     RF_CHAN_149_V2               = 40,
     RF_CHAN_153_V2               = 41,
     RF_CHAN_157_V2               = 42,
     RF_CHAN_161_V2               = 43,
     RF_CHAN_165_V2               = 44,
 
-    //CHANNEL BONDED CHANNELS
+    //                       
     RF_CHAN_BOND_3_V2            = 45,
     RF_CHAN_BOND_4_V2            = 46,
     RF_CHAN_BOND_5_V2            = 47,
@@ -119,19 +119,19 @@ typedef enum
     RF_CHAN_BOND_9_V2            = 51,
     RF_CHAN_BOND_10_V2           = 52,
     RF_CHAN_BOND_11_V2           = 53,
-    RF_CHAN_BOND_242_V2          = 54,    //4.9GHz Band
+    RF_CHAN_BOND_242_V2          = 54,    //           
     RF_CHAN_BOND_246_V2          = 55,
     RF_CHAN_BOND_250_V2          = 56,
     RF_CHAN_BOND_210_V2          = 57,
     RF_CHAN_BOND_214_V2          = 58,
-    RF_CHAN_BOND_38_V2           = 59,    //5GHz Low & Mid U-NII Band
+    RF_CHAN_BOND_38_V2           = 59,    //                         
     RF_CHAN_BOND_42_V2           = 60,
     RF_CHAN_BOND_46_V2           = 61,
     RF_CHAN_BOND_50_V2           = 62,
     RF_CHAN_BOND_54_V2           = 63,
     RF_CHAN_BOND_58_V2           = 64,
     RF_CHAN_BOND_62_V2           = 65,
-    RF_CHAN_BOND_102_V2          = 66,    //5GHz Mid Band - ETSI & FCC
+    RF_CHAN_BOND_102_V2          = 66,    //                          
     RF_CHAN_BOND_106_V2          = 67,
     RF_CHAN_BOND_110_V2          = 68,
     RF_CHAN_BOND_114_V2          = 69,
@@ -141,7 +141,7 @@ typedef enum
     RF_CHAN_BOND_130_V2          = 73,
     RF_CHAN_BOND_134_V2          = 74,
     RF_CHAN_BOND_138_V2          = 75,
-    RF_CHAN_BOND_151_V2          = 76,    //5GHz High U-NII Band
+    RF_CHAN_BOND_151_V2          = 76,    //                    
     RF_CHAN_BOND_155_V2          = 77,
     RF_CHAN_BOND_159_V2          = 78,
     RF_CHAN_BOND_163_V2          = 79,
@@ -173,7 +173,7 @@ typedef enum
     NUM_TPC_5GHZ_CHANNELS_V2 = NUM_5GHZ_CHANNELS_V2,
 
     INVALID_RF_CHANNEL_V2 = 0xBAD,
-    RF_CHANNEL_INVALID_MAX_FIELD_V2 = 0x7FFFFFFF  /* define as 4 bytes data */
+    RF_CHANNEL_INVALID_MAX_FIELD_V2 = 0x7FFFFFFF  /*                        */
 }eRfChannelsV2;
 
 typedef PACKED_PRE struct PACKED_POST
@@ -192,36 +192,36 @@ typedef PACKED_PRE struct PACKED_POST
 
 typedef PACKED_PRE union PACKED_POST
 {
-    tRateGroupPwr        pwrOptimum[NUM_RF_SUBBANDS];                         // NV_TABLE_RATE_POWER_SETTINGS
-    sRegulatoryDomainsV2   regDomains[NUM_REG_DOMAINS];                         // NV_TABLE_REGULATORY_DOMAINS
-    sDefaultCountry      defaultCountryTable;                                 // NV_TABLE_DEFAULT_COUNTRY
-    tTpcPowerTable       plutCharacterized[NUM_RF_CHANNELS_V2];                  // NV_TABLE_TPC_POWER_TABLE
-    int16             plutPdadcOffset[NUM_RF_CHANNELS_V2];                       // NV_TABLE_TPC_PDADC_OFFSETS
-    tRateGroupPwrVR      pwrOptimum_virtualRate[NUM_RF_SUBBANDS];             // NV_TABLE_VIRTUAL_RATE
-    sFwConfig            fwConfig;                                             // NV_TABLE_FW_CONFIG
-    sRssiChannelOffsetsV2  rssiChanOffsets[2];                                  // NV_TABLE_RSSI_CHANNEL_OFFSETS
-    sHwCalValues         hwCalValues;                                         // NV_TABLE_HW_CAL_VALUES
-    int16             antennaPathLoss[NUM_RF_CHANNELS_V2];                    // NV_TABLE_ANTENNA_PATH_LOSS
-    int16             pktTypePwrLimits[NUM_802_11_MODES][NUM_RF_CHANNELS_V2]; // NV_TABLE_PACKET_TYPE_POWER_LIMITS
-    sOfdmCmdPwrOffset    ofdmCmdPwrOffset;                                    // NV_TABLE_OFDM_CMD_PWR_OFFSET
-    sTxBbFilterMode      txbbFilterMode;                                      // NV_TABLE_TX_BB_FILTER_MODE
+    tRateGroupPwr        pwrOptimum[NUM_RF_SUBBANDS];                         //                             
+    sRegulatoryDomainsV2   regDomains[NUM_REG_DOMAINS];                         //                            
+    sDefaultCountry      defaultCountryTable;                                 //                         
+    tTpcPowerTable       plutCharacterized[NUM_RF_CHANNELS_V2];                  //                         
+    int16             plutPdadcOffset[NUM_RF_CHANNELS_V2];                       //                           
+    tRateGroupPwrVR      pwrOptimum_virtualRate[NUM_RF_SUBBANDS];             //                      
+    sFwConfig            fwConfig;                                             //                   
+    sRssiChannelOffsetsV2  rssiChanOffsets[2];                                  //                              
+    sHwCalValues         hwCalValues;                                         //                       
+    int16             antennaPathLoss[NUM_RF_CHANNELS_V2];                    //                           
+    int16             pktTypePwrLimits[NUM_802_11_MODES][NUM_RF_CHANNELS_V2]; //                                  
+    sOfdmCmdPwrOffset    ofdmCmdPwrOffset;                                    //                             
+    sTxBbFilterMode      txbbFilterMode;                                      //                           
 }ALIGN_4 uNvTablesV2;
 
 typedef PACKED_PRE struct PACKED_POST
 {
-    tRateGroupPwr        pwrOptimum[NUM_RF_SUBBANDS];                         // NV_TABLE_RATE_POWER_SETTINGS
-    sRegulatoryDomainsV2   regDomains[NUM_REG_DOMAINS];                         // NV_TABLE_REGULATORY_DOMAINS
-    sDefaultCountry      defaultCountryTable;                                 // NV_TABLE_DEFAULT_COUNTRY
-    tTpcPowerTable       plutCharacterized[NUM_RF_CHANNELS_V2];                  // NV_TABLE_TPC_POWER_TABLE
-    int16             plutPdadcOffset[NUM_RF_CHANNELS_V2];                    // NV_TABLE_TPC_PDADC_OFFSETS
-    tRateGroupPwrVR      pwrOptimum_virtualRate[NUM_RF_SUBBANDS];             // NV_TABLE_VIRTUAL_RATE
-    sFwConfig           fwConfig;                                              // NV_TABLE_FW_CONFIG
-    sRssiChannelOffsetsV2  rssiChanOffsets[2];                                  // NV_TABLE_RSSI_CHANNEL_OFFSETS
-    sHwCalValues         hwCalValues;                                         // NV_TABLE_HW_CAL_VALUES
-    int16             antennaPathLoss[NUM_RF_CHANNELS_V2];                    // NV_TABLE_ANTENNA_PATH_LOSS
-    int16             pktTypePwrLimits[NUM_802_11_MODES][NUM_RF_CHANNELS_V2]; // NV_TABLE_PACKET_TYPE_POWER_LIMITS
-    sOfdmCmdPwrOffset    ofdmCmdPwrOffset;                                    // NV_TABLE_OFDM_CMD_PWR_OFFSET
-    sTxBbFilterMode      txbbFilterMode;                                      // NV_TABLE_TX_BB_FILTER_MODE
+    tRateGroupPwr        pwrOptimum[NUM_RF_SUBBANDS];                         //                             
+    sRegulatoryDomainsV2   regDomains[NUM_REG_DOMAINS];                         //                            
+    sDefaultCountry      defaultCountryTable;                                 //                         
+    tTpcPowerTable       plutCharacterized[NUM_RF_CHANNELS_V2];                  //                         
+    int16             plutPdadcOffset[NUM_RF_CHANNELS_V2];                    //                           
+    tRateGroupPwrVR      pwrOptimum_virtualRate[NUM_RF_SUBBANDS];             //                      
+    sFwConfig           fwConfig;                                              //                   
+    sRssiChannelOffsetsV2  rssiChanOffsets[2];                                  //                              
+    sHwCalValues         hwCalValues;                                         //                       
+    int16             antennaPathLoss[NUM_RF_CHANNELS_V2];                    //                           
+    int16             pktTypePwrLimits[NUM_802_11_MODES][NUM_RF_CHANNELS_V2]; //                                  
+    sOfdmCmdPwrOffset    ofdmCmdPwrOffset;                                    //                             
+    sTxBbFilterMode      txbbFilterMode;                                      //                           
 }ALIGN_4 sNvTablesV2;
 
 typedef PACKED_PRE struct PACKED_POST

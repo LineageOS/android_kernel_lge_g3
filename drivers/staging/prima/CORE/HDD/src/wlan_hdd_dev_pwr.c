@@ -39,67 +39,67 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-/**========================================================================= 
+/*                                                                           
 
-                       EDIT HISTORY FOR FILE 
+                                             
    
    
-  This section contains comments describing changes made to the module. 
-  Notice that changes are listed in reverse chronological order. 
+                                                                        
+                                                                 
    
    
-  $Header:$   $DateTime: $ $Author: $ 
+                                      
    
    
-  when        who    what, where, why 
-  --------    ---    --------------------------------------------------------
-  03/29/11    tbh    Created module. 
+                                      
+                                                                             
+                                     
 
-  ==========================================================================*/
+                                                                            */
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                
+                                                                            */
 #include <wlan_hdd_dev_pwr.h>
 #ifdef ANI_BUS_TYPE_PLATFORM
 #include <linux/wcnss_wlan.h>
 #else
 #include <wcnss_wlan.h>
-#endif // ANI_BUS_TYP_PLATFORM
+#endif //                     
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 
-/*----------------------------------------------------------------------------
- *  Type Declarations
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                     
+                                                                            */
 
 
-/*-------------------------------------------------------------------------
- * Global variables.
- *-------------------------------------------------------------------------*/
+/*                                                                         
+                    
+                                                                           */
 
-/*-------------------------------------------------------------------------
- * Local variables.
- *-------------------------------------------------------------------------*/
-/* Reference VoIP, 100msec delay make disconnect.
- * So TX sleep must be less than 100msec
- * Every 20msec TX frame will goes out.
- * 10 frame means 2seconds TX operation */
+/*                                                                         
+                   
+                                                                           */
+/*                                               
+                                        
+                                       
+                                        */
 static const hdd_tmLevelAction_t thermalMigrationAction[WLAN_HDD_TM_LEVEL_MAX] =
 {
-   /* TM Level 0, Do nothing, just normal operaton */
+   /*                                              */
    {1, 0, 0, 0, 0xFFFFF},
-   /* Tm Level 1, disable TX AMPDU */
+   /*                              */
    {0, 0, 0, 0, 0xFFFFF},
-   /* TM Level 2, disable AMDPU,
-    * TX sleep 100msec if TX frame count is larger than 16 during 300msec */
+   /*                           
+                                                                          */
    {0, 0, 100, 300, 16},
-   /* TM Level 3, disable AMDPU,
-    * TX sleep 500msec if TX frame count is larger than 11 during 500msec */
+   /*                           
+                                                                          */
    {0, 0, 500, 500, 11},
-   /* TM Level 4, MAX TM level, enter IMPS */
+   /*                                      */
    {0, 1, 1000, 500, 10}
 };
 #ifdef HAVE_WCNSS_SUSPEND_RESUME_NOTIFY
@@ -107,24 +107,24 @@ static bool suspend_notify_sent;
 #endif
 
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Function to suspend the wlan driver.
+                                              
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
 
-   @return None
+               
 
-----------------------------------------------------------------------------*/
+                                                                            */
 static int wlan_suspend(hdd_context_t* pHddCtx)
 {
    int rc = 0;
 
    pVosSchedContext vosSchedContext = NULL;
 
-   /* Get the global VOSS context */
+   /*                             */
    vosSchedContext = get_vos_sched_ctxt();
 
    if(!vosSchedContext) {
@@ -133,24 +133,24 @@ static int wlan_suspend(hdd_context_t* pHddCtx)
    }
    if(!vos_is_apps_power_collapse_allowed(pHddCtx))
    {
-       /* Fail this suspend */
+       /*                   */
        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR, "%s: Fail wlan suspend: not in IMPS/BMPS", __func__);
        return -EPERM;
    }
 
    /*
-     Suspending MC Thread, Rx Thread and Tx Thread as the platform driver is going to Suspend.     
+                                                                                                   
    */
    VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s: Suspending Mc, Rx and Tx Threads",__func__);
 
    INIT_COMPLETION(pHddCtx->tx_sus_event_var);
 
-   /* Indicate Tx Thread to Suspend */
+   /*                               */
    set_bit(TX_SUSPEND_EVENT_MASK, &vosSchedContext->txEventFlag);
 
    wake_up_interruptible(&vosSchedContext->txWaitQueue);
 
-   /* Wait for Suspend Confirmation from Tx Thread */
+   /*                                              */
    rc = wait_for_completion_interruptible_timeout(&pHddCtx->tx_sus_event_var, msecs_to_jiffies(200));
 
    if(!rc)
@@ -160,17 +160,17 @@ static int wlan_suspend(hdd_context_t* pHddCtx)
 
       return -ETIME;
    }
-   /* Set the Tx Thread as Suspended */
+   /*                                */
    pHddCtx->isTxThreadSuspended = TRUE;
 
    INIT_COMPLETION(pHddCtx->rx_sus_event_var);
 
-   /* Indicate Rx Thread to Suspend */
+   /*                               */
    set_bit(RX_SUSPEND_EVENT_MASK, &vosSchedContext->rxEventFlag);
 
    wake_up_interruptible(&vosSchedContext->rxWaitQueue);
 
-   /* Wait for Suspend Confirmation from Rx Thread */
+   /*                                              */
    rc = wait_for_completion_interruptible_timeout(&pHddCtx->rx_sus_event_var, msecs_to_jiffies(200));
 
    if(!rc)
@@ -179,26 +179,26 @@ static int wlan_suspend(hdd_context_t* pHddCtx)
 
        clear_bit(RX_SUSPEND_EVENT_MASK, &vosSchedContext->rxEventFlag);
 
-       /* Indicate Tx Thread to Resume */
+       /*                              */
        complete(&vosSchedContext->ResumeTxEvent);
 
-       /* Set the Tx Thread as Resumed */
+       /*                              */
        pHddCtx->isTxThreadSuspended = FALSE;
 
        return -ETIME;
    }
 
-   /* Set the Rx Thread as Suspended */
+   /*                                */
    pHddCtx->isRxThreadSuspended = TRUE;
 
    INIT_COMPLETION(pHddCtx->mc_sus_event_var);
 
-   /* Indicate MC Thread to Suspend */
+   /*                               */
    set_bit(MC_SUSPEND_EVENT_MASK, &vosSchedContext->mcEventFlag);
 
    wake_up_interruptible(&vosSchedContext->mcWaitQueue);
 
-   /* Wait for Suspend Confirmation from MC Thread */
+   /*                                              */
    rc = wait_for_completion_interruptible_timeout(&pHddCtx->mc_sus_event_var, msecs_to_jiffies(200));
 
    if(!rc)
@@ -207,46 +207,46 @@ static int wlan_suspend(hdd_context_t* pHddCtx)
 
        clear_bit(MC_SUSPEND_EVENT_MASK, &vosSchedContext->mcEventFlag);
 
-       /* Indicate Rx Thread to Resume */
+       /*                              */
        complete(&vosSchedContext->ResumeRxEvent);
 
-       /* Set the Rx Thread as Resumed */
+       /*                              */
        pHddCtx->isRxThreadSuspended = FALSE;
 
-       /* Indicate Tx Thread to Resume */
+       /*                              */
        complete(&vosSchedContext->ResumeTxEvent);
 
-       /* Set the Tx Thread as Resumed */
+       /*                              */
        pHddCtx->isTxThreadSuspended = FALSE;
 
        return -ETIME;
    }
 
-   /* Set the Mc Thread as Suspended */
+   /*                                */
    pHddCtx->isMcThreadSuspended = TRUE;
    
-   /* Set the Station state as Suspended */
+   /*                                    */
    pHddCtx->isWlanSuspended = TRUE;
 
    return 0;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Function to resume the wlan driver.
+                                             
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
 
-   @return None
+               
 
-----------------------------------------------------------------------------*/
+                                                                            */
 static void wlan_resume(hdd_context_t* pHddCtx)
 {
    pVosSchedContext vosSchedContext = NULL;
 
-   //Get the global VOSS context.
+   //                            
    vosSchedContext = get_vos_sched_ctxt();
 
    if(!vosSchedContext) {
@@ -255,43 +255,43 @@ static void wlan_resume(hdd_context_t* pHddCtx)
    }
 
    /*
-     Resuming Mc, Rx and Tx Thread as platform Driver is resuming.
+                                                                  
    */
    VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s: Resuming Mc, Rx and Tx Thread",__func__);
 
-   /* Indicate MC Thread to Resume */
+   /*                              */
    complete(&vosSchedContext->ResumeMcEvent);
 
-   /* Set the Mc Thread as Resumed */
+   /*                              */
    pHddCtx->isMcThreadSuspended = FALSE;
 
-   /* Indicate Rx Thread to Resume */
+   /*                              */
    complete(&vosSchedContext->ResumeRxEvent);
 
-   /* Set the Rx Thread as Resumed */
+   /*                              */
    pHddCtx->isRxThreadSuspended = FALSE;
 
-   /* Indicate Tx Thread to Resume */
+   /*                              */
    complete(&vosSchedContext->ResumeTxEvent);
 
-   /* Set the Tx Thread as Resumed */
+   /*                              */
    pHddCtx->isTxThreadSuspended = FALSE;
 
-   /* Set the Station state as Suspended */
+   /*                                    */
    pHddCtx->isWlanSuspended = FALSE;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Function to suspend the wlan driver.
-   This function will get called by platform driver Suspend on System Suspend
+                                              
+                                                                             
 
-   @param dev    platform_func_device
+                                     
 
 
-   @return None
+               
 
-----------------------------------------------------------------------------*/
+                                                                            */
 int hddDevSuspendHdlr(struct device *dev)
 {
    int ret = 0;
@@ -301,7 +301,7 @@ int hddDevSuspendHdlr(struct device *dev)
 
    VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s: WLAN suspended by platform driver",__func__);
 
-   /* Get the HDD context */
+   /*                     */
    if(!pHddCtx) {
       VOS_TRACE(VOS_MODULE_ID_HDD,VOS_TRACE_LEVEL_FATAL,"%s: HDD context is Null",__func__);
       return 0;
@@ -313,7 +313,7 @@ int hddDevSuspendHdlr(struct device *dev)
       return 0;
    }
 
-   /* Suspend the wlan driver */
+   /*                         */
    ret = wlan_suspend(pHddCtx);
    if(ret != 0)
    {
@@ -331,17 +331,17 @@ int hddDevSuspendHdlr(struct device *dev)
    return 0;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Function to resume the wlan driver.
-   This function will get called by platform driver Resume on System Resume 
+                                             
+                                                                            
 
-   @param dev    platform_func_device
+                                     
 
 
-   @return None
+               
 
-----------------------------------------------------------------------------*/
+                                                                            */
 int hddDevResumeHdlr(struct device *dev)
 {
    hdd_context_t* pHddCtx = NULL;
@@ -356,7 +356,7 @@ int hddDevResumeHdlr(struct device *dev)
       return 0;
    }
 
-   /* Resume the wlan driver */
+   /*                        */
    wlan_resume(pHddCtx);
 #ifdef HAVE_WCNSS_SUSPEND_RESUME_NOTIFY
    if(suspend_notify_sent == true)
@@ -374,66 +374,66 @@ static const struct dev_pm_ops pm_ops = {
    .resume = hddDevResumeHdlr,
 };
 
-/*----------------------------------------------------------------------------
- *
+/*                                                                            
+  
 
-   @brief Registration function.
-        Register suspend, resume callback functions with platform driver. 
+                                
+                                                                          
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
-   @return General status code
-        VOS_STATUS_SUCCESS       Registration Success
-        VOS_STATUS_E_FAILURE     Registration Fail
+                              
+                                                     
+                                                  
 
-----------------------------------------------------------------------------*/
+                                                                            */
 VOS_STATUS hddRegisterPmOps(hdd_context_t *pHddCtx)
 {
     wcnss_wlan_set_drvdata(pHddCtx->parent_dev, pHddCtx);
 #ifndef FEATURE_R33D
     wcnss_wlan_register_pm_ops(pHddCtx->parent_dev, &pm_ops);
-#endif /* FEATURE_R33D */
+#endif /*              */
     return VOS_STATUS_SUCCESS;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief De-registration function.
-        Deregister the suspend, resume callback functions with platform driver
+                                   
+                                                                              
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
-   @return General status code
-        VOS_STATUS_SUCCESS       De-Registration Success
-        VOS_STATUS_E_FAILURE     De-Registration Fail
+                              
+                                                        
+                                                     
 
-----------------------------------------------------------------------------*/
+                                                                            */
 VOS_STATUS hddDeregisterPmOps(hdd_context_t *pHddCtx)
 {
 #ifndef FEATURE_R33D
     wcnss_wlan_unregister_pm_ops(pHddCtx->parent_dev, &pm_ops);
-#endif /* FEATURE_R33D */
+#endif /*              */
     return VOS_STATUS_SUCCESS;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief TX frame block timeout handler
-          Resume TX, and reset TX frame count
+                                        
+                                             
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
-   @return NONE
+               
 
-----------------------------------------------------------------------------*/
+                                                                            */
 void hddDevTmTxBlockTimeoutHandler(void *usrData)
 {
    hdd_context_t        *pHddCtx = (hdd_context_t *)usrData;
    hdd_adapter_t        *staAdapater;
-   /* Sanity, This should not happen */
+   /*                                */
    if(NULL == pHddCtx)
    {
       VOS_TRACE(VOS_MODULE_ID_HDD,VOS_TRACE_LEVEL_ERROR,
@@ -460,7 +460,7 @@ void hddDevTmTxBlockTimeoutHandler(void *usrData)
    }
    pHddCtx->tmInfo.txFrameCount = 0;
 
-   /* Resume TX flow */
+   /*                */
     
    netif_tx_wake_all_queues(staAdapater->dev);
    pHddCtx->tmInfo.qBlocked = VOS_FALSE;
@@ -469,17 +469,17 @@ void hddDevTmTxBlockTimeoutHandler(void *usrData)
    return;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief TM Level Change handler
-          Received Tm Level changed notification
+                                 
+                                                
 
-   @param dev : Device context
-          changedTmLevel : Changed new TM level
+                              
+                                               
 
-   @return 
+           
 
-----------------------------------------------------------------------------*/
+                                                                            */
 void hddDevTmLevelChangedHandler(struct device *dev, int changedTmLevel)
 {
    hdd_context_t        *pHddCtx = NULL;
@@ -494,14 +494,14 @@ void hddDevTmLevelChangedHandler(struct device *dev, int changedTmLevel)
       VOS_TRACE(VOS_MODULE_ID_HDD,VOS_TRACE_LEVEL_WARN,
                 "%s: TM Not enabled %d or Level does not changed %d",
                 __func__, pHddCtx->cfg_ini->thermalMitigationEnable, newTmLevel);
-      /* TM Level does not changed,
-       * Or feature does not enabled
-       * do nothing */
+      /*                           
+                                    
+                    */
       return;
    }
 
-   /* Only STA mode support TM now
-    * all other mode, TM feature should be disabled */
+   /*                             
+                                                    */
    if (~VOS_STA & pHddCtx->concurrency_mode)
    {
       VOS_TRACE(VOS_MODULE_ID_HDD,VOS_TRACE_LEVEL_ERROR,
@@ -555,19 +555,19 @@ void hddDevTmLevelChangedHandler(struct device *dev, int changedTmLevel)
    return;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Register function
-        Register Thermal Mitigation Level Changed handle callback function
+                           
+                                                                          
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
-   @return General status code
-        VOS_STATUS_SUCCESS       Registration Success
-        VOS_STATUS_E_FAILURE     Registration Fail
+                              
+                                                     
+                                                  
 
-----------------------------------------------------------------------------*/
+                                                                            */
 VOS_STATUS hddDevTmRegisterNotifyCallback(hdd_context_t *pHddCtx)
 {
    VOS_TRACE(VOS_MODULE_ID_HDD,VOS_TRACE_LEVEL_INFO,
@@ -575,7 +575,7 @@ VOS_STATUS hddDevTmRegisterNotifyCallback(hdd_context_t *pHddCtx)
 
    wcnss_register_thermal_mitigation(pHddCtx->parent_dev ,hddDevTmLevelChangedHandler);
 
-   /* Set Default TM Level as Lowest, do nothing */
+   /*                                            */
    pHddCtx->tmInfo.currentTmLevel = WLAN_HDD_TM_LEVEL_0;
    vos_mem_zero(&pHddCtx->tmInfo.tmAction, sizeof(hdd_tmLevelAction_t)); 
    vos_timer_init(&pHddCtx->tmInfo.txSleepTimer,
@@ -589,19 +589,19 @@ VOS_STATUS hddDevTmRegisterNotifyCallback(hdd_context_t *pHddCtx)
    return VOS_STATUS_SUCCESS;
 }
 
-/*----------------------------------------------------------------------------
+/*                                                                            
 
-   @brief Un-Register function
-        Un-Register Thermal Mitigation Level Changed handle callback function
+                              
+                                                                             
 
-   @param hdd_context_t pHddCtx
-        Global hdd context
+                               
+                          
 
-   @return General status code
-        VOS_STATUS_SUCCESS       Un-Registration Success
-        VOS_STATUS_E_FAILURE     Un-Registration Fail
+                              
+                                                        
+                                                     
 
-----------------------------------------------------------------------------*/
+                                                                            */
 VOS_STATUS hddDevTmUnregisterNotifyCallback(hdd_context_t *pHddCtx)
 {
    VOS_STATUS vosStatus = VOS_STATUS_SUCCESS;
@@ -619,7 +619,7 @@ VOS_STATUS hddDevTmUnregisterNotifyCallback(hdd_context_t *pHddCtx)
        }
    }
 
-   // Destroy the vos timer...
+   //                         
    vosStatus = vos_timer_destroy(&pHddCtx->tmInfo.txSleepTimer);
    if (!VOS_IS_STATUS_SUCCESS(vosStatus))
    {

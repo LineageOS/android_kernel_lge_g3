@@ -59,31 +59,31 @@
 
 /*
  
-  Place the macro VOS_PACK_START above a structure declaration to pack. We 
-  are not going to allow modifying the pack size because pack size cannot be 
-  specified in AMSS and GNU. Place the macro VOS_PACK_END below a structure 
-  declaration to stop the pack. This requirement is necessitated by Windows
-  which need pragma based prolog and epilog.
+                                                                           
+                                                                             
+                                                                            
+                                                                           
+                                            
 
-  Pack-size > 1-byte is not supported since gcc and arm do not support that.
+                                                                            
   
-  Here are some examples
+                        
   
-  1. Pack-size 1-byte foo_t across all platforms  
+                                                  
   
-  VOS_PACK_START
-  typedef VOS_PACK_PRE struct foo_s { ... } VOS_PACK_POST foo_t; 
-  VOS_PACK_END
+                
+                                                                 
+              
   
-  2. 2-byte alignment for foo_t across all platforms
+                                                    
   
-  typedef VOS_ALIGN_PRE(2) struct foo_s { ... } VOS_ALIGN_POST(2) foo_t; 
+                                                                         
 
-  3. Pack-size 1-byte and 2-byte alignment for foo_t across all platforms
+                                                                         
 
-  VOS_PACK_START
-  typedef VOS_PACK_PRE VOS_ALIGN_PRE(2) struct foo_s { ... } VOS_ALIGN_POST(2) VOS_PACK_POST foo_t; 
-  VOS_PACK_END
+                
+                                                                                                    
+              
   
 */
 
@@ -126,4 +126,4 @@
 
 #endif
 
-#endif // __VOSS_PACK_ALIGN_H
+#endif //                    

@@ -44,14 +44,14 @@
  * Qualcomm Confidential and Proprietary 
  */
 
-/* This file is generated from btampFsm.cdd - do not edit manually*/
-/* Generated on: Thu Oct 16 15:40:39 PDT 2008 */
+/*                                                                */
+/*                                            */
 
 
 #ifndef __SAPFSM_EXT_H__
 #define __SAPFSM_EXT_H__
 
-/* Events that can be sent to the SAP state-machine */
+/*                                                  */
 typedef enum
 {
   eSAP_TIMER_CONNECT_ACCEPT_TIMEOUT=0U,

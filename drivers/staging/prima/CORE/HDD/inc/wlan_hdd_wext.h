@@ -51,7 +51,7 @@
 #include "vos_event.h"
 
 /*
- * order of parameters in addTs private ioctl
+                                             
  */
 #define HDD_WLAN_WMM_PARAM_HANDLE                       0
 #define HDD_WLAN_WMM_PARAM_TID                          1
@@ -97,97 +97,97 @@ typedef enum
 
 typedef enum
 {
-   // TSPEC/re-assoc done, async
+   //                           
    HDD_WLAN_WMM_STATUS_SETUP_SUCCESS = 0,
-   // no need to setup TSPEC since ACM=0 and no UAPSD desired, sync + async
+   //                                                                      
    HDD_WLAN_WMM_STATUS_SETUP_SUCCESS_NO_ACM_NO_UAPSD = 1,
-   // no need to setup TSPEC since ACM=0 and UAPSD already exists, sync + async
+   //                                                                          
    HDD_WLAN_WMM_STATUS_SETUP_SUCCESS_NO_ACM_UAPSD_EXISTING = 2,
-   // TSPEC result pending, sync
+   //                           
    HDD_WLAN_WMM_STATUS_SETUP_PENDING = 3,
-   // TSPEC/re-assoc failed, sync + async
+   //                                    
    HDD_WLAN_WMM_STATUS_SETUP_FAILED = 4,
-   // Request rejected due to invalid params, sync + async
+   //                                                     
    HDD_WLAN_WMM_STATUS_SETUP_FAILED_BAD_PARAM = 5,
-   // TSPEC request rejected since AP!=QAP, sync
+   //                                           
    HDD_WLAN_WMM_STATUS_SETUP_FAILED_NO_WMM = 6,
 
-   // TSPEC modification/re-assoc successful, async
+   //                                              
    HDD_WLAN_WMM_STATUS_MODIFY_SUCCESS = 7,
-   // TSPEC modification a no-op since ACM=0 and no change in UAPSD, sync + async
+   //                                                                            
    HDD_WLAN_WMM_STATUS_MODIFY_SUCCESS_NO_ACM_NO_UAPSD = 8,
-   // TSPEC modification a no-op since ACM=0 and requested U-APSD already exists, sync + async
+   //                                                                                         
    HDD_WLAN_WMM_STATUS_MODIFY_SUCCESS_NO_ACM_UAPSD_EXISTING = 9,
-   // TSPEC result pending, sync
+   //                           
    HDD_WLAN_WMM_STATUS_MODIFY_PENDING = 10,
-   // TSPEC modification failed, prev TSPEC in effect, sync + async
+   //                                                              
    HDD_WLAN_WMM_STATUS_MODIFY_FAILED = 11,
-   // TSPEC modification request rejected due to invalid params, sync + async
+   //                                                                        
    HDD_WLAN_WMM_STATUS_MODIFY_FAILED_BAD_PARAM = 12,
 
-   // TSPEC release successful, sync and also async
+   //                                              
    HDD_WLAN_WMM_STATUS_RELEASE_SUCCESS = 13,
-   // TSPEC release pending, sync
+   //                            
    HDD_WLAN_WMM_STATUS_RELEASE_PENDING = 14,
-   // TSPEC release failed, sync + async
+   //                                   
    HDD_WLAN_WMM_STATUS_RELEASE_FAILED = 15,
-   // TSPEC release rejected due to invalid params, sync
+   //                                                   
    HDD_WLAN_WMM_STATUS_RELEASE_FAILED_BAD_PARAM = 16,
-   // TSPEC modified due to the mux'ing of requests on ACs, async
+   //                                                            
 
    HDD_WLAN_WMM_STATUS_MODIFIED = 17,
-   // TSPEC revoked by AP, async
+   //                           
    HDD_WLAN_WMM_STATUS_LOST = 18,
-   // some internal failure like memory allocation failure, etc, sync
+   //                                                                
    HDD_WLAN_WMM_STATUS_INTERNAL_FAILURE = 19, 
 
-   // U-APSD failed during setup but OTA setup (whether TSPEC exchnage or
-   // re-assoc) was done so app should release this QoS, async
+   //                                                                    
+   //                                                         
    HDD_WLAN_WMM_STATUS_SETUP_UAPSD_SET_FAILED = 20,
-   // U-APSD failed during modify, but OTA setup (whether TSPEC exchnage or
-   // re-assoc) was done so app should release this QoS, async
+   //                                                                      
+   //                                                         
    HDD_WLAN_WMM_STATUS_MODIFY_UAPSD_SET_FAILED = 21
 
 } hdd_wlan_wmm_status_e;
 
-/** TS Info Ack Policy */
+/*                     */
 typedef enum
 {
    HDD_WLAN_WMM_TS_INFO_ACK_POLICY_NORMAL_ACK      = 0,
    HDD_WLAN_WMM_TS_INFO_ACK_POLICY_HT_IMMEDIATE_BLOCK_ACK    = 1,
 } hdd_wlan_wmm_ts_info_ack_policy_e;
 
-/** vendor element ID */
-#define IE_EID_VENDOR        ( 221 ) /* 0xDD */
+/*                    */
+#define IE_EID_VENDOR        ( 221 ) /*      */
 #define IE_LEN_SIZE          1
 #define IE_EID_SIZE          1
 #define IE_VENDOR_OUI_SIZE   4
 
-/** Maximum Length of WPA/RSN IE */
+/*                               */
 #define MAX_WPA_RSN_IE_LEN 40
 
-/** Maximum Number of WEP KEYS */
+/*                             */
 #define MAX_WEP_KEYS 4
 
-/** Ether Address Length */
+/*                       */
 #define ETHER_ADDR_LEN 6
 
-/** Enable 11d */
+/*             */
 #define ENABLE_11D  1
 
-/** Disable 11d */
+/*              */
 #define DISABLE_11D 0
 
 /* 
-   refer wpa.h in wpa supplicant code for REASON_MICHAEL_MIC_FAILURE
+                                                                    
 
-   supplicant sets REASON_MICHAEL_MIC_FAILURE as the reason code when it sends the MLME deauth IOCTL 
-   for TKIP counter measures
+                                                                                                     
+                            
 */
 #define HDD_REASON_MICHAEL_MIC_FAILURE 14
 
 /* 
-  * These are for TLV fields in WPS IE
+                                      
   */
 #define HDD_WPS_UUID_LEN                    16 
 #define HDD_WPS_ELEM_VERSION                0x104a 
@@ -260,63 +260,63 @@ typedef enum
 } hdd_scan_pending_option_e;
 
 /* 
- * This structure contains the interface level (granularity) 
- * configuration information in support of wireless extensions. 
+                                                             
+                                                                
  */
 typedef struct hdd_wext_state_s 
 {
-   /** The CSR "desired" Profile */
+   /*                            */
    tCsrRoamProfile roamProfile; 
 
-   /** BSSID to which connect request is received */
+   /*                                             */
    tCsrBssid req_bssId;
 
-   /** The association status code */ 
+   /*                              */ 
    v_U32_t statusCode;
 
-   /** wpa version WPA/WPA2/None*/
+   /*                           */
    v_S31_t wpaVersion; 
    
-   /**WPA or RSN IE*/
+   /*              */
    u_int8_t WPARSNIE[MAX_WPA_RSN_IE_LEN]; 
 
-   /**gen IE */
+   /*        */
    tSirAddie genIE;
 
-   /**Additional IE for assoc */
+   /*                         */
    tSirAddie assocAddIE; 
    
-   /**auth key mgmt */
+   /*               */
    v_S31_t authKeyMgmt; 
 
-    /**vos event */
+    /*           */
    vos_event_t  vosevent;
 
    vos_event_t  scanevent;
 
-   /**Counter measure state, Started/Stopped*/
+   /*                                       */
    v_BOOL_t mTKIPCounterMeasures;  
 
-   /**Completion Variable*/
+   /*                    */
    struct completion completion_var;
 
 #ifdef FEATURE_OEM_DATA_SUPPORT
-   /* oem data req in Progress */
+   /*                          */
    v_BOOL_t oemDataReqInProgress;
 
-   /* oem data req ID */
+   /*                 */
    v_U32_t oemDataReqID;
 #endif
 
 #ifdef FEATURE_WLAN_CCX
-   /* CCX state variables */
+   /*                     */
    v_BOOL_t isCCXConnection;
-   eCsrAuthType collectedAuthType; /* Collected from ALL SIOCSIWAUTH Ioctls. Will be negotiatedAuthType - in tCsrProfile */
+   eCsrAuthType collectedAuthType; /*                                                                                    */
 #endif
 }hdd_wext_state_t;
 
 typedef struct ccp_freq_chan_map_s{
-    // List of frequencies
+    //                    
     v_U32_t freq;
     v_U32_t chan;
 }hdd_freq_chan_map_t;
@@ -430,5 +430,5 @@ void wlan_hdd_set_mc_addr_list(hdd_adapter_t *pAdapter, v_U8_t set);
 #endif
 void* wlan_hdd_change_country_code_callback(void *pAdapter);
 
-#endif // __WEXT_IW_H__
+#endif //              
 

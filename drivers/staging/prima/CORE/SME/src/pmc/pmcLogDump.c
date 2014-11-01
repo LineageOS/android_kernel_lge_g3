@@ -74,7 +74,7 @@ void dump_pmc_callbackRoutine2 (void *callbackContext, tpSirWakeReasonInd pWakeR
     tpAniSirGlobal pMac = (tpAniSirGlobal)callbackContext;
     pmcLog(pMac, LOGW, "*********Received callback from PMC with reason = %d\n*********",pWakeReasonInd->ulReason);
 }
-#endif // WLAN_WAKEUP_EVENTS
+#endif //                   
 
 void dump_pmc_deviceUpdateRoutine (void *callbackContext, tPmcState pmcState)
 {
@@ -247,7 +247,7 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
     if(arg1 == 1)
     {
         wowlEnterParams.ucMagicPktEnable = 1;
-        /* magic packet */
+        /*              */
         length = SIR_MAC_ADDR_LENGTH;
         status = wlan_cfgGetStr(pMac, WNI_CFG_STA_ID, (tANI_U8 *)wowlEnterParams.magicPtrn, &length); 
         if (eSIR_SUCCESS != status)
@@ -279,9 +279,9 @@ dump_pmc_enter_wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32
 #ifdef WLAN_WAKEUP_EVENTS
     (void)sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac, 
                         &wowlEnterParams, sessionId);
-#else // WLAN_WAKEUP_EVENTS
+#else //                   
     (void)sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, &wowlEnterParams, sessionId);
-#endif // WLAN_WAKEUP_EVENTS
+#endif //                   
     return p;
 }
 
@@ -363,26 +363,26 @@ dump_pmc_test_Wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 
     }
 
     sessionId = (tANI_U8 ) arg1;
-    //Add pattern
+    //           
     sme_WowlAddBcastPattern(pMac, &addPattern, sessionId);
 
-    //Delete pattern
+    //              
     sme_WowlDelBcastPattern(pMac, &delPattern, sessionId);
 
-    //Force the device into BMPS
+    //                          
     pMac->pmc.pmcState = BMPS;
 
-    //Enter Wowl
+    //          
 #ifdef WLAN_WAKEUP_EVENTS
     sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, dump_pmc_callbackRoutine2, pMac, 
                    &wowlEnterParams, sessionId);
-#else // WLAN_WAKEUP_EVENTS
+#else //                   
     sme_EnterWowl(pMac, dump_pmc_callbackRoutine, pMac, &wowlEnterParams, sessionId);
-#endif // WLAN_WAKEUP_EVENTS
+#endif //                   
     smeRsp.messageType = eWNI_PMC_ENTER_WOWL_RSP;
     pmcMessageProcessor(pMac, &smeRsp);
 
-    //Exit Wowl
+    //         
     sme_ExitWowl(pMac);
     smeRsp.messageType = eWNI_PMC_EXIT_WOWL_RSP;
     pmcMessageProcessor(pMac, &smeRsp);
@@ -391,29 +391,29 @@ dump_pmc_test_Wowl( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tANI_U32 
 
 static tDumpFuncEntry pmcMenuDumpTable[] = {
     {0,     "PMC (900-925)",           NULL},
-    // General
+    //        
     {900,   "PMC: Dump State + config", dump_pmc_state},
-    // IMPS Related
+    //             
     {901,   "PMC: Enable IMPS",         dump_pmc_enable_imps},
     {902,   "PMC: Disable IMPS",        dump_pmc_disable_imps},
     {903,   "PMC: Request IMPS: Syntax: dump 903 <imps_period_ms>", dump_pmc_request_imps},
-    // BMPS Related
+    //             
     {904,   "PMC: Start Auto BMPS Timer",  dump_pmc_start_auto_bmps_timer},
     {905,   "PMC: Stop Auto BMPS Timer", dump_pmc_stop_auto_bmps_timer},
     {906,   "PMC: Request BMPS",        dump_pmc_request_bmps},
-    // UAPSD Related
+    //              
     {907,   "PMC: Enable UAPSD",        dump_pmc_enable_uapsd},
     {908,   "PMC: Disable UAPSD",       dump_pmc_disable_uapsd},
     {909,   "PMC: Start UAPSD",         dump_pmc_start_uapsd},
     {910,   "PMC: Stop UAPSD",          dump_pmc_stop_uapsd},
-    // Standby Related
+    //                
     {911,   "PMC: Request Standby",     dump_pmc_request_standby},
-    // Full Power Related
+    //                   
     {912,   "PMC: Request Full Power",  dump_pmc_request_full_power},
-    //Unit Test Related
+    //                 
     {913,   "PMC: Test UAPSD",          dump_pmc_test_uapsd},
     {914,   "PMC: Test WOWL : Syntax :dump 914 <sessionId>",           dump_pmc_test_Wowl},
-    // WoWL Related
+    //             
     {915,   "PMC: Enter WoWL: Syntax: dump 915 <enable_magic_pkt> <enable_ptrn_match> <sessionId>",  dump_pmc_enter_wowl},
     {916,   "PMC: Exit WoWL",  dump_pmc_exit_wowl},
     {917,   "PMC: Remove a pattern: Syntax: dump 917 <pattern_id(0-7) <sessionId>>",  dump_pmc_remove_ptrn},
@@ -427,4 +427,4 @@ void pmcDumpInit(tHalHandle hHal)
                           sizeof(pmcMenuDumpTable)/sizeof(pmcMenuDumpTable[0]) );
 }
 
-#endif //#if defined(ANI_LOGDUMP)
+#endif //                        

@@ -40,16 +40,16 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file schDebug.h contains some debug macros.
- *
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                   
+  
+                            
+                        
+            
+                                                          
+                                                                       
+  
  */
 
 #ifndef __SCH_DEBUG_H__
@@ -65,9 +65,9 @@
 
 void schLog(tpAniSirGlobal pMac, tANI_U32 loglevel, const char *pString,...) ;
 
-// -------------------------------------------------------------
-/**
- *
+//                                                              
+/* 
+  
  */
 
 #ifdef SCH_DEBUG_STATS

@@ -57,34 +57,34 @@ extern "C" {
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                       EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                            
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-  when        who    what, where, why
-  --------    ---    --------------------------------------------------------
-  12/15/08    sho    Resolved warnings and errors from AMSS compiler when
-                     this is ported to WM
-  11/20/08    sho    Renamed this to VossWrapper.h; remove all dependencies
-                     on WM platform and allow this to work on all VOSS enabled
-                     platforms
-  06/24/08    tbh    Modified the file to remove the dependecy on HDD files as
-                     part of Gen6 bring up process.
-  10/29/02 Neelay Das Created file.
+                                   
 
-===========================================================================*/
 
-/*---------------------------------------------------------------------------
- * Include Files
- * ------------------------------------------------------------------------*/
+                                     
+                                                                             
+                                                                         
+                                         
+                                                                           
+                                                                              
+                              
+                                                                              
+                                                   
+                                   
+
+                                                                           */
+
+/*                                                                           
+                
+                                                                           */
 
 #include "sirTypes.h"
 #include "sirParams.h"
@@ -96,11 +96,11 @@ extern "C" {
 #include "vos_trace.h"
 #include "vos_memory.h"
 
-/* Interlocked Compare Exchange related definitions */
+/*                                                  */
 
 
 
-/* Define basic constants for the ThreadX kernel.  */
+/*                                                 */
 
 #define TX_NO_WAIT          0
 #define TX_WAIT_FOREVER     0xFFFFFFFFUL
@@ -109,15 +109,15 @@ extern "C" {
 
 
 
-/* API return values.  */
+/*                     */
 #define TX_SUCCESS          0x00
 #define TX_QUEUE_FULL    0x01
-// ...
+//    
 #define TX_NO_INSTANCE      0x0D
-// ...
+//    
 #define TX_TIMER_ERROR      0x15
 #define TX_TICK_ERROR       0x16
-// ...
+//    
 
 
 #ifndef true
@@ -128,13 +128,13 @@ extern "C" {
 #define false               0
 #endif
 
-/* Following macro specifies the number of milliseconds which constitute 1 ThreadX timer tick. Used
-   for mimicking the ThreadX timer behaviour on VOSS. */
-// Use the same MACRO used by firmware modules to calculate TICKs from mSec
-// Mismatch would cause worng timer value to be programmed
+/*                                                                                                 
+                                                      */
+//                                                                         
+//                                                        
 #define TX_MSECS_IN_1_TICK  SYS_TICK_DUR_MS
 
-// Signature with which the TX_TIMER struct is initialized, when the timer is created
+//                                                                                   
 #define TX_AIRGO_TMR_SIGNATURE   0xDEADBEEF
 
 #ifdef TIMER_MANAGER
@@ -143,12 +143,12 @@ extern "C" {
 #define  tx_timer_create(a, b, c, d, e, f, g)   tx_timer_create_intern((v_PVOID_t)pMac, a, b, c, d, e, f, g)
 #endif
 
-/*--------------------------------------------------------------------*/
-/* Timer structure                                                    */
-/* This structure is used to implement ThreadX timer facility.  Just  */
-/* like ThreadX, timer expiration handler executes at the highest     */
-/* possible priority level, i.e. DISPATCH_LEVEL.                      */
-/*--------------------------------------------------------------------*/
+/*                                                                    */
+/*                                                                    */
+/*                                                                    */
+/*                                                                    */
+/*                                                                    */
+/*                                                                    */
 typedef struct TX_TIMER_STRUCT
 {
 #ifdef WLAN_DEBUG
@@ -162,8 +162,8 @@ typedef struct TX_TIMER_STRUCT
     v_ULONG_t  rescheduleTimeInMsecs;
     vos_timer_t vosTimer;
 
-    // Pointer to the MAC global structure, which stores the context for the NIC,
-    // for which this timer is supposed to operate.
+    //                                                                           
+    //                                             
     v_PVOID_t  pMac;
     tANI_U8 sessionId;
 

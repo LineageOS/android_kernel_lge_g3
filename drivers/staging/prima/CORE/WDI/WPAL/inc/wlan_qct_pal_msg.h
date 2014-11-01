@@ -60,10 +60,10 @@
 #include "wlan_qct_pal_type.h"
 #include "wlan_qct_pal_status.h"
 
-/* Random signature to detect SMD OPEN NOTIFY */
+/*                                            */
 #define WPAL_MC_MSG_SMD_NOTIF_OPEN_SIG   0x09E2
 
-/* Random signature to detect SMD DATA NOTIFY */
+/*                                            */
 #define WPAL_MC_MSG_SMD_NOTIF_DATA_SIG   0xDA7A
 
 typedef struct swpt_msg wpt_msg;
@@ -81,35 +81,35 @@ struct swpt_msg
 }; 
 
 
-/*---------------------------------------------------------------------------
-   wpalPostCtrlMsg – Post a message to control context so it can 
-                           be processed in that context.
-   Param: 
-      pPalContext – A PAL context
-      pMsg – a pointer to called allocated object; Caller retain the ownership 
-             after this API returns.
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                 
+                                                        
+          
+                                 
+                                                                               
+                                    
+                                                                           */
 wpt_status wpalPostCtrlMsg(void *pPalContext, wpt_msg *pMsg);
 
 
-/*---------------------------------------------------------------------------
-   wpalPostTxMsg – Post a message to TX context so it can be processed in that context.
-   Param: 
-      pPalContext – A PAL context
-      pMsg – a pointer to called allocated object; Caller retain the ownership 
-             after this API returns.
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                                       
+          
+                                 
+                                                                               
+                                    
+                                                                           */
 wpt_status wpalPostTxMsg(void *pPalContext, wpt_msg *pMsg);
 
-/*---------------------------------------------------------------------------
-   wpalPostRxMsg – Post a message to RX context so it can be processed in that context.
-   Param: 
-      pPalContext – A PAL context
-      pMsg – a pointer to called allocated object; Caller retain the ownership 
-             after this API returns.
----------------------------------------------------------------------------*/
+/*                                                                           
+                                                                                       
+          
+                                 
+                                                                               
+                                    
+                                                                           */
 wpt_status wpalPostRxMsg(void *pPalContext, wpt_msg *pMsg);
 
 
 
-#endif // __WLAN_QCT_PAL_API_H
+#endif //                     

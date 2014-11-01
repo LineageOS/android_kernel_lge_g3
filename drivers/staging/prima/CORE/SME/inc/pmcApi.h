@@ -64,255 +64,255 @@
 
 #define __PMC_API_H__
 
-//This timer value determines the default periodicity at which BMPS retries will happen
-//This default value is overwritten typicaly by OS specific registry/INI values. 
-#define BMPS_TRAFFIC_TIMER_DEFAULT 5000  //unit = ms
-#define DHCP_REMAIN_POWER_ACTIVE_THRESHOLD 12 // (12 * 5) sec = 60 seconds = 1 min
+//                                                                                     
+//                                                                               
+#define BMPS_TRAFFIC_TIMER_DEFAULT 5000  //         
+#define DHCP_REMAIN_POWER_ACTIVE_THRESHOLD 12 //                                  
 
-//This timer value is used when starting the timer right after association. This value
-//should be large enough to allow the auth, DHCP handshake to complete
-#define BMPS_TRAFFIC_TIMER_ALLOW_SECURITY_DHCP 8000  //unit = ms
+//                                                                                    
+//                                                                    
+#define BMPS_TRAFFIC_TIMER_ALLOW_SECURITY_DHCP 8000  //         
 
 #define PMC_IS_CHIP_ACCESSIBLE(pmcState) ( (IMPS != (pmcState)) && (REQUEST_IMPS != (pmcState)) && \
        (STANDBY != (pmcState)) && (REQUEST_STANDBY != (pmcState)) )
 
 
 
-/* Power events that are signaled to PMC. */
+/*                                        */
 
 typedef enum ePmcPowerEvent
 
 {
 
-    ePMC_SYSTEM_HIBERNATE,  /* host is entering hibernation */
+    ePMC_SYSTEM_HIBERNATE,  /*                              */
 
-    ePMC_SYSTEM_RESUME,  /* host is resuming after hibernation */
+    ePMC_SYSTEM_RESUME,  /*                                    */
 
-    ePMC_HW_WLAN_SWITCH_OFF,  /* Hardware WLAN Switch has been turned off */
+    ePMC_HW_WLAN_SWITCH_OFF,  /*                                          */
 
-    ePMC_HW_WLAN_SWITCH_ON,  /* Hardware WLAN Switch has been turned on */
+    ePMC_HW_WLAN_SWITCH_ON,  /*                                         */
 
-    ePMC_SW_WLAN_SWITCH_OFF,  /* Software WLAN Switch has been turned off */
+    ePMC_SW_WLAN_SWITCH_OFF,  /*                                          */
 
-    ePMC_SW_WLAN_SWITCH_ON,  /* Software WLAN Switch has been turned on */
+    ePMC_SW_WLAN_SWITCH_ON,  /*                                         */
 
-    ePMC_BATTERY_OPERATION,  /* host is now operating on battery power */
+    ePMC_BATTERY_OPERATION,  /*                                        */
 
-    ePMC_AC_OPERATION  /* host is now operating on AC power */
+    ePMC_AC_OPERATION  /*                                   */
 
 } tPmcPowerEvent;
 
 
 
 
-/* Power saving modes. */
+/*                     */
 
 typedef enum ePmcPowerSavingMode
 
 {
 
-    ePMC_IDLE_MODE_POWER_SAVE,  /* Idle Mode Power Save (IMPS) */
+    ePMC_IDLE_MODE_POWER_SAVE,  /*                             */
 
-    ePMC_BEACON_MODE_POWER_SAVE,  /* Beacon Mode Power Save (BMPS) */
+    ePMC_BEACON_MODE_POWER_SAVE,  /*                               */
 
-    ePMC_SPATIAL_MULTIPLEX_POWER_SAVE,  /* Spatial Multiplexing Power Save (SMPS) */
+    ePMC_SPATIAL_MULTIPLEX_POWER_SAVE,  /*                                        */
 
-    ePMC_UAPSD_MODE_POWER_SAVE,  /* Unscheduled Automatic Power Save Delivery Mode */
+    ePMC_UAPSD_MODE_POWER_SAVE,  /*                                                */
 
-    ePMC_STANDBY_MODE_POWER_SAVE,  /* Standby Power Save Mode */
+    ePMC_STANDBY_MODE_POWER_SAVE,  /*                         */
 
-    ePMC_WOWL_MODE_POWER_SAVE  /* Wake-on-Wireless LAN Power Save Mode */
+    ePMC_WOWL_MODE_POWER_SAVE  /*                                      */
 
 } tPmcPowerSavingMode;
 
 
 
 
-/* Switch states. */
+/*                */
 
 typedef enum ePmcSwitchState
 
 {
 
-    ePMC_SWITCH_OFF,  /* switch off */
+    ePMC_SWITCH_OFF,  /*            */
 
-    ePMC_SWITCH_ON  /* switch on */
+    ePMC_SWITCH_ON  /*           */
 
 } tPmcSwitchState;
 
 
 
 
-/* Device power states. */
+/*                      */
 
 typedef enum ePmcPowerState
 
 {
 
-    ePMC_FULL_POWER,  /* full power */
+    ePMC_FULL_POWER,  /*            */
 
-    ePMC_LOW_POWER,  /* low power */
+    ePMC_LOW_POWER,  /*           */
 
 } tPmcPowerState;
 
  
 
-/* PMC states. */
+/*             */
 
 typedef enum ePmcState
 
 {
 
-    STOPPED, /* PMC is stopped */
+    STOPPED, /*                */
 
-    FULL_POWER, /* full power */
+    FULL_POWER, /*            */
 
-    LOW_POWER, /* low power */
+    LOW_POWER, /*           */
 
-    REQUEST_IMPS,  /* requesting IMPS */
+    REQUEST_IMPS,  /*                 */
 
-    IMPS,  /* in IMPS */
+    IMPS,  /*         */
 
-    REQUEST_BMPS,  /* requesting BMPS */
+    REQUEST_BMPS,  /*                 */
 
-    BMPS,  /* in BMPS */
+    BMPS,  /*         */
 
-    REQUEST_FULL_POWER,  /* requesting full power */
+    REQUEST_FULL_POWER,  /*                       */
 
-    REQUEST_START_UAPSD,  /* requesting Start UAPSD */
+    REQUEST_START_UAPSD,  /*                        */
 
-    REQUEST_STOP_UAPSD,  /* requesting Stop UAPSD */
+    REQUEST_STOP_UAPSD,  /*                       */
 
-    UAPSD,           /* in UAPSD */
+    UAPSD,           /*          */
 
-    REQUEST_STANDBY,  /* requesting standby mode */
+    REQUEST_STANDBY,  /*                         */
 
-    STANDBY,  /* in standby mode */
+    STANDBY,  /*                 */
 
-    REQUEST_ENTER_WOWL, /* requesting enter WOWL */
+    REQUEST_ENTER_WOWL, /*                       */
 
-    REQUEST_EXIT_WOWL,  /* requesting exit WOWL */
+    REQUEST_EXIT_WOWL,  /*                      */
 
-    WOWL                /* Chip in WOWL mode */
+    WOWL                /*                   */
 
 } tPmcState;
 
 
-/* Which beacons should be forwarded to the host. */
+/*                                                */
 
 typedef enum ePmcBeaconsToForward
 
 {
 
-    ePMC_NO_BEACONS,  /* none */
+    ePMC_NO_BEACONS,  /*      */
 
-    ePMC_BEACONS_WITH_TIM_SET,  /* with TIM set */
+    ePMC_BEACONS_WITH_TIM_SET,  /*              */
 
-    ePMC_BEACONS_WITH_DTIM_SET,  /* with DTIM set */
+    ePMC_BEACONS_WITH_DTIM_SET,  /*               */
 
-    ePMC_NTH_BEACON,  /* every Nth beacon */
+    ePMC_NTH_BEACON,  /*                  */
 
-    ePMC_ALL_BEACONS  /* all beacons */
+    ePMC_ALL_BEACONS  /*             */
 
 } tPmcBeaconsToForward;
 
 
 
 
-/* The Spatial Mulitplexing Power Save modes. */
+/*                                            */
 
 typedef enum ePmcSmpsMode
 
 {
 
-    ePMC_DYNAMIC_SMPS,  /* dynamic SMPS */
+    ePMC_DYNAMIC_SMPS,  /*              */
 
-    ePMC_STATIC_SMPS  /* static SMPS */
+    ePMC_STATIC_SMPS  /*             */
 
 } tPmcSmpsMode;
 
 
 
 
-/* Configuration parameters for Idle Mode Power Save (IMPS). */
+/*                                                           */
 
 typedef struct sPmcImpsConfigParams
 
 {
 
-    tANI_BOOLEAN enterOnAc;  /* FALSE if device should enter IMPS only when host operating
+    tANI_BOOLEAN enterOnAc;  /*                                                           
 
-                                on battery power, TRUE if device should enter always */
+                                                                                     */
 
 } tPmcImpsConfigParams, *tpPmcImpsConfigParams;
 
 
 
 
-/* Configuration parameters for Beacon Mode Power Save (BMPS). */
+/*                                                             */
 
 typedef struct sPmcBmpsConfigParams
 
 {
 
-    tANI_BOOLEAN enterOnAc;  /* FALSE if device should enter BMPS only when host operating on
+    tANI_BOOLEAN enterOnAc;  /*                                                              
 
-                                battery power, TRUE if device should enter always */
+                                                                                  */
 
-    tANI_U32 txThreshold;  /* transmit rate under which BMPS should be entered (frames / traffic measurement period) */
+    tANI_U32 txThreshold;  /*                                                                                        */
 
-    tANI_U32 rxThreshold;  /* receive rate under which BMPS should be entered (frames / traffic measurement period) */
+    tANI_U32 rxThreshold;  /*                                                                                       */
 
-    tANI_U32 trafficMeasurePeriod; /* period for BMPS traffic measurement (milliseconds) */
+    tANI_U32 trafficMeasurePeriod; /*                                                    */
 
-    tANI_U32 bmpsPeriod;  /* amount of time in low power (beacon intervals) */
+    tANI_U32 bmpsPeriod;  /*                                                */
 
-    tPmcBeaconsToForward forwardBeacons;  /* which beacons should be forwarded to the host */
+    tPmcBeaconsToForward forwardBeacons;  /*                                               */
 
-    tANI_U32 valueOfN;  /* the value of N when forwardBeacons is set to ePMC_NTH_BEACON */
+    tANI_U32 valueOfN;  /*                                                              */
 
-    tANI_BOOLEAN usePsPoll;  /* TRUE if PS-POLL should be used to retrieve frames from AP, FALSE if a
+    tANI_BOOLEAN usePsPoll;  /*                                                                      
 
-                                null data frame with the PM bit reset should be used */
+                                                                                     */
 
-    tANI_BOOLEAN setPmOnLastFrame; /* TRUE to keep device in BMPS as much as possible, FALSE otherwise, TRUE means:
+    tANI_BOOLEAN setPmOnLastFrame; /*                                                                              
 
-                                      1) PM bit should be set on last pending transmit data frame
+                                                                                                 
 
-                                      2) null frame with PM bit set should be transmitted after last pending receive
+                                                                                                                    
 
-                                         frame has been processed */
+                                                                  */
 
-    tANI_BOOLEAN enableBeaconEarlyTermination; /* if TRUE, BET feature in RIVA 
-                                      will be enabled, FALSE otherwise, TRUE means:
-                                      RXP will read the beacon header for the 
-                                      TIM bit & discard the rest if set to 0, 
-                                      while in BMPS              */
-    tANI_U8      bcnEarlyTermWakeInterval; /* This specifies how often in terms 
-                                      of LI we will disable BET in order to sync 
-                                      up TSF*/
+    tANI_BOOLEAN enableBeaconEarlyTermination; /*                              
+                                                                                   
+                                                                              
+                                                                              
+                                                                 */
+    tANI_U8      bcnEarlyTermWakeInterval; /*                                   
+                                                                                 
+                                            */
 
 } tPmcBmpsConfigParams, *tpPmcBmpsConfigParams;
 
 
 
 
-/* Configuration parameters for Spatial Mulitplexing Power Save (SMPS). */
+/*                                                                      */
 
 typedef struct sPmcSmpsConfigParams
 
 {
 
-    tPmcSmpsMode mode;  /* mode to use */
+    tPmcSmpsMode mode;  /*             */
 
-    tANI_BOOLEAN enterOnAc;  /* FALSE if device should enter SMPS only when host operating on
+    tANI_BOOLEAN enterOnAc;  /*                                                              
 
-                                battery power, TRUE if device should enter always */
+                                                                                  */
 
 } tPmcSmpsConfigParams, *tpPmcSmpsConfigParams;
 
 
-/* Routine definitions. */
+/*                      */
 
 extern eHalStatus pmcOpen (tHalHandle hHal);
 
@@ -433,7 +433,7 @@ extern eHalStatus pmcEnterWowl (
     void (*wakeReasonIndCB) (void *callbackContext, tpSirWakeReasonInd pWakeReasonInd),
 
     void *wakeReasonIndCBContext,
-#endif // WLAN_WAKEUP_EVENTS
+#endif //                   
     tpSirSmeWowlEnterParams wowlEnterParams, tANI_U8 sessionId);
 
 extern eHalStatus pmcExitWowl (tHalHandle hHal);
@@ -442,15 +442,15 @@ extern eHalStatus pmcExitWowl (tHalHandle hHal);
 extern eHalStatus pmcSetHostOffload (tHalHandle hHal, tpSirHostOffloadReq pRequest,
                                           tANI_U8 sessionId);
 
-/* ---------------------------------------------------------------------------
-    \fn pmcSetKeepAlive
-    \brief  Set the Keep Alive feature.
-    \param  hHal - The handle returned by macOpen.
-    \param  pRequest - Pointer to the Keep Alive.
-    \return eHalStatus
-            eHAL_STATUS_FAILURE  Cannot set the keepalive.
-            eHAL_STATUS_SUCCESS  Request accepted. 
-  ---------------------------------------------------------------------------*/
+/*                                                                            
+                       
+                                       
+                                                  
+                                                 
+                      
+                                                          
+                                                   
+                                                                             */
 extern eHalStatus pmcSetKeepAlive (tHalHandle hHal, tpSirKeepAliveReq pRequest, tANI_U8 sessionId);
 
 extern tANI_BOOLEAN pmcValidateConnectState( tHalHandle hHal );
@@ -459,85 +459,85 @@ extern tANI_BOOLEAN pmcAllowImps( tHalHandle hHal );
 
 
 #ifdef FEATURE_WLAN_SCAN_PNO
-/*Pref netw found Cb declaration*/
+/*                              */
 typedef void(*preferredNetworkFoundIndCallback)(void *callbackContext, tpSirPrefNetworkFoundInd pPrefNetworkFoundInd);
 
 extern eHalStatus pmcSetPreferredNetworkList(tHalHandle hHal, tpSirPNOScanReq pRequest, tANI_U8 sessionId, preferredNetworkFoundIndCallback callbackRoutine, void *callbackContext);
 extern eHalStatus pmcSetRssiFilter(tHalHandle hHal, v_U8_t rssiThreshold);
-#endif // FEATURE_WLAN_SCAN_PNO
+#endif //                      
 
 #ifdef WLAN_FEATURE_PACKET_FILTERING
-// Packet Coalescing Filter Match Count Callback declaration
+//                                                          
 typedef void(*FilterMatchCountCallback)(void *callbackContext,
                                         tpSirRcvFltPktMatchRsp pRcvFltPktMatchRsp);
 extern eHalStatus pmcGetFilterMatchCount(tHalHandle hHal, FilterMatchCountCallback callbackRoutine, 
                                                 void *callbackContext, tANI_U8 sessionId);
-#endif // WLAN_FEATURE_PACKET_FILTERING
+#endif //                              
 
 #ifdef WLAN_FEATURE_GTK_OFFLOAD
-// GTK Offload Information Callback declaration
+//                                             
 typedef void(*GTKOffloadGetInfoCallback)(void *callbackContext, tpSirGtkOffloadGetInfoRspParams pGtkOffloadGetInfoRsp);
 
-/* ---------------------------------------------------------------------------
-    \fn pmcSetGTKOffload
-    \brief  Set GTK offload feature.
-    \param  hHal - The handle returned by macOpen.
-    \param  pGtkOffload - Pointer to the GTK offload request.
-    \return eHalStatus
-            eHAL_STATUS_FAILURE  Cannot set the offload.
-            eHAL_STATUS_SUCCESS  Request accepted. 
-  ---------------------------------------------------------------------------*/
+/*                                                                            
+                        
+                                    
+                                                  
+                                                             
+                      
+                                                        
+                                                   
+                                                                             */
 extern eHalStatus pmcSetGTKOffload (tHalHandle hHal, tpSirGtkOffloadParams pGtkOffload, tANI_U8 sessionId);
 
-/* ---------------------------------------------------------------------------
-    \fn pmcGetGTKOffload
-    \brief  Get GTK offload information.
-    \param  hHal - The handle returned by macOpen.
-    \param  callbackRoutine - Pointer to the GTK Offload Get Info response callback routine.
-    \return eHalStatus
-            eHAL_STATUS_FAILURE  Cannot set the offload.
-            eHAL_STATUS_SUCCESS  Request accepted. 
-  ---------------------------------------------------------------------------*/
+/*                                                                            
+                        
+                                        
+                                                  
+                                                                                            
+                      
+                                                        
+                                                   
+                                                                             */
 extern eHalStatus pmcGetGTKOffload(tHalHandle hHal,
                                    GTKOffloadGetInfoCallback callbackRoutine,
                                    void *callbackContext, tANI_U8 sessionId);
-#endif // WLAN_FEATURE_GTK_OFFLOAD
+#endif //                         
 
 #ifdef FEATURE_WLAN_BATCH_SCAN
-/*Set batch scan request Cb declaration*/
+/*                                     */
 typedef void(*hddSetBatchScanReqCallback)(void *callbackContext,
      tSirSetBatchScanRsp *pRsp);
 
-/*Trigger batch scan result indication Cb declaration*/
+/*                                                   */
 typedef void(*hddTriggerBatchScanResultIndCallback)(void *callbackContext,
      void *pRsp);
 
-/* -----------------------------------------------------------------------------
-    \fn pmcSetBatchScanReq
-    \brief  Setting batch scan request in FW
-    \param  hHal - The handle returned by macOpen.
-    \param  sessionId - session id
-    \param  callbackRoutine - Pointer to set batch scan request callback routine
-    \param  calbackContext - callback context
-    \return eHalStatus
-             eHAL_STATUS_FAILURE  Cannot set batch scan request
-             eHAL_STATUS_SUCCESS  Request accepted.
- -----------------------------------------------------------------------------*/
+/*                                                                              
+                          
+                                            
+                                                  
+                                  
+                                                                                
+                                             
+                      
+                                                               
+                                                   
+                                                                              */
 extern eHalStatus pmcSetBatchScanReq(tHalHandle hHal, tSirSetBatchScanReq
        *pRequest, tANI_U8 sessionId, hddSetBatchScanReqCallback callbackRoutine,
        void *callbackContext);
 
-/* -----------------------------------------------------------------------------
-    \fn pmcTriggerBatchScanResultInd
-    \brief  API to pull batch scan result from FW
-    \param  hHal - The handle returned by macOpen.
-    \param  sessionId - session id
-    \param  callbackRoutine - Pointer to get batch scan request callback routine
-    \param  calbackContext - callback context
-    \return eHalStatus
-             eHAL_STATUS_FAILURE  Cannot set batch scan request
-             eHAL_STATUS_SUCCESS  Request accepted.
- -----------------------------------------------------------------------------*/
+/*                                                                              
+                                    
+                                                 
+                                                  
+                                  
+                                                                                
+                                             
+                      
+                                                               
+                                                   
+                                                                              */
 extern eHalStatus pmcTriggerBatchScanResultInd
 (
     tHalHandle hHal, tSirTriggerBatchScanResultInd *pRequest, tANI_U8 sessionId,
@@ -545,15 +545,15 @@ extern eHalStatus pmcTriggerBatchScanResultInd
 );
 
 
-/* -----------------------------------------------------------------------------
-    \fn pmcStopBatchScanInd
-    \brief  Stoping batch scan request in FW
-    \param  hHal - The handle returned by macOpen.
-    \param  pInd - Pointer to stop batch scan indication
-    \return eHalStatus
-             eHAL_STATUS_FAILURE  Cannot set batch scan request
-             eHAL_STATUS_SUCCESS  Request accepted.
- -----------------------------------------------------------------------------*/
+/*                                                                              
+                           
+                                            
+                                                  
+                                                        
+                      
+                                                               
+                                                   
+                                                                              */
 
 extern eHalStatus pmcStopBatchScanInd
 (
@@ -562,7 +562,7 @@ extern eHalStatus pmcStopBatchScanInd
     tANI_U8 sessionId
 );
 
-#endif // FEATURE_WLAN_BATCH_SCAN
+#endif //                        
 
 
 #endif

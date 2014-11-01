@@ -40,18 +40,18 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * This file limPropExtsUtils.cc contains the utility functions
- * to populate, parse proprietary extensions required to
- * support ANI feature set.
- *
- * Author:        Chandra Modumudi
- * Date:          11/27/02
- * History:-
- * Date           Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                                                               
+                                                        
+                           
+  
+                                  
+                          
+            
+                                                         
+                                                                       
+  
  */
 #include "aniGlobal.h"
 #include "wniCfgSta.h"
@@ -68,25 +68,25 @@
 #include "limTrace.h"
 #include "limSession.h"
 #define LIM_GET_NOISE_MAX_TRY 5
-/**
- * limExtractApCapability()
- *
- *FUNCTION:
- * This function is called to extract AP's HCF/WME/WSM capability
- * from the IEs received from it in Beacon/Probe Response frames
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- * NA
- *
- *NOTE:
- *
- * @param   pMac      Pointer to Global MAC structure
- * @param   pIE       Pointer to starting IE in Beacon/Probe Response
- * @param   ieLen     Length of all IEs combined
- * @param   qosCap    Bits are set according to capabilities
- * @return  0 - If AP does not assert HCF capability & 1 - otherwise
+/* 
+                           
+  
+           
+                                                                 
+                                                                
+  
+        
+  
+              
+     
+  
+       
+  
+                                                     
+                                                                     
+                                                
+                                                            
+                                                                    
  */
 void
 limExtractApCapability(tpAniSirGlobal pMac, tANI_U8 *pIE, tANI_U16 ieLen,
@@ -146,13 +146,13 @@ limExtractApCapability(tpAniSirGlobal pMac, tANI_U8 *pIE, tANI_U16 ieLen,
             psessionEntry->vhtCapabilityPresentInBeacon = 0;
         }
 #endif
-        // Extract the UAPSD flag from WMM Parameter element
+        //                                                  
         if (pBeaconStruct->wmeEdcaPresent)
             *uapsd = pBeaconStruct->edcaParams.qosInfo.uapsd;
 #if defined FEATURE_WLAN_CCX
-        /* If there is Power Constraint Element specifically,
-         * adapt to it. Hence there is else condition check
-         * for this if statement.
+        /*                                                   
+                                                           
+                                 
          */
         if ( pBeaconStruct->ccxTxPwr.present)
         {
@@ -161,8 +161,8 @@ limExtractApCapability(tpAniSirGlobal pMac, tANI_U8 *pIE, tANI_U16 ieLen,
 #endif
         if (pBeaconStruct->powerConstraintPresent)
 #if 0
-        //Remove this check. This function is expected to return localPowerConsraints
-        //and it should just do that. Check for 11h enabled or not can be done at the caller
+        //                                                                           
+        //                                                                                  
 #if defined WLAN_FEATURE_VOWIFI
           && ( pMac->lim.gLim11hEnable
            || pMac->rrm.rrmPEContext.rrmEnable
@@ -184,21 +184,21 @@ limExtractApCapability(tpAniSirGlobal pMac, tANI_U8 *pIE, tANI_U16 ieLen,
     }
     vos_mem_free(pBeaconStruct);
     return;
-} /****** end limExtractApCapability() ******/
+} /*                                        */
 
-/**
- * limGetHTCBState
- *
- *FUNCTION:
- * This routing provides the translation of Airgo Enum to HT enum for determining 
- * secondary channel offset.
- * Airgo Enum is required for backward compatibility purposes.
- *
- *
- *NOTE:
- *
- * @param  pMac - Pointer to Global MAC structure
- * @return The corresponding HT enumeration
+/* 
+                  
+  
+           
+                                                                                  
+                            
+                                                              
+  
+  
+       
+  
+                                                 
+                                           
  */
 ePhyChanBondState  limGetHTCBState(ePhyChanBondState aniCBMode) 
 {
@@ -228,31 +228,31 @@ ePhyChanBondState  limGetHTCBState(ePhyChanBondState aniCBMode)
 }
 
  /*
- * limGetStaPeerType
- *
- *FUNCTION:
- * Based on a combination of the following -
- * 1) tDphHashNode.aniPeer
- * 2) tDphHashNode.propCapability
- * this API determines if a given STA is an ANI peer or not
- *
- *LOGIC:
- *
- *ASSUMPTIONS:
- *
- *NOTE:
- *
- * @param  pMac - Pointer to Global MAC structure
- * @param  pStaDs - Pointer to the tpDphHashNode of the STA
- *         under consideration
- * @return tStaRateMode
+                    
+  
+           
+                                            
+                          
+                                 
+                                                           
+  
+        
+  
+              
+  
+       
+  
+                                                 
+                                                           
+                              
+                       
  */
 tStaRateMode limGetStaPeerType( tpAniSirGlobal pMac,
     tpDphHashNode pStaDs,
     tpPESession   psessionEntry)
 {
 tStaRateMode staPeerType = eSTA_11b;
-  // Determine the peer-STA type
+  //                            
   if( pStaDs->aniPeer )
   {
     if(PROP_CAPABILITY_GET( TAURUS, pStaDs->propCapability ))

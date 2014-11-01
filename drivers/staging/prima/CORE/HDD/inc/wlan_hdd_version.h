@@ -39,21 +39,21 @@
  * PERFORMANCE OF THIS SOFTWARE.
  */
 
-//==================================================================
+//                                                                  
 //
-//  File:         hdd_Version.h
+//                             
 //
-//  Description:  Miniport driver version information
+//                                                   
 //
-//  Author:       Larry Cawley
+//                            
 // 
 //  Copyright 2007, QUALCOMM, Inc.  All rights reserved.
 //
-//===================================================================
+//                                                                   
 #if !defined( __hddVersion_h__ )
 #define __hddVersion_h__
 
-// force string expansion from chars                               
+//                                                                 
 #define strEXPAND(x) #x
 #define strSTRING(x) strEXPAND(x)
 #define strVERSION( _mj, _mn, _sfx, _build ) strSTRING(_mj) "." strSTRING(_mn) "." strSTRING(_sfx) "." strSTRING(_build)
@@ -108,4 +108,4 @@
 #define OEM_PRODUCTVERSION_STR      HDD_DRIVER_VERSION_STR
 
 
-#endif  // __hddVersion_h__
+#endif  //                 

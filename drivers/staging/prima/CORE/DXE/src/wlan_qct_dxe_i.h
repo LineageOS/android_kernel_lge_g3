@@ -55,47 +55,47 @@
    Qualcomm Technologies Confidential and Proprietary
 ========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-  $Header:$ $DateTime: $ $Author: $
+                                                                       
+                                                                
 
 
-when           who        what, where, why
---------    ---         ----------------------------------------------------------
-08/03/10    schang      Created module.
+                                   
 
-===========================================================================*/
 
-/*===========================================================================
+                                          
+                                                                                  
+                                       
 
-                          INCLUDE FILES FOR MODULE
+                                                                           */
 
-===========================================================================*/
+/*                                                                           
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+                                                  
+
+                                                                           */
+
+/*                                                                            
+                
+                                                                            */
 #include "wlan_qct_dxe.h"
 #include "wlan_qct_pal_trace.h"
 #include "wlan_qct_pal_timer.h"
 #include "vos_trace.h"
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 #define WLANDXE_CTXT_COOKIE              0xC00CC111
 
 
-/* From here WCNSS DXE register information
- * This is temporary definition location to make compile and unit test
- * If official msmreg.h integrated, this part will be eliminated */
-/* Start with base address */
+/*                                         
+                                                                      
+                                                                 */
+/*                         */
 
 #ifdef WCN_PRONTO
 #define WLANDXE_CCU_DXE_INT_SELECT       0xfb2050dc
@@ -116,13 +116,13 @@ when           who        what, where, why
 #else
 #define WLANDXE_WCNSS_BASE_ADDRESS        0x03000000
 #endif
-#endif /* PAL_OS_TYPE_BMP */
+#endif /*                 */
 
 #define WLANDXE_BMU_AVAILABLE_BD_PDU     (WLANDXE_WCNSS_BASE_ADDRESS + 0x80084)
 
 #define WLANDXE_REGISTER_BASE_ADDRESS    (WLANDXE_WCNSS_BASE_ADDRESS + 0x202000)
 
-/* Common over the channels register addresses */
+/*                                             */
 #define WALNDEX_DMA_CSR_ADDRESS          (WLANDXE_REGISTER_BASE_ADDRESS + 0x00)
 #define WALNDEX_DMA_ENCH_ADDRESS         (WLANDXE_REGISTER_BASE_ADDRESS + 0x04)
 #define WALNDEX_DMA_CH_EN_ADDRESS        (WLANDXE_REGISTER_BASE_ADDRESS + 0x08)
@@ -130,7 +130,7 @@ when           who        what, where, why
 #define WALNDEX_DMA_CH_ERR_ADDRESS       (WLANDXE_REGISTER_BASE_ADDRESS + 0x10)
 #define WALNDEX_DMA_CH_STOP_ADDRESS      (WLANDXE_REGISTER_BASE_ADDRESS + 0x14)
 
-/* Interrupt Control register address */
+/*                                    */
 #define WLANDXE_INT_MASK_REG_ADDRESS     (WLANDXE_REGISTER_BASE_ADDRESS + 0x18)
 #define WLANDXE_INT_SRC_MSKD_ADDRESS     (WLANDXE_REGISTER_BASE_ADDRESS + 0x1C)
 #define WLANDXE_INT_SRC_RAW_ADDRESS      (WLANDXE_REGISTER_BASE_ADDRESS + 0x20)
@@ -145,7 +145,7 @@ when           who        what, where, why
 #define WLANDXE_DMA_CH_PRES_ADDRESS      (WLANDXE_REGISTER_BASE_ADDRESS + 0x40)
 #define WLANDXE_ARB_CH_MSK_CLR_ADDRRESS  (WLANDXE_REGISTER_BASE_ADDRESS + 0x74)
 
-/* Channel Counter register */
+/*                          */
 #define WLANDXE_DMA_COUNTER_0            (WLANDXE_REGISTER_BASE_ADDRESS + 0x200)
 #define WLANDXE_DMA_COUNTER_1            (WLANDXE_REGISTER_BASE_ADDRESS + 0x204)
 #define WLANDXE_DMA_COUNTER_2            (WLANDXE_REGISTER_BASE_ADDRESS + 0x208)
@@ -157,7 +157,7 @@ when           who        what, where, why
 #define WLANDXE_ENGINE_STAT_ADDRESS      (WLANDXE_REGISTER_BASE_ADDRESS + 0x64)
 #define WLANDXE_BMU_SB_QDAT_AV_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x5c)
 
-/* Channel Base address */
+/*                      */
 #define WLANDXE_DMA_CHAN0_BASE_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x400)
 #define WLANDXE_DMA_CHAN1_BASE_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x440)
 #define WLANDXE_DMA_CHAN2_BASE_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x480)
@@ -166,7 +166,7 @@ when           who        what, where, why
 #define WLANDXE_DMA_CHAN5_BASE_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x540)
 #define WLANDXE_DMA_CHAN6_BASE_ADDRESS   (WLANDXE_REGISTER_BASE_ADDRESS + 0x580)
 
-/* Channel specific register offset */
+/*                                  */
 #define WLANDXE_DMA_CH_CTRL_REG          0x0000
 #define WLANDXE_DMA_CH_STATUS_REG        0x0004
 #define WLANDXE_DMA_CH_SZ_REG            0x0008
@@ -184,7 +184,7 @@ when           who        what, where, why
 #define WLANDXE_DMA_CH_PDU_REG           0x0038
 #define WLANDXE_DMA_CH_TSTMP_REG         0x003C
 
-/* Common CSR Register Contorol mask and offset */
+/*                                              */
 #ifdef WCN_PRONTO
 #define WLANDXE_DMA_CSR_RESERVED_MASK         0xFFFF0000
 #define WLANDXE_DMA_CSR_RESERVED_OFFSET       0x10
@@ -247,7 +247,7 @@ when           who        what, where, why
 #define WLANDXE_DMA_CSR_RESET_MASK            0x4
 #define WLANDXE_DMA_CSR_RESET_OFFSET          0x2
 #define WLANDXE_DMA_CSR_RESET_DEFAULT         0x0
-#endif /* WCN_PRONTO */
+#endif /*            */
 
 #define WLANDXE_DMA_CSR_PAUSE_MASK            0x2
 #define WLANDXE_DMA_CSR_PAUSE_OFFSET          0x1
@@ -257,12 +257,12 @@ when           who        what, where, why
 #define WLANDXE_DMA_CSR_EN_OFFSET             0x0
 #define WLANDXE_DMA_CSR_EN_DEFAULT            0x0
 
-/* DXE CSR Master enable register value */
+/*                                      */
 #define WLANDXE_CSR_DEFAULT_ENABLE            (WLANDXE_DMA_CSR_H2H_SYNC_EN_MASK | \
                                                WLANDXE_DMA_CSR_ECTR_EN_MASK | \
                                                WLANDXE_DMA_CSR_EN_MASK)
 
-/* Channel CTRL Register Control mask and offset */
+/*                                               */
 #define WLANDXE_CH_CTRL_RSVD_MASK             0x80000000
 #define WLANDXE_CH_CTRL_RSVD_OFFSET           0x1F
 #define WLANDXE_CH_CTRL_RSVD_DEFAULT          0x0
@@ -409,7 +409,7 @@ when           who        what, where, why
 #define WLANDXE_DESC_CTRL_ENDIANNESS     0x00200000
 #define WLANDXE_DESC_CTRL_DFMT           0x10000000
 #define WLANDXE_DESC_CTRL_RSVD           0xfffc0000
-/* CSR Register Control mask and offset */
+/*                                      */
 
 #define WLANDXE_CH_STAT_INT_DONE_MASK   0x00008000
 #define WLANDXE_CH_STAT_INT_ERR_MASK    0x00004000
@@ -419,11 +419,11 @@ when           who        what, where, why
 
 #define WLANDXE_CH_STAT_MASKED_MASK     0x00000008
 #define WLANDXE_CH_STAT_ENABLED_MASK    0x00000001
-/* Till here WCNSS DXE register information
- * This is temporary definition location to make compile and unit test
- * If official msmreg.h integrated, this part will be eliminated */
+/*                                         
+                                                                      
+                                                                 */
 
-/* Interrupt control channel mask */
+/*                                */
 #define WLANDXE_INT_MASK_CHAN_0          0x00000001
 #define WLANDXE_INT_MASK_CHAN_1          0x00000002
 #define WLANDXE_INT_MASK_CHAN_2          0x00000004
@@ -465,26 +465,26 @@ typedef enum {
    WLANDXE_ERROR_PDU_CNT_OVFL        = 27,
 }WLANDXE_ErrorCode;
 
-/* DXE Descriptor Endian swap macro */
+/*                                  */
 #ifdef WLANDXE_ENDIAN_SWAP_ENABLE
 #define WLANDXE_U32_SWAP_ENDIAN(a) (((a & 0x000000FF) << 24) |    \
                                     ((a & 0x0000FF00) << 8)  |    \
                                     ((a & 0x00FF0000) >> 8)  |    \
                                     ((a & 0xFF000000) >> 24))
 #else
-/* If DXE HW does not need endian swap, DO NOTHING */
+/*                                                 */
 #define WLANDXE_U32_SWAP_ENDIAN(a) (a)
-#endif /* WLANDXE_ENDIAN_SWAP_ENABLE */
+#endif /*                            */
 
-/* Log Definition will be mappped with PAL MSG */
+/*                                             */
 #define HDXE_MSG                     WPAL_TRACE
 #define HDXE_ASSERT(a)               VOS_ASSERT(a)
 
-/*----------------------------------------------------------------------------
- *  Type Declarations
- * -------------------------------------------------------------------------*/
-/* DMA Channel Q handle Method type
-  * Linear handle or circular */
+/*                                                                            
+                     
+                                                                            */
+/*                                 
+                              */
 typedef enum
 {
    WLANDXE_CHANNEL_HANDLE_LINEAR,
@@ -516,7 +516,7 @@ typedef enum
    WLANDXE_DMA_CHANNEL_MAX
 } WLANDXE_DMAChannelType;
 
-/** DXE HW Long Descriptor format */
+/*                                */
 typedef struct
 {
    wpt_uint32                      srcMemAddrL;
@@ -528,7 +528,7 @@ typedef struct
 } WLANDXE_LongDesc;
 
 
-/** DXE HW Short Descriptor format */
+/*                                 */
 typedef struct tDXEShortDesc
 {
    wpt_uint32                      srcMemAddrL;
@@ -537,26 +537,26 @@ typedef struct tDXEShortDesc
 } WLANDXE_ShortDesc;
 
 
-/* DXE Descriptor Data Type
-  * Pick up from GEN5 */
+/*                         
+                      */
 typedef struct
 {
    union
    {
       wpt_uint32                   ctrl;
-      wpt_uint32                   valid          :1;     //0 = DMA stop, 1 = DMA continue with this descriptor
-      wpt_uint32                   transferType   :2;     //0 = Host to Host space
-      wpt_uint32                   eop            :1;     //End of Packet
-      wpt_uint32                   bdHandling     :1;          //if transferType = Host to BMU, then 0 means first 128 bytes contain BD, and 1 means create new empty BD
-      wpt_uint32                   siq            :1;     // SIQ
-      wpt_uint32                   diq            :1;     // DIQ
-      wpt_uint32                   pduRel         :1;     //0 = don't release BD and PDUs when done, 1 = release them
-      wpt_uint32                   bthldSel       :4;     //BMU Threshold Select
-      wpt_uint32                   prio           :3;     //Specifies the priority level to use for the transfer
-      wpt_uint32                   stopChannel    :1;     //1 = DMA stops processing further, channel requires re-enabling after this
-      wpt_uint32                   intr           :1;     //Interrupt on Descriptor Done
-      wpt_uint32                   rsvd           :1;     //reserved
-      wpt_uint32                   transferSize   :14;    //14 bits used - ignored for BMU transfers, only used for host to host transfers?
+      wpt_uint32                   valid          :1;     //                                                   
+      wpt_uint32                   transferType   :2;     //                      
+      wpt_uint32                   eop            :1;     //             
+      wpt_uint32                   bdHandling     :1;          //                                                                                                       
+      wpt_uint32                   siq            :1;     //    
+      wpt_uint32                   diq            :1;     //    
+      wpt_uint32                   pduRel         :1;     //                                                         
+      wpt_uint32                   bthldSel       :4;     //                    
+      wpt_uint32                   prio           :3;     //                                                    
+      wpt_uint32                   stopChannel    :1;     //                                                                         
+      wpt_uint32                   intr           :1;     //                            
+      wpt_uint32                   rsvd           :1;     //        
+      wpt_uint32                   transferSize   :14;    //                                                                               
    } descCtrl;
    wpt_uint32                      xfrSize;
    union
@@ -575,45 +575,45 @@ typedef struct
    wpt_uint32                       ctrlBlkOrder;
 #ifdef FEATURE_R33D
    wpt_uint32                       shadowBufferVa;
-#endif /* FEATURE_R33D */
+#endif /*              */
 } WLANDXE_DescCtrlBlkType;
 
 typedef struct
 {
-   /* Q handle method, linear or ring */
+   /*                                 */
    WLANDXE_ChannelHandleType       queueMethod;
 
-   /* Number of descriptors for DXE that can be queued for transfer at one time */
+   /*                                                                           */
    wpt_uint32                      nDescs;
 
-   /* Maximum number of receive buffers  of shared memory to use for this pipe */
+   /*                                                                          */
    wpt_uint32                      nRxBuffers;
 
-   /* Reference WQ - for H2B and B2H only */
+   /*                                     */
    wpt_uint32                      refWQ;
 
-   /* for usb only, endpoint info for CH_SADR or CH_DADR */
+   /*                                                    */
    wpt_uint32                      refEP;
 
-   /* H2B(Tx), B2H(Rx), H2H(SRAM<->HostMem R/W) */
+   /*                                           */
    wpt_uint32                      xfrType;
 
-   /* Channel Priority 7(Highest) - 0(Lowest) */
+   /*                                         */
    wpt_uint32                      chPriority;
 
-   /* 1 = BD attached to frames for this pipe */
+   /*                                         */
    wpt_boolean                     bdPresent;
 
    wpt_uint32                      chk_size;
 
    wpt_uint32                      bmuThdSel;
 
-   /*  Added in Gen5 for Prefetch */
+   /*                             */
    wpt_boolean                     useLower4G;
 
    wpt_boolean                     useShortDescFmt;
-   /* Till here inharited from GEN5 code */
-   /* From now on, added for PRIMA  */
+   /*                                    */
+   /*                               */
 } WLANDXE_ChannelConfigType;
 
 typedef struct
@@ -720,47 +720,47 @@ typedef struct
    wpt_timer                       dxeSSRTimer;
 } WLANDXE_CtrlBlkType;
 
-/*==========================================================================
-  @  Function Name 
-      dxeCommonDefaultConfig
+/*                                                                          
+                   
+                            
 
-  @  Description 
+                 
 
-  @  Parameters
-      WLANDXE_CtrlBlkType     *dxeCtrlBlk,
-                               DXE host driver main control block
+               
+                                          
+                                                                 
 
-  @  Return
-      wpt_status
+           
+                
 
-===========================================================================*/
+                                                                           */
 extern wpt_status dxeCommonDefaultConfig
 (
    WLANDXE_CtrlBlkType     *dxeCtrlBlk
 );
 
-/*==========================================================================
-  @  Function Name 
-      dxeChannelDefaultConfig
+/*                                                                          
+                   
+                             
 
-  @  Description 
-      Get defualt configuration values from pre defined structure
-      All the channels must have it's own configurations
+                 
+                                                                 
+                                                        
 
-  @  Parameters
-      WLANDXE_CtrlBlkType     *dxeCtrlBlk,
-                               DXE host driver main control block
-      WLANDXE_ChannelCBType   *channelEntry
-                               Channel specific control block
+               
+                                          
+                                                                 
+                                           
+                                                             
 
-  @  Return
-      wpt_status
+           
+                
 
-===========================================================================*/
+                                                                           */
 extern wpt_status dxeChannelDefaultConfig
 (
    WLANDXE_CtrlBlkType     *dxeCtrlBlk,
    WLANDXE_ChannelCBType   *channelEntry
 );
 
-#endif /* WLAN_QCT_DXE_I_H */
+#endif /*                  */

@@ -40,25 +40,25 @@
  */
 
 #include "palTypes.h"
-#include "wniApi.h"     /* WNI_CFG_SET_REQ */
-#include "sirParams.h"  /* tSirMbMsg */
-#include "smsDebug.h"   /* smsLog */
+#include "wniApi.h"     /*                 */
+#include "sirParams.h"  /*           */
+#include "smsDebug.h"   /*        */
 #include "cfgApi.h"
 #include "ccmApi.h"
 #include "logDump.h"
 
-//#define CCM_DEBUG
+//                 
 #undef CCM_DEBUG
 
 #define CCM_DEBUG2
-//#undef CCM_DEBUG2
+//                 
 
 #define CFGOBJ_ALIGNTO          4
 #define CFGOBJ_ALIGN(len)       ( ((len)+CFGOBJ_ALIGNTO-1) & ~(CFGOBJ_ALIGNTO-1) )
 
-#define CFGOBJ_ID_SIZE                  4       /* 4 bytes for cfgId */
-#define CFGOBJ_LEN_SIZE                 4       /* 4 bytes for length */
-#define CFGOBJ_INTEGER_VALUE_SIZE       4       /* 4 bytes for integer value */
+#define CFGOBJ_ID_SIZE                  4       /*                   */
+#define CFGOBJ_LEN_SIZE                 4       /*                    */
+#define CFGOBJ_INTEGER_VALUE_SIZE       4       /*                           */
 
 #define CFG_UPDATE_MAGIC_DWORD     0xabab
 
@@ -97,29 +97,29 @@ static tANI_U32 * encodeCfgReq(tHddHandle hHdd, tANI_U32 *pl, tANI_U32 cfgId, tA
 }
 
 /*
- * CCM_STRING_TYPE                       CCM_INTEGER_TYPE
- * |<--------  4   ----->|               |<--------  4   ----->|                          
- * +----------+            <-- msg  -->  +----------+                                 
- * |type      |                          |type      |           
- * +----------+                          +----------+           
- * |msgLen=24 |                          |msgLen=16 |           
- * +----------+----------+               +----------+----------+
- * | cfgId               |               | cfgId               |  
- * +---------------------+               +---------------------+
- * | length=11           |               | length=4            |  
- * +---------------------+               +---------------------+
- * |                     |               | value               |  
- * |                     |               +---------------------+  
- * |                     |
- * |                +----+
- * |                |////| <- padding to 4-byte boundary
- * +----------------+----+
+                                                         
+                                                                                          
+                                                                                      
+                                                                
+                                                                
+                                                                
+                                                                
+                                                                  
+                                                                
+                                                                  
+                                                                
+                                                                  
+                                                                  
+                          
+                          
+                                                        
+                          
  */
 static eHalStatus sendCfg(tpAniSirGlobal pMac, tHddHandle hHdd, tCfgReq *req, tANI_BOOLEAN fRsp)
 {
     tSirMbMsg *msg;
     eHalStatus status;
-    tANI_S16 msgLen = (tANI_U16)(4 +    /* 4 bytes for msg header */
+    tANI_S16 msgLen = (tANI_U16)(4 +    /*                        */
                                  CFGOBJ_ID_SIZE +
                                  CFGOBJ_LEN_SIZE +
                                  CFGOBJ_ALIGN(req->length)) ;
@@ -142,7 +142,7 @@ static eHalStatus sendCfg(tpAniSirGlobal pMac, tHddHandle hHdd, tCfgReq *req, tA
         if (status != eHAL_STATUS_SUCCESS)
         {
             smsLog( pMac, LOGW, FL("palSendMBMessage() failed"));
-            //No need to free msg. palSendMBMessage frees it.
+            //                                               
             status = eHAL_STATUS_FAILURE ;
         }
     }
@@ -210,7 +210,7 @@ static void purgeReqQ(tHalHandle hHal)
 
     for (req = pMac->ccm.reqQ.head; req; req = tmp)
     {
-        /* loop thru reqQ and invoke callback to return failure */
+        /*                                                      */
         smsLog(pMac, LOGW, FL("deleting cfgReq, cfgid=%d"), (int)req->cfgId);
 
         tmp = req->next ;
@@ -231,13 +231,13 @@ static void sendQueuedReqToMacSw(tpAniSirGlobal pMac, tHddHandle hHdd)
 {
     tCfgReq *req ;
 
-    /* Send the head req */
+    /*                   */
     req = pMac->ccm.reqQ.head ;
     if (req)
     {
         if (req->state == eCCM_REQ_QUEUED)
         {
-            /* Send WNI_CFG_SET_REQ */
+            /*                      */
             req->state = eCCM_REQ_SENT;
             if (sendCfg(pMac, hHdd, req, eANI_BOOLEAN_TRUE) != eHAL_STATUS_SUCCESS)
             {
@@ -311,10 +311,10 @@ static eHalStatus cfgSetSub(tpAniSirGlobal pMac, tHddHandle hHdd, tANI_U32 cfgId
         palSpinLockTake(hHdd, pMac->ccm.lock);
 
         add_req_tail(req, &pMac->ccm.reqQ);
-        /* If this is the first req on the queue, send it to MAC SW */
+        /*                                                          */
         if ((pMac->ccm.replay.started == 0) && (pMac->ccm.reqQ.head == req))
         {
-            /* Send WNI_CFG_SET_REQ */
+            /*                      */
             req->state = eCCM_REQ_SENT;
             palSpinLockGive(hHdd, pMac->ccm.lock);
             status = sendCfg(pMac, hHdd, req, eANI_BOOLEAN_TRUE) ;
@@ -332,7 +332,7 @@ static eHalStatus cfgSetSub(tpAniSirGlobal pMac, tHddHandle hHdd, tANI_U32 cfgId
                 palSpinLockTake(hHdd, pMac->ccm.lock);
                 if(req != pMac->ccm.reqQ.head)
                 {
-                    //We send the request and it must be done already
+                    //                                               
                     req = NULL;
                 }
                 palSpinLockGive(hHdd, pMac->ccm.lock);
@@ -383,7 +383,7 @@ static eHalStatus cfgSet(tHalHandle hHal, tANI_U32 cfgId, tANI_U32 type, tANI_S3
             status = cfgSetSub(pMac, hHdd, cfgId, type, length, ccmPtr, ccmValue, callback, toBeSaved, sem, &req);
             if ((status != eHAL_STATUS_SUCCESS) || (req == NULL))
             {
-                //Either it fails to send or the req is finished already
+                //                                                      
                 palSemaphoreFree( hHdd, sem );
                 sem = NULL;
             }
@@ -426,7 +426,7 @@ eHalStatus ccmClose(tHalHandle hHal)
 
     ccmStop(hHal);
 
-    /* Go thru comp[] to free all saved requests */
+    /*                                           */
     for (i = 0 ; i < CFG_PARAM_MAX_NUM ; ++i)
     {
         if ((req = pMac->ccm.comp[i]) != NULL)
@@ -438,7 +438,7 @@ eHalStatus ccmClose(tHalHandle hHal)
     return palSpinLockFree(hHdd, pMac->ccm.lock);
 }
 
-/* This function executes in (Linux) softirq context */
+/*                                                   */
 void ccmCfgCnfMsgHandler(tHalHandle hHal, void *m)
 {
     tHddHandle hHdd = halHandle2HddHandle(hHal);
@@ -465,7 +465,7 @@ void ccmCfgCnfMsgHandler(tHalHandle hHal, void *m)
 
     if (pMac->ccm.replay.in_progress)
     {
-        /* save error code */
+        /*                 */
         if (!CCM_IS_RESULT_SUCCESS(result))
         {
             pMac->ccm.replay.result = result ;
@@ -482,20 +482,20 @@ void ccmCfgCnfMsgHandler(tHalHandle hHal, void *m)
 
             pMac->ccm.replay.started = 0 ;
 
-            /* Wake up the sleeping process */
+            /*                              */
 #ifdef CCM_DEBUG
             smsLog(pMac, LOGW, FL("ccmComplete(%p)"), pMac->ccm.replay.done);
 #endif
             ccmComplete(hHdd, pMac->ccm.replay.done);
-            //Let go with the rest of the set CFGs waiting.
+            //                                             
             sendQueuedReqToMacSw(pMac, hHdd);
         }
     }
     else
     {
         /*
-         * Try to match this response with the request.
-         * What if i could not find the req entry ???
+                                                       
+                                                     
          */
         req = pMac->ccm.reqQ.head ;
         if (req)
@@ -514,10 +514,10 @@ void ccmCfgCnfMsgHandler(tHalHandle hHal, void *m)
 #ifdef CCM_DEBUG
                     smsLog(pMac, LOGW, FL("need restart/reload, cfgId=%d"), req->cfgId) ;
 #endif
-                    //purgeReqQ(hHal);
+                    //                
                 }
 
-                /* invoke callback */
+                /*                 */
                 if (req->callback)
                 {
 #ifdef CCM_DEBUG
@@ -527,13 +527,13 @@ void ccmCfgCnfMsgHandler(tHalHandle hHal, void *m)
 #endif
                 }
 
-                /* Wake up the sleeping process */
+                /*                              */
 #ifdef CCM_DEBUG
                 smsLog(pMac, LOGW, FL("cfgId=%ld, calling ccmComplete(%p)"), cfgId, req->done);
 #endif
                 ccmComplete(hHdd, req->done);
 
-                /* move the completed req from reqQ to comp[] */
+                /*                                            */
                 if (req->toBeSaved && (CCM_IS_RESULT_SUCCESS(result)))
                 {
                     if (cfgId < CFG_PARAM_MAX_NUM)
@@ -575,7 +575,7 @@ void ccmStart(tHalHandle hHal)
 
 #if defined(ANI_LOGDUMP)
     ccmDumpInit(hHal);
-#endif //#if defined(ANI_LOGDUMP)
+#endif //                        
 
     return ;
 }
@@ -597,12 +597,12 @@ eHalStatus ccmCfgSetInt(tHalHandle hHal, tANI_U32 cfgId, tANI_U32 ccmValue, tCcm
 {
     if( callback || toBeSaved)
     {
-        //we need to sychronous this one
+        //                              
         return cfgSet(hHal, cfgId, CCM_INTEGER_TYPE, sizeof(tANI_U32), NULL, ccmValue, callback, toBeSaved);
     }
     else
     {
-        //Simply push to CFG and not waiting for the response
+        //                                                   
         tCfgReq req;
         tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
 
@@ -624,12 +624,12 @@ eHalStatus ccmCfgSetStr(tHalHandle hHal, tANI_U32 cfgId, tANI_U8 *pStr, tANI_U32
 {
     if( callback || toBeSaved )
     {
-        //we need to sychronous this one
+        //                              
         return cfgSet(hHal, cfgId, CCM_STRING_TYPE, length, pStr, 0, callback, toBeSaved);
     }
     else
     {
-        //Simply push to CFG and not waiting for the response
+        //                                                   
         tCfgReq req;
         tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
 
@@ -694,9 +694,9 @@ eHalStatus ccmCfgGetStr(tHalHandle hHal, tANI_U32 cfgId, tANI_U8 *pBuf, tANI_U32
 }
 
 /*
- * Loop thru comp[] and form an ANI message which contains all completed cfgIds.
- * The message begins with an INTEGER parameter (cfgId=CFG_UPDATE_MAGIC_DWORD)     
- * to mark the start of the message.
+                                                                                
+                                                                                   
+                                    
  */ 
 static eHalStatus cfgUpdate(tpAniSirGlobal pMac, tHddHandle hHdd, tCcmCfgSetCallback callback)
 {
@@ -704,8 +704,8 @@ static eHalStatus cfgUpdate(tpAniSirGlobal pMac, tHddHandle hHdd, tCcmCfgSetCall
     tCfgReq *req ;
     tSirMbMsg *msg ;
     eHalStatus status ;
-    tANI_S16 msgLen = 4 +       /* 4 bytes for msg header */ 
-                                /* for CFG_UPDATE_MAGIC_DWORD */ 
+    tANI_S16 msgLen = 4 +       /*                        */ 
+                                /*                            */ 
         CFGOBJ_ID_SIZE +
         CFGOBJ_LEN_SIZE +
         CFGOBJ_INTEGER_VALUE_SIZE ;
@@ -723,7 +723,7 @@ static eHalStatus cfgUpdate(tpAniSirGlobal pMac, tHddHandle hHdd, tCcmCfgSetCall
 
     palSpinLockGive(hHdd, pMac->ccm.lock);
 
-    /* Calculate message length */
+    /*                          */
     for (i = 0 ; i < CFG_PARAM_MAX_NUM ; ++i)
     {
         if ((req = pMac->ccm.comp[i]) != NULL)
@@ -761,10 +761,10 @@ static eHalStatus cfgUpdate(tpAniSirGlobal pMac, tHddHandle hHdd, tCcmCfgSetCall
     msg->type   = pal_cpu_to_be16(WNI_CFG_SET_REQ);
     msg->msgLen = pal_cpu_to_be16(msgLen);
 
-    /* Encode the starting cfgId */
+    /*                           */
     pl = encodeCfgReq(hHdd, msg->data, CFG_UPDATE_MAGIC_DWORD, 4, NULL, 0, CCM_INTEGER_TYPE) ;
 
-    /* Encode the saved cfg requests */
+    /*                               */
     for (i = 0 ; i < CFG_PARAM_MAX_NUM ; ++i)
     {
         if ((req = pMac->ccm.comp[i]) != NULL)
@@ -778,7 +778,7 @@ static eHalStatus cfgUpdate(tpAniSirGlobal pMac, tHddHandle hHdd, tCcmCfgSetCall
     {
         smsLog(pMac, LOGW, FL("palSendMBMessage() failed. status=%d"), status);
         pMac->ccm.replay.started = 0 ;
-        //No need to free msg. palSendMBMessage frees it.
+        //                                               
         goto end ;
     }
 
@@ -799,12 +799,12 @@ eHalStatus ccmCfgUpdate(tHalHandle hHal, tCcmCfgSetCallback callback)
     {
         if (pMac->ccm.replay.nr_param == 0)
         {
-            /* there is nothing saved at comp[], so we are done! */
+            /*                                                   */
             pMac->ccm.replay.started = 0 ;
         }
         else
         {
-            /* we have sent update message to MAC SW */
+            /*                                       */
             void *sem ;
 
             status = palMutexAllocLocked( hHdd, &sem ) ;
@@ -822,7 +822,7 @@ eHalStatus ccmCfgUpdate(tHalHandle hHal, tCcmCfgSetCallback callback)
 
     pal_local_bh_enable() ;
 
-    /* Waiting here ... */
+    /*                  */
     if (status == eHAL_STATUS_SUCCESS && pMac->ccm.replay.done)
     {
 #ifdef CCM_DEBUG

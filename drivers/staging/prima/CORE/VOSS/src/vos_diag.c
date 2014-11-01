@@ -56,61 +56,61 @@ typedef struct event_report_s
 } event_report_t;
 
 
-/**---------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_log_set_code() - 
+                              
 
-   This function sets the logging code in the given log record. 
+                                                                
 
-  \param  - ptr - Pointer to the log header type.
-              - code - log code.
-  \return - None
+                                                 
+                                
+                
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 
 void vos_log_set_code (v_VOID_t *ptr, v_U16_t code)
 {
     if (ptr)
     {
-        /* All log packets are required to start with 'log_header_type'. */
+        /*                                                               */
         ((log_hdr_type *) ptr)->code = code;
     }
 
 } 
 
-/**---------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_log_set_length() - 
+                                
 
-   This function sets the length field in the given log record.
+                                                               
 
-  \param  - ptr - Pointer to the log header type.
-              - length - log length.
+                                                 
+                                    
               
-  \return - None
+                
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 
 void vos_log_set_length (v_VOID_t *ptr, v_U16_t length)
 {
     if(ptr)
     {
-        /* All log packets are required to start with 'log_header_type'. */
+        /*                                                               */
         ((log_hdr_type *) ptr)->len = (v_U16_t) length;
     }
 } 
 
-/**---------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_log_submit() - 
+                            
 
-   This function sends the log data to the ptt socket app only if it is registered with the driver.
+                                                                                                   
 
-  \param  - ptr - Pointer to the log header type.
+                                                 
               
-  \return - None
+                
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 
 void vos_log_submit(v_VOID_t *plog_hdr_ptr)
 {
@@ -125,21 +125,21 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr)
     v_U16_t total_len;
 
 
-     /*Get the global context */
+     /*                       */
     pVosContext = vos_get_global_context(VOS_MODULE_ID_SYS, NULL);
 
-     /*Get the Hdd Context */
+     /*                    */
     pHddCtx = ((VosContextType*)(pVosContext))->pHDDContext;
 
 #ifdef WLAN_KD_READY_NOTIFIER
-    /* NL is not ready yet, WLAN KO started first */
+    /*                                            */
     if ((pHddCtx->kd_nl_init) && (!pHddCtx->ptt_pid))
     {
         nl_srv_nl_ready_indication();
     }
-#endif /* WLAN_KD_READY_NOTIFIER */
+#endif /*                        */
 
-   /* Send the log data to the ptt app only if it is registered with the wlan driver*/
+   /*                                                                               */
     if(pHddCtx->ptt_pid)
     {
         data_len = pHdr->len;
@@ -163,7 +163,7 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr)
         pBuf += sizeof(tAniHdr);
     
     
-            /*  Diag Type events or log */
+            /*                          */
         *(v_U32_t*)pBuf = DIAG_TYPE_LOGS;
         pBuf += sizeof(v_U32_t);
     
@@ -186,17 +186,17 @@ void vos_log_submit(v_VOID_t *plog_hdr_ptr)
     return;
 }
 
-/**---------------------------------------------------------------------------
+/*                                                                            
   
-  \brief vos_event_report_payload() - 
+                                      
 
-   This function sends the event data to the ptt socket app only if it is registered with the driver.
+                                                                                                     
 
-  \param  - ptr - Pointer to the log header type.
+                                                 
               
-  \return - None
+                
   
-  --------------------------------------------------------------------------*/
+                                                                            */
 
 void vos_event_report_payload(v_U16_t event_Id, v_U16_t length, v_VOID_t *pPayload)
 { 
@@ -209,21 +209,21 @@ void vos_event_report_payload(v_U16_t event_Id, v_U16_t length, v_VOID_t *pPaylo
     event_report_t *pEvent_report;
     v_U16_t total_len;
 
-     /*Get the global context */
+     /*                       */
     pVosContext = vos_get_global_context(VOS_MODULE_ID_SYS, NULL);
 
-     /*Get the Hdd Context */
+     /*                    */
     pHddCtx = ((VosContextType*)(pVosContext))->pHDDContext;
 
 #ifdef WLAN_KD_READY_NOTIFIER
-    /* NL is not ready yet, WLAN KO started first */
+    /*                                            */
     if ((pHddCtx->kd_nl_init) && (!pHddCtx->ptt_pid))
     {
         nl_srv_nl_ready_indication();
     }
-#endif /* WLAN_KD_READY_NOTIFIER */
+#endif /*                        */
     
-    /* Send the log data to the ptt app only if it is registered with the wlan driver*/
+    /*                                                                               */
     if(pHddCtx->ptt_pid)
     {
         total_len = sizeof(tAniHdr)+sizeof(event_report_t)+length;

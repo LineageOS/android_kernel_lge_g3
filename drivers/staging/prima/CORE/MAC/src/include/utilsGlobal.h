@@ -40,14 +40,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Sandesh Goel
- * Date:        02/25/02
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- * 
+  
+                                                        
+                            
+                        
+            
+                                                          
+                                                                       
+   
  */
 
 #ifndef __UTILS_GLOBAL_H__
@@ -56,7 +56,7 @@
 #include "sirParams.h"
 
 /*
- * Current debug and event log level
+                                    
  */
 #define LOG_FIRST_MODULE_ID    SIR_FIRST_MODULE_ID
 #define LOG_LAST_MODULE_ID     SIR_LAST_MODULE_ID

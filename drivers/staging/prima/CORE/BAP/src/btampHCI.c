@@ -59,8 +59,8 @@
   *
   */
 
-#include <memory.h> /* For memcpy */
-#include <stddef.h> /* For offsetof */
+#include <memory.h> /*            */
+#include <stddef.h> /*              */
 
 #define _vsnprintf vsnprintf
 
@@ -71,131 +71,131 @@
 #   pragma warning (disable: 4244)
 #   pragma warning (disable: 4505)
 #   pragma warning (disable: 4702)
-#   pragma warning (disable: 4996) /* ... was declared deprecated */
-#endif /* Microsoft C/C++ */
+#   pragma warning (disable: 4996) /*                             */
+#endif /*                 */
 
-/*Length of the value field expected in a TLV of type Connected Channel in an 
- AMP Assoc*/
+/*                                                                            
+          */
 #define WLAN_BAP_PAL_AMP_ASSOC_CONN_CH_TLV_MIN_LEN    3
 
-/*Length of the value field expected in a TLV of type Preferred Channel in an 
- AMP Assoc*/
+/*                                                                            
+          */
 #define WLAN_BAP_PAL_AMP_ASSOC_PREF_CH_TLV_MIN_LEN    3
 
-/*Length of the value field expected in a TLV of type MAC Address*/
+/*                                                               */
 #define WLAN_BAP_PAL_MAC_ADDR_TLV_LEN                 6
 
-/*Length of the value field expected in a TLV of type Capabilities*/
+/*                                                                */
 #define WLAN_BAP_PAL_CAPABILITIES_TLV_LEN             4
 
-/*Length of the value field expected in a TLV of type Version*/
+/*                                                           */
 #define WLAN_BAP_PAL_VERSION_TLV_LEN             5
 
-/*Length of the value field expected in a TLV of type Accept Phy Link*/
+/*                                                                   */
 #define WLAN_BAP_PAL_ACC_PHY_LINK_TLV_MIN_LEN               3
 
-/*Length of the value field expected in a TLV of type Accept Log Link*/
+/*                                                                   */
 #define WLAN_BAP_PAL_ACC_LOG_LINK_TLV_LEN                  37
 
-/*Length of the value field expected in a TLV of type Create Log Link*/
+/*                                                                   */
 #define WLAN_BAP_PAL_CREATE_LOG_LINK_TLV_LEN               37
 
-/*Length of the value field expected in a TLV of type Create Phy Link*/
+/*                                                                   */
 #define WLAN_BAP_PAL_CREATE_PHY_LINK_TLV_MIN_LEN            3
 
-/*Length of the value field expected in a TLV of type Disconnect Log Link*/
+/*                                                                       */
 #define WLAN_BAP_PAL_DISC_LOG_LINK_TLV_LEN                  2
 
-/*Length of the value field expected in a TLV of type Disconnect Phy Link*/
+/*                                                                       */
 #define WLAN_BAP_PAL_DISC_PHY_LINK_TLV_LEN                  2
 
-/*Length of the value field expected in a TLV of type Flow Spec Modify*/
+/*                                                                    */
 #define WLAN_BAP_PAL_FLOW_SPEC_MOD_TLV_LEN                 34
 
-/*Length of the value field expected in a TLV of type Flush*/
+/*                                                         */
 #define WLAN_BAP_PAL_FLUSH_TLV_LEN                          2 
 
-/*Length of the value field expected in a TLV of type enhanced Flush*/
+/*                                                                  */
 #define WLAN_BAP_PAL_ENHANCED_FLUSH_TLV_LEN                 3 
 
-/*Length of the value field expected in a TLV of type Cancel Log Link*/
+/*                                                                   */
 #define WLAN_BAP_PAL_CANCEL_LOG_LINK_TLV_LEN                2
 
-/*Length of the value field expected in a TLV of type Read Best Effort Flush 
- Timeout*/
+/*                                                                           
+        */
 #define WLAN_BAP_PAL_READ_BE_FLUSH_TIMEOUT_TLV_LEN          2
 
-/*Length of the value field expected in a TLV of type Read Failed Contact 
- Counter*/
+/*                                                                        
+        */
 #define WLAN_BAP_PAL_READ_FAILED_CONTACT_CNT_TLV_LEN        2
 
-/*Length of the value field expected in a TLV of type Link Quality*/
+/*                                                                */
 #define WLAN_BAP_PAL_READ_LINK_QUALITY_TLV_LEN              2
 
-/*Length of the value field expected in a TLV of type Read Link Supervision
-  Timeout*/
+/*                                                                         
+         */
 #define WLAN_BAP_PAL_READ_LINK_SVISISON_TIMEOUT_TLV_LEN     2
 
-/*Length of the value field expected in a TLV of type Read Local AMP Assoc*/
+/*                                                                        */
 #define WLAN_BAP_PAL_READ_LOCAL_AMP_ASSOC_TLV_LEN           5
 
-/*Length of the value field expected in a TLV of type Read RSSI*/
+/*                                                             */
 #define WLAN_BAP_PAL_READ_RSSI_TLV_LEN                      2
 
-/*Length of the value field expected in a TLV of type Reset Failed Contact 
- Counter*/
+/*                                                                         
+        */
 #define WLAN_BAP_PAL_RESET_FAILED_CONTACT_CNT_TLV_LEN       2
 
-/*Length of the value field expected in a TLV of type Set Event Mask*/
+/*                                                                  */
 #define WLAN_BAP_PAL_SET_EVENT_MASK_TLV_LEN                 8
 
-/*Length of the value field expected in a TLV of type Set Event Mask2*/
+/*                                                                   */
 #define WLAN_BAP_PAL_SET_EVENT_MASK2_TLV_LEN                8
 
-/*Length of the value field expected in a TLV of type Set SHort Range Mode*/
+/*                                                                        */
 #define WLAN_BAP_PAL_SET_SHORT_RANGE_MODE_TLV_LEN           2
 
-/*Length of the value field expected in a TLV of type Write Best Effort Flush 
-  Timeout*/
+/*                                                                            
+         */
 #define WLAN_BAP_PAL_WRITE_BE_FLUSH_TIMEOUT_TLV_LEN         6
 
-/*Length of the value field expected in a TLV of type Write Connection Accept 
-  Timeout*/
+/*                                                                            
+         */
 #define WLAN_BAP_PAL_WRITE_CON_ACC_TIMEOUT_TLV_LEN          2
 
-/*Length of the value field expected in a TLV of type Write Flow Control Mode*/
+/*                                                                           */
 #define WLAN_BAP_PAL_WRITE_FLOW_CTRL_MODE_TLV_LEN           1
 
-/*Length of the value field expected in a TLV of type Write Link Supervision
-  Timeout*/
+/*                                                                          
+         */
 #define WLAN_BAP_PAL_WRITE_LINK_SVISION_TIMEOUT_TLV_LEN     4
 
-/*Length of the value field expected in a TLV of type Write Location Data*/
+/*                                                                       */
 #define WLAN_BAP_PAL_WRITE_LOCATION_DATA_CMD_TLV_LEN        5
 
-/*Length of the value field expected in a TLV of type Write LL Acc Timeout*/
+/*                                                                        */
 #define WLAN_BAP_PAL_WRITE_LOG_LINK_ACC_TIMEOUT_TLV_LEN     2
 
-/*Length of the value field expected in a TLV of type Write Loopback Mode*/
+/*                                                                       */
 #define WLAN_BAP_PAL_WRITE_LOOOPBACK_MODE_TLV_LEN           1
 
-/*Length of the value field expected in a TLV of type Write Remote AMP Assoc*/
+/*                                                                          */
 #define WLAN_BAP_PAL_WRITE_REMOTE_AMP_ASSOC_MIN_TLV_LEN     5 
 
-/* As per AMP specification */
-/* Regulatory Extension Identifier for channel list */
+/*                          */
+/*                                                  */
 #define WLAN_BAP_PAL_REG_EXTN_ID_VAL                        201
 
-/* Regulatory Class for channel list */
+/*                                   */
 #define WLAN_BAP_PAL_REG_CLASS_VAL                          254
 
-/* Coverage ClASS for channel list */
+/*                                 */
 #define WLAN_BAP_PAL_COVERAGE_CLASS_VAL                     0
 
 
-/* LOGGING and VALIDITY_CHECKING control */
-//#define WLAN_BAPHCI_ENABLE_VALIDITY_CHECKING
-//#define WLAN_BAPHCI_ENABLE_LOGGING
+/*                                       */
+//                                            
+//                                  
 
 typedef unsigned char tFRAMES_BOOL;
 typedef void (*pfnGeneric_t)(void);
@@ -263,16 +263,16 @@ typedef struct sIEDefn {
 
 #ifndef BTAMP_LOG_GATE
 #   define BTAMP_LOG_GATE FRLOGW
-#endif // BTAMP_LOG_GATE
+#endif //               
 
 #ifdef WIN32
 
 #if defined ( _CONSOLE ) || defined ( _WINDOWS ) || defined ( _DLL ) || defined ( _LIB )
 #include <windows.h>
 #define DBGPRINT OutputDebugStringA
-#else  /* Not User mode */
+#else  /*               */
 #define DBGPRINT DbgPrint
-#endif /* User mode */
+#endif /*           */
 
 
 
@@ -314,10 +314,10 @@ static void framesDump(void * pCtx, int nSev, v_U8_t *pBuf, int nBuf)
     DBGPRINT("\n");
 }
 
-#elif defined OS_X /* Not WIN32 */
+#elif defined OS_X /*           */
 static void framesLog(void * pCtx, int nSev,
                       const char *lpszFormat, ...)
-{// To fill in when needed using IOLog
+{//                                   
 
 }
 
@@ -361,7 +361,7 @@ static void framesDump(void * pCtx, int nSev, v_U8_t *pBuf, int nBuf)
     printf("\n");
 }
 
-#endif /* WIN32 */
+#endif /*       */
 
 #define FRAMES_LOG0(ctx, sev, fmt) \
      framesLog((ctx), (sev), (fmt));
@@ -377,9 +377,9 @@ static void framesDump(void * pCtx, int nSev, v_U8_t *pBuf, int nBuf)
 #   define FRAMES_SEV_FOR_FRAME(ctx, sig) FRLOG3
 #endif
 
-#endif /* End BTAMP_HAVE_LOG_MACROS */
+#endif /*                           */
 
-#else  // ! BTAMP_ENABLE_LOGGING
+#else  //                       
 #   define FRAMES_LOG0(ctx, sev, fmt)
 #   define FRAMES_LOG1(ctx, sev, fmt, p1)
 #   define FRAMES_LOG2(ctx, sev, fmt, p1, p2)
@@ -388,7 +388,7 @@ static void framesDump(void * pCtx, int nSev, v_U8_t *pBuf, int nBuf)
 #   ifndef FRAMES_SEV_FOR_FRAME
 #       define FRAMES_SEV_FOR_FRAME(ctx, sig) FRLOG3
 #   endif
-#endif // BTAMP_ENABLE_LOGGING
+#endif //                     
 
 #if defined( BTAMP_ENABLE_DBG_BREAK ) && defined ( WIN32 )
 #   define FRAMES_DBG_BREAK() { _asm int 3 }
@@ -619,23 +619,23 @@ static v_U32_t GetPackedSizeTlvCore(void * pCtx,
 v_U32_t btampUnpackTlvAMP_Assoc_Connected_Channel(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVAMP_Assoc_Connected_Channel *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_AMP_ASSOC_CONN_CH_TLV_MIN_LEN > tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR, "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
 
 
     pDst->present = 1;
@@ -649,7 +649,7 @@ v_U32_t btampUnpackTlvAMP_Assoc_Connected_Channel(void * pCtx, v_U8_t *pBuf, v_U
     }
     else
     {
-        /* Maximum of 5 triplets allowed, based on size of triplets definition */
+        /*                                                                     */
         if (tlvlen / 3 > 5)
         {
             tlvlen = 15;
@@ -662,7 +662,7 @@ v_U32_t btampUnpackTlvAMP_Assoc_Connected_Channel(void * pCtx, v_U8_t *pBuf, v_U
     }
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvAMP_Assoc_Connected_Channel. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_Connected_Channel_t)(void *, v_U8_t*, v_U16_t, tBtampTLVAMP_Assoc_Connected_Channel*);
 
@@ -672,30 +672,30 @@ typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_Connected_Channel_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvAMP_Assoc_MAC_Addr(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVAMP_Assoc_MAC_Addr *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_MAC_ADDR_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,"Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     BTAMP_MEMCPY(pCtx, pDst->mac_addr, pBuf, 6);
     pBuf += 6;
     tlvlen -= (v_U8_t)6;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvAMP_Assoc_MAC_Addr. */
+} /*                                       */
 
 typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_MAC_Addr_t)(void *, v_U8_t*, v_U16_t, tBtampTLVAMP_Assoc_MAC_Addr*);
 
@@ -705,30 +705,30 @@ typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_MAC_Addr_t)(void *, v_U8_t*, v_U16_t, tB
 v_U32_t btampUnpackTlvAMP_Assoc_PAL_Capabilities(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVAMP_Assoc_PAL_Capabilities *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_CAPABILITIES_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,"Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohl(pCtx, &pDst->pal_capabilities, pBuf, 0);
     pBuf += 4;
     tlvlen -= (v_U8_t)4;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvAMP_Assoc_PAL_Capabilities. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_PAL_Capabilities_t)(void *, v_U8_t*, v_U16_t, tBtampTLVAMP_Assoc_PAL_Capabilities*);
 
@@ -738,24 +738,24 @@ typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_PAL_Capabilities_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvAMP_Assoc_PAL_Version(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVAMP_Assoc_PAL_Version *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
 
-     /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+     /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_VERSION_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,"Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->pal_version = *pBuf;
     pBuf += 1;  
@@ -768,7 +768,7 @@ v_U32_t btampUnpackTlvAMP_Assoc_PAL_Version(void * pCtx, v_U8_t *pBuf, v_U16_t t
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvAMP_Assoc_PAL_Version. */
+} /*                                          */
 
 typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_PAL_Version_t)(void *, v_U8_t*, v_U16_t, tBtampTLVAMP_Assoc_PAL_Version*);
 
@@ -778,25 +778,25 @@ typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_PAL_Version_t)(void *, v_U8_t*, v_U16_t,
 v_U32_t btampUnpackTlvAMP_Assoc_Preferred_Channel_List(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVAMP_Assoc_Preferred_Channel_List *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_AMP_ASSOC_PREF_CH_TLV_MIN_LEN > tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,"Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
-    /* Contry String - 3 bytes */
+    /*                         */
     BTAMP_MEMCPY(pCtx, pDst->country, pBuf, 3);
     pBuf += 3;
     tlvlen -= (v_U8_t)3;
@@ -808,7 +808,7 @@ v_U32_t btampUnpackTlvAMP_Assoc_Preferred_Channel_List(void * pCtx, v_U8_t *pBuf
     }
     else
     {
-        /* Maximum of 5 triplets allowed, based on size of triplets definition */
+        /*                                                                     */
         if (tlvlen / 3 > 5)
         {
             tlvlen = 15;
@@ -820,7 +820,7 @@ v_U32_t btampUnpackTlvAMP_Assoc_Preferred_Channel_List(void * pCtx, v_U8_t *pBuf
         tlvlen -= ( tlvlen );
     }
     return status;
-} /* End btampUnpackTlvAMP_Assoc_Preferred_Channel_List. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_Preferred_Channel_List_t)(void *, v_U8_t*, v_U16_t, tBtampTLVAMP_Assoc_Preferred_Channel_List*);
 
@@ -830,24 +830,24 @@ typedef v_U32_t (*pfnUnpackTlvAMP_Assoc_Preferred_Channel_List_t)(void *, v_U8_t
 v_U32_t btampUnpackTlvFlow_Spec(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVFlow_Spec *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_FLOW_SPEC_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING 
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->flow_spec_id = *pBuf;
     pBuf += 1;
@@ -869,7 +869,7 @@ v_U32_t btampUnpackTlvFlow_Spec(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtam
     tlvlen -= (v_U8_t)4;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvFlow_Spec. */
+} /*                              */
 
 typedef v_U32_t (*pfnUnpackTlvFlow_Spec_t)(void *, v_U8_t*, v_U16_t, tBtampTLVFlow_Spec*);
 
@@ -879,26 +879,26 @@ typedef v_U32_t (*pfnUnpackTlvFlow_Spec_t)(void *, v_U8_t*, v_U16_t, tBtampTLVFl
 v_U32_t btampUnpackTlvHCI_Accept_Logical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Accept_Logical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
 #ifdef WLAN_BAPHCI_ENABLE_VALIDITY_CHECKING
     if ( WLAN_BAP_PAL_ACC_LOG_LINK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
-//      return BTAMP_INVALID_TLV_LENGTH; 
+//                                       
     }
 #endif
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
 
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
@@ -912,7 +912,7 @@ v_U32_t btampUnpackTlvHCI_Accept_Logical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U
     tlvlen -= (v_U8_t)18;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Accept_Logical_Link_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Accept_Logical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Accept_Logical_Link_Cmd*);
 
@@ -922,24 +922,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Accept_Logical_Link_Cmd_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvHCI_Accept_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Accept_Physical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_ACC_PHY_LINK_TLV_MIN_LEN > tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -960,7 +960,7 @@ v_U32_t btampUnpackTlvHCI_Accept_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_
     tlvlen -= ( pDst->key_length );
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Accept_Physical_Link_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Accept_Physical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Accept_Physical_Link_Cmd*);
 
@@ -970,14 +970,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Accept_Physical_Link_Cmd_t)(void *, v_U8_t*, v
 v_U32_t btampUnpackTlvHCI_Channel_Selected_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Channel_Selected_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Channel_Selected_Event. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Channel_Selected_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Channel_Selected_Event*);
 
@@ -987,7 +987,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Channel_Selected_Event_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvHCI_Command_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Command_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
     pDst->present = 1;
     pDst->num_hci_command_packets = *pBuf;
@@ -1273,7 +1273,7 @@ v_U32_t btampUnpackTlvHCI_Command_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U1
             pBuf += 2;
             tlvlen -= (v_U8_t)2;
             if (pDst->cc_event.Read_Read_Local_AMP_Assoc.remaining_length > 248){
-                        // pDst->cc_event.Read_Read_Local_AMP_Assoc.present = 0;
+                        //                                                      
                         return BTAMP_SKIPPED_BAD_IE;
             }
 
@@ -1305,7 +1305,7 @@ v_U32_t btampUnpackTlvHCI_Command_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U1
     }
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Command_Complete_Event. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Command_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Command_Complete_Event*);
 
@@ -1315,7 +1315,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Command_Complete_Event_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvHCI_Command_Status_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Command_Status_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1328,7 +1328,7 @@ v_U32_t btampUnpackTlvHCI_Command_Status_Event(void * pCtx, v_U8_t *pBuf, v_U16_
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Command_Status_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Command_Status_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Command_Status_Event*);
 
@@ -1338,25 +1338,25 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Command_Status_Event_t)(void *, v_U8_t*, v_U16
 v_U32_t btampUnpackTlvHCI_Create_Logical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Create_Logical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
 #ifdef WLAN_BAPHCI_ENABLE_VALIDITY_CHECKING
     if ( WLAN_BAP_PAL_CREATE_LOG_LINK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
-//      return BTAMP_INVALID_TLV_LENGTH; 
+//                                       
     }
 #endif 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -1369,7 +1369,7 @@ v_U32_t btampUnpackTlvHCI_Create_Logical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U
     tlvlen -= (v_U8_t)18;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Create_Logical_Link_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Create_Logical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Create_Logical_Link_Cmd*);
 
@@ -1379,24 +1379,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Create_Logical_Link_Cmd_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvHCI_Create_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Create_Physical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_CREATE_PHY_LINK_TLV_MIN_LEN > tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING    
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -1417,7 +1417,7 @@ v_U32_t btampUnpackTlvHCI_Create_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_
     tlvlen -= ( pDst->key_length );
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Create_Physical_Link_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Create_Physical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Create_Physical_Link_Cmd*);
 
@@ -1427,14 +1427,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Create_Physical_Link_Cmd_t)(void *, v_U8_t*, v
 v_U32_t btampUnpackTlvHCI_Data_Buffer_Overflow_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Data_Buffer_Overflow_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->link_type = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Data_Buffer_Overflow_Event. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Data_Buffer_Overflow_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Data_Buffer_Overflow_Event*);
 
@@ -1444,31 +1444,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Data_Buffer_Overflow_Event_t)(void *, v_U8_t*,
 v_U32_t btampUnpackTlvHCI_Disconnect_Logical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Disconnect_Logical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_DISC_LOG_LINK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Disconnect_Logical_Link_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Logical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Disconnect_Logical_Link_Cmd*);
 
@@ -1478,7 +1478,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Logical_Link_Cmd_t)(void *, v_U8_t*
 v_U32_t btampUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1491,7 +1491,7 @@ v_U32_t btampUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event(void * pCtx, v_
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event. */
+} /*                                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event*);
 
@@ -1501,26 +1501,26 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Logical_Link_Complete_Event_t)(void
 v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Disconnect_Physical_Link_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
 #ifdef WLAN_BAPHCI_ENABLE_VALIDITY_CHECKING
     if ( WLAN_BAP_PAL_DISC_PHY_LINK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
-//      return BTAMP_INVALID_TLV_LENGTH; 
+//                                       
     }
 #endif      
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -1530,7 +1530,7 @@ v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Cmd(void * pCtx, v_U8_t *pBuf
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Disconnect_Physical_Link_Cmd. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Physical_Link_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Disconnect_Physical_Link_Cmd*);
 
@@ -1540,7 +1540,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Physical_Link_Cmd_t)(void *, v_U8_t
 v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-   (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+   (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1553,7 +1553,7 @@ v_U32_t btampUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event(void * pCtx, v
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event. */
+} /*                                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event*);
 
@@ -1563,24 +1563,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Disconnect_Physical_Link_Complete_Event_t)(voi
 v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Flow_Spec_Modify_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_FLOW_SPEC_MOD_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
@@ -1596,7 +1596,7 @@ v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_
     tlvlen -= (v_U8_t)18;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Flow_Spec_Modify_Cmd. */
+} /*                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Flow_Spec_Modify_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Flow_Spec_Modify_Cmd*);
 
@@ -1606,7 +1606,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Flow_Spec_Modify_Cmd_t)(void *, v_U8_t*, v_U16
 v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1616,7 +1616,7 @@ v_U32_t btampUnpackTlvHCI_Flow_Spec_Modify_Complete_Event(void * pCtx, v_U8_t *p
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Flow_Spec_Modify_Complete_Event. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Flow_Spec_Modify_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event*);
 
@@ -1626,31 +1626,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Flow_Spec_Modify_Complete_Event_t)(void *, v_U
 v_U32_t btampUnpackTlvHCI_Flush_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Flush_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_FLUSH_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Flush_Cmd. */
+} /*                                  */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Flush_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Flush_Cmd*);
 
@@ -1660,14 +1660,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Flush_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampT
 v_U32_t btampUnpackTlvHCI_Flush_Occurred_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Flush_Occurred_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Flush_Occurred_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Flush_Occurred_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Flush_Occurred_Event*);
 
@@ -1677,7 +1677,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Flush_Occurred_Event_t)(void *, v_U8_t*, v_U16
 v_U32_t btampUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     BTAMP_MEMCPY(pCtx, pDst->bd_addr, pBuf, 6);
     pBuf += 6;
@@ -1690,7 +1690,7 @@ v_U32_t btampUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx, v
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event. */
+} /*                                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event*);
 
@@ -1700,14 +1700,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Generic_AMP_Link_Key_Notification_Event_t)(voi
 v_U32_t btampUnpackTlvHCI_Hardware_Error_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Hardware_Error_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->hardware_code = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Hardware_Error_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Hardware_Error_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Hardware_Error_Event*);
 
@@ -1717,24 +1717,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Hardware_Error_Event_t)(void *, v_U8_t*, v_U16
 v_U32_t btampUnpackTlvHCI_Logical_Link_Cancel_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Logical_Link_Cancel_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_CANCEL_LOG_LINK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -1744,7 +1744,7 @@ v_U32_t btampUnpackTlvHCI_Logical_Link_Cancel_Cmd(void * pCtx, v_U8_t *pBuf, v_U
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Logical_Link_Cancel_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Logical_Link_Cancel_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Logical_Link_Cancel_Cmd*);
 
@@ -1754,7 +1754,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Logical_Link_Cancel_Cmd_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvHCI_Logical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Logical_Link_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1767,7 +1767,7 @@ v_U32_t btampUnpackTlvHCI_Logical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf,
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Logical_Link_Complete_Event. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Logical_Link_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Logical_Link_Complete_Event*);
 
@@ -1777,14 +1777,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Logical_Link_Complete_Event_t)(void *, v_U8_t*
 v_U32_t btampUnpackTlvHCI_Loopback_Command_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Loopback_Command_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     BTAMP_MEMCPY(pCtx, pDst->hci_command_packet, pBuf, 64);
     pBuf += 64;
     tlvlen -= (v_U8_t)64;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Loopback_Command_Event. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Loopback_Command_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Loopback_Command_Event*);
 
@@ -1794,7 +1794,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Loopback_Command_Event_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvHCI_Physical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Physical_Link_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -1804,7 +1804,7 @@ v_U32_t btampUnpackTlvHCI_Physical_Link_Complete_Event(void * pCtx, v_U8_t *pBuf
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Physical_Link_Complete_Event. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Physical_Link_Complete_Event*);
 
@@ -1814,7 +1814,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Complete_Event_t)(void *, v_U8_t
 v_U32_t btampUnpackTlvHCI_Physical_Link_Loss_Warning_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Physical_Link_Loss_Warning_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -1824,7 +1824,7 @@ v_U32_t btampUnpackTlvHCI_Physical_Link_Loss_Warning_Event(void * pCtx, v_U8_t *
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Physical_Link_Loss_Warning_Event. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Loss_Warning_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Physical_Link_Loss_Warning_Event*);
 
@@ -1834,14 +1834,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Loss_Warning_Event_t)(void *, v_
 v_U32_t btampUnpackTlvHCI_Physical_Link_Recovery_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Physical_Link_Recovery_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Physical_Link_Recovery_Event. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Recovery_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Physical_Link_Recovery_Event*);
 
@@ -1851,14 +1851,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Physical_Link_Recovery_Event_t)(void *, v_U8_t
 v_U32_t btampUnpackTlvHCI_Qos_Violation_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Qos_Violation_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Qos_Violation_Event. */
+} /*                                            */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Qos_Violation_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Qos_Violation_Event*);
 
@@ -1868,31 +1868,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Qos_Violation_Event_t)(void *, v_U8_t*, v_U16_
 v_U32_t btampUnpackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_READ_BE_FLUSH_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd*);
 
@@ -1902,11 +1902,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd_t)(void *, 
 v_U32_t btampUnpackTlvHCI_Read_Buffer_Size_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Buffer_Size_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Buffer_Size_Cmd. */
+} /*                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Buffer_Size_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Buffer_Size_Cmd*);
 
@@ -1916,11 +1916,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Buffer_Size_Cmd_t)(void *, v_U8_t*, v_U16
 v_U32_t btampUnpackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Connection_Accept_Timeout_Cmd. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Connection_Accept_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd*);
 
@@ -1930,11 +1930,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Connection_Accept_Timeout_Cmd_t)(void *, 
 v_U32_t btampUnpackTlvHCI_Read_Data_Block_Size_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Data_Block_Size_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Data_Block_Size_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Data_Block_Size_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Data_Block_Size_Cmd*);
 
@@ -1944,31 +1944,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Data_Block_Size_Cmd_t)(void *, v_U8_t*, v
 v_U32_t btampUnpackTlvHCI_Read_Failed_Contact_Counter_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_READ_FAILED_CONTACT_CNT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Failed_Contact_Counter_Cmd. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Failed_Contact_Counter_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd*);
 
@@ -1978,11 +1978,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Failed_Contact_Counter_Cmd_t)(void *, v_U
 v_U32_t btampUnpackTlvHCI_Read_Flow_Control_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Flow_Control_Mode_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Flow_Control_Mode_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd*);
 
@@ -1992,31 +1992,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Flow_Control_Mode_Cmd_t)(void *, v_U8_t*,
 v_U32_t btampUnpackTlvHCI_Read_Link_Quality_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Link_Quality_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_READ_LINK_QUALITY_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Link_Quality_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Link_Quality_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Link_Quality_Cmd*);
 
@@ -2026,31 +2026,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Link_Quality_Cmd_t)(void *, v_U8_t*, v_U1
 v_U32_t btampUnpackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_READ_LINK_SVISISON_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Link_Supervision_Timeout_Cmd. */
+} /*                                                          */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Link_Supervision_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd*);
 
@@ -2060,11 +2060,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Link_Supervision_Timeout_Cmd_t)(void *, v
 v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s. tlvlen=%d.", __func__, tlvlen); 
 
@@ -2072,17 +2072,17 @@ v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx, v_U8_t *pBuf, v_
     if ( WLAN_BAP_PAL_READ_LOCAL_AMP_ASSOC_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
-//      return BTAMP_INVALID_TLV_LENGTH; 
+//                                       
     }
 #endif      
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -2095,7 +2095,7 @@ v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx, v_U8_t *pBuf, v_
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd*);
 
@@ -2105,11 +2105,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_AMP_Assoc_Cmd_t)(void *, v_U8_t*, v
 v_U32_t btampUnpackTlvHCI_Read_Local_AMP_Information_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Local_AMP_Information_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
      pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Local_AMP_Information_Cmd. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_AMP_Information_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Local_AMP_Information_Cmd*);
 
@@ -2119,11 +2119,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_AMP_Information_Cmd_t)(void *, v_U8
 v_U32_t btampUnpackTlvHCI_Read_Local_Supported_Cmds_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Local_Supported_Cmds_Cmd. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_Supported_Cmds_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd*);
 
@@ -2133,11 +2133,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_Supported_Cmds_Cmd_t)(void *, v_U8_
 v_U32_t btampUnpackTlvHCI_Read_Local_Version_Info_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Local_Version_Info_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Local_Version_Info_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_Version_Info_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Local_Version_Info_Cmd*);
 
@@ -2147,11 +2147,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Local_Version_Info_Cmd_t)(void *, v_U8_t*
 v_U32_t btampUnpackTlvHCI_Read_Location_Data_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Location_Data_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Location_Data_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Location_Data_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Location_Data_Cmd*);
 
@@ -2161,11 +2161,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Location_Data_Cmd_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                             */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd*);
 
@@ -2175,11 +2175,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd_t)(void *
 v_U32_t btampUnpackTlvHCI_Read_Loopback_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_Loopback_Mode_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_Loopback_Mode_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_Loopback_Mode_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_Loopback_Mode_Cmd*);
 
@@ -2189,31 +2189,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_Loopback_Mode_Cmd_t)(void *, v_U8_t*, v_U
 v_U32_t btampUnpackTlvHCI_Read_RSSI_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Read_RSSI_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_READ_RSSI_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Read_RSSI_Cmd. */
+} /*                                      */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Read_RSSI_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Read_RSSI_Cmd*);
 
@@ -2223,11 +2223,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Read_RSSI_Cmd_t)(void *, v_U8_t*, v_U16_t, tBt
 v_U32_t btampUnpackTlvHCI_Reset_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Reset_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Reset_Cmd. */
+} /*                                  */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Reset_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Reset_Cmd*);
 
@@ -2237,31 +2237,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Reset_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampT
 v_U32_t btampUnpackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_RESET_FAILED_CONTACT_CNT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Reset_Failed_Contact_Counter_Cmd. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Reset_Failed_Contact_Counter_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd*);
 
@@ -2271,31 +2271,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Reset_Failed_Contact_Counter_Cmd_t)(void *, v_
 v_U32_t btampUnpackTlvHCI_Set_Event_Mask_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Set_Event_Mask_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_SET_EVENT_MASK_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     BTAMP_MEMCPY(pCtx, pDst->event_mask, pBuf, 8);
     pBuf += 8;
     tlvlen -= (v_U8_t)8;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Set_Event_Mask_Cmd. */
+} /*                                           */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Set_Event_Mask_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Set_Event_Mask_Cmd*);
 
@@ -2305,11 +2305,11 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Set_Event_Mask_Cmd_t)(void *, v_U8_t*, v_U16_t
 v_U32_t btampUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
 
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s. tlvlen=%d.", __func__, tlvlen); 
@@ -2317,24 +2317,24 @@ v_U32_t btampUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd(void * pCtx, v_U8_t *pBuf, v
     if ( WLAN_BAP_PAL_SET_EVENT_MASK2_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
-//      return BTAMP_INVALID_TLV_LENGTH; 
+//                                       
     }
 #endif      
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     BTAMP_MEMCPY(pCtx, pDst->event_mask_page_2, pBuf, 8);
     pBuf += 8;
     tlvlen -= (v_U8_t)8;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd*);
 
@@ -2344,24 +2344,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Set_Event_Mask_Page_2_Cmd_t)(void *, v_U8_t*, 
 v_U32_t btampUnpackTlvHCI_Set_Short_Range_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Set_Short_Range_Mode_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_SET_SHORT_RANGE_MODE_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -2371,7 +2371,7 @@ v_U32_t btampUnpackTlvHCI_Set_Short_Range_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Set_Short_Range_Mode_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Set_Short_Range_Mode_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Set_Short_Range_Mode_Cmd*);
 
@@ -2381,7 +2381,7 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Set_Short_Range_Mode_Cmd_t)(void *, v_U8_t*, v
 v_U32_t btampUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     pDst->status = *pBuf;
     pBuf += 1;
@@ -2394,7 +2394,7 @@ v_U32_t btampUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event(void * pCtx, v_
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event. */
+} /*                                                               */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event*);
 
@@ -2404,24 +2404,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Short_Range_Mode_Change_Complete_Event_t)(void
 v_U32_t btampUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_BE_FLUSH_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
@@ -2431,7 +2431,7 @@ v_U32_t btampUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void * pCtx, v_U8_
     tlvlen -= (v_U8_t)4;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                            */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd*);
 
@@ -2441,31 +2441,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd_t)(void *,
 v_U32_t btampUnpackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_CON_ACC_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->connection_accept_timeout, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Connection_Accept_Timeout_Cmd. */
+} /*                                                            */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Connection_Accept_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd*);
 
@@ -2475,31 +2475,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Connection_Accept_Timeout_Cmd_t)(void *,
 v_U32_t btampUnpackTlvHCI_Write_Flow_Control_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_FLOW_CTRL_MODE_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->flow_control_mode = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Flow_Control_Mode_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Flow_Control_Mode_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd*);
 
@@ -2509,23 +2509,23 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Flow_Control_Mode_Cmd_t)(void *, v_U8_t*
 v_U32_t btampUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    (void)pBuf; (void)tlvlen; /*                     */
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_LINK_SVISION_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
@@ -2535,7 +2535,7 @@ v_U32_t btampUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void * pCtx, v_U8_t
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd*);
 
@@ -2545,24 +2545,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Link_Supervision_Timeout_Cmd_t)(void *, 
 v_U32_t btampUnpackTlvHCI_Write_Location_Data_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Location_Data_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_LOCATION_DATA_CMD_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->loc_domain_aware = *pBuf;
     pBuf += 1;
@@ -2575,7 +2575,7 @@ v_U32_t btampUnpackTlvHCI_Write_Location_Data_Cmd(void * pCtx, v_U8_t *pBuf, v_U
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Location_Data_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Location_Data_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Location_Data_Cmd*);
 
@@ -2585,31 +2585,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Location_Data_Cmd_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_LOG_LINK_ACC_TIMEOUT_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->logical_link_accept_timeout, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd*);
 
@@ -2619,31 +2619,31 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd_t)(void 
 v_U32_t btampUnpackTlvHCI_Write_Loopback_Mode_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Loopback_Mode_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_LOOOPBACK_MODE_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->loopback_mode = *pBuf;
     pBuf += 1;
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Loopback_Mode_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Loopback_Mode_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Loopback_Mode_Cmd*);
 
@@ -2653,24 +2653,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Loopback_Mode_Cmd_t)(void *, v_U8_t*, v_
 v_U32_t btampUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_WRITE_REMOTE_AMP_ASSOC_MIN_TLV_LEN > tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     pDst->phy_link_handle = *pBuf;
     pBuf += 1;
@@ -2691,7 +2691,7 @@ v_U32_t btampUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void * pCtx, v_U8_t *pBuf, 
     tlvlen -= ( pDst->amp_assoc_remaining_length );
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd*);
 
@@ -2700,24 +2700,24 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Write_Remote_AMP_ASSOC_Cmd_t)(void *, v_U8_t*,
 v_U32_t btampUnpackTlvHCI_Enhanced_Flush_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Enhanced_Flush_Cmd *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
 
-    /*-----------------------------------------------------------------------
-       TLV Sanity check 
-    -------------------------------------------------------------------------*/
+    /*                                                                       
+                        
+                                                                             */
     if ( WLAN_BAP_PAL_ENHANCED_FLUSH_TLV_LEN != tlvlen ) 
     {
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
-      /*Log invalid len*/
+      /*               */
       VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR, 
             "Invalid TLV len on %s", __func__); 
 #endif      
       return BTAMP_INVALID_TLV_LENGTH; 
     }
 
-    /*-----------------------------------------------------------------------
-      Parse TLV 
-     -----------------------------------------------------------------------*/
+    /*                                                                       
+                
+                                                                            */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
@@ -2727,7 +2727,7 @@ v_U32_t btampUnpackTlvHCI_Enhanced_Flush_Cmd(void * pCtx, v_U8_t *pBuf, v_U16_t 
     tlvlen -= (v_U8_t)1;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Enhanced_Flush_Cmd. */
+} /*                                           */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Enhanced_Flush_Cmd_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Enhanced_Flush_Cmd*);
 
@@ -2737,14 +2737,14 @@ typedef v_U32_t (*pfnUnpackTlvHCI_Enhanced_Flush_Cmd_t)(void *, v_U8_t*, v_U16_t
 v_U32_t btampUnpackTlvHCI_Enhanced_Flush_Complete_Event(void * pCtx, v_U8_t *pBuf, v_U16_t tlvlen, tBtampTLVHCI_Enhanced_Flush_Complete_Event *pDst)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->log_link_handle, pBuf, 0);
     pBuf += 2;
     tlvlen -= (v_U8_t)2;
     (void)pCtx;
     return status;
-} /* End btampUnpackTlvHCI_Enhanced_Flush_Completed_Event. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnUnpackTlvHCI_Enhanced_Flush_Complete_Event_t)(void *, v_U8_t*, v_U16_t, tBtampTLVHCI_Enhanced_Flush_Complete_Event*);
 
@@ -2756,8 +2756,8 @@ v_U32_t btampUnpackAMP_ASSOC(void * pCtx, v_U8_t *pBuf, v_U32_t nBuf, tBtampAMP_
     v_U32_t i;
     static tTLVDefn TLVS[ ] = {
         {BTAMP_TLV_AMP_ASSOC_MAC_ADDR, 0, 9, 9, offsetof(tBtampAMP_ASSOC, AMP_Assoc_MAC_Addr), offsetof(tBtampTLVAMP_Assoc_MAC_Addr, present), SigUnpackTlvAMP_Assoc_MAC_Addr, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_MAC_Addr, "AMP_Assoc_MAC_Addr", 1, },
-        {BTAMP_TLV_AMP_ASSOC_PREFERRED_CHANNEL_LIST, 0, 9, 0xFF/*12*/, offsetof(tBtampAMP_ASSOC, AMP_Assoc_Preferred_Channel_List), offsetof(tBtampTLVAMP_Assoc_Preferred_Channel_List, present), SigUnpackTlvAMP_Assoc_Preferred_Channel_List, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_Preferred_Channel_List, "AMP_Assoc_Preferred_Channel_List", 1, },
-        {BTAMP_TLV_AMP_ASSOC_CONNECTED_CHANNEL, 0, 9, 0xFF/*12*/, offsetof(tBtampAMP_ASSOC, AMP_Assoc_Connected_Channel), offsetof(tBtampTLVAMP_Assoc_Connected_Channel, present), SigUnpackTlvAMP_Assoc_Connected_Channel, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_Connected_Channel, "AMP_Assoc_Connected_Channel", 0, },
+        {BTAMP_TLV_AMP_ASSOC_PREFERRED_CHANNEL_LIST, 0, 9, 0xFF/*  */, offsetof(tBtampAMP_ASSOC, AMP_Assoc_Preferred_Channel_List), offsetof(tBtampTLVAMP_Assoc_Preferred_Channel_List, present), SigUnpackTlvAMP_Assoc_Preferred_Channel_List, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_Preferred_Channel_List, "AMP_Assoc_Preferred_Channel_List", 1, },
+        {BTAMP_TLV_AMP_ASSOC_CONNECTED_CHANNEL, 0, 9, 0xFF/*  */, offsetof(tBtampAMP_ASSOC, AMP_Assoc_Connected_Channel), offsetof(tBtampTLVAMP_Assoc_Connected_Channel, present), SigUnpackTlvAMP_Assoc_Connected_Channel, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_Connected_Channel, "AMP_Assoc_Connected_Channel", 0, },
         {BTAMP_TLV_AMP_ASSOC_PAL_CAPABILITIES, 0, 7, 7, offsetof(tBtampAMP_ASSOC, AMP_Assoc_PAL_Capabilities), offsetof(tBtampTLVAMP_Assoc_PAL_Capabilities, present), SigUnpackTlvAMP_Assoc_PAL_Capabilities, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_PAL_Capabilities, "AMP_Assoc_PAL_Capabilities", 0, },
         {BTAMP_TLV_AMP_ASSOC_PAL_VERSION, 0, 8, 8, offsetof(tBtampAMP_ASSOC, AMP_Assoc_PAL_Version), offsetof(tBtampTLVAMP_Assoc_PAL_Version, present), SigUnpackTlvAMP_Assoc_PAL_Version, (pfnGeneric_t)btampUnpackTlvAMP_Assoc_PAL_Version, "AMP_Assoc_PAL_Version", 1, },
     { 0xffff, 0 },
@@ -2830,10 +2830,10 @@ v_U32_t btampUnpackAMP_ASSOC(void * pCtx, v_U8_t *pBuf, v_U32_t nBuf, tBtampAMP_
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, BTAMP_AMP_ASSOC), ( v_U8_t* )&pFrm->AMP_Assoc_PAL_Version.pal_subversion, 2);
         }
     }
-#   endif // BTAMP_DUMP_FRAMES
+#   endif //                  
     return status;
 
-} /* End btampUnpackAMP_ASSOC. */
+} /*                           */
 
 static v_U32_t UnpackTlvCore( void *   pCtx,
                                    v_U8_t *pBuf,
@@ -2848,7 +2848,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
     v_U16_t      id, len;
     v_U8_t      *pBufRemaining, *pfFound;
 
-    (void)pCtx;                 // Shutup the compiler
+    (void)pCtx;                 //                    
     (void)nFrm;
     status = BTAMP_PARSE_SUCCESS;
     status2 = BTAMP_PARSE_SUCCESS;
@@ -2859,7 +2859,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
       "In UnpackTlvCore, nBufRemaining - %d\n", nBufRemaining); 
 #endif    
 
-    // While we have data...
+    //                      
     while ( nBufRemaining )
     {
         if ( 3 > nBufRemaining )
@@ -2877,11 +2877,11 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
           "Calling FindTLVDefn...\n", nBufRemaining); 
 #endif
 
-        // Look for a matching TLV definition,
+        //                                    
         pTlv = FindTLVDefn( pCtx, pBufRemaining, nBufRemaining, TLVs );
         sType = 1;
         sLen  = 2;
-        // consume the type,
+        //                  
         if (sType == 2) 
             framesntohs(pCtx, &id, pBufRemaining, 1);
         else { 
@@ -2889,7 +2889,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
         }
         pBufRemaining += sType;
         nBufRemaining -= sType;
-        // & length,
+        //          
         framesntohs(pCtx, &len, pBufRemaining, 1);
         pBufRemaining += sLen;
         nBufRemaining -= sLen;
@@ -2924,8 +2924,8 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
           "Len - %d nBufRemaining - %d\n", len, nBufRemaining); 
 #endif
 
-        // Whether we found a hit or not, we can validate the reported
-        // length of this TLV:
+        //                                                            
+        //                    
         if ( len > nBufRemaining )
         {
             FRAMES_LOG3(pCtx, FRLOGW, FRFL("TLV %d reports length %"
@@ -2940,7 +2940,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
             goto MandatoryCheck;
         }
 
-        // Now, *if* we found a hit...
+        //                            
         if ( pTlv )
         {
             if ( nBufRemaining < pTlv->minSize - npec - (sType + sLen))
@@ -3166,8 +3166,8 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
                         pTlv->sig);
                     FRAMES_DBG_BREAK();
                     return BTAMP_INTERNAL_ERROR;
-                } // End switch on sig.
-            } // End if on length check.
+                } //                   
+            } //                        
 
             status |= status2;
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
@@ -3183,7 +3183,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
             status |= BTAMP_UNKNOWN_TLVS;
         }
 
-        // Advance to the next TLV
+        //                        
         pBufRemaining += len;
 #ifdef WLAN_BAPHCI_ENABLE_LOGGING
         VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
@@ -3203,7 +3203,7 @@ static v_U32_t UnpackTlvCore( void *   pCtx,
 
         nBufRemaining -= len;
 
-    } // End iteration over TLVs.
+    } //                         
 
 MandatoryCheck:
     pTlv = &TLVs[0];
@@ -3232,7 +3232,7 @@ MandatoryCheck:
     }
 
     return status;
-} /* End UnpacTlvkCore. */
+} /*                    */
 v_U32_t btampGetPackedTlvAMP_Assoc_Connected_Channel(void * pCtx, tBtampTLVAMP_Assoc_Connected_Channel *pTlv, v_U32_t *pnNeeded)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
@@ -3253,7 +3253,7 @@ v_U32_t btampGetPackedTlvAMP_Assoc_Connected_Channel(void * pCtx, tBtampTLVAMP_A
         break;
     }
     return status;
-} /* End btampGetPackedTLVAMP_Assoc_Connected_Channel. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvAMP_Assoc_Connected_Channel_t)(void *, tBtampTLVAMP_Assoc_Connected_Channel*, v_U32_t*);
 #define SigPackSizeTlvAMP_Assoc_Connected_Channel ( 0x003e )
@@ -3273,7 +3273,7 @@ v_U32_t btampGetPackedTlvAMP_Assoc_MAC_Addr(void * pCtx, tBtampTLVAMP_Assoc_MAC_
         break;
     }
     return status;
-} /* End btampGetPackedTLVAMP_Assoc_MAC_Addr. */
+} /*                                          */
 
 typedef v_U32_t (*pfnPackSizeTlvAMP_Assoc_MAC_Addr_t)(void *, tBtampTLVAMP_Assoc_MAC_Addr*, v_U32_t*);
 #define SigPackSizeTlvAMP_Assoc_MAC_Addr ( 0x003f )
@@ -3293,7 +3293,7 @@ v_U32_t btampGetPackedTlvAMP_Assoc_PAL_Capabilities(void * pCtx, tBtampTLVAMP_As
         break;
     }
     return status;
-} /* End btampGetPackedTLVAMP_Assoc_PAL_Capabilities. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvAMP_Assoc_PAL_Capabilities_t)(void *, tBtampTLVAMP_Assoc_PAL_Capabilities*, v_U32_t*);
 #define SigPackSizeTlvAMP_Assoc_PAL_Capabilities ( 0x0040 )
@@ -3310,7 +3310,7 @@ v_U32_t btampGetPackedTlvAMP_Assoc_PAL_Version(void * pCtx, tBtampTLVAMP_Assoc_P
         break;
     }
     return status;
-} /* End btampGetPackedTLVAMP_Assoc_PAL_Version. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackSizeTlvAMP_Assoc_PAL_Version_t)(void *, tBtampTLVAMP_Assoc_PAL_Version*, v_U32_t*);
 #define SigPackSizeTlvAMP_Assoc_PAL_Version ( 0x0041 )
@@ -3335,7 +3335,7 @@ v_U32_t btampGetPackedTlvAMP_Assoc_Preferred_Channel_List(void * pCtx, tBtampTLV
         break;
     }
     return status;
-} /* End btampGetPackedTLVAMP_Assoc_Preferred_Channel_List. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnPackSizeTlvAMP_Assoc_Preferred_Channel_List_t)(void *, tBtampTLVAMP_Assoc_Preferred_Channel_List*, v_U32_t*);
 #define SigPackSizeTlvAMP_Assoc_Preferred_Channel_List ( 0x0042 )
@@ -3355,7 +3355,7 @@ v_U32_t btampGetPackedTlvFlow_Spec(void * pCtx, tBtampTLVFlow_Spec *pTlv, v_U32_
         break;
     }
     return status;
-} /* End btampGetPackedTLVFlow_Spec. */
+} /*                                 */
 
 typedef v_U32_t (*pfnPackSizeTlvFlow_Spec_t)(void *, tBtampTLVFlow_Spec*, v_U32_t*);
 #define SigPackSizeTlvFlow_Spec ( 0x0043 )
@@ -3372,7 +3372,7 @@ v_U32_t btampGetPackedTlvHCI_Accept_Logical_Link_Cmd(void * pCtx, tBtampTLVHCI_A
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Accept_Logical_Link_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Accept_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Accept_Logical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Accept_Logical_Link_Cmd ( 0x0044 )
@@ -3390,7 +3390,7 @@ v_U32_t btampGetPackedTlvHCI_Accept_Physical_Link_Cmd(void * pCtx, tBtampTLVHCI_
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Accept_Physical_Link_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Accept_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Accept_Physical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Accept_Physical_Link_Cmd ( 0x0045 )
@@ -3405,7 +3405,7 @@ v_U32_t btampGetPackedTlvHCI_Channel_Selected_Event(void * pCtx, tBtampTLVHCI_Ch
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Channel_Selected_Event. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Channel_Selected_Event_t)(void *, tBtampTLVHCI_Channel_Selected_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Channel_Selected_Event ( 0x0046 )
@@ -3565,7 +3565,7 @@ v_U32_t btampGetPackedTlvHCI_Command_Complete_Event(void * pCtx, tBtampTLVHCI_Co
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Command_Complete_Event. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Command_Complete_Event_t)(void *, tBtampTLVHCI_Command_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Command_Complete_Event ( 0x0047 )
@@ -3582,7 +3582,7 @@ v_U32_t btampGetPackedTlvHCI_Command_Status_Event(void * pCtx, tBtampTLVHCI_Comm
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Command_Status_Event. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Command_Status_Event_t)(void *, tBtampTLVHCI_Command_Status_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Command_Status_Event ( 0x0048 )
@@ -3599,7 +3599,7 @@ v_U32_t btampGetPackedTlvHCI_Create_Logical_Link_Cmd(void * pCtx, tBtampTLVHCI_C
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Create_Logical_Link_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Create_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Create_Logical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Create_Logical_Link_Cmd ( 0x0049 )
@@ -3617,7 +3617,7 @@ v_U32_t btampGetPackedTlvHCI_Create_Physical_Link_Cmd(void * pCtx, tBtampTLVHCI_
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Create_Physical_Link_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Create_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Create_Physical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Create_Physical_Link_Cmd ( 0x004a )
@@ -3632,7 +3632,7 @@ v_U32_t btampGetPackedTlvHCI_Data_Buffer_Overflow_Event(void * pCtx, tBtampTLVHC
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Data_Buffer_Overflow_Event. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Data_Buffer_Overflow_Event_t)(void *, tBtampTLVHCI_Data_Buffer_Overflow_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Data_Buffer_Overflow_Event ( 0x004b )
@@ -3647,7 +3647,7 @@ v_U32_t btampGetPackedTlvHCI_Disconnect_Logical_Link_Cmd(void * pCtx, tBtampTLVH
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Disconnect_Logical_Link_Cmd. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Disconnect_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Disconnect_Logical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Disconnect_Logical_Link_Cmd ( 0x004c )
@@ -3664,7 +3664,7 @@ v_U32_t btampGetPackedTlvHCI_Disconnect_Logical_Link_Complete_Event(void * pCtx,
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Disconnect_Logical_Link_Complete_Event. */
+} /*                                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Disconnect_Logical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Disconnect_Logical_Link_Complete_Event ( 0x004d )
@@ -3680,7 +3680,7 @@ v_U32_t btampGetPackedTlvHCI_Disconnect_Physical_Link_Cmd(void * pCtx, tBtampTLV
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Disconnect_Physical_Link_Cmd. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Disconnect_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Disconnect_Physical_Link_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Disconnect_Physical_Link_Cmd ( 0x004e )
@@ -3697,7 +3697,7 @@ v_U32_t btampGetPackedTlvHCI_Disconnect_Physical_Link_Complete_Event(void * pCtx
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Disconnect_Physical_Link_Complete_Event. */
+} /*                                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Disconnect_Physical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Disconnect_Physical_Link_Complete_Event ( 0x004f )
@@ -3715,7 +3715,7 @@ v_U32_t btampGetPackedTlvHCI_Flow_Spec_Modify_Cmd(void * pCtx, tBtampTLVHCI_Flow
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Flow_Spec_Modify_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Flow_Spec_Modify_Cmd_t)(void *, tBtampTLVHCI_Flow_Spec_Modify_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Flow_Spec_Modify_Cmd ( 0x0050 )
@@ -3731,7 +3731,7 @@ v_U32_t btampGetPackedTlvHCI_Flow_Spec_Modify_Complete_Event(void * pCtx, tBtamp
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Flow_Spec_Modify_Complete_Event. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Flow_Spec_Modify_Complete_Event_t)(void *, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Flow_Spec_Modify_Complete_Event ( 0x0051 )
@@ -3746,7 +3746,7 @@ v_U32_t btampGetPackedTlvHCI_Flush_Cmd(void * pCtx, tBtampTLVHCI_Flush_Cmd *pTlv
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Flush_Cmd. */
+} /*                                     */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Flush_Cmd_t)(void *, tBtampTLVHCI_Flush_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Flush_Cmd ( 0x0052 )
@@ -3761,7 +3761,7 @@ v_U32_t btampGetPackedTlvHCI_Flush_Occurred_Event(void * pCtx, tBtampTLVHCI_Flus
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Flush_Occurred_Event. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Flush_Occurred_Event_t)(void *, tBtampTLVHCI_Flush_Occurred_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Flush_Occurred_Event ( 0x0053 )
@@ -3770,44 +3770,44 @@ v_U32_t btampGetPackedTlvHCI_Num_Completed_Pkts_Event(void * pCtx, tBtampTLVHCI_
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
     (void)pCtx; (void)pTlv; (void)pnNeeded;
-//    while ( pTlv->present )
+//                           
     {
         *pnNeeded += 1;
         *pnNeeded += 2;
         *pnNeeded += 2;
 #if 0
-// New 
+//     
         *pnNeeded += 2;
         *pnNeeded += 2;
         *pnNeeded += 2;
         *pnNeeded += 2;
         *pnNeeded += 2;
         *pnNeeded += 2;
-// End of New 
+//            
 #endif
-//        break;
+//              
     }
     return status;
-} /* End btampGetPackedTLVHCI_Num_Completed_Pkts_Event. */
+} /*                                                    */
 
 v_U32_t btampGetPackedTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx, tBtampTLVHCI_Num_Completed_Data_Blocks_Event *pTlv, v_U32_t *pnNeeded)
 {
     v_U32_t status = BTAMP_PARSE_SUCCESS;
     (void)pCtx; (void)pTlv; (void)pnNeeded;
-//    while ( pTlv->present )
+//                           
     {
         *pnNeeded += 2;
         *pnNeeded += 1;
         *pnNeeded += 2;
         *pnNeeded += 2;
         *pnNeeded += 2;
-//        break;
+//              
     }
     return status;
-} /* End btampGetPackedTLVHCI_Num_Completed_Data_Blocks_Event. */
+} /*                                                           */
 
-//typedef v_U32_t (*pfnPackSizeTlvHCI_Num_Completed_Pkts_Event_t)(void *, tBtampTLVHCI_Command_Status_Event*, v_U32_t*);
-//#define SigPackSizeTlvHCI_Num_Completed_Pkts_Event ( 0x0048 )
+//                                                                                                                      
+//                                                             
 
 v_U32_t btampGetPackedTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event *pTlv, v_U32_t *pnNeeded)
 {
@@ -3821,7 +3821,7 @@ v_U32_t btampGetPackedTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Generic_AMP_Link_Key_Notification_Event. */
+} /*                                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Generic_AMP_Link_Key_Notification_Event_t)(void *, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Generic_AMP_Link_Key_Notification_Event ( 0x0054 )
@@ -3836,7 +3836,7 @@ v_U32_t btampGetPackedTlvHCI_Hardware_Error_Event(void * pCtx, tBtampTLVHCI_Hard
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Hardware_Error_Event. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Hardware_Error_Event_t)(void *, tBtampTLVHCI_Hardware_Error_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Hardware_Error_Event ( 0x0055 )
@@ -3852,7 +3852,7 @@ v_U32_t btampGetPackedTlvHCI_Logical_Link_Cancel_Cmd(void * pCtx, tBtampTLVHCI_L
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Logical_Link_Cancel_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Logical_Link_Cancel_Cmd_t)(void *, tBtampTLVHCI_Logical_Link_Cancel_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Logical_Link_Cancel_Cmd ( 0x0056 )
@@ -3870,7 +3870,7 @@ v_U32_t btampGetPackedTlvHCI_Logical_Link_Complete_Event(void * pCtx, tBtampTLVH
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Logical_Link_Complete_Event. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Logical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Logical_Link_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Logical_Link_Complete_Event ( 0x0057 )
@@ -3885,7 +3885,7 @@ v_U32_t btampGetPackedTlvHCI_Loopback_Command_Event(void * pCtx, tBtampTLVHCI_Lo
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Loopback_Command_Event. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Loopback_Command_Event_t)(void *, tBtampTLVHCI_Loopback_Command_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Loopback_Command_Event ( 0x0058 )
@@ -3901,7 +3901,7 @@ v_U32_t btampGetPackedTlvHCI_Physical_Link_Complete_Event(void * pCtx, tBtampTLV
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Physical_Link_Complete_Event. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Physical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Physical_Link_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Physical_Link_Complete_Event ( 0x0059 )
@@ -3917,7 +3917,7 @@ v_U32_t btampGetPackedTlvHCI_Physical_Link_Loss_Warning_Event(void * pCtx, tBtam
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Physical_Link_Loss_Warning_Event. */
+} /*                                                            */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Physical_Link_Loss_Warning_Event_t)(void *, tBtampTLVHCI_Physical_Link_Loss_Warning_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Physical_Link_Loss_Warning_Event ( 0x005a )
@@ -3932,7 +3932,7 @@ v_U32_t btampGetPackedTlvHCI_Physical_Link_Recovery_Event(void * pCtx, tBtampTLV
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Physical_Link_Recovery_Event. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Physical_Link_Recovery_Event_t)(void *, tBtampTLVHCI_Physical_Link_Recovery_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Physical_Link_Recovery_Event ( 0x005b )
@@ -3947,7 +3947,7 @@ v_U32_t btampGetPackedTlvHCI_Qos_Violation_Event(void * pCtx, tBtampTLVHCI_Qos_V
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Qos_Violation_Event. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Qos_Violation_Event_t)(void *, tBtampTLVHCI_Qos_Violation_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Qos_Violation_Event ( 0x005c )
@@ -3962,7 +3962,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void * pCtx, tBt
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd ( 0x005d )
@@ -3976,7 +3976,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Buffer_Size_Cmd(void * pCtx, tBtampTLVHCI_Read
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Buffer_Size_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Buffer_Size_Cmd_t)(void *, tBtampTLVHCI_Read_Buffer_Size_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Buffer_Size_Cmd ( 0x005e )
@@ -3990,7 +3990,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Connection_Accept_Timeout_Cmd(void * pCtx, tBt
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Connection_Accept_Timeout_Cmd. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Connection_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Connection_Accept_Timeout_Cmd ( 0x005f )
@@ -4004,7 +4004,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Data_Block_Size_Cmd(void * pCtx, tBtampTLVHCI_
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Data_Block_Size_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Data_Block_Size_Cmd_t)(void *, tBtampTLVHCI_Read_Data_Block_Size_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Data_Block_Size_Cmd ( 0x0060 )
@@ -4019,7 +4019,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Failed_Contact_Counter_Cmd(void * pCtx, tBtamp
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Failed_Contact_Counter_Cmd. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Failed_Contact_Counter_Cmd_t)(void *, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Failed_Contact_Counter_Cmd ( 0x0061 )
@@ -4033,7 +4033,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Flow_Control_Mode_Cmd(void * pCtx, tBtampTLVHC
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Flow_Control_Mode_Cmd. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Flow_Control_Mode_Cmd_t)(void *, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Flow_Control_Mode_Cmd ( 0x0062 )
@@ -4048,7 +4048,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Link_Quality_Cmd(void * pCtx, tBtampTLVHCI_Rea
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Link_Quality_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Link_Quality_Cmd_t)(void *, tBtampTLVHCI_Read_Link_Quality_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Link_Quality_Cmd ( 0x0063 )
@@ -4063,7 +4063,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Link_Supervision_Timeout_Cmd(void * pCtx, tBta
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Link_Supervision_Timeout_Cmd. */
+} /*                                                             */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Link_Supervision_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Link_Supervision_Timeout_Cmd ( 0x0064 )
@@ -4080,7 +4080,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx, tBtampTLVHCI_
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Local_AMP_Assoc_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Local_AMP_Assoc_Cmd_t)(void *, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Local_AMP_Assoc_Cmd ( 0x0065 )
@@ -4094,7 +4094,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Local_AMP_Information_Cmd(void * pCtx, tBtampT
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Local_AMP_Information_Cmd. */
+} /*                                                          */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Local_AMP_Information_Cmd_t)(void *, tBtampTLVHCI_Read_Local_AMP_Information_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Local_AMP_Information_Cmd ( 0x0066 )
@@ -4108,7 +4108,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Local_Supported_Cmds_Cmd(void * pCtx, tBtampTL
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Local_Supported_Cmds_Cmd. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Local_Supported_Cmds_Cmd_t)(void *, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Local_Supported_Cmds_Cmd ( 0x0067 )
@@ -4122,7 +4122,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Local_Version_Info_Cmd(void * pCtx, tBtampTLVH
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Local_Version_Info_Cmd. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Local_Version_Info_Cmd_t)(void *, tBtampTLVHCI_Read_Local_Version_Info_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Local_Version_Info_Cmd ( 0x0068 )
@@ -4136,7 +4136,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Location_Data_Cmd(void * pCtx, tBtampTLVHCI_Re
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Location_Data_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Location_Data_Cmd_t)(void *, tBtampTLVHCI_Read_Location_Data_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Location_Data_Cmd ( 0x0069 )
@@ -4150,7 +4150,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void * pCtx, t
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                                */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd ( 0x006a )
@@ -4164,7 +4164,7 @@ v_U32_t btampGetPackedTlvHCI_Read_Loopback_Mode_Cmd(void * pCtx, tBtampTLVHCI_Re
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_Loopback_Mode_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_Loopback_Mode_Cmd_t)(void *, tBtampTLVHCI_Read_Loopback_Mode_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_Loopback_Mode_Cmd ( 0x006b )
@@ -4179,7 +4179,7 @@ v_U32_t btampGetPackedTlvHCI_Read_RSSI_Cmd(void * pCtx, tBtampTLVHCI_Read_RSSI_C
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Read_RSSI_Cmd. */
+} /*                                         */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Read_RSSI_Cmd_t)(void *, tBtampTLVHCI_Read_RSSI_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Read_RSSI_Cmd ( 0x006c )
@@ -4193,7 +4193,7 @@ v_U32_t btampGetPackedTlvHCI_Reset_Cmd(void * pCtx, tBtampTLVHCI_Reset_Cmd *pTlv
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Reset_Cmd. */
+} /*                                     */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Reset_Cmd_t)(void *, tBtampTLVHCI_Reset_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Reset_Cmd ( 0x006d )
@@ -4208,7 +4208,7 @@ v_U32_t btampGetPackedTlvHCI_Reset_Failed_Contact_Counter_Cmd(void * pCtx, tBtam
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Reset_Failed_Contact_Counter_Cmd. */
+} /*                                                            */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Reset_Failed_Contact_Counter_Cmd_t)(void *, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Reset_Failed_Contact_Counter_Cmd ( 0x006e )
@@ -4223,7 +4223,7 @@ v_U32_t btampGetPackedTlvHCI_Set_Event_Mask_Cmd(void * pCtx, tBtampTLVHCI_Set_Ev
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Set_Event_Mask_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Set_Event_Mask_Cmd_t)(void *, tBtampTLVHCI_Set_Event_Mask_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Set_Event_Mask_Cmd ( 0x006f )
@@ -4238,7 +4238,7 @@ v_U32_t btampGetPackedTlvHCI_Set_Event_Mask_Page_2_Cmd(void * pCtx, tBtampTLVHCI
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Set_Event_Mask_Page_2_Cmd. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Set_Event_Mask_Page_2_Cmd_t)(void *, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Set_Event_Mask_Page_2_Cmd ( 0x0070 )
@@ -4254,7 +4254,7 @@ v_U32_t btampGetPackedTlvHCI_Set_Short_Range_Mode_Cmd(void * pCtx, tBtampTLVHCI_
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Set_Short_Range_Mode_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Set_Short_Range_Mode_Cmd_t)(void *, tBtampTLVHCI_Set_Short_Range_Mode_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Set_Short_Range_Mode_Cmd ( 0x0071 )
@@ -4271,7 +4271,7 @@ v_U32_t btampGetPackedTlvHCI_Short_Range_Mode_Change_Complete_Event(void * pCtx,
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Short_Range_Mode_Change_Complete_Event. */
+} /*                                                                  */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Short_Range_Mode_Change_Complete_Event_t)(void *, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Short_Range_Mode_Change_Complete_Event ( 0x0072 )
@@ -4287,7 +4287,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void * pCtx, tB
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                               */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd ( 0x0073 )
@@ -4302,7 +4302,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Connection_Accept_Timeout_Cmd(void * pCtx, tB
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Connection_Accept_Timeout_Cmd. */
+} /*                                                               */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Connection_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Connection_Accept_Timeout_Cmd ( 0x0074 )
@@ -4317,7 +4317,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Flow_Control_Mode_Cmd(void * pCtx, tBtampTLVH
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Flow_Control_Mode_Cmd. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Flow_Control_Mode_Cmd_t)(void *, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Flow_Control_Mode_Cmd ( 0x0075 )
@@ -4333,7 +4333,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Link_Supervision_Timeout_Cmd(void * pCtx, tBt
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Link_Supervision_Timeout_Cmd. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Link_Supervision_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Link_Supervision_Timeout_Cmd ( 0x0076 )
@@ -4350,7 +4350,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Location_Data_Cmd(void * pCtx, tBtampTLVHCI_W
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Location_Data_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Location_Data_Cmd_t)(void *, tBtampTLVHCI_Write_Location_Data_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Location_Data_Cmd ( 0x0077 )
@@ -4365,7 +4365,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void * pCtx, 
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                                 */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd ( 0x0078 )
@@ -4380,7 +4380,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Loopback_Mode_Cmd(void * pCtx, tBtampTLVHCI_W
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Loopback_Mode_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Loopback_Mode_Cmd_t)(void *, tBtampTLVHCI_Write_Loopback_Mode_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Loopback_Mode_Cmd ( 0x0079 )
@@ -4403,7 +4403,7 @@ v_U32_t btampGetPackedTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void * pCtx, tBtampTLVHC
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Write_Remote_AMP_ASSOC_Cmd. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Write_Remote_AMP_ASSOC_Cmd_t)(void *, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Write_Remote_AMP_ASSOC_Cmd ( 0x007a )
@@ -4419,7 +4419,7 @@ v_U32_t btampGetPackedTlvHCI_Enhanced_Flush_Cmd(void * pCtx, tBtampTLVHCI_Enhanc
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Enhanced_Flush_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Enhanced_Flush_Cmd_t)(void *, tBtampTLVHCI_Enhanced_Flush_Cmd*, v_U32_t*);
 #define SigPackSizeTlvHCI_Enhanced_Flush_Cmd ( 0x007b )
@@ -4434,7 +4434,7 @@ v_U32_t btampGetPackedTlvHCI_Enhanced_Flush_Complete_Event(void * pCtx, tBtampTL
         break;
     }
     return status;
-} /* End btampGetPackedTLVHCI_Enhanced_Flush_Complete_Event. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnPackSizeTlvHCI_Enhanced_Flush_Complete_Event_t)(void *, tBtampTLVHCI_Enhanced_Flush_Complete_Event*, v_U32_t*);
 #define SigPackSizeTlvHCI_Enhanced_Flush_Complete_Event ( 0x007c )
@@ -4459,7 +4459,7 @@ v_U32_t btampGetPackedAMP_ASSOCSize(void * pCtx, tBtampAMP_ASSOC *pFrm, v_U32_t 
 
     status |= GetPackedSizeTlvCore(pCtx,(v_U8_t*)pFrm,pnNeeded,TLVS);
     return status;
-} /* End btampGetPackedAMP_ASSOCSize. */
+} /*                                  */
 
 static v_U32_t GetPackedSizeTlvCore(void * pCtx,
                                  v_U8_t *pFrm,
@@ -4766,7 +4766,7 @@ v_U32_t btampPackTlvAMP_Assoc_Connected_Channel(void * pCtx,
     VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
       "In btampPackTlvAMP_Assoc_Connected_Channel\n"); 
 #endif    
-    // sanity checking
+    //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -4811,7 +4811,7 @@ v_U32_t btampPackTlvAMP_Assoc_Connected_Channel(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvAMP_Assoc_Connected_Channel. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvAMP_Assoc_Connected_Channel_t)(void *, tBtampTLVAMP_Assoc_Connected_Channel *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvAMP_Assoc_Connected_Channel ( 0x007b )
@@ -4834,7 +4834,7 @@ v_U32_t btampPackTlvAMP_Assoc_MAC_Addr(void * pCtx,
     VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
       "In btampPackTlvAMP_Assoc_MAC_Addr\n"); 
 #endif    
-    // sanity checking
+    //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -4871,7 +4871,7 @@ v_U32_t btampPackTlvAMP_Assoc_MAC_Addr(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvAMP_Assoc_MAC_Addr. */
+} /*                                     */
 
 typedef v_U32_t (*pfnPackTlvAMP_Assoc_MAC_Addr_t)(void *, tBtampTLVAMP_Assoc_MAC_Addr *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvAMP_Assoc_MAC_Addr ( 0x007c )
@@ -4894,7 +4894,7 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Capabilities(void * pCtx,
     VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
       "In btampPackTlvAMP_Assoc_PAL_Capabilities\n"); 
 #endif    
-    // sanity checking
+    //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -4931,7 +4931,7 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Capabilities(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvAMP_Assoc_PAL_Capabilities. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvAMP_Assoc_PAL_Capabilities_t)(void *, tBtampTLVAMP_Assoc_PAL_Capabilities *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvAMP_Assoc_PAL_Capabilities ( 0x007d )
@@ -4954,7 +4954,7 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Version(void * pCtx,
     VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
       "In btampPackTlvAMP_Assoc_PAL_Version\n"); 
 #endif    
-    // sanity checking
+    //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -4999,7 +4999,7 @@ v_U32_t btampPackTlvAMP_Assoc_PAL_Version(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvAMP_Assoc_PAL_Version. */
+} /*                                        */
 
 typedef v_U32_t (*pfnPackTlvAMP_Assoc_PAL_Version_t)(void *, tBtampTLVAMP_Assoc_PAL_Version *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvAMP_Assoc_PAL_Version ( 0x007e )
@@ -5022,7 +5022,7 @@ v_U32_t btampPackTlvAMP_Assoc_Preferred_Channel_List(void * pCtx,
     VOS_TRACE(VOS_MODULE_ID_BAP,VOS_TRACE_LEVEL_ERROR,
       "In btampPackTlvAMP_Assoc_Preferred_Channel_List\n"); 
 #endif    
-    // sanity checking
+    //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5066,7 +5066,7 @@ v_U32_t btampPackTlvAMP_Assoc_Preferred_Channel_List(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvAMP_Assoc_Preferred_Channel_List. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackTlvAMP_Assoc_Preferred_Channel_List_t)(void *, tBtampTLVAMP_Assoc_Preferred_Channel_List *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvAMP_Assoc_Preferred_Channel_List ( 0x007f )
@@ -5085,7 +5085,7 @@ v_U32_t btampPackTlvFlow_Spec(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5142,7 +5142,7 @@ v_U32_t btampPackTlvFlow_Spec(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvFlow_Spec. */
+} /*                            */
 
 typedef v_U32_t (*pfnPackTlvFlow_Spec_t)(void *, tBtampTLVFlow_Spec *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvFlow_Spec ( 0x0080 )
@@ -5161,7 +5161,7 @@ v_U32_t btampPackTlvHCI_Accept_Logical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5205,7 +5205,7 @@ v_U32_t btampPackTlvHCI_Accept_Logical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Accept_Logical_Link_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Accept_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Accept_Logical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Accept_Logical_Link_Cmd ( 0x0081 )
@@ -5224,7 +5224,7 @@ v_U32_t btampPackTlvHCI_Accept_Physical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5272,7 +5272,7 @@ v_U32_t btampPackTlvHCI_Accept_Physical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Accept_Physical_Link_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackTlvHCI_Accept_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Accept_Physical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Accept_Physical_Link_Cmd ( 0x0082 )
@@ -5291,7 +5291,7 @@ v_U32_t btampPackTlvHCI_Channel_Selected_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5327,7 +5327,7 @@ v_U32_t btampPackTlvHCI_Channel_Selected_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Channel_Selected_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Channel_Selected_Event_t)(void *, tBtampTLVHCI_Channel_Selected_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Channel_Selected_Event ( 0x0083 )
@@ -5346,7 +5346,7 @@ v_U32_t btampPackTlvHCI_Command_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5768,7 +5768,7 @@ v_U32_t btampPackTlvHCI_Command_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Command_Complete_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Command_Complete_Event_t)(void *, tBtampTLVHCI_Command_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Command_Complete_Event ( 0x0084 )
@@ -5787,7 +5787,7 @@ v_U32_t btampPackTlvHCI_Command_Status_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5831,7 +5831,7 @@ v_U32_t btampPackTlvHCI_Command_Status_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Command_Status_Event. */
+} /*                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Command_Status_Event_t)(void *, tBtampTLVHCI_Command_Status_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Command_Status_Event ( 0x0085 )
@@ -5850,7 +5850,7 @@ v_U32_t btampPackTlvHCI_Create_Logical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5893,7 +5893,7 @@ v_U32_t btampPackTlvHCI_Create_Logical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Create_Logical_Link_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Create_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Create_Logical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Create_Logical_Link_Cmd ( 0x0086 )
@@ -5912,7 +5912,7 @@ v_U32_t btampPackTlvHCI_Create_Physical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -5959,7 +5959,7 @@ v_U32_t btampPackTlvHCI_Create_Physical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Create_Physical_Link_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackTlvHCI_Create_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Create_Physical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Create_Physical_Link_Cmd ( 0x0087 )
@@ -5978,7 +5978,7 @@ v_U32_t btampPackTlvHCI_Data_Buffer_Overflow_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6014,7 +6014,7 @@ v_U32_t btampPackTlvHCI_Data_Buffer_Overflow_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Data_Buffer_Overflow_Event. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnPackTlvHCI_Data_Buffer_Overflow_Event_t)(void *, tBtampTLVHCI_Data_Buffer_Overflow_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Data_Buffer_Overflow_Event ( 0x0088 )
@@ -6033,7 +6033,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6068,7 +6068,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Disconnect_Logical_Link_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackTlvHCI_Disconnect_Logical_Link_Cmd_t)(void *, tBtampTLVHCI_Disconnect_Logical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Disconnect_Logical_Link_Cmd ( 0x0089 )
@@ -6087,7 +6087,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6131,7 +6131,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Logical_Link_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Disconnect_Logical_Link_Complete_Event. */
+} /*                                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Disconnect_Logical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Disconnect_Logical_Link_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Disconnect_Logical_Link_Complete_Event ( 0x008a )
@@ -6150,7 +6150,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6189,7 +6189,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Disconnect_Physical_Link_Cmd. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackTlvHCI_Disconnect_Physical_Link_Cmd_t)(void *, tBtampTLVHCI_Disconnect_Physical_Link_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Disconnect_Physical_Link_Cmd ( 0x008b )
@@ -6208,7 +6208,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6252,7 +6252,7 @@ v_U32_t btampPackTlvHCI_Disconnect_Physical_Link_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Disconnect_Physical_Link_Complete_Event. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Disconnect_Physical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Disconnect_Physical_Link_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Disconnect_Physical_Link_Complete_Event ( 0x008c )
@@ -6271,7 +6271,7 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6318,7 +6318,7 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Flow_Spec_Modify_Cmd. */
+} /*                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Flow_Spec_Modify_Cmd_t)(void *, tBtampTLVHCI_Flow_Spec_Modify_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Flow_Spec_Modify_Cmd ( 0x008d )
@@ -6337,7 +6337,7 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6377,7 +6377,7 @@ v_U32_t btampPackTlvHCI_Flow_Spec_Modify_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Flow_Spec_Modify_Complete_Event. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnPackTlvHCI_Flow_Spec_Modify_Complete_Event_t)(void *, tBtampTLVHCI_Flow_Spec_Modify_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Flow_Spec_Modify_Complete_Event ( 0x008e )
@@ -6396,7 +6396,7 @@ v_U32_t btampPackTlvHCI_Flush_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6431,7 +6431,7 @@ v_U32_t btampPackTlvHCI_Flush_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Flush_Cmd. */
+} /*                                */
 
 typedef v_U32_t (*pfnPackTlvHCI_Flush_Cmd_t)(void *, tBtampTLVHCI_Flush_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Flush_Cmd ( 0x008f )
@@ -6450,7 +6450,7 @@ v_U32_t btampPackTlvHCI_Flush_Occurred_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6486,7 +6486,7 @@ v_U32_t btampPackTlvHCI_Flush_Occurred_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Flush_Occurred_Event. */
+} /*                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Flush_Occurred_Event_t)(void *, tBtampTLVHCI_Flush_Occurred_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Flush_Occurred_Event ( 0x0090 )
@@ -6505,7 +6505,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6518,7 +6518,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void * pCtx,
     if ( ! BTAMP_SUCCEEDED( status ) ) return status;
     nNeeded += sType + sLen;
     if ( nNeeded > nBuf ) return BTAMP_BUFFER_OVERFLOW;
-//    while ( pSrc->present )
+//                           
     {
         if( sType == 2) frameshtons( pCtx, pBuf, 19, 0);
         else *pBuf = 19;
@@ -6538,7 +6538,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void * pCtx,
         pBuf += 2;
         nBuf -= 2;
 #if 0
-        // New
+        //    
         frameshtons(pCtx, pBuf, 0, 0);
         *pnConsumed += 2;
         pBuf += 2;
@@ -6563,9 +6563,9 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void * pCtx,
         *pnConsumed += 2;
         pBuf += 2;
         nBuf -= 2;
-// End of new
+//           
 #endif
-//        break;
+//              
     }
 
     if (pTlvLen && sLen == 2)
@@ -6576,7 +6576,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Pkts_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Num_Completed_Pkts_Event. */
+} /*                                               */
 
 v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
                                              tBtampTLVHCI_Num_Completed_Data_Blocks_Event *pSrc,
@@ -6592,7 +6592,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6605,7 +6605,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
     if ( ! BTAMP_SUCCEEDED( status ) ) return status;
     nNeeded += sType + sLen;
     if ( nNeeded > nBuf ) return BTAMP_BUFFER_OVERFLOW;
-//    while ( pSrc->present )
+//                           
     {
         if( sType == 2) frameshtons( pCtx, pBuf, 72, 0);
         else *pBuf = 72;
@@ -6633,7 +6633,7 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
         pBuf += 2;
         nBuf -= 2;
 #if 0
-        // New
+        //    
         frameshtons(pCtx, pBuf, 0, 0);
         *pnConsumed += 2;
         pBuf += 2;
@@ -6658,9 +6658,9 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
         *pnConsumed += 2;
         pBuf += 2;
         nBuf -= 2;
-// End of new
+//           
 #endif
-//        break;
+//              
     }
 
     if (pTlvLen && sLen == 2)
@@ -6671,10 +6671,10 @@ v_U32_t btampPackTlvHCI_Num_Completed_Data_Blocks_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Num_Completed_Data_Blocks_Event. */
+} /*                                                      */
 
-//typedef v_U32_t (*pfnPackTlvHCI_Num_Completed_Pkts_Event_t)(void *, tBtampTLVHCI_Num_Completed_Pkts_Event *, v_U8_t*, v_U32_t, v_U32_t*);
-//#define SigPackTlvHCI_Num_Completed_Pkts_Event ( 0x0085 )
+//                                                                                                                                         
+//                                                         
 
 v_U32_t btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx,
                                                                 tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event *pSrc,
@@ -6690,7 +6690,7 @@ v_U32_t btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6734,7 +6734,7 @@ v_U32_t btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Generic_AMP_Link_Key_Notification_Event. */
+} /*                                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Generic_AMP_Link_Key_Notification_Event_t)(void *, tBtampTLVHCI_Generic_AMP_Link_Key_Notification_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Generic_AMP_Link_Key_Notification_Event ( 0x0091 )
@@ -6753,7 +6753,7 @@ v_U32_t btampPackTlvHCI_Hardware_Error_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6789,7 +6789,7 @@ v_U32_t btampPackTlvHCI_Hardware_Error_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Hardware_Error_Event. */
+} /*                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Hardware_Error_Event_t)(void *, tBtampTLVHCI_Hardware_Error_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Hardware_Error_Event ( 0x0092 )
@@ -6808,7 +6808,7 @@ v_U32_t btampPackTlvHCI_Logical_Link_Cancel_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6847,7 +6847,7 @@ v_U32_t btampPackTlvHCI_Logical_Link_Cancel_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Logical_Link_Cancel_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Logical_Link_Cancel_Cmd_t)(void *, tBtampTLVHCI_Logical_Link_Cancel_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Logical_Link_Cancel_Cmd ( 0x0093 )
@@ -6866,7 +6866,7 @@ v_U32_t btampPackTlvHCI_Logical_Link_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6914,7 +6914,7 @@ v_U32_t btampPackTlvHCI_Logical_Link_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Logical_Link_Complete_Event. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackTlvHCI_Logical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Logical_Link_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Logical_Link_Complete_Event ( 0x0094 )
@@ -6933,7 +6933,7 @@ v_U32_t btampPackTlvHCI_Loopback_Command_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -6969,7 +6969,7 @@ v_U32_t btampPackTlvHCI_Loopback_Command_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Loopback_Command_Event. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Loopback_Command_Event_t)(void *, tBtampTLVHCI_Loopback_Command_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Loopback_Command_Event ( 0x0095 )
@@ -6988,7 +6988,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7028,7 +7028,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Physical_Link_Complete_Event. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackTlvHCI_Physical_Link_Complete_Event_t)(void *, tBtampTLVHCI_Physical_Link_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Physical_Link_Complete_Event ( 0x0096 )
@@ -7047,7 +7047,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Loss_Warning_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7087,7 +7087,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Loss_Warning_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Physical_Link_Loss_Warning_Event. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackTlvHCI_Physical_Link_Loss_Warning_Event_t)(void *, tBtampTLVHCI_Physical_Link_Loss_Warning_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Physical_Link_Loss_Warning_Event ( 0x0097 )
@@ -7106,7 +7106,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Recovery_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7142,7 +7142,7 @@ v_U32_t btampPackTlvHCI_Physical_Link_Recovery_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Physical_Link_Recovery_Event. */
+} /*                                                   */
 
 typedef v_U32_t (*pfnPackTlvHCI_Physical_Link_Recovery_Event_t)(void *, tBtampTLVHCI_Physical_Link_Recovery_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Physical_Link_Recovery_Event ( 0x0098 )
@@ -7161,7 +7161,7 @@ v_U32_t btampPackTlvHCI_Qos_Violation_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7197,7 +7197,7 @@ v_U32_t btampPackTlvHCI_Qos_Violation_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Qos_Violation_Event. */
+} /*                                          */
 
 typedef v_U32_t (*pfnPackTlvHCI_Qos_Violation_Event_t)(void *, tBtampTLVHCI_Qos_Violation_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Qos_Violation_Event ( 0x0099 )
@@ -7216,7 +7216,7 @@ v_U32_t btampPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7251,7 +7251,7 @@ v_U32_t btampPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Best_Effort_Flush_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Best_Effort_Flush_Timeout_Cmd ( 0x009a )
@@ -7270,7 +7270,7 @@ v_U32_t btampPackTlvHCI_Read_Buffer_Size_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7301,7 +7301,7 @@ v_U32_t btampPackTlvHCI_Read_Buffer_Size_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Buffer_Size_Cmd. */
+} /*                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Buffer_Size_Cmd_t)(void *, tBtampTLVHCI_Read_Buffer_Size_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Buffer_Size_Cmd ( 0x009b )
@@ -7320,7 +7320,7 @@ v_U32_t btampPackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7351,7 +7351,7 @@ v_U32_t btampPackTlvHCI_Read_Connection_Accept_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Connection_Accept_Timeout_Cmd. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Connection_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Connection_Accept_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Connection_Accept_Timeout_Cmd ( 0x009c )
@@ -7370,7 +7370,7 @@ v_U32_t btampPackTlvHCI_Read_Data_Block_Size_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7401,7 +7401,7 @@ v_U32_t btampPackTlvHCI_Read_Data_Block_Size_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Data_Block_Size_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Data_Block_Size_Cmd_t)(void *, tBtampTLVHCI_Read_Data_Block_Size_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Data_Block_Size_Cmd ( 0x009d )
@@ -7420,7 +7420,7 @@ v_U32_t btampPackTlvHCI_Read_Failed_Contact_Counter_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7455,7 +7455,7 @@ v_U32_t btampPackTlvHCI_Read_Failed_Contact_Counter_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Failed_Contact_Counter_Cmd. */
+} /*                                                      */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Failed_Contact_Counter_Cmd_t)(void *, tBtampTLVHCI_Read_Failed_Contact_Counter_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Failed_Contact_Counter_Cmd ( 0x009e )
@@ -7474,7 +7474,7 @@ v_U32_t btampPackTlvHCI_Read_Flow_Control_Mode_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7505,7 +7505,7 @@ v_U32_t btampPackTlvHCI_Read_Flow_Control_Mode_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Flow_Control_Mode_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Flow_Control_Mode_Cmd_t)(void *, tBtampTLVHCI_Read_Flow_Control_Mode_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Flow_Control_Mode_Cmd ( 0x009f )
@@ -7524,7 +7524,7 @@ v_U32_t btampPackTlvHCI_Read_Link_Quality_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7559,7 +7559,7 @@ v_U32_t btampPackTlvHCI_Read_Link_Quality_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Link_Quality_Cmd. */
+} /*                                            */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Link_Quality_Cmd_t)(void *, tBtampTLVHCI_Read_Link_Quality_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Link_Quality_Cmd ( 0x00a0 )
@@ -7578,7 +7578,7 @@ v_U32_t btampPackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7613,7 +7613,7 @@ v_U32_t btampPackTlvHCI_Read_Link_Supervision_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Link_Supervision_Timeout_Cmd. */
+} /*                                                        */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Link_Supervision_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Link_Supervision_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Link_Supervision_Timeout_Cmd ( 0x00a1 )
@@ -7632,7 +7632,7 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7675,7 +7675,7 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Assoc_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Local_AMP_Assoc_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Local_AMP_Assoc_Cmd_t)(void *, tBtampTLVHCI_Read_Local_AMP_Assoc_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Local_AMP_Assoc_Cmd ( 0x00a2 )
@@ -7694,7 +7694,7 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Information_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7725,7 +7725,7 @@ v_U32_t btampPackTlvHCI_Read_Local_AMP_Information_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Local_AMP_Information_Cmd. */
+} /*                                                     */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Local_AMP_Information_Cmd_t)(void *, tBtampTLVHCI_Read_Local_AMP_Information_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Local_AMP_Information_Cmd ( 0x00a3 )
@@ -7744,7 +7744,7 @@ v_U32_t btampPackTlvHCI_Read_Local_Supported_Cmds_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7775,7 +7775,7 @@ v_U32_t btampPackTlvHCI_Read_Local_Supported_Cmds_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Local_Supported_Cmds_Cmd. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Local_Supported_Cmds_Cmd_t)(void *, tBtampTLVHCI_Read_Local_Supported_Cmds_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Local_Supported_Cmds_Cmd ( 0x00a4 )
@@ -7794,7 +7794,7 @@ v_U32_t btampPackTlvHCI_Read_Local_Version_Info_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7825,7 +7825,7 @@ v_U32_t btampPackTlvHCI_Read_Local_Version_Info_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Local_Version_Info_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Local_Version_Info_Cmd_t)(void *, tBtampTLVHCI_Read_Local_Version_Info_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Local_Version_Info_Cmd ( 0x00a5 )
@@ -7844,7 +7844,7 @@ v_U32_t btampPackTlvHCI_Read_Location_Data_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7875,7 +7875,7 @@ v_U32_t btampPackTlvHCI_Read_Location_Data_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Location_Data_Cmd. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Location_Data_Cmd_t)(void *, tBtampTLVHCI_Read_Location_Data_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Location_Data_Cmd ( 0x00a6 )
@@ -7894,7 +7894,7 @@ v_U32_t btampPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7925,7 +7925,7 @@ v_U32_t btampPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                           */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Read_Logical_Link_Accept_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Logical_Link_Accept_Timeout_Cmd ( 0x00a7 )
@@ -7944,7 +7944,7 @@ v_U32_t btampPackTlvHCI_Read_Loopback_Mode_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -7975,7 +7975,7 @@ v_U32_t btampPackTlvHCI_Read_Loopback_Mode_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_Loopback_Mode_Cmd. */
+} /*                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_Loopback_Mode_Cmd_t)(void *, tBtampTLVHCI_Read_Loopback_Mode_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_Loopback_Mode_Cmd ( 0x00a8 )
@@ -7994,7 +7994,7 @@ v_U32_t btampPackTlvHCI_Read_RSSI_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8029,7 +8029,7 @@ v_U32_t btampPackTlvHCI_Read_RSSI_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Read_RSSI_Cmd. */
+} /*                                    */
 
 typedef v_U32_t (*pfnPackTlvHCI_Read_RSSI_Cmd_t)(void *, tBtampTLVHCI_Read_RSSI_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Read_RSSI_Cmd ( 0x00a9 )
@@ -8048,7 +8048,7 @@ v_U32_t btampPackTlvHCI_Reset_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8079,7 +8079,7 @@ v_U32_t btampPackTlvHCI_Reset_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Reset_Cmd. */
+} /*                                */
 
 typedef v_U32_t (*pfnPackTlvHCI_Reset_Cmd_t)(void *, tBtampTLVHCI_Reset_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Reset_Cmd ( 0x00aa )
@@ -8098,7 +8098,7 @@ v_U32_t btampPackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8133,7 +8133,7 @@ v_U32_t btampPackTlvHCI_Reset_Failed_Contact_Counter_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Reset_Failed_Contact_Counter_Cmd. */
+} /*                                                       */
 
 typedef v_U32_t (*pfnPackTlvHCI_Reset_Failed_Contact_Counter_Cmd_t)(void *, tBtampTLVHCI_Reset_Failed_Contact_Counter_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Reset_Failed_Contact_Counter_Cmd ( 0x00ab )
@@ -8152,7 +8152,7 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8187,7 +8187,7 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Set_Event_Mask_Cmd. */
+} /*                                         */
 
 typedef v_U32_t (*pfnPackTlvHCI_Set_Event_Mask_Cmd_t)(void *, tBtampTLVHCI_Set_Event_Mask_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Set_Event_Mask_Cmd ( 0x00ac )
@@ -8206,7 +8206,7 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Page_2_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8241,7 +8241,7 @@ v_U32_t btampPackTlvHCI_Set_Event_Mask_Page_2_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Set_Event_Mask_Page_2_Cmd. */
+} /*                                                */
 
 typedef v_U32_t (*pfnPackTlvHCI_Set_Event_Mask_Page_2_Cmd_t)(void *, tBtampTLVHCI_Set_Event_Mask_Page_2_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Set_Event_Mask_Page_2_Cmd ( 0x00ad )
@@ -8260,7 +8260,7 @@ v_U32_t btampPackTlvHCI_Set_Short_Range_Mode_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8299,7 +8299,7 @@ v_U32_t btampPackTlvHCI_Set_Short_Range_Mode_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Set_Short_Range_Mode_Cmd. */
+} /*                                               */
 
 typedef v_U32_t (*pfnPackTlvHCI_Set_Short_Range_Mode_Cmd_t)(void *, tBtampTLVHCI_Set_Short_Range_Mode_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Set_Short_Range_Mode_Cmd ( 0x00ae )
@@ -8318,7 +8318,7 @@ v_U32_t btampPackTlvHCI_Short_Range_Mode_Change_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8362,7 +8362,7 @@ v_U32_t btampPackTlvHCI_Short_Range_Mode_Change_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Short_Range_Mode_Change_Complete_Event. */
+} /*                                                             */
 
 typedef v_U32_t (*pfnPackTlvHCI_Short_Range_Mode_Change_Complete_Event_t)(void *, tBtampTLVHCI_Short_Range_Mode_Change_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Short_Range_Mode_Change_Complete_Event ( 0x00af )
@@ -8381,7 +8381,7 @@ v_U32_t btampPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8420,7 +8420,7 @@ v_U32_t btampPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd. */
+} /*                                                          */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Best_Effort_Flush_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Best_Effort_Flush_Timeout_Cmd ( 0x00b0 )
@@ -8439,7 +8439,7 @@ v_U32_t btampPackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8474,7 +8474,7 @@ v_U32_t btampPackTlvHCI_Write_Connection_Accept_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Connection_Accept_Timeout_Cmd. */
+} /*                                                          */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Connection_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Connection_Accept_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Connection_Accept_Timeout_Cmd ( 0x00b1 )
@@ -8493,7 +8493,7 @@ v_U32_t btampPackTlvHCI_Write_Flow_Control_Mode_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8528,7 +8528,7 @@ v_U32_t btampPackTlvHCI_Write_Flow_Control_Mode_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Flow_Control_Mode_Cmd. */
+} /*                                                  */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Flow_Control_Mode_Cmd_t)(void *, tBtampTLVHCI_Write_Flow_Control_Mode_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Flow_Control_Mode_Cmd ( 0x00b2 )
@@ -8547,7 +8547,7 @@ v_U32_t btampPackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8586,7 +8586,7 @@ v_U32_t btampPackTlvHCI_Write_Link_Supervision_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Link_Supervision_Timeout_Cmd. */
+} /*                                                         */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Link_Supervision_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Link_Supervision_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Link_Supervision_Timeout_Cmd ( 0x00b3 )
@@ -8605,7 +8605,7 @@ v_U32_t btampPackTlvHCI_Write_Location_Data_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8648,7 +8648,7 @@ v_U32_t btampPackTlvHCI_Write_Location_Data_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Location_Data_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Location_Data_Cmd_t)(void *, tBtampTLVHCI_Write_Location_Data_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Location_Data_Cmd ( 0x00b4 )
@@ -8667,7 +8667,7 @@ v_U32_t btampPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8702,7 +8702,7 @@ v_U32_t btampPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd. */
+} /*                                                            */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd_t)(void *, tBtampTLVHCI_Write_Logical_Link_Accept_Timeout_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Logical_Link_Accept_Timeout_Cmd ( 0x00b5 )
@@ -8721,7 +8721,7 @@ v_U32_t btampPackTlvHCI_Write_Loopback_Mode_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8756,7 +8756,7 @@ v_U32_t btampPackTlvHCI_Write_Loopback_Mode_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Loopback_Mode_Cmd. */
+} /*                                              */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Loopback_Mode_Cmd_t)(void *, tBtampTLVHCI_Write_Loopback_Mode_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Loopback_Mode_Cmd ( 0x00b6 )
@@ -8775,7 +8775,7 @@ v_U32_t btampPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8822,7 +8822,7 @@ v_U32_t btampPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd. */
+} /*                                                 */
 
 typedef v_U32_t (*pfnPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd_t)(void *, tBtampTLVHCI_Write_Remote_AMP_ASSOC_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Write_Remote_AMP_ASSOC_Cmd ( 0x00b7 )
@@ -8841,7 +8841,7 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Cmd(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 2;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8880,7 +8880,7 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Cmd(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Enhanced_Flush_Cmd. */
+} /*                                         */
 
 typedef v_U32_t (*pfnPackTlvHCI_Enhanced_Flush_Cmd_t)(void *, tBtampTLVHCI_Enhanced_Flush_Cmd *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Enhanced_Flush_Cmd ( 0x00b8 )
@@ -8899,7 +8899,7 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Complete_Event(void * pCtx,
     v_U32_t sLen = 0U;
     sType = 1;
     sLen = 1;
-        // sanity checking
+        //                
     if( pCtx == NULL || pSrc == NULL ||
         pBuf == NULL || pnConsumed == NULL)
     {
@@ -8935,7 +8935,7 @@ v_U32_t btampPackTlvHCI_Enhanced_Flush_Complete_Event(void * pCtx,
         *pTlvLen = (v_U8_t)(*pnConsumed - nConsumedOnEntry - sType - sLen);
     }
     return status;
-} /* End btampPackTlvHCI_Enhanced_Flush_Complete_Event. */
+} /*                                                    */
 
 typedef v_U32_t (*pfnPackTlvHCI_Enhanced_Flush_Complete_Event_t)(void *, tBtampTLVHCI_Enhanced_Flush_Complete_Event *, v_U8_t*, v_U32_t, v_U32_t*);
 #define SigPackTlvHCI_Enhanced_Flush_Complete_Event ( 0x00b9 )
@@ -9016,10 +9016,10 @@ v_U32_t btampPackAMP_ASSOC(void * pCtx, tBtampAMP_ASSOC *pFrm, v_U8_t *pBuf, v_U
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, BTAMP_AMP_ASSOC), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, BTAMP_AMP_ASSOC), pBuf, nBuf);
     }
-#   endif // BTAMP_DUMP_FRAMES
+#   endif //                  
     return status;
 
-} /* End btampUnpackAMP_ASSOC. */
+} /*                           */
 
 
 static v_U32_t PackTlvCore(void * pCtx,
@@ -9312,7 +9312,7 @@ static v_U32_t PackTlvCore(void * pCtx,
             return BTAMP_INTERNAL_ERROR;
         }
 
-        } /* End if on *pfFound */
+        } /*                    */
         pBufRemaining += len;
         nBufRemaining -= len;
         *pnConsumed   += len;

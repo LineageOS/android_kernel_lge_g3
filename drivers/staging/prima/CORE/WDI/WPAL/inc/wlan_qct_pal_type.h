@@ -72,15 +72,15 @@ typedef enum
    eWLAN_MODULE_DAL_DATA,
    eWLAN_MODULE_PAL,
    
-   //Always the last one
+   //                   
    eWLAN_MODULE_COUNT
 } wpt_moduleid;
 
 
 typedef struct
 {
-   //BIT order is most likely little endian. 
-   //This structure is for netowkr-order byte array (or big-endian byte order)
+   //                                        
+   //                                                                         
 #ifndef WLAN_PAL_BIG_ENDIAN_BIT
    wpt_byte protVer :2;
    wpt_byte type :2;
@@ -116,21 +116,21 @@ typedef struct
 
 typedef struct
 {
-   /* Frame control field */
+   /*                     */
    wpt_FrameCtrl frameCtrl;
-   /* Duration ID */
+   /*             */
    wpt_uint16 usDurationId;
-   /* Address 1 field  */
+   /*                  */
    wpt_macAddr vA1;
-   /* Address 2 field */
+   /*                 */
    wpt_macAddr vA2;
-   /* Address 3 field */
+   /*                 */
    wpt_macAddr vA3;
-   /* Sequence control field */
+   /*                        */
    wpt_uint16 sSeqCtrl;
-   /* Optional A4 address */
+   /*                     */
    wpt_macAddr optvA4;
-   /* Optional QOS control field */
+   /*                            */
    wpt_uint16  usQosCtrl;
 }wpt_80211Header;
 
@@ -142,4 +142,4 @@ typedef struct
 } wpt_8023Header;
 
 
-#endif // __WLAN_QCT_PAL_TYPE_H
+#endif //                      

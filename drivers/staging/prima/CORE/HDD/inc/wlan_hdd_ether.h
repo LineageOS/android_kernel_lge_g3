@@ -50,28 +50,28 @@
                All Rights Reserved.
                Qualcomm Confidential and Proprietary
 ============================================================================*/
-/* $Header$ */
+/*          */
 
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                
+                                                                            */
 #include <linux/version.h>
 #include <linux/byteorder/generic.h>
 #include <linux/if_ether.h>
 #include <linux/if_vlan.h>
 
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                                         
+                                                                            */
 #define WLAN_SNAP_OUI_LEN 3
 #define WLAN_SNAP_DSAP 0xAAU
 #define WLAN_SNAP_SSAP 0xAAU
 #define WLAN_SNAP_CTRL 0x03
 #define WLAN_MIN_PROTO 0x0600
 
-/*----------------------------------------------------------------------------
- * Type Declarations
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                    
+                                                                            */
 struct wlan_snap_hdr {
    unsigned char dsap;
    unsigned char ssap;
@@ -104,4 +104,4 @@ union generic_ethhdr {
    struct wlan_8023_vlan eth_8023v;
 };
 
-#endif /* #ifndef _WLAN_HDD_ETHER_H */
+#endif /*                           */

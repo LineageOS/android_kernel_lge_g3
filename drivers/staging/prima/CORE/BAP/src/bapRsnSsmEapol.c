@@ -40,18 +40,18 @@
  */
 
 /*
- * Woodside Networks, Inc proprietary. All rights reserved.
- * File: $Header: //depot/software/projects/feature_branches/gen5_phase1/os/linux/classic/ap/apps/ssm/lib/aniSsmEapol.c#2 $ 
- *
- * Contains definitions of various utilities for EAPoL frame
- * parsing and creation.
- *
- * Author:      Mayank D. Upadhyay
- * Date:        19-June-2002
- * History:-
- * Date         Modified by     Modification Information
- * ------------------------------------------------------
- *
+                                                           
+                                                                                                                            
+  
+                                                            
+                        
+  
+                                  
+                            
+            
+                                                        
+                                                         
+  
  */
 #include "vos_utils.h"
 #include <bapRsnAsfPacket.h>
@@ -60,10 +60,10 @@
 #include "bapRsn8021xFsm.h"
 #include "vos_memory.h"
 
-//#include "aniSsmUtils.h"
+//                        
 
 
-//TODO: Put these in an array after EAPOL_TYPE is made an enum
+//                                                            
 #define ANI_EAPOL_TYPE_PACKET_STR    "EAP"
 #define ANI_EAPOL_TYPE_START_STR     "START"
 #define ANI_EAPOL_TYPE_LOGOFF_STR    "LOGOFF"
@@ -71,8 +71,8 @@
 #define ANI_EAPOL_TYPE_ASF_ALERT_STR "ALERT"
 #define ANI_EAPOL_TYPE_UNKNOWN_STR   "UNKNOWN"
 
-/**
- * The EAPOL packet is structured as follows:
+/* 
+                                             
  */
 #define DST_MAC_POS 0
 #define SRC_MAC_POS 6
@@ -86,8 +86,8 @@
 
 #define ANI_SSM_LEGACY_RC4_KEY_SIGN_OFFSET (EAPOL_BODY_POS + 28)
 
-/**
- * Bitmasks for the RSN Key Information field
+/* 
+                                             
  */
 #define ANI_SSM_RSN_KEY_DESC_VERS_MASK 0x0007
 #define ANI_SSM_RSN_UNICAST_MASK       0x0008
@@ -105,11 +105,11 @@
 
 #define ANI_SSM_RSN_KEY_MIC_OFFSET (EAPOL_BODY_POS + 77)
 
-/**
- * Other hard coded values for convenience:
+/* 
+                                           
  */
 static const v_U8_t 
-ANI_ETH_P_EAPOL_BYTES[2] = {0x00, 0x03};//BT-AMP security type{0x88, 0x8e};
+ANI_ETH_P_EAPOL_BYTES[2] = {0x00, 0x03};//                                 
 static const v_U8_t 
 EAPOL_VERSION_BYTES[1] = {EAPOL_VERSION_1};
 static const v_U8_t 
@@ -167,22 +167,22 @@ extern void suppEapolHandler( tSuppRsnFsm *fsm, tAniPacket *eapolFrame,
                  tAniMacAddr srcMac,
                  v_U8_t *type);
 
-/**
- * addEapolHeaders
- *
- * FUNCTION:
- * Prepends the EAPOL header to a packet.
- *
- * ASSUMPTIONS:
- * The packet has enough space available for prepending the EAPOL
- * header.
- *
- * @param packet the packet to prepend to
- * @param dstMac the MAC address of the destination (authenticator)
- * @param srcMac the MAC address of the source (supplicant)
- * @param eapolType the EAPOL-Type field
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                  
+  
+            
+                                         
+  
+               
+                                                                 
+          
+  
+                                         
+                                                                   
+                                                           
+                                        
+  
+                                           
  */
 static int
 addEapolHeaders(tAniPacket *packet, 
@@ -210,12 +210,12 @@ addEapolHeaders(tAniPacket *packet,
         retVal = aniAsfPacketPrependBuffer(packet, ANI_ETH_P_EAPOL_BYTES, 2);
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
 
-        //Since TL expects SNAP header in all packets we send, put it in
+        //                                                              
         retVal = aniAsfPacketPrependBuffer(packet, BAP_RSN_LLC_HEADER, sizeof(BAP_RSN_LLC_HEADER));
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
 
-        //packet length
-        len += 6/*length + eapolType+version + eth_type*/ + sizeof(BAP_RSN_LLC_HEADER);
+        //             
+        len += 6/*                                     */ + sizeof(BAP_RSN_LLC_HEADER);
         retVal = aniAsfPacketPrepend16(packet, len);
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
 
@@ -229,25 +229,25 @@ addEapolHeaders(tAniPacket *packet,
     return retVal;
 }
 
-/**
- * aniEapolWriteStart
- *
- * FUNCTION:
- * Writes an EAPOL-Start frame to the packet. It is only used by the
- * supplicant.
- *
- * LOGIC:
- * Prepend the appropriate EAPOL header to the packet. There is no
- * EAPOL payload for this kind of frame.
- *
- * ASSUMPTIONS:
- * The packet has enough space available for prepending the header.
- *
- * @param packet the packet to which the frame should be written
- * @param dstMac the MAC address of the destination (authenticator)
- * @param srcMac the MAC address of the source (supplicant)
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                     
+  
+            
+                                                                    
+              
+  
+         
+                                                                  
+                                        
+  
+               
+                                                                   
+  
+                                                                
+                                                                   
+                                                           
+  
+                                           
  */
 int
 aniEapolWriteStart(tAniPacket *packet, 
@@ -257,27 +257,27 @@ aniEapolWriteStart(tAniPacket *packet,
     return ( addEapolHeaders(packet, dstMac, srcMac, ANI_EAPOL_TYPE_START) );
 }
 
-/**
- * aniEapolWriteEapPacket
- *
- * FUNCTION:
- * Writes the EAPOL/EAP-Packet frame headers. It is used
- * by both the authenticator and the supplicant. This creates an EAPOL
- * frame that is carrying an EAP message as its payload.
- *
- * LOGIC:
- * Prepend the appropriate EAPOL header to the packet.
- *
- * ASSUMPTIONS:
- * The EAP message (ie., the payload) is already available in the
- * packet and that the packet has enough space available for
- * prepending the EAPOL header.
- *
- * @param packet the packet containing the EAP message
- * @param dstMac the MAC address of the destination (authenticator)
- * @param srcMac the MAC address of the source (supplicant)
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                         
+  
+            
+                                                        
+                                                                      
+                                                        
+  
+         
+                                                      
+  
+               
+                                                                 
+                                                            
+                               
+  
+                                                      
+                                                                   
+                                                           
+  
+                                           
  */
 int
 aniEapolWriteEapPacket(tAniPacket *eapPacket, 
@@ -287,28 +287,28 @@ aniEapolWriteEapPacket(tAniPacket *eapPacket,
     return( addEapolHeaders(eapPacket, dstMac, srcMac, ANI_EAPOL_TYPE_PACKET) );
 }
 
-/**
- * aniEapolParse
- *
- * FUNCTION:
- * Parses an EAPoL frame to the first level of headers (no EAP
- * headers are parsed). 
- *
- * NOTE: This is a non-destructive read, that is the
- * headers are not stripped off the packet. However, any additional
- * data at  the end of the packet, beyond what the EAPoL headers encode
- * will be stripped off.
- *
- * @param packet the packet containing the EAPoL frame to parse
- * @param dstMac a pointer to set to the location of the destination
- * MAC address
- * @param srcMac a pointer to set to the location of the source
- * MAC address
- * @param type a pointer to set to the location of the EAPOL type
- * field.
- *
- * @return the non-negative length of the EAPOL payload if the operation
- * succeeds
+/* 
+                
+  
+            
+                                                              
+                        
+  
+                                                    
+                                                                   
+                                                                       
+                        
+  
+                                                               
+                                                                    
+              
+                                                               
+              
+                                                                 
+         
+  
+                                                                        
+           
  */
 int 
 aniEapolParse(tAniPacket *packet,
@@ -337,7 +337,7 @@ aniEapolParse(tAniPacket *packet,
     frameType = (ptr[ETHER_PROTO_POS] << 8) + ptr[ETHER_PROTO_POS+1];
 
     /*
-     * Validate the EAPOL-FRAME
+                               
      */
 
     if (frameType != ANI_ETH_P_EAPOL)
@@ -346,17 +346,17 @@ aniEapolParse(tAniPacket *packet,
     *dstMac = ptr + DST_MAC_POS;
     *srcMac = ptr + SRC_MAC_POS;
 
-    //    if (ptr[EAPOL_VERSION_POS] != EAPOL_VERSION_1)
-    //        return ANI_E_ILLEGAL_ARG;
+    //                                                  
+    //                                 
 
     *type = ptr + ANI_EAPOL_TYPE_POS;
     retVal = (ptr[EAPOL_BODY_LEN_POS] << 8) + ptr[EAPOL_BODY_LEN_POS + 1];
  
     /* 
-     * Validate the length of the body. Allow for longer 
-     * packets than encoded, but encoding should not be larger than
-     * packet.
-     * Note: EAPOL body len does not include headers
+                                                         
+                                                                   
+              
+                                                    
      */
     tmp = aniAsfPacketGetLen(packet) - EAPOL_RX_HEADER_SIZE;
     if (retVal > tmp) 
@@ -373,29 +373,29 @@ aniEapolParse(tAniPacket *packet,
     return retVal;
 }
 
-/**
- * aniEapolWriteKey
- *
- * Writes out a complete EAPOL-Key frame. The key descriptor is
- * appended to the packet and the EAPOL header is prepended to it. If
- * a micKey is passed in, then a MIC is calculated and inserted into
- * the frame.
- *
- * @param packet the packet to write to
- * @param dstMac the destination MAC address
- * @param srcMac the source MAC address
- * @param descType the key descriptor type
- * (ANI_EAPOL_KEY_DESC_TYPE_LEGACY_RC4 or
- * ANI_EAPOL_KEY_DESC_TYPE_RSN).
- * @param keyDescData the key descriptor data corresponding to the
- * above descType. The signature field is ignored and will be
- * generated in the packet. The key bytes are expected to be encrypted
- * if they need to be encrypted.
- * @param micKey the MIC key
- * @param micKeyLen the number of bytes in the MIC key
- *
- * @return ANI_OK if the operation succeeds
- *
+/* 
+                   
+  
+                                                               
+                                                                     
+                                                                    
+             
+  
+                                       
+                                            
+                                       
+                                          
+                                         
+                                
+                                                                  
+                                                             
+                                                                      
+                                
+                            
+                                                      
+  
+                                           
+  
  */
 int
 aniEapolWriteKey(v_U32_t cryptHandle,
@@ -420,9 +420,9 @@ aniEapolWriteKey(v_U32_t cryptHandle,
 
             retVal = writeRsnKeyDesc(packet,
                                      (tAniEapolRsnKeyDesc *) keyDescData,
-                                     // Indicate 
-                                     // ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW 
-                                     // or ANI_EAPOL_KEY_DESC_TYPE_RSN
+                                     //          
+                                     //                                 
+                                     //                               
                                      descType);
             if( !ANI_IS_STATUS_SUCCESS( retVal ) )
             {
@@ -449,33 +449,33 @@ aniEapolWriteKey(v_U32_t cryptHandle,
 }
 
 
-/**
- * aniEapolParseKey
- *
- * Parses and verifies a complete EAPOL-Key frame. The key descriptor
- * type is returned and so is a newly allocated key descriptor structure
- * that is appropriate for the type.
- *
- * NOTE: This is a non-destructive read. That is, the packet headers
- * will be unchanged at the end of this read operation. This is so
- * that a followup MIC check may be done on the complete packet. If
- * the packet parsing fails, the packet headers are not guaranteed to
- * be unchanged.
- *
- * @param packet the packet to read from. Note that the frame is not
- * expected to contain any additional padding at the end other than
- * the exact number of key bytes. (The aniEapolParse function will
- * ensure this.)
- * @param descType is set to the key descriptor type
- * (ANI_EAPOL_KEY_DESC_TYPE_LEGACY_RC4 or
- * ANI_EAPOL_KEY_DESC_TYPE_RSN).
- * @param keyDescData is set to a newly allocated key descriptor
- * corresponding to the above descType. The signature field is
- * verified. The key bytes will be returned encrypted. It is the
- * responsibility of the caller to free this structure and the data
- * contained therein.
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                   
+  
+                                                                     
+                                                                        
+                                    
+  
+                                                                    
+                                                                  
+                                                                   
+                                                                     
+                
+  
+                                                                    
+                                                                   
+                                                                  
+                
+                                                    
+                                         
+                                
+                                                                
+                                                              
+                                                                
+                                                                   
+                     
+  
+                                           
  */
 int
 aniEapolParseKey(tAniPacket *packet,
@@ -507,7 +507,7 @@ aniEapolParseKey(tAniPacket *packet,
         {
             tAniEapolRsnKeyDesc *rsnDesc = NULL;
 
-            //*descType = ANI_EAPOL_KEY_DESC_TYPE_RSN;
+            //                                        
             *descType = (*bytes == ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW ?  
                  ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW :  ANI_EAPOL_KEY_DESC_TYPE_RSN) ;
             retVal = parseRsnKeyDesc(packet, &rsnDesc);
@@ -542,7 +542,7 @@ parseRsnKeyDesc(tAniPacket *packet,
 
     do
     {
-        aniAsfPacketTruncateFromFront(packet, 1); // Desc-Type
+        aniAsfPacketTruncateFromFront(packet, 1); //          
 
         rsnDesc = (tAniEapolRsnKeyDesc *) 
             vos_mem_malloc( sizeof(tAniEapolRsnKeyDesc) );
@@ -620,7 +620,7 @@ parseRsnKeyDesc(tAniPacket *packet,
 
         len = rsnDesc->keyDataLen;
         if (len > 0) {
-            // We have a key
+            //              
             retVal = aniAsfPacketGetN(packet, len, &bytes);
             if (retVal != ANI_OK)
             {
@@ -703,8 +703,8 @@ writeRsnKeyDesc(tAniPacket *packet,
 
     do
     {
-        // This can be either ANI_EAPOL_KEY_DESC_TYPE_RSN
-        // or ANI_EAPOL_KEY_DESC_TYPE_RSN_NEW
+        //                                               
+        //                                   
         retVal = aniAsfPacketAppend8(packet, keyDescType);
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
 
@@ -739,7 +739,7 @@ writeRsnKeyDesc(tAniPacket *packet,
                                           sizeof(rsnDesc->keyId));
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
 
-        // Zero out the key MIC
+        //                     
         retVal = aniAsfPacketAppendBuffer(packet, 
                                           ZERO_BYTES, 
                                           sizeof(rsnDesc->keyMic));
@@ -819,10 +819,10 @@ writeRsnKeyMic(v_U32_t cryptHandle,
 
     v_U8_t *ptr = NULL;
     v_U8_t *micPos = NULL;
-    v_U8_t result[VOS_DIGEST_SHA1_SIZE]; // Larger of the two
+    v_U8_t result[VOS_DIGEST_SHA1_SIZE]; //                  
 
-    // Sanity check the arguments and return if no MIC generation is
-    // needed
+    //                                                              
+    //       
     if (micKey != NULL) 
     {
         if (micKeyLen == 0 || !rsnDesc->info.micFlag) 
@@ -841,7 +841,7 @@ writeRsnKeyMic(v_U32_t cryptHandle,
             VOS_ASSERT( 0 );
             return ANI_E_ILLEGAL_ARG;
         }
-        // Normal condition where MIC is not desired by the caller
+        //                                                        
         return ANI_OK;
     }
 
@@ -853,10 +853,10 @@ writeRsnKeyMic(v_U32_t cryptHandle,
 
     micPos = ptr + ANI_SSM_RSN_KEY_MIC_OFFSET + SNAP_HEADER_SIZE;
 
-    // Clear the MIC field in the packet before the MIC computation
+    //                                                             
     vos_mem_zero( micPos, VOS_DIGEST_MD5_SIZE);
 
-    // Skip to the EAPOL version field for MIC computation
+    //                                                    
     ptr += EAPOL_VERSION_POS + SNAP_HEADER_SIZE;
     len -= (EAPOL_VERSION_POS + SNAP_HEADER_SIZE);
 
@@ -878,25 +878,25 @@ writeRsnKeyMic(v_U32_t cryptHandle,
 
     if (retVal == ANI_OK) 
     {
-        // Copy only 16B which is the smaller of the two and the same as
-        // ANI_EAPOL_KEY_RSN_MIC_SIZE
+        //                                                              
+        //                           
         vos_mem_copy(micPos, result, VOS_DIGEST_MD5_SIZE);
     }
 
     return retVal;
 }
 
-/**
- * aniEapolKeyCheckMic
- *
- * @param eapolFrame the complete EAPOL-Key packet
- * @param descType the key descriptor type
- * @param keyDescData the key descriptor
- * @param micKey the MIC key
- * @param micKeyLen the number of bytes in the MIC key
- *
- * @return ANI_OK if the operation succeeds; ANI_E_MIC_FAILED if the
- * MIC check fails.
+/* 
+                      
+  
+                                                  
+                                          
+                                        
+                            
+                                                      
+  
+                                                                    
+                   
  */
 int
 aniEapolKeyCheckMic(v_U32_t cryptHandle,
@@ -930,7 +930,7 @@ checkRsnKeyMic(v_U32_t cryptHandle,
     v_U8_t *ptr = NULL;
     v_U8_t *micPos = NULL;
 
-    v_U8_t result[VOS_DIGEST_SHA1_SIZE]; // Larger of the two
+    v_U8_t result[VOS_DIGEST_SHA1_SIZE]; //                  
     v_U8_t incomingMic[ANI_EAPOL_KEY_RSN_MIC_SIZE];
 
     if (!rsnDesc->info.micFlag) 
@@ -944,11 +944,11 @@ checkRsnKeyMic(v_U32_t cryptHandle,
     {
         micPos = ptr + ANI_SSM_RSN_KEY_MIC_OFFSET;
 
-        // Skip to the EAPOL version field for MIC computation
+        //                                                    
         ptr += EAPOL_VERSION_POS;
         len -= EAPOL_VERSION_POS;
 
-        // Copy existing MIC to temporary location and zero it out
+        //                                                        
         vos_mem_copy( incomingMic, micPos, ANI_EAPOL_KEY_RSN_MIC_SIZE );
         vos_mem_zero( micPos, ANI_EAPOL_KEY_RSN_MIC_SIZE );
 
@@ -976,15 +976,15 @@ checkRsnKeyMic(v_U32_t cryptHandle,
     return retVal;
 }
 
-/**
- * aniEapolKeyFreeDesc
- *
- * Frees the EAPOL key descriptor and the key bytes contained within it.
- *
- * @param descType the key descriptor type
- * @param keyDescData the key descriptor
- *
- * @return ANI_OK if the operation succeeds
+/* 
+                      
+  
+                                                                        
+  
+                                          
+                                        
+  
+                                           
  */
 int
 aniEapolKeyFreeDesc(int descType, void *keyDescData)
@@ -1054,8 +1054,8 @@ void bapRsnEapolHandler( v_PVOID_t pvFsm, tAniPacket *packet, v_BOOL_t fIsAuth )
     {
         retVal = ANI_OK;
 
-        // Sanity check that a PAE role has been assigned to it,
-        // and then dispatch to the appropriate handler
+        //                                                      
+        //                                             
 
         if( fIsAuth )
         {
@@ -1066,8 +1066,8 @@ void bapRsnEapolHandler( v_PVOID_t pvFsm, tAniPacket *packet, v_BOOL_t fIsAuth )
         {
             tSuppRsnFsm *fsm = (tSuppRsnFsm *)pvFsm;
             suppEapolHandler(fsm, packet, dstMac, srcMac, type);
-        } // switch statement
-    } // Successfully parsed EAPOL
+        } //                 
+    } //                          
     else
     {
         VOS_TRACE( VOS_MODULE_ID_BAP, VOS_TRACE_LEVEL_ERROR,
@@ -1112,10 +1112,10 @@ int bapRsnFormPktFromVosPkt( tAniPacket **ppPacket, vos_pkt_t *pVosPacket )
         aniAsfPacketEmptyExplicit( pAniPacket, 0 );
         pFrame[ETHER_PROTO_POS] = pFrame[BAP_RSN_SNAP_TYPE_OFFSET];
         pFrame[ETHER_PROTO_POS + 1] = pFrame[BAP_RSN_SNAP_TYPE_OFFSET + 1];
-        //push ethernet II header in
+        //                          
         retVal = aniAsfPacketAppendBuffer( pAniPacket, pFrame, ETHER_PROTO_POS + 2 );
         if( !ANI_IS_STATUS_SUCCESS( retVal ) ) break;
-        //Get the rest of the data in
+        //                           
         uPktLen -= BAP_RSN_ETHERNET_3_HEADER_LEN;
         VOS_ASSERT( uPktLen > 0 );
         retVal = aniAsfPacketAppendBuffer( pAniPacket, pFrame + BAP_RSN_ETHERNET_3_HEADER_LEN, 

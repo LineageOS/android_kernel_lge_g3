@@ -68,11 +68,11 @@ typedef struct
 {
    wpt_uint32 txFlags;
    wpt_uint8 ac;
-   wpt_uint8 isEapol:1; //0 - not eapol 1 - eapol
-   wpt_uint8 isWai:1;   //WAPI 0 - not WAI 1 WAI 
-   wpt_uint8 fdisableFrmXlt:1;   //0 - Let ADU do FT. 1 - bypass ADU FT
-   wpt_uint8 qosEnabled:1; //0 - non-Qos 1 - Qos
-   wpt_uint8 fenableWDS:1; //0 - not WDS 1 WDS
+   wpt_uint8 isEapol:1; //                       
+   wpt_uint8 isWai:1;   //                       
+   wpt_uint8 fdisableFrmXlt:1;   //                                    
+   wpt_uint8 qosEnabled:1; //                   
+   wpt_uint8 fenableWDS:1; //                 
    wpt_uint8 reserved1:3;
    wpt_uint8 typeSubtype;
    wpt_uint8 fUP;
@@ -111,21 +111,21 @@ typedef struct
    wpt_uint8 subtype:4;
    wpt_uint8 rfBand:2;
 
-   wpt_uint16 rtsf:1;  //For beacon only. 1 ~V Riva TSF is bigger(later) than the one received
-   wpt_uint16 bsf:1;   //1 Riva sends the last beacon, 0 not.
-   wpt_uint16 unknownUcastPkt:1;   //1 ~V unicast frame received with unknown A2
-   wpt_uint16 scan:1;   //1 frame received in scan state. 0 not.
-   wpt_uint16 dpuSig:3;   //DPU signature
-   wpt_uint16 ft:1;   //0~Wframe translation is not done. 1~Wdone
-   wpt_uint16 ne:1;   //1 ~V frame is not encrypted OTA. This is for WAPI~Rs WAI packet.
-   wpt_uint16 llcr:1;   // Has the LLC been stripped by H/W
-   wpt_uint16 bcast:1;   //0 ~V unicast frame 1 ~V broadcast/multicast frame
+   wpt_uint16 rtsf:1;  //                                                                     
+   wpt_uint16 bsf:1;   //                                    
+   wpt_uint16 unknownUcastPkt:1;   //                                           
+   wpt_uint16 scan:1;   //                                      
+   wpt_uint16 dpuSig:3;   //             
+   wpt_uint16 ft:1;   //                                         
+   wpt_uint16 ne:1;   //                                                                
+   wpt_uint16 llcr:1;   //                                 
+   wpt_uint16 bcast:1;   //                                                 
    wpt_uint16 tid:4;
    wpt_uint16 reserved1:1;
    wpt_uint8 dpuFeedback;
    wpt_int8 snr;
 
-   wpt_uint32 currentPktSeqNo:12;  /*current sequence number */
+   wpt_uint32 currentPktSeqNo:12;  /*                        */
    wpt_uint32 ampdu_reorderOpcode:4;
    wpt_uint32 ampdu_reorderSlotIdx:6;
    wpt_uint32 ampdu_reorderFwdIdx:6;
@@ -147,7 +147,7 @@ typedef struct
    wpt_uint32  rxpFlags;
    wpt_uint32  mclkRxTimestamp;
 
-   //Flow control frames
+   //                   
    wpt_uint8  fc;
    wpt_uint32 fcSTATxQStatus:16;
    wpt_uint32 fcSTAThreshIndMask:16;
@@ -155,8 +155,8 @@ typedef struct
    wpt_uint32 fcSTAValidMask:16;
 
    wpt_uint16 fcStaTxDisabledBitmap;
-   wpt_uint8 fcSTATxQLen[12]; // one byte per STA. 
-   wpt_uint8 fcSTACurTxRate[12]; // current Tx rate for each sta.
+   wpt_uint8 fcSTATxQLen[12]; //                   
+   wpt_uint8 fcSTACurTxRate[12]; //                              
 
    wpt_uint64 replayCount;
 
@@ -203,20 +203,20 @@ typedef void (*WDI_DS_TxFlowControlCallback)(void *pContext, wpt_uint8 ac_mask);
 
 
 
-/* DAL registration function. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along 
- *  with the callback.
- *  pfnTxCompleteCallback:Callback function that is to be invoked to return 
- *  packets which have been transmitted.
- *  pfnRxPacketCallback:Callback function that is to be invoked to deliver 
- *  packets which have been received
- *  pfnTxFlowControlCallback:Callback function that is to be invoked to 
- *  indicate/clear congestion. 
- *
- * Return Value: SUCCESS  Completed successfully.
- *     FAILURE_XXX  Request was rejected due XXX Reason.
- *
+/*                            
+              
+                                                                   
+                      
+                                                                            
+                                        
+                                                                           
+                                    
+                                                                        
+                               
+  
+                                                 
+                                                        
+  
  */
 WDI_Status WDI_DS_Register( void *pContext, 
   WDI_DS_TxCompleteCallback pfnTxCompleteCallback,
@@ -226,14 +226,14 @@ WDI_Status WDI_DS_Register( void *pContext,
 
 
 
-/* DAL Transmit function. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  pFrame:Refernce to PAL frame.
- *  more: Does the invokee have more than one packet pending?
- * Return Value: SUCCESS  Completed successfully.
- *     FAILURE_XXX  Request was rejected due XXX Reason.
- *
+/*                        
+              
+                                                                                     
+                                 
+                                                             
+                                                 
+                                                        
+  
  */
 
 
@@ -242,128 +242,128 @@ WDI_Status WDI_DS_TxPacket(void *pContext,
   wpt_boolean more);
   
   
-/* DAL Transmit Complete function. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  ucTxResReq:TX resource number required by TL
- * Return Value: SUCCESS  Completed successfully.
- *     FAILURE_XXX  Request was rejected due XXX Reason.
- *
+/*                                 
+              
+                                                                                     
+                                                
+                                                 
+                                                        
+  
  */
 
 
 WDI_Status WDI_DS_TxComplete(void *pContext, wpt_uint32 ucTxResReq);
 
-/* DAL Suspend Transmit function. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- * Return Value: SUCCESS  Completed successfully.
- *     FAILURE_XXX  Request was rejected due XXX Reason.
- *
+/*                                
+              
+                                                                                     
+                                                 
+                                                        
+  
  */
 
 
 WDI_Status WDI_DS_TxSuspend(void *pContext);
 
 
-/* DAL Resume Transmit function. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- * Return Value: SUCCESS  Completed successfully.
- *     FAILURE_XXX  Request was rejected due XXX Reason.
- *
+/*                               
+              
+                                                                                     
+                                                 
+                                                        
+  
  */
 
 
 WDI_Status WDI_DS_TxResume(void *pContext);
 
-/* DAL Get Reserved resource by STA 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  wdiResPool: MemPool, MGMT ot DATA
- *  staId: STA ID
- * Return Value: Number of reserved resouce count
- *
+/*                                  
+              
+                                                                                     
+                                     
+                 
+                                                 
+  
  */
 wpt_uint32 WDI_DS_GetReservedResCountPerSTA(void *pContext,
                                                         WDI_ResPoolType wdiResPool,
                                                         wpt_uint8 staId);
 
-/* DAL ADD STA into memPool
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  staId: STA ID
- * Return Value: SUCCESS or FAIL
- *
+/*                         
+              
+                                                                                     
+                 
+                                
+  
  */
 WDI_Status WDI_DS_AddSTAMemPool(void *pContext, wpt_uint8 staIndex);
 
-/* DAL Remove STA from memPool
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  staId: STA ID
- * Return Value: SUCCESS or FAIL
- *
+/*                            
+              
+                                                                                     
+                 
+                                
+  
  */
 WDI_Status WDI_DS_DelSTAMemPool(void *pContext, wpt_uint8 staIndex);
 
-/* DAL Set STA index associated with BSS index. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  bssIdx: BSS index
- *  staId: STA index associated with BSS index
- * Return Status: Found empty slot
- *
+/*                                              
+              
+                                                                                     
+                     
+                                              
+                                  
+  
  */
 WDI_Status WDI_DS_SetStaIdxPerBssIdx(void *pContext, wpt_uint8 bssIdx, wpt_uint8 staIdx);
 
-/* DAL Get STA index associated with BSS index. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  bssIdx: BSS index
- *  staId: STA index associated with BSS index
- * Return Status: Found empty slot
- *
+/*                                              
+              
+                                                                                     
+                     
+                                              
+                                  
+  
  */
 WDI_Status WDI_DS_GetStaIdxFromBssIdx(void *pContext, wpt_uint8 bssIdx, wpt_uint8 *staIdx);
 
-/* DAL Clear STA index associated with BSS index. 
- * Parameters:
- *  pContext:Cookie that should be passed back to the caller along with the callback.
- *  bssIdx: BSS index
- *  staId: STA index associated with BSS index
- * Return Status: Found empty slot
- *
+/*                                                
+              
+                                                                                     
+                     
+                                              
+                                  
+  
  */
 WDI_Status WDI_DS_ClearStaIdxPerBssIdx(void *pContext, wpt_uint8 bssIdx, wpt_uint8 staIdx);
 
-/* @brief: WDI_DS_GetTrafficStats
- * This function should be invoked to fetch the current stats
-  * Parameters:
- *  pStats:Pointer to the collected stats
- *  len: length of buffer pointed to by pStats
- *  Return Status: None
+/*                               
+                                                             
+               
+                                         
+                                              
+                       
  */
 void WDI_DS_GetTrafficStats(WDI_TrafficStatsType** pStats, wpt_uint32 *len);
 
-/* @brief: WDI_DS_DeactivateTrafficStats
- * This function should be invoked to deactivate traffic stats collection
-  * Parameters: None
- *  Return Status: None
+/*                                      
+                                                                         
+                    
+                       
  */
 void WDI_DS_DeactivateTrafficStats(void);
 
-/* @brief: WDI_DS_ActivateTrafficStats
- * This function should be invoked to activate traffic stats collection
-  * Parameters: None
- *  Return Status: None
+/*                                    
+                                                                       
+                    
+                       
  */
 void WDI_DS_ActivateTrafficStats(void);
 
-/* @brief: WDI_DS_ClearTrafficStats
- * This function should be invoked to clear all past stats
-  * Parameters: None
- *  Return Status: None
+/*                                 
+                                                          
+                    
+                       
  */
 void WDI_DS_ClearTrafficStats(void);
 

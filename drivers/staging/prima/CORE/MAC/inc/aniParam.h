@@ -40,16 +40,16 @@
  */
 
 /* 
- *
- * Airgo Networks, Inc proprietary. All rights reserved
- * aniParam.h: MAC parameter interface.
- * Author:  Kevin Nguyen
- * Date:    09/09/2002
- *
- * History:-
- * Date        Modified by              Modification Information
- * --------------------------------------------------------------------------
- *
+  
+                                                       
+                                       
+                        
+                      
+  
+            
+                                                                
+                                                                             
+  
  */
 
 #ifndef _ANIPARAM_H
@@ -57,23 +57,23 @@
 
 #include "halTypes.h"
 
-/**
- * -------------------------------------------------------------------------*
- *  MAC parameter structure                                                *
- *  This structure is the only interface passed between the MAC FW and the *
- *  host driver.                                                           *
- *                                                                         *
- *  Host-to-MAC parameters:                                                *
- *  =======================                                                *
- *  radioId:         radio ID (1 or 2)                                     *
- *  pPacketBufAlloc: function pointer for SKBuffer allocation              *
- *  pPacketBufFree : function pointer for SKBuffer free                    *
- *                                                                         *
- *-------------------------------------------------------------------------
+/* 
+                                                                             
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+                                                                           
  */
 typedef struct 
 {
-    // HDD to MAC parameters
+    //                      
     int             radioId;
 
     void          (*pPacketBufAlloc)(unsigned short size, void **ppBuf, 
@@ -82,7 +82,7 @@ typedef struct
 
     int rx_tasklet;
 
-    // block table allocated by HDD
+    //                             
     void * block_table;
 
     tHalHandle hHalHandle;
@@ -97,6 +97,6 @@ typedef struct
 #endif
 
 
-#endif /* _ANIPARAM_H */
+#endif /*             */
 
 

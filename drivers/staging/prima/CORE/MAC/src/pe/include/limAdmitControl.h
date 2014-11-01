@@ -40,14 +40,14 @@
  */
 
 /*
- *
- * Airgo Networks, Inc proprietary. All rights reserved.
- * Author:      Dinesh Upadhyay
- * Date:        10/24/06
- * History:-
- * Date            Modified by    Modification Information
- * --------------------------------------------------------------------
- *
+  
+                                                        
+                               
+                        
+            
+                                                          
+                                                                       
+  
  */
 
 #ifndef __LIM_ADMIT_CONTROL_H__
@@ -61,7 +61,7 @@
 tSirRetStatus
 limTspecFindByAssocId(tpAniSirGlobal, tANI_U16, tSirMacTspecIE*, tpLimTspecInfo, tpLimTspecInfo *);
 
-// Add TSPEC in lim local table
+//                             
 tSirRetStatus limTspecAdd(
     tpAniSirGlobal    pMac,
     tANI_U8               *pAddr,
@@ -71,7 +71,7 @@ tSirRetStatus limTspecAdd(
     tpLimTspecInfo   *ppInfo);
     
 
-// admit control interface
+//                        
 extern tSirRetStatus
 limAdmitControlAddTS(
     tpAniSirGlobal          pMac,
@@ -81,7 +81,7 @@ limAdmitControlAddTS(
     tANI_U16                     assocId,
     tANI_U8                    alloc,
     tSirMacScheduleIE      *pSch,
-    tANI_U8                   *pTspecIdx ,//index to the lim tspec table.
+    tANI_U8                   *pTspecIdx ,//                             
     tpPESession psessionEntry
     );
 

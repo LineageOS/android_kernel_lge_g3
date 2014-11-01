@@ -27,20 +27,20 @@ logDump.c
 */
 
 /*
- * Woodside Networks, Inc proprietary. All rights reserved.
- * This file contains the utility functions to dump various
- * MAC states and to enable/disable certain features during
- * debugging.
- * Author:        Sandesh Goel
- * Date:          02/27/02
- * History:-
- * 02/11/02       Created.
- * --------------------------------------------------------------------
- *
+                                                           
+                                                           
+                                                           
+             
+                              
+                          
+            
+                          
+                                                                       
+  
  */
 
 /* 
- * @note : Bytes is to print overflow message information.
+                                                          
  */
 
 #include "palTypes.h"
@@ -76,15 +76,15 @@ logDump.c
 #include "limAssocUtils.h"
 #include "limSendMessages.h"
 #include "limSecurityUtils.h"
-//#include "halRadar.h"
+//                     
 #include "logDump.h"
 #include "sysDebug.h"
 #include "wlan_qct_wda.h"
 
 #define HAL_LOG_DUMP_CMD_START 0
 
-/* Dump command id for Host modules starts from 300 onwards,
- * hence do not extend the HAL commands beyond 300.
+/*                                                          
+                                                   
  */
 #define HAL_LOG_DUMP_CMD_END 299
 
@@ -100,20 +100,20 @@ logPrintf(tpAniSirGlobal pMac, tANI_U32 cmd, tANI_U32 arg1, tANI_U32 arg2, tANI_
     bufLen = (tANI_U16)logRtaiDump(pMac, cmd, arg1, arg2, arg3, arg4, buf);
 }
 
-/**
-  @brief: This function is used to Aggregate the formated buffer, this
-  also check the overflow condition and adds the overflow message
-  to the end of the log Dump buffer reserved of MAX_OVERFLOW_MSG size.
-  @param: tpAniSirGlobal pMac
-  @param: char *pBuf
-  @param: variable arguments...
-  @return: Returns the number of bytes added to the buffer.
-  Returns 0 incase of overflow.
+/* 
+                                                                      
+                                                                 
+                                                                      
+                             
+                    
+                               
+                                                           
+                               
 
-  @note: Currently in windows we do not print the Aggregated buffer as there
-  is a limitation on the number of bytes that can be displayed by DbgPrint
-  So we print the buffer immediately and we would also aggregate where
-  the TestDbg might use this buffer to print out at the application level.
+                                                                            
+                                                                          
+                                                                      
+                                                                          
   */
 int log_sprintf(tpAniSirGlobal pMac, char *pBuf, char *fmt, ...)
 {
@@ -132,7 +132,7 @@ int log_sprintf(tpAniSirGlobal pMac, char *pBuf, char *fmt, ...)
 
     va_end(args);
 
-    /* If an output error is encountered, a negative value is returned by vsnprintf */
+    /*                                                                              */
     if (ret < 0)
         return 0;
 
@@ -145,7 +145,7 @@ int log_sprintf(tpAniSirGlobal pMac, char *pBuf, char *fmt, ...)
         ret = snprintf(pBuf, MAX_OVERFLOW_MSG, "\n-> ***********"
                 "\nOutput Exceeded the Buffer Size, message truncated!!\n<- ***********\n");
 #endif
-        /* If an output error is encountered, a negative value is returned by snprintf */
+        /*                                                                             */
         if (ret < 0)
             return 0;
 
@@ -156,7 +156,7 @@ int log_sprintf(tpAniSirGlobal pMac, char *pBuf, char *fmt, ...)
     pMac->gCurrentLogSize += ret;
 
 
-#endif //for #ifdef WLAN_DEBUG
+#endif //                     
     return ret;
 }
 
@@ -238,7 +238,7 @@ static void Log_getCfg(tpAniSirGlobal pMac, tANI_U16 cfgId)
     {
         tANI_U32  val;
 
-        // Get integer parameter
+        //                      
         if (wlan_cfgGetInt(pMac, (tANI_U16)cfgId, &val) != eSIR_SUCCESS)
         {
             sysLog(pMac, LOGE, FL("Get cfgId 0x%x failed\n"), cfgId);
@@ -253,7 +253,7 @@ static void Log_getCfg(tpAniSirGlobal pMac, tANI_U16 cfgId)
         tANI_U8 buf[CFG_MAX_STR_LEN] = {0} ;
         tANI_U32 valueLen ;
 
-        // Get string parameter
+        //                     
         valueLen = CFG_MAX_STR_LEN ;
         if (wlan_cfgGetStr(pMac, cfgId, buf, &valueLen) != eSIR_SUCCESS)
         {
@@ -326,7 +326,7 @@ char * dump_log_level_set( tpAniSirGlobal pMac, tANI_U32 arg1, tANI_U32 arg2, tA
 }
 
 
-/* Initialize the index */
+/*                      */
 void logDumpInit(tpAniSirGlobal pMac)
 {
     pMac->dumpTablecurrentId = 0;
@@ -345,7 +345,7 @@ void logDumpRegisterTable( tpAniSirGlobal pMac, tDumpFuncEntry *pEntry, tANI_U32
 
 
 /*
- * print nItems from the menu list ponted to by m
+                                                 
  */
 static tANI_U32 print_menu(tpAniSirGlobal pMac, char  *p, tANI_U32 startId)
 {

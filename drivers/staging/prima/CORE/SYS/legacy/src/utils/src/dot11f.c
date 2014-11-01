@@ -39,9 +39,9 @@
   */
 
 #if !defined  ANI_OS_TYPE_OSX && !defined ANI_OS_TYPE_LINUX && !defined ANI_OS_TYPE_ANDROID
-#include <memory.h> /* For memcpy */
-#include <stdio.h>  /* For _vsnprintf */
-#include <stddef.h> /* For offsetof */
+#include <memory.h> /*            */
+#include <stdio.h>  /*                */
+#include <stddef.h> /*              */
 #endif
 
 #include <aniGlobal.h>
@@ -53,8 +53,8 @@
 #   pragma warning (disable: 4244)
 #   pragma warning (disable: 4505)
 #   pragma warning (disable: 4702)
-#   pragma warning (disable: 4996) /* ... was declared deprecated */
-#endif /* Microsoft C/C++ */
+#   pragma warning (disable: 4996) /*                             */
+#endif /*                 */
 
 typedef unsigned char tFRAMES_BOOL;
 typedef void (*pfnGeneric_t)(void);
@@ -119,16 +119,16 @@ typedef struct sIEDefn {
 
 #ifndef DOT11F_LOG_GATE
 #   define DOT11F_LOG_GATE FRLOGW
-#endif // DOT11F_LOG_GATE
+#endif //                
 
 #ifdef WIN32
 
 #if defined ( _CONSOLE ) || defined ( _WINDOWS ) || defined ( _DLL ) || defined ( _LIB )
 #include <windows.h>
 #define DBGPRINT OutputDebugStringA
-#else  /* Not User mode */
+#else  /*               */
 #define DBGPRINT DbgPrint
-#endif /* User mode */
+#endif /*           */
 
 static void framesLog(tpAniSirGlobal pCtx, int nSev,
                       const char *lpszFormat, ...)
@@ -172,10 +172,10 @@ static void framesDump(tpAniSirGlobal pCtx, int nSev, tANI_U8 *pBuf, int nBuf)
 #endif
 }
 
-#elif defined OS_X /* Not WIN32 */
+#elif defined OS_X /*           */
 static void framesLog(tpAniSirGlobal pCtx, int nSev,
                       const char *lpszFormat, ...)
-{// To fill in when needed using IOLog
+{//                                   
 
 }
 
@@ -223,7 +223,7 @@ static void framesDump(tpAniSirGlobal pCtx, int nSev, tANI_U8 *pBuf, int nBuf)
 #endif
 }
 
-#endif /* WIN32 */
+#endif /*       */
 
 #define FRAMES_LOG0(ctx, sev, fmt) \
      framesLog((ctx), (sev), (fmt));
@@ -239,9 +239,9 @@ static void framesDump(tpAniSirGlobal pCtx, int nSev, tANI_U8 *pBuf, int nBuf)
 #   define FRAMES_SEV_FOR_FRAME(ctx, sig) FRLOG3
 #endif
 
-#endif /* End DOT11F_HAVE_LOG_MACROS */
+#endif /*                            */
 
-#else  // ! DOT11F_ENABLE_LOGGING
+#else  //                        
 #   define FRAMES_LOG0(ctx, sev, fmt)
 #   define FRAMES_LOG1(ctx, sev, fmt, p1)
 #   define FRAMES_LOG2(ctx, sev, fmt, p1, p2)
@@ -250,7 +250,7 @@ static void framesDump(tpAniSirGlobal pCtx, int nSev, tANI_U8 *pBuf, int nBuf)
 #   ifndef FRAMES_SEV_FOR_FRAME
 #       define FRAMES_SEV_FOR_FRAME(ctx, sig) FRLOG3
 #   endif
-#endif // DOT11F_ENABLE_LOGGING
+#endif //                      
 
 #if defined( DOT11F_ENABLE_DBG_BREAK ) && defined ( WIN32 )
 #   define FRAMES_DBG_BREAK() { _asm int 3 }
@@ -521,32 +521,32 @@ static tANI_U32 GetPackedSizeCore(tpAniSirGlobal pCtx,
 tANI_U32 dot11fUnpackTlvCommonFunc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tlvlen, tANI_U8 *pDstPresent, tANI_U8 *pDstField)
 {
    tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)tlvlen; /* Shutup the compiler */
+    (void)tlvlen; /*                     */
 
     *pDstPresent = 1;
     *pDstField = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvCommonFunc. */
+} /*                                */
 
 tANI_U32 dot11fUnpackTlvCommonFunc2(tpAniSirGlobal  pCtx, tANI_U8 *pBuf, tANI_U16 tlvlen, tANI_U8 *pDstPresent, tANI_U16 *pDstState)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)tlvlen; /* Shutup the compiler */
+    (void)tlvlen; /*                     */
 
     *pDstPresent = 1;
     framesntohs(pCtx, pDstState, pBuf, 1);
     (void)pCtx;
     return status;
 
-} /* End dot11fUnpackTlvCommonFunc2. */
+} /*                                 */
                                            
 void dot11fUnpackFfCommonFunc(tpAniSirGlobal pCtx,
                             tANI_U8 *pBuf, tANI_U16 *pDstField)
 {
     framesntohs(pCtx, pDstField, pBuf, 0);
     (void)pCtx;
-} /* End dot11fUnpackFfCommonFunc. */
+} /*                               */
 
 tANI_U32 dot11fUnpackIeCommonFunc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
                                          tANI_U8 *pDstPresent , tANI_U8 *pDstField)
@@ -559,7 +559,7 @@ tANI_U32 dot11fUnpackIeCommonFunc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     *pDstField = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeComonFunc. */
+} /*                              */
 typedef struct sTLVDefn {
     tANI_U32   offset;
     tANI_U32   presenceOffset;
@@ -641,7 +641,7 @@ void dot11fUnpackFfAction(tpAniSirGlobal pCtx,
 {
     pDst->action = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfAction. */
+} /*                           */
 
 #define SigFfAction ( 0x0002 )
 
@@ -656,7 +656,7 @@ void dot11fUnpackFfAddBAParameterSet(tpAniSirGlobal pCtx,
     pDst->tid = tmp0__ >> 2 & 0xf;
     pDst->bufferSize = tmp0__ >> 6 & 0x3ff;
     (void)pCtx;
-} /* End dot11fUnpackFfAddBAParameterSet. */
+} /*                                      */
 
 #define SigFfAddBAParameterSet ( 0x0003 )
 
@@ -673,7 +673,7 @@ void dot11fUnpackFfBAStartingSequenceControl(tpAniSirGlobal pCtx,
     pDst->fragNumber = tmp1__ >> 0 & 0xf;
     pDst->ssn = tmp1__ >> 4 & 0xfff;
     (void)pCtx;
-} /* End dot11fUnpackFfBAStartingSequenceControl. */
+} /*                                              */
 
 #define SigFfBAStartingSequenceControl ( 0x0006 )
 
@@ -704,7 +704,7 @@ void dot11fUnpackFfCapabilities(tpAniSirGlobal pCtx,
     pDst->delayedBA = tmp2__ >> 14 & 0x1;
     pDst->immediateBA = tmp2__ >> 15 & 0x1;
     (void)pCtx;
-} /* End dot11fUnpackFfCapabilities. */
+} /*                                 */
 
 #define SigFfCapabilities ( 0x0009 )
 
@@ -714,7 +714,7 @@ void dot11fUnpackFfCategory(tpAniSirGlobal pCtx,
 {
     pDst->category = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfCategory. */
+} /*                             */
 
 #define SigFfCategory ( 0x000a )
 
@@ -724,7 +724,7 @@ void dot11fUnpackFfCurrentAPAddress(tpAniSirGlobal pCtx,
 {
     DOT11F_MEMCPY(pCtx, pDst->mac, pBuf, 6);
     (void)pCtx;
-} /* End dot11fUnpackFfCurrentAPAddress. */
+} /*                                     */
 
 #define SigFfCurrentAPAddress ( 0x000b )
 
@@ -738,7 +738,7 @@ void dot11fUnpackFfDelBAParameterSet(tpAniSirGlobal pCtx,
     pDst->initiator = tmp3__ >> 11 & 0x1;
     pDst->tid = tmp3__ >> 12 & 0xf;
     (void)pCtx;
-} /* End dot11fUnpackFfDelBAParameterSet. */
+} /*                                      */
 
 #define SigFfDelBAParameterSet ( 0x000c )
 
@@ -748,7 +748,7 @@ void dot11fUnpackFfDialogToken(tpAniSirGlobal pCtx,
 {
     pDst->token = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfDialogToken. */
+} /*                                */
 
 #define SigFfDialogToken ( 0x000d )
 
@@ -758,7 +758,7 @@ void dot11fUnpackFfLinkMargin(tpAniSirGlobal pCtx,
 {
     pDst->linkMargin = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfLinkMargin. */
+} /*                               */
 
 #define SigFfLinkMargin ( 0x000e )
 
@@ -770,7 +770,7 @@ void dot11fUnpackFfMaxTxPower(tpAniSirGlobal pCtx,
 {
     pDst->maxTxPower = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfMaxTxPower. */
+} /*                               */
 
 #define SigFfMaxTxPower ( 0x0010 )
 
@@ -780,7 +780,7 @@ void dot11fUnpackFfNumOfRepetitions(tpAniSirGlobal pCtx,
 {
     framesntohs(pCtx, &pDst->repetitions, pBuf, 0);
     (void)pCtx;
-} /* End dot11fUnpackFfNumOfRepetitions. */
+} /*                                     */
 
 #define SigFfNumOfRepetitions ( 0x0011 )
 
@@ -795,7 +795,7 @@ void dot11fUnpackFfOperatingMode(tpAniSirGlobal pCtx,
     pDst->rxNSS = tmp4__ >> 4 & 0x7;
     pDst->rxNSSType = tmp4__ >> 7 & 0x1;
     (void)pCtx;
-} /* End dot11fUnpackFfOperatingMode. */
+} /*                                  */
 
 #define SigFfOperatingMode ( 0x0012 )
 
@@ -805,7 +805,7 @@ void dot11fUnpackFfP2POUI(tpAniSirGlobal pCtx,
 {
     framesntohl(pCtx, &pDst->oui, pBuf, 0);
     (void)pCtx;
-} /* End dot11fUnpackFfP2POUI. */
+} /*                           */
 
 #define SigFfP2POUI ( 0x0013 )
 
@@ -815,7 +815,7 @@ void dot11fUnpackFfP2POUISubType(tpAniSirGlobal pCtx,
 {
     pDst->ouiSubtype = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfP2POUISubType. */
+} /*                                  */
 
 #define SigFfP2POUISubType ( 0x0014 )
 
@@ -825,7 +825,7 @@ void dot11fUnpackFfRCPI(tpAniSirGlobal pCtx,
 {
     pDst->rcpi = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfRCPI. */
+} /*                         */
 
 #define SigFfRCPI ( 0x0015 )
 
@@ -835,7 +835,7 @@ void dot11fUnpackFfRSNI(tpAniSirGlobal pCtx,
 {
     pDst->rsni = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfRSNI. */
+} /*                         */
 
 #define SigFfRSNI ( 0x0016 )
 
@@ -847,7 +847,7 @@ void dot11fUnpackFfRxAntennaId(tpAniSirGlobal pCtx,
 {
     pDst->antennaId = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfRxAntennaId. */
+} /*                                */
 
 #define SigFfRxAntennaId ( 0x0018 )
 
@@ -861,7 +861,7 @@ void dot11fUnpackFfSMPowerModeSet(tpAniSirGlobal pCtx,
     pDst->Mode = tmp5__ >> 1 & 0x1;
     pDst->reserved = tmp5__ >> 2 & 0x3f;
     (void)pCtx;
-} /* End dot11fUnpackFfSMPowerModeSet. */
+} /*                                   */
 
 #define SigFfSMPowerModeSet ( 0x0019 )
 
@@ -873,7 +873,7 @@ void dot11fUnpackFfStatusCode(tpAniSirGlobal pCtx,
 {
     pDst->statusCode = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfStatusCode. */
+} /*                               */
 
 #define SigFfStatusCode ( 0x001b )
 
@@ -883,7 +883,7 @@ void dot11fUnpackFfTPCEleID(tpAniSirGlobal pCtx,
 {
     pDst->TPCId = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfTPCEleID. */
+} /*                             */
 
 #define SigFfTPCEleID ( 0x001c )
 
@@ -893,7 +893,7 @@ void dot11fUnpackFfTPCEleLen(tpAniSirGlobal pCtx,
 {
     pDst->TPCLen = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfTPCEleLen. */
+} /*                              */
 
 #define SigFfTPCEleLen ( 0x001d )
 
@@ -914,7 +914,7 @@ void dot11fUnpackFfTSInfo(tpAniSirGlobal pCtx,
     pDst->schedule = tmp6__ >> 16 & 0x1;
     pDst->unused = tmp6__ >> 17 & 0x7fff;
     (void)pCtx;
-} /* End dot11fUnpackFfTSInfo. */
+} /*                           */
 
 #define SigFfTSInfo ( 0x001e )
 
@@ -924,7 +924,7 @@ void dot11fUnpackFfTimeStamp(tpAniSirGlobal pCtx,
 {
     framesntohq(pCtx, &pDst->timestamp, pBuf, 0);
     (void)pCtx;
-} /* End dot11fUnpackFfTimeStamp. */
+} /*                              */
 
 #define SigFfTimeStamp ( 0x001f )
 
@@ -934,7 +934,7 @@ void dot11fUnpackFfTransactionId(tpAniSirGlobal pCtx,
 {
     DOT11F_MEMCPY(pCtx, pDst->transId, pBuf, 2);
     (void)pCtx;
-} /* End dot11fUnpackFfTransactionId. */
+} /*                                  */
 
 #define SigFfTransactionId ( 0x0020 )
 
@@ -944,7 +944,7 @@ void dot11fUnpackFfTxAntennaId(tpAniSirGlobal pCtx,
 {
     pDst->antennaId = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfTxAntennaId. */
+} /*                                */
 
 #define SigFfTxAntennaId ( 0x0021 )
 
@@ -954,7 +954,7 @@ void dot11fUnpackFfTxPower(tpAniSirGlobal pCtx,
 {
     pDst->txPower = *pBuf;
     (void)pCtx;
-} /* End dot11fUnpackFfTxPower. */
+} /*                            */
 
 #define SigFfTxPower ( 0x0022 )
 
@@ -967,7 +967,7 @@ tANI_U32 dot11fUnpackTlvAuthorizedMACs(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
     tlvlen -= (tANI_U8)6;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvAuthorizedMACs. */
+} /*                                    */
 
 #define SigTlvAuthorizedMACs ( 0x0001 )
 
@@ -987,7 +987,7 @@ tANI_U32 dot11fUnpackTlvVersion2(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tl
     pDst->major = tmp7__ >> 4 & 0xf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvVersion2. */
+} /*                              */
 
 #define SigTlvVersion2 ( 0x0003 )
 
@@ -1016,7 +1016,7 @@ tANI_U32 dot11fUnpackTlvChannelList(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvChannelList. */
+} /*                                 */
 
 #define SigTlvChannelList ( 0x0006 )
 
@@ -1039,7 +1039,7 @@ tANI_U32 dot11fUnpackTlvConfigurationTimeout(tpAniSirGlobal pCtx, tANI_U8 *pBuf,
     tlvlen -= (tANI_U8)1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvConfigurationTimeout. */
+} /*                                          */
 
 #define SigTlvConfigurationTimeout ( 0x0009 )
 
@@ -1059,7 +1059,7 @@ tANI_U32 dot11fUnpackTlvDeviceName(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvDeviceName. */
+} /*                                */
 
 #define SigTlvDeviceName ( 0x000a )
 
@@ -1079,7 +1079,7 @@ tANI_U32 dot11fUnpackTlvExtendedListenTiming(tpAniSirGlobal pCtx, tANI_U8 *pBuf,
     tlvlen -= (tANI_U8)2;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvExtendedListenTiming. */
+} /*                                          */
 
 #define SigTlvExtendedListenTiming ( 0x000c )
 
@@ -1096,7 +1096,7 @@ tANI_U32 dot11fUnpackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal pCtx, tANI_U8
     tlvlen -= (tANI_U8)6;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvIntendedP2PInterfaceAddress. */
+} /*                                                 */
 
 #define SigTlvIntendedP2PInterfaceAddress ( 0x000e )
 
@@ -1119,7 +1119,7 @@ tANI_U32 dot11fUnpackTlvListenChannel(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     tlvlen -= (tANI_U8)1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvListenChannel. */
+} /*                                   */
 
 #define SigTlvListenChannel ( 0x0010 )
 
@@ -1139,7 +1139,7 @@ tANI_U32 dot11fUnpackTlvManufacturer(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvManufacturer. */
+} /*                                  */
 
 #define SigTlvManufacturer ( 0x0011 )
 
@@ -1162,7 +1162,7 @@ tANI_U32 dot11fUnpackTlvModelName(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 t
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvModelName. */
+} /*                               */
 
 #define SigTlvModelName ( 0x0013 )
 
@@ -1182,7 +1182,7 @@ tANI_U32 dot11fUnpackTlvModelNumber(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvModelNumber. */
+} /*                                 */
 
 #define SigTlvModelNumber ( 0x0014 )
 
@@ -1208,7 +1208,7 @@ tANI_U32 dot11fUnpackTlvNoticeOfAbsence(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvNoticeOfAbsence. */
+} /*                                     */
 
 #define SigTlvNoticeOfAbsence ( 0x0015 )
 
@@ -1228,7 +1228,7 @@ tANI_U32 dot11fUnpackTlvOperatingChannel(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
     tlvlen -= (tANI_U8)1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvOperatingChannel. */
+} /*                                      */
 
 #define SigTlvOperatingChannel ( 0x0016 )
 
@@ -1245,7 +1245,7 @@ tANI_U32 dot11fUnpackTlvP2PCapability(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     tlvlen -= (tANI_U8)1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PCapability. */
+} /*                                   */
 
 #define SigTlvP2PCapability ( 0x0017 )
 
@@ -1259,7 +1259,7 @@ tANI_U32 dot11fUnpackTlvP2PDeviceId(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16
     tlvlen -= (tANI_U8)6;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PDeviceId. */
+} /*                                 */
 
 #define SigTlvP2PDeviceId ( 0x0018 )
 
@@ -1290,7 +1290,7 @@ tANI_U32 dot11fUnpackTlvP2PDeviceInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
                         ( tANI_U8* )pDst,
                         sizeof(*pDst));
     return status;
-} /* End dot11fUnpackTlvP2PDeviceInfo. */
+} /*                                   */
 
 #define SigTlvP2PDeviceInfo ( 0x0019 )
 
@@ -1304,7 +1304,7 @@ tANI_U32 dot11fUnpackTlvP2PGroupBssid(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     tlvlen -= (tANI_U8)6;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PGroupBssid. */
+} /*                                   */
 
 #define SigTlvP2PGroupBssid ( 0x001a )
 
@@ -1327,7 +1327,7 @@ tANI_U32 dot11fUnpackTlvP2PGroupId(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PGroupId. */
+} /*                                */
 
 #define SigTlvP2PGroupId ( 0x001b )
 
@@ -1342,7 +1342,7 @@ tANI_U32 dot11fUnpackTlvP2PGroupInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PGroupInfo. */
+} /*                                  */
 
 #define SigTlvP2PGroupInfo ( 0x001c )
 
@@ -1353,7 +1353,7 @@ tANI_U32 dot11fUnpackTlvP2PGroupInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
 tANI_U32 dot11fUnpackTlvPrimaryDeviceType(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tlvlen, tDot11fTLVPrimaryDeviceType *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)tlvlen; /* Shutup the compiler */
+    (void)pBuf; (void)tlvlen; /*                     */
     pDst->present = 1;
     framesntohs(pCtx, &pDst->primary_category, pBuf, 1);
     pBuf += 2;
@@ -1366,7 +1366,7 @@ tANI_U32 dot11fUnpackTlvPrimaryDeviceType(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
     tlvlen -= (tANI_U8)2;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvPrimaryDeviceType. */
+} /*                                       */
 
 #define SigTlvPrimaryDeviceType ( 0x001e )
 
@@ -1389,7 +1389,7 @@ tANI_U32 dot11fUnpackTlvRequestDeviceType(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
     tlvlen -= (tANI_U8)2;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvRequestDeviceType. */
+} /*                                       */
 
 #define SigTlvRequestDeviceType ( 0x0020 )
 
@@ -1421,7 +1421,7 @@ tANI_U32 dot11fUnpackTlvSerialNumber(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
     tlvlen -= ( tlvlen );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvSerialNumber. */
+} /*                                  */
 
 #define SigTlvSerialNumber ( 0x0025 )
 
@@ -1435,7 +1435,7 @@ tANI_U32 dot11fUnpackTlvUUID_E(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tlvl
     tlvlen -= (tANI_U8)16;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvUUID_E. */
+} /*                            */
 
 #define SigTlvUUID_E ( 0x0026 )
 
@@ -1449,7 +1449,7 @@ tANI_U32 dot11fUnpackTlvUUID_R(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tlvl
     tlvlen -= (tANI_U8)16;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvUUID_R. */
+} /*                            */
 
 #define SigTlvUUID_R ( 0x0027 )
 
@@ -1476,7 +1476,7 @@ tANI_U32 dot11fUnpackTlvVendorExtension(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
                         ( tANI_U8* )pDst,
                         sizeof(*pDst));
     return status;
-} /* End dot11fUnpackTlvVendorExtension. */
+} /*                                     */
 
 #define SigTlvVendorExtension ( 0x0028 )
 
@@ -1493,7 +1493,7 @@ tANI_U32 dot11fUnpackTlvVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U16 tlv
     pDst->major = tmp8__ >> 4 & 0xf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvVersion. */
+} /*                             */
 
 #define SigTlvVersion ( 0x0029 )
 
@@ -1510,7 +1510,7 @@ tANI_U32 dot11fUnpackTlvP2PInterface(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
     tlvlen -= (tANI_U8)6;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackTlvP2PInterface. */
+} /*                                  */
 
 #define SigTlvP2PInterface ( 0x002b )
 
@@ -1521,7 +1521,7 @@ tANI_U32 dot11fUnpackTlvP2PInterface(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U1
 tANI_U32 dot11fUnpackIeAPName(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEAPName *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_name = (tANI_U8)( ielen );
@@ -1533,7 +1533,7 @@ tANI_U32 dot11fUnpackIeAPName(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     DOT11F_MEMCPY(pCtx, pDst->name, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeAPName. */
+} /*                           */
 
 #define SigIeAPName ( 0x0001 )
 
@@ -1541,7 +1541,7 @@ tANI_U32 dot11fUnpackIeAPName(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeBPIndicator(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEBPIndicator *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->indicator = *pBuf;
@@ -1550,7 +1550,7 @@ tANI_U32 dot11fUnpackIeBPIndicator(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     pDst->type = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeBPIndicator. */
+} /*                                */
 
 #define SigIeBPIndicator ( 0x0002 )
 
@@ -1558,13 +1558,13 @@ tANI_U32 dot11fUnpackIeBPIndicator(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeCondensedCountryStr(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECondensedCountryStr *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->countryStr, pBuf, 2);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCondensedCountryStr. */
+} /*                                        */
 
 #define SigIeCondensedCountryStr ( 0x0003 )
 
@@ -1573,7 +1573,7 @@ tANI_U32 dot11fUnpackIeGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp9__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &tmp9__, pBuf, 0);
@@ -1596,7 +1596,7 @@ tANI_U32 dot11fUnpackIeGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
     DOT11F_MEMCPY(pCtx, pDst->key, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeGTK. */
+} /*                        */
 
 #define SigIeGTK ( 0x0004 )
 
@@ -1607,7 +1607,7 @@ tANI_U32 dot11fUnpackIeGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeIGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEIGTK *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->keyID, pBuf, 2);
@@ -1622,7 +1622,7 @@ tANI_U32 dot11fUnpackIeIGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
     DOT11F_MEMCPY(pCtx, pDst->key, pBuf, 24);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeIGTK. */
+} /*                         */
 
 #define SigIeIGTK ( 0x0006 )
 
@@ -1630,13 +1630,13 @@ tANI_U32 dot11fUnpackIeIGTK(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
 tANI_U32 dot11fUnpackIeLLAttr(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIELLAttr *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohl(pCtx, &pDst->defer_threshold, pBuf, 1);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeLLAttr. */
+} /*                           */
 
 #define SigIeLLAttr ( 0x0007 )
 
@@ -1644,7 +1644,7 @@ tANI_U32 dot11fUnpackIeLLAttr(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeLoadBalance(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIELoadBalance *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->bssid, pBuf, 6);
@@ -1653,7 +1653,7 @@ tANI_U32 dot11fUnpackIeLoadBalance(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     pDst->channel = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeLoadBalance. */
+} /*                                */
 
 #define SigIeLoadBalance ( 0x0008 )
 
@@ -1661,7 +1661,7 @@ tANI_U32 dot11fUnpackIeLoadBalance(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeLoadInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIELoadInfo *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->num_stas, pBuf, 1);
@@ -1670,7 +1670,7 @@ tANI_U32 dot11fUnpackIeLoadInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     framesntohs(pCtx, &pDst->channel_util, pBuf, 1);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeLoadInfo. */
+} /*                             */
 
 #define SigIeLoadInfo ( 0x0009 )
 
@@ -1681,13 +1681,13 @@ tANI_U32 dot11fUnpackIeLoadInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIePropCapability(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPropCapability *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->capability, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePropCapability. */
+} /*                                   */
 
 #define SigIePropCapability ( 0x000b )
 
@@ -1695,7 +1695,7 @@ tANI_U32 dot11fUnpackIePropCapability(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 tANI_U32 dot11fUnpackIePropChannSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPropChannSwitchAnn *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->mode = *pBuf;
@@ -1710,7 +1710,7 @@ tANI_U32 dot11fUnpackIePropChannSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
     pDst->channel_switch_count = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePropChannSwitchAnn. */
+} /*                                       */
 
 #define SigIePropChannSwitchAnn ( 0x000c )
 
@@ -1726,7 +1726,7 @@ tANI_U32 dot11fUnpackIePropEDCAParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     tANI_U8 tmp15__;
     tANI_U8 tmp16__;
     tANI_U8 tmp17__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->qos = *pBuf;
@@ -1795,7 +1795,7 @@ tANI_U32 dot11fUnpackIePropEDCAParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     framesntohs(pCtx, &pDst->acvo_txoplimit, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePropEDCAParams. */
+} /*                                   */
 
 #define SigIePropEDCAParams ( 0x000d )
 
@@ -1803,7 +1803,7 @@ tANI_U32 dot11fUnpackIePropEDCAParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 tANI_U32 dot11fUnpackIePropQuietBSS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPropQuietBSS *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->quiet_count = *pBuf;
@@ -1818,7 +1818,7 @@ tANI_U32 dot11fUnpackIePropQuietBSS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     framesntohs(pCtx, &pDst->quiet_offset, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePropQuietBSS. */
+} /*                                 */
 
 #define SigIePropQuietBSS ( 0x000e )
 
@@ -1828,7 +1828,7 @@ tANI_U32 dot11fUnpackIePropSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     tANI_U8 i;
     tANI_U8 rate_indx = 0;
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     for (i = 0; i < ielen; i++) {
@@ -1846,7 +1846,7 @@ tANI_U32 dot11fUnpackIePropSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->num_rates = rate_indx;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePropSuppRates. */
+} /*                                  */
 
 #define SigIePropSuppRates ( 0x000f )
 
@@ -1854,7 +1854,7 @@ tANI_U32 dot11fUnpackIePropSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeR0KH_ID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIER0KH_ID *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_PMK_R0_ID = (tANI_U8)( ielen );
@@ -1866,7 +1866,7 @@ tANI_U32 dot11fUnpackIeR0KH_ID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     DOT11F_MEMCPY(pCtx, pDst->PMK_R0_ID, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeR0KH_ID. */
+} /*                            */
 
 #define SigIeR0KH_ID ( 0x0010 )
 
@@ -1874,13 +1874,13 @@ tANI_U32 dot11fUnpackIeR0KH_ID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 tANI_U32 dot11fUnpackIeR1KH_ID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIER1KH_ID *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->PMK_R1_ID, pBuf, 6);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeR1KH_ID. */
+} /*                            */
 
 #define SigIeR1KH_ID ( 0x0011 )
 
@@ -1888,7 +1888,7 @@ tANI_U32 dot11fUnpackIeR1KH_ID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 tANI_U32 dot11fUnpackIeTSFInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETSFInfo *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->TsfOffset, pBuf, 0);
@@ -1897,7 +1897,7 @@ tANI_U32 dot11fUnpackIeTSFInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     framesntohs(pCtx, &pDst->BeaconIntvl, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTSFInfo. */
+} /*                            */
 
 #define SigIeTSFInfo ( 0x0012 )
 
@@ -1906,7 +1906,7 @@ tANI_U32 dot11fUnpackIeTaurus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp18__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->baTIDBitmap, pBuf, 0);
@@ -1920,7 +1920,7 @@ tANI_U32 dot11fUnpackIeTaurus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     pDst->rsvd = tmp18__ >> 12 & 0xf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTaurus. */
+} /*                           */
 
 #define SigIeTaurus ( 0x0013 )
 
@@ -1928,7 +1928,7 @@ tANI_U32 dot11fUnpackIeTaurus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeTitan(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETitan *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->concat_tcid_bitmap = *pBuf;
@@ -1943,7 +1943,7 @@ tANI_U32 dot11fUnpackIeTitan(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
     pDst->rev_fcs_state = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTitan. */
+} /*                          */
 
 #define SigIeTitan ( 0x0014 )
 
@@ -1954,7 +1954,7 @@ tANI_U32 dot11fUnpackIeTitan(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
 tANI_U32 dot11fUnpackIeVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEVersion *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohl(pCtx, &pDst->chip_rev, pBuf, 0);
@@ -1972,7 +1972,7 @@ tANI_U32 dot11fUnpackIeVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     DOT11F_MEMCPY(pCtx, pDst->build_version, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeVersion. */
+} /*                            */
 
 #define SigIeVersion ( 0x0016 )
 
@@ -1980,7 +1980,7 @@ tANI_U32 dot11fUnpackIeVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 tANI_U32 dot11fUnpackIeWDS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWDS *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_wdsData = (tANI_U8)( ielen );
@@ -1992,7 +1992,7 @@ tANI_U32 dot11fUnpackIeWDS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
     DOT11F_MEMCPY(pCtx, pDst->wdsData, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWDS. */
+} /*                        */
 
 #define SigIeWDS ( 0x0017 )
 
@@ -2000,7 +2000,7 @@ tANI_U32 dot11fUnpackIeWDS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeAPChannelReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEAPChannelReport *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->regulatoryClass = *pBuf;
@@ -2015,7 +2015,7 @@ tANI_U32 dot11fUnpackIeAPChannelReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
     DOT11F_MEMCPY(pCtx, pDst->channelList, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeAPChannelReport. */
+} /*                                    */
 
 #define SigIeAPChannelReport ( 0x0018 )
 
@@ -2023,13 +2023,13 @@ tANI_U32 dot11fUnpackIeAPChannelReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
 tANI_U32 dot11fUnpackIeBcnReportingDetail(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEBcnReportingDetail *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->reportingDetail = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeBcnReportingDetail. */
+} /*                                       */
 
 #define SigIeBcnReportingDetail ( 0x0019 )
 
@@ -2037,7 +2037,7 @@ tANI_U32 dot11fUnpackIeBcnReportingDetail(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
 tANI_U32 dot11fUnpackIeBeaconReportFrmBody(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEBeaconReportFrmBody *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_reportedFields = (tANI_U8)( ielen );
@@ -2049,7 +2049,7 @@ tANI_U32 dot11fUnpackIeBeaconReportFrmBody(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
     DOT11F_MEMCPY(pCtx, pDst->reportedFields, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeBeaconReportFrmBody. */
+} /*                                        */
 
 #define SigIeBeaconReportFrmBody ( 0x001a )
 
@@ -2057,7 +2057,7 @@ tANI_U32 dot11fUnpackIeBeaconReportFrmBody(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
 tANI_U32 dot11fUnpackIeBeaconReporting(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEBeaconReporting *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->reportingCondition = *pBuf;
@@ -2066,7 +2066,7 @@ tANI_U32 dot11fUnpackIeBeaconReporting(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
     pDst->threshold = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeBeaconReporting. */
+} /*                                    */
 
 #define SigIeBeaconReporting ( 0x001b )
 
@@ -2074,7 +2074,7 @@ tANI_U32 dot11fUnpackIeBeaconReporting(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
 tANI_U32 dot11fUnpackIeMeasurementPilot(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEMeasurementPilot *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->measurementPilot = *pBuf;
@@ -2084,7 +2084,7 @@ tANI_U32 dot11fUnpackIeMeasurementPilot(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
     DOT11F_MEMCPY(pCtx, pDst->vendorSpecific, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeMeasurementPilot. */
+} /*                                     */
 
 #define SigIeMeasurementPilot ( 0x001c )
 
@@ -2092,7 +2092,7 @@ tANI_U32 dot11fUnpackIeMeasurementPilot(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
 tANI_U32 dot11fUnpackIeMultiBssid(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEMultiBssid *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->maxBSSIDIndicator = *pBuf;
@@ -2102,7 +2102,7 @@ tANI_U32 dot11fUnpackIeMultiBssid(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     DOT11F_MEMCPY(pCtx, pDst->vendorSpecific, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeMultiBssid. */
+} /*                               */
 
 #define SigIeMultiBssid ( 0x001d )
 
@@ -2110,7 +2110,7 @@ tANI_U32 dot11fUnpackIeMultiBssid(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
 tANI_U32 dot11fUnpackIeRICData(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERICData *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->Identifier = *pBuf;
@@ -2122,7 +2122,7 @@ tANI_U32 dot11fUnpackIeRICData(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     framesntohs(pCtx, &pDst->statusCode, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRICData. */
+} /*                            */
 
 #define SigIeRICData ( 0x001e )
 
@@ -2130,7 +2130,7 @@ tANI_U32 dot11fUnpackIeRICData(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 tANI_U32 dot11fUnpackIeRICDescriptor(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERICDescriptor *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->resourceType = *pBuf;
@@ -2140,7 +2140,7 @@ tANI_U32 dot11fUnpackIeRICDescriptor(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     DOT11F_MEMCPY(pCtx, pDst->variableData, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRICDescriptor. */
+} /*                                  */
 
 #define SigIeRICDescriptor ( 0x001f )
 
@@ -2153,7 +2153,7 @@ tANI_U32 dot11fUnpackIeRRMEnabledCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     tANI_U8 tmp21__;
     tANI_U8 tmp22__;
     tANI_U8 tmp23__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp19__ = *pBuf;
@@ -2200,7 +2200,7 @@ tANI_U32 dot11fUnpackIeRRMEnabledCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->reserved = tmp23__ >> 2 & 0x3f;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRRMEnabledCap. */
+} /*                                  */
 
 #define SigIeRRMEnabledCap ( 0x0020 )
 
@@ -2208,14 +2208,14 @@ tANI_U32 dot11fUnpackIeRRMEnabledCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeRequestedInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERequestedInfo *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_requested_eids = (tANI_U8)( ielen );
     DOT11F_MEMCPY(pCtx, pDst->requested_eids, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRequestedInfo. */
+} /*                                  */
 
 #define SigIeRequestedInfo ( 0x0021 )
 
@@ -2223,7 +2223,7 @@ tANI_U32 dot11fUnpackIeRequestedInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeSSID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIESSID *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present)
     {
         status = DOT11F_DUPLICATE_IE;
@@ -2239,7 +2239,7 @@ tANI_U32 dot11fUnpackIeSSID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
     DOT11F_MEMCPY(pCtx, pDst->ssid, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeSSID. */
+} /*                         */
 
 #define SigIeSSID ( 0x0022 )
 
@@ -2248,7 +2248,7 @@ tANI_U32 dot11fUnpackIeSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp24__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &tmp24__, pBuf, 0);
@@ -2270,7 +2270,7 @@ tANI_U32 dot11fUnpackIeSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     framesntohs(pCtx, &pDst->spec_interval, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeSchedule. */
+} /*                             */
 
 #define SigIeSchedule ( 0x0023 )
 
@@ -2278,7 +2278,7 @@ tANI_U32 dot11fUnpackIeSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIeTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETCLAS *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->user_priority = *pBuf;
@@ -2359,7 +2359,7 @@ tANI_U32 dot11fUnpackIeTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTCLAS. */
+} /*                          */
 
 #define SigIeTCLAS ( 0x0024 )
 
@@ -2370,13 +2370,13 @@ tANI_U32 dot11fUnpackIeTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
 tANI_U32 dot11fUnpackIeTSDelay(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETSDelay *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohl(pCtx, &pDst->delay, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTSDelay. */
+} /*                            */
 
 #define SigIeTSDelay ( 0x0026 )
 
@@ -2387,7 +2387,7 @@ tANI_U32 dot11fUnpackIeTSPEC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
     tANI_U16 tmp25__;
     tANI_U8 tmp26__;
     tANI_U16 tmp27__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &tmp25__, pBuf, 0);
@@ -2453,7 +2453,7 @@ tANI_U32 dot11fUnpackIeTSPEC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
     framesntohs(pCtx, &pDst->medium_time, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTSPEC. */
+} /*                          */
 
 #define SigIeTSPEC ( 0x0027 )
 
@@ -2462,7 +2462,7 @@ tANI_U32 dot11fUnpackIeWMMSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp28__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -2492,7 +2492,7 @@ tANI_U32 dot11fUnpackIeWMMSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     framesntohs(pCtx, &pDst->spec_interval, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMSchedule. */
+} /*                                */
 
 #define SigIeWMMSchedule ( 0x0028 )
 
@@ -2500,7 +2500,7 @@ tANI_U32 dot11fUnpackIeWMMSchedule(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWMMTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWMMTCLAS *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -2589,7 +2589,7 @@ tANI_U32 dot11fUnpackIeWMMTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMTCLAS. */
+} /*                             */
 
 #define SigIeWMMTCLAS ( 0x0029 )
 
@@ -2597,7 +2597,7 @@ tANI_U32 dot11fUnpackIeWMMTCLAS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIeWMMTCLASPROC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWMMTCLASPROC *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -2611,7 +2611,7 @@ tANI_U32 dot11fUnpackIeWMMTCLASPROC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     pDst->processing = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMTCLASPROC. */
+} /*                                 */
 
 #define SigIeWMMTCLASPROC ( 0x002a )
 
@@ -2619,7 +2619,7 @@ tANI_U32 dot11fUnpackIeWMMTCLASPROC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
 tANI_U32 dot11fUnpackIeWMMTSDelay(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWMMTSDelay *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -2633,7 +2633,7 @@ tANI_U32 dot11fUnpackIeWMMTSDelay(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     framesntohl(pCtx, &pDst->delay, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMTSDelay. */
+} /*                               */
 
 #define SigIeWMMTSDelay ( 0x002b )
 
@@ -2644,7 +2644,7 @@ tANI_U32 dot11fUnpackIeWMMTSPEC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     tANI_U16 tmp29__;
     tANI_U8 tmp30__;
     tANI_U16 tmp31__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -2718,7 +2718,7 @@ tANI_U32 dot11fUnpackIeWMMTSPEC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     framesntohs(pCtx, &pDst->medium_time, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMTSPEC. */
+} /*                             */
 
 #define SigIeWMMTSPEC ( 0x002c )
 
@@ -2726,13 +2726,13 @@ tANI_U32 dot11fUnpackIeWMMTSPEC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIeAID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEAID *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->assocId, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeAID. */
+} /*                        */
 
 #define SigIeAID ( 0x002d )
 
@@ -2765,7 +2765,7 @@ tANI_U32 dot11fUnpackIeAID(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeAirgo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEAirgo *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     (void)pCtx;
@@ -2777,7 +2777,7 @@ tANI_U32 dot11fUnpackIeAirgo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
                      ( tANI_U8* )pDst,
                      sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeAirgo. */
+} /*                          */
 
 #define SigIeAirgo ( 0x002e )
 
@@ -2785,7 +2785,7 @@ tANI_U32 dot11fUnpackIeAirgo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
 tANI_U32 dot11fUnpackIeCCXCckmOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECCXCckmOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -2797,7 +2797,7 @@ tANI_U32 dot11fUnpackIeCCXCckmOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXCckmOpaque. */
+} /*                                  */
 
 #define SigIeCCXCckmOpaque ( 0x002f )
 
@@ -2806,7 +2806,7 @@ tANI_U32 dot11fUnpackIeCCXRadMgmtCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp32__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->mgmt_state = *pBuf;
@@ -2817,7 +2817,7 @@ tANI_U32 dot11fUnpackIeCCXRadMgmtCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->reserved = tmp32__ >> 3 & 0x1f;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXRadMgmtCap. */
+} /*                                  */
 
 #define SigIeCCXRadMgmtCap ( 0x0030 )
 
@@ -2825,7 +2825,7 @@ tANI_U32 dot11fUnpackIeCCXRadMgmtCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeCCXTrafStrmMet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECCXTrafStrmMet *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->tsid = *pBuf;
@@ -2837,7 +2837,7 @@ tANI_U32 dot11fUnpackIeCCXTrafStrmMet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     framesntohs(pCtx, &pDst->msmt_interval, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXTrafStrmMet. */
+} /*                                   */
 
 #define SigIeCCXTrafStrmMet ( 0x0031 )
 
@@ -2845,7 +2845,7 @@ tANI_U32 dot11fUnpackIeCCXTrafStrmMet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 tANI_U32 dot11fUnpackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECCXTrafStrmRateSet *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->tsid = *pBuf;
@@ -2860,7 +2860,7 @@ tANI_U32 dot11fUnpackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
     DOT11F_MEMCPY(pCtx, pDst->tsrates, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXTrafStrmRateSet. */
+} /*                                       */
 
 #define SigIeCCXTrafStrmRateSet ( 0x0032 )
 
@@ -2868,7 +2868,7 @@ tANI_U32 dot11fUnpackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
 tANI_U32 dot11fUnpackIeCCXTxmitPower(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECCXTxmitPower *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->power_limit = *pBuf;
@@ -2877,7 +2877,7 @@ tANI_U32 dot11fUnpackIeCCXTxmitPower(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->reserved = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXTxmitPower. */
+} /*                                  */
 
 #define SigIeCCXTxmitPower ( 0x0033 )
 
@@ -2885,13 +2885,13 @@ tANI_U32 dot11fUnpackIeCCXTxmitPower(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeCCXVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECCXVersion *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCCXVersion. */
+} /*                               */
 
 #define SigIeCCXVersion ( 0x0034 )
 
@@ -2899,7 +2899,7 @@ tANI_U32 dot11fUnpackIeCCXVersion(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
 tANI_U32 dot11fUnpackIeCFParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECFParams *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->cfp_count = *pBuf;
@@ -2914,7 +2914,7 @@ tANI_U32 dot11fUnpackIeCFParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     framesntohs(pCtx, &pDst->cfp_durremaining, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCFParams. */
+} /*                             */
 
 #define SigIeCFParams ( 0x0035 )
 
@@ -2922,7 +2922,7 @@ tANI_U32 dot11fUnpackIeCFParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIeChallengeText(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEChallengeText *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_text = (tANI_U8)( ielen );
@@ -2934,7 +2934,7 @@ tANI_U32 dot11fUnpackIeChallengeText(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     DOT11F_MEMCPY(pCtx, pDst->text, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeChallengeText. */
+} /*                                  */
 
 #define SigIeChallengeText ( 0x0036 )
 
@@ -2942,7 +2942,7 @@ tANI_U32 dot11fUnpackIeChallengeText(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEChanSwitchAnn *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->switchMode = *pBuf;
@@ -2954,7 +2954,7 @@ tANI_U32 dot11fUnpackIeChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->switchCount = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeChanSwitchAnn. */
+} /*                                  */
 
 #define SigIeChanSwitchAnn ( 0x0037 )
 
@@ -2962,7 +2962,7 @@ tANI_U32 dot11fUnpackIeChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeCountry(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIECountry *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->country, pBuf, 3);
@@ -2985,7 +2985,7 @@ tANI_U32 dot11fUnpackIeCountry(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeCountry. */
+} /*                            */
 
 #define SigIeCountry ( 0x0038 )
 
@@ -3004,7 +3004,7 @@ tANI_U32 dot11fUnpackIeEDCAParamSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     tANI_U8 tmp38__;
     tANI_U8 tmp39__;
     tANI_U8 tmp40__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->qos = *pBuf;
@@ -3073,7 +3073,7 @@ tANI_U32 dot11fUnpackIeEDCAParamSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     framesntohs(pCtx, &pDst->acvo_txoplimit, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeEDCAParamSet. */
+} /*                                 */
 
 #define SigIeEDCAParamSet ( 0x003a )
 
@@ -3082,7 +3082,7 @@ tANI_U32 dot11fUnpackIeERPInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp41__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp41__ = *pBuf;
@@ -3092,7 +3092,7 @@ tANI_U32 dot11fUnpackIeERPInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     pDst->unused = tmp41__ >> 3 & 0x1f;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeERPInfo. */
+} /*                            */
 
 #define SigIeERPInfo ( 0x003b )
 
@@ -3103,7 +3103,7 @@ tANI_U32 dot11fUnpackIeExtCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     tANI_U32 tmp42__;
     tANI_U16 tmp43__;
     tANI_U16 tmp44__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohl(pCtx, &tmp42__, pBuf, 0);
@@ -3166,7 +3166,7 @@ tANI_U32 dot11fUnpackIeExtCap(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     pDst->reserved7 = tmp44__ >> 15 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeExtCap. */
+} /*                           */
 
 #define SigIeExtCap ( 0x003c )
 
@@ -3179,7 +3179,7 @@ tANI_U32 dot11fUnpackIeExtSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     tANI_U8 i;
     tANI_U8 rate_indx = 0;
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     for (i = 0; i < ielen; i++) {
@@ -3197,7 +3197,7 @@ tANI_U32 dot11fUnpackIeExtSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     pDst->num_rates = rate_indx;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeExtSuppRates. */
+} /*                                 */
 
 #define SigIeExtSuppRates ( 0x003e )
 
@@ -3205,7 +3205,7 @@ tANI_U32 dot11fUnpackIeExtSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
 tANI_U32 dot11fUnpackIeFHParamSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEFHParamSet *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->dwell_time, pBuf, 0);
@@ -3220,7 +3220,7 @@ tANI_U32 dot11fUnpackIeFHParamSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     pDst->hop_index = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeFHParamSet. */
+} /*                               */
 
 #define SigIeFHParamSet ( 0x003f )
 
@@ -3228,7 +3228,7 @@ tANI_U32 dot11fUnpackIeFHParamSet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
 tANI_U32 dot11fUnpackIeFHParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEFHParams *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->radix = *pBuf;
@@ -3237,7 +3237,7 @@ tANI_U32 dot11fUnpackIeFHParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     pDst->nchannels = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeFHParams. */
+} /*                             */
 
 #define SigIeFHParams ( 0x0040 )
 
@@ -3245,7 +3245,7 @@ tANI_U32 dot11fUnpackIeFHParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
 tANI_U32 dot11fUnpackIeFHPattTable(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEFHPattTable *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->flag = *pBuf;
@@ -3269,7 +3269,7 @@ tANI_U32 dot11fUnpackIeFHPattTable(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     DOT11F_MEMCPY(pCtx, pDst->randtable, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeFHPattTable. */
+} /*                                */
 
 #define SigIeFHPattTable ( 0x0041 )
 
@@ -3290,7 +3290,7 @@ tANI_U32 dot11fUnpackIeFTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp45__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &tmp45__, pBuf, 0);
@@ -3316,7 +3316,7 @@ tANI_U32 dot11fUnpackIeFTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
                      ( tANI_U8* )pDst,
                      sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeFTInfo. */
+} /*                           */
 
 #define SigIeFTInfo ( 0x0042 )
 
@@ -3324,7 +3324,7 @@ tANI_U32 dot11fUnpackIeFTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeFTTimeoutInterval(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEFTTimeoutInterval *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->timeoutType = *pBuf;
@@ -3333,7 +3333,7 @@ tANI_U32 dot11fUnpackIeFTTimeoutInterval(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
     framesntohl(pCtx, &pDst->timeoutValue, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeFTTimeoutInterval. */
+} /*                                      */
 
 #define SigIeFTTimeoutInterval ( 0x0043 )
 
@@ -3346,7 +3346,7 @@ tANI_U32 dot11fUnpackIeHTCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     tANI_U16 tmp48__;
     tANI_U32 tmp49__;
     tANI_U8 tmp50__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &tmp46__, pBuf, 0);
@@ -3422,7 +3422,7 @@ tANI_U32 dot11fUnpackIeHTCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     DOT11F_MEMCPY(pCtx, pDst->rsvd, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeHTCaps. */
+} /*                           */
 
 #define SigIeHTCaps ( 0x0044 )
 
@@ -3433,7 +3433,7 @@ tANI_U32 dot11fUnpackIeHTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     tANI_U8 tmp51__;
     tANI_U16 tmp52__;
     tANI_U16 tmp53__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->primaryChannel = *pBuf;
@@ -3477,7 +3477,7 @@ tANI_U32 dot11fUnpackIeHTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     DOT11F_MEMCPY(pCtx, pDst->rsvd, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeHTInfo. */
+} /*                           */
 
 #define SigIeHTInfo ( 0x0045 )
 
@@ -3485,13 +3485,13 @@ tANI_U32 dot11fUnpackIeHTInfo(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeIBSSParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEIBSSParams *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->atim, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeIBSSParams. */
+} /*                               */
 
 #define SigIeIBSSParams ( 0x0046 )
 
@@ -3499,7 +3499,7 @@ tANI_U32 dot11fUnpackIeIBSSParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
 tANI_U32 dot11fUnpackIeLinkIdentifier(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIELinkIdentifier *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->bssid, pBuf, 6);
@@ -3511,7 +3511,7 @@ tANI_U32 dot11fUnpackIeLinkIdentifier(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     DOT11F_MEMCPY(pCtx, pDst->RespStaAddr, pBuf, 6);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeLinkIdentifier. */
+} /*                                   */
 
 #define SigIeLinkIdentifier ( 0x0047 )
 
@@ -3531,7 +3531,7 @@ tANI_U32 dot11fUnpackIeMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
     tANI_U8 tmp54__;
     tANI_U8 tmp55__;
     tANI_U8 tmp56__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->token = *pBuf;
@@ -3669,7 +3669,7 @@ tANI_U32 dot11fUnpackIeMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeMeasurementReport. */
+} /*                                      */
 
 #define SigIeMeasurementReport ( 0x0048 )
 
@@ -3691,7 +3691,7 @@ tANI_U32 dot11fUnpackIeMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp57__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->measurement_token = *pBuf;
@@ -3774,7 +3774,7 @@ tANI_U32 dot11fUnpackIeMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeMeasurementRequest. */
+} /*                                       */
 
 #define SigIeMeasurementRequest ( 0x0049 )
 
@@ -3783,7 +3783,7 @@ tANI_U32 dot11fUnpackIeMobilityDomain(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp58__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->MDID, pBuf, 0);
@@ -3795,7 +3795,7 @@ tANI_U32 dot11fUnpackIeMobilityDomain(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     pDst->reserved = tmp58__ >> 2 & 0x3f;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeMobilityDomain. */
+} /*                                   */
 
 #define SigIeMobilityDomain ( 0x004a )
 
@@ -3818,7 +3818,7 @@ tANI_U32 dot11fUnpackIeNeighborReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp59__;
     tANI_U8 tmp60__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     DOT11F_MEMCPY(pCtx, pDst->bssid, pBuf, 6);
@@ -3862,7 +3862,7 @@ tANI_U32 dot11fUnpackIeNeighborReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
                      ( tANI_U8* )pDst,
                      sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeNeighborReport. */
+} /*                                   */
 
 #define SigIeNeighborReport ( 0x004b )
 
@@ -3871,7 +3871,7 @@ tANI_U32 dot11fUnpackIeOperatingMode(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp61__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp61__ = *pBuf;
@@ -3881,7 +3881,7 @@ tANI_U32 dot11fUnpackIeOperatingMode(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->rxNSSType = tmp61__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeOperatingMode. */
+} /*                                  */
 
 #define SigIeOperatingMode ( 0x004c )
 
@@ -3889,13 +3889,13 @@ tANI_U32 dot11fUnpackIeOperatingMode(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeOxygenNetwork(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEOxygenNetwork *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->data, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeOxygenNetwork. */
+} /*                                  */
 
 #define SigIeOxygenNetwork ( 0x004d )
 
@@ -3910,11 +3910,11 @@ tANI_U32 dot11fUnpackIeOxygenNetwork(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeP2PAssocReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PAssocReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PAssocReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PAssocReq. */
+} /*                                */
 
 #define SigIeP2PAssocReq ( 0x004e )
 
@@ -3928,11 +3928,11 @@ tANI_U32 dot11fUnpackIeP2PAssocReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PAssocRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PAssocRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PAssocRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PAssocRes. */
+} /*                                */
 
 #define SigIeP2PAssocRes ( 0x004f )
 
@@ -3947,11 +3947,11 @@ tANI_U32 dot11fUnpackIeP2PAssocRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PBeacon *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PBeacon,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PBeacon. */
+} /*                              */
 
 #define SigIeP2PBeacon ( 0x0050 )
 
@@ -3969,11 +3969,11 @@ tANI_U32 dot11fUnpackIeP2PBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeP2PBeaconProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PBeaconProbeRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PBeaconProbeRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PBeaconProbeRes. */
+} /*                                      */
 
 #define SigIeP2PBeaconProbeRes ( 0x0051 )
 
@@ -3986,11 +3986,11 @@ tANI_U32 dot11fUnpackIeP2PBeaconProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
 tANI_U32 dot11fUnpackIeP2PDeAuth(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PDeAuth *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PDeAuth,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PDeAuth. */
+} /*                              */
 
 #define SigIeP2PDeAuth ( 0x0052 )
 
@@ -4004,11 +4004,11 @@ tANI_U32 dot11fUnpackIeP2PDeAuth(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PDeviceDiscoverabilityReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PDeviceDiscoverabilityReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PDeviceDiscoverabilityReq. */
+} /*                                                */
 
 #define SigIeP2PDeviceDiscoverabilityReq ( 0x0053 )
 
@@ -4021,11 +4021,11 @@ tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 
 tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PDeviceDiscoverabilityRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PDeviceDiscoverabilityRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PDeviceDiscoverabilityRes. */
+} /*                                                */
 
 #define SigIeP2PDeviceDiscoverabilityRes ( 0x0054 )
 
@@ -4038,11 +4038,11 @@ tANI_U32 dot11fUnpackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tANI_U8 
 tANI_U32 dot11fUnpackIeP2PDisAssoc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PDisAssoc *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PDisAssoc,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PDisAssoc. */
+} /*                                */
 
 #define SigIeP2PDisAssoc ( 0x0055 )
 
@@ -4059,11 +4059,11 @@ tANI_U32 dot11fUnpackIeP2PDisAssoc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PGONegCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PGONegCnf *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PGONegCnf,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PGONegCnf. */
+} /*                                */
 
 #define SigIeP2PGONegCnf ( 0x0056 )
 
@@ -4084,11 +4084,11 @@ tANI_U32 dot11fUnpackIeP2PGONegCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PGONegReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PGONegReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PGONegReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PGONegReq. */
+} /*                                */
 
 #define SigIeP2PGONegReq ( 0x0057 )
 
@@ -4109,11 +4109,11 @@ tANI_U32 dot11fUnpackIeP2PGONegReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PGONegRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PGONegRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PGONegRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PGONegRes. */
+} /*                                */
 
 #define SigIeP2PGONegRes ( 0x0058 )
 
@@ -4127,11 +4127,11 @@ tANI_U32 dot11fUnpackIeP2PGONegRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PGONegWPS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PGONegWPS *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PGONegWPS,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PGONegWPS. */
+} /*                                */
 
 #define SigIeP2PGONegWPS ( 0x0059 )
 
@@ -4139,7 +4139,7 @@ tANI_U32 dot11fUnpackIeP2PGONegWPS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PIEOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -4151,7 +4151,7 @@ tANI_U32 dot11fUnpackIeP2PIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeP2PIEOpaque. */
+} /*                                */
 
 #define SigIeP2PIEOpaque ( 0x005a )
 
@@ -4170,11 +4170,11 @@ tANI_U32 dot11fUnpackIeP2PIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PInvitationReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PInvitationReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PInvitationReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PInvitationReq. */
+} /*                                     */
 
 #define SigIeP2PInvitationReq ( 0x005b )
 
@@ -4191,11 +4191,11 @@ tANI_U32 dot11fUnpackIeP2PInvitationReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
 tANI_U32 dot11fUnpackIeP2PInvitationRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PInvitationRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PInvitationRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PInvitationRes. */
+} /*                                     */
 
 #define SigIeP2PInvitationRes ( 0x005c )
 
@@ -4208,11 +4208,11 @@ tANI_U32 dot11fUnpackIeP2PInvitationRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
 tANI_U32 dot11fUnpackIeP2PNoticeOfAbsence(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PNoticeOfAbsence *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PNoticeOfAbsence,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PNoticeOfAbsence. */
+} /*                                       */
 
 #define SigIeP2PNoticeOfAbsence ( 0x005d )
 
@@ -4226,11 +4226,11 @@ tANI_U32 dot11fUnpackIeP2PNoticeOfAbsence(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
 tANI_U32 dot11fUnpackIeP2PPresenceResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PPresenceResponse *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PPresenceResponse,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PPresenceResponse. */
+} /*                                        */
 
 #define SigIeP2PPresenceResponse ( 0x005e )
 
@@ -4247,11 +4247,11 @@ tANI_U32 dot11fUnpackIeP2PPresenceResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
 tANI_U32 dot11fUnpackIeP2PProbeReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PProbeReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PProbeReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PProbeReq. */
+} /*                                */
 
 #define SigIeP2PProbeReq ( 0x005f )
 
@@ -4268,11 +4268,11 @@ tANI_U32 dot11fUnpackIeP2PProbeReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PProbeRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PProbeRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PProbeRes. */
+} /*                                */
 
 #define SigIeP2PProbeRes ( 0x0060 )
 
@@ -4287,11 +4287,11 @@ tANI_U32 dot11fUnpackIeP2PProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PProvisionDiscoveryReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PProvisionDiscoveryReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PProvisionDiscoveryReq. */
+} /*                                             */
 
 #define SigIeP2PProvisionDiscoveryReq ( 0x0061 )
 
@@ -4304,11 +4304,11 @@ tANI_U32 dot11fUnpackIeP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx, tANI_U8 *pB
 tANI_U32 dot11fUnpackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEP2PWSCProvisionDiscoveryRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_P2PWSCProvisionDiscoveryRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeP2PWSCProvisionDiscoveryRes. */
+} /*                                                */
 
 #define SigIeP2PWSCProvisionDiscoveryRes ( 0x0062 )
 
@@ -4316,7 +4316,7 @@ tANI_U32 dot11fUnpackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx, tANI_U8 
 tANI_U32 dot11fUnpackIePTIControl(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPTIControl *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->tid = *pBuf;
@@ -4325,7 +4325,7 @@ tANI_U32 dot11fUnpackIePTIControl(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     framesntohs(pCtx, &pDst->sequence_control, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePTIControl. */
+} /*                               */
 
 #define SigIePTIControl ( 0x0063 )
 
@@ -4334,7 +4334,7 @@ tANI_U32 dot11fUnpackIePUBufferStatus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp62__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp62__ = *pBuf;
@@ -4345,7 +4345,7 @@ tANI_U32 dot11fUnpackIePUBufferStatus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     pDst->reserved = tmp62__ >> 4 & 0xf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePUBufferStatus. */
+} /*                                   */
 
 #define SigIePUBufferStatus ( 0x0064 )
 
@@ -4353,7 +4353,7 @@ tANI_U32 dot11fUnpackIePUBufferStatus(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 tANI_U32 dot11fUnpackIePowerCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPowerCaps *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->minTxPower = *pBuf;
@@ -4362,7 +4362,7 @@ tANI_U32 dot11fUnpackIePowerCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     pDst->maxTxPower = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePowerCaps. */
+} /*                              */
 
 #define SigIePowerCaps ( 0x0065 )
 
@@ -4370,13 +4370,13 @@ tANI_U32 dot11fUnpackIePowerCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIePowerConstraints(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEPowerConstraints *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->localPowerConstraints = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIePowerConstraints. */
+} /*                                     */
 
 #define SigIePowerConstraints ( 0x0066 )
 
@@ -4384,7 +4384,7 @@ tANI_U32 dot11fUnpackIePowerConstraints(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
 tANI_U32 dot11fUnpackIeQBSSLoad(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEQBSSLoad *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->stacount, pBuf, 0);
@@ -4396,7 +4396,7 @@ tANI_U32 dot11fUnpackIeQBSSLoad(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iele
     framesntohs(pCtx, &pDst->avail, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeQBSSLoad. */
+} /*                             */
 
 #define SigIeQBSSLoad ( 0x0067 )
 
@@ -4405,7 +4405,7 @@ tANI_U32 dot11fUnpackIeQOSCapsAp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp63__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp63__ = *pBuf;
@@ -4416,7 +4416,7 @@ tANI_U32 dot11fUnpackIeQOSCapsAp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     pDst->reserved = tmp63__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeQOSCapsAp. */
+} /*                              */
 
 #define SigIeQOSCapsAp ( 0x0068 )
 
@@ -4425,7 +4425,7 @@ tANI_U32 dot11fUnpackIeQOSCapsStation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp64__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     tmp64__ = *pBuf;
@@ -4438,7 +4438,7 @@ tANI_U32 dot11fUnpackIeQOSCapsStation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     pDst->more_data_ack = tmp64__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeQOSCapsStation. */
+} /*                                   */
 
 #define SigIeQOSCapsStation ( 0x0069 )
 
@@ -4446,7 +4446,7 @@ tANI_U32 dot11fUnpackIeQOSCapsStation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 tANI_U32 dot11fUnpackIeQuiet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEQuiet *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->count = *pBuf;
@@ -4461,7 +4461,7 @@ tANI_U32 dot11fUnpackIeQuiet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
     framesntohs(pCtx, &pDst->offset, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeQuiet. */
+} /*                          */
 
 #define SigIeQuiet ( 0x006a )
 
@@ -4469,13 +4469,13 @@ tANI_U32 dot11fUnpackIeQuiet(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, 
 tANI_U32 dot11fUnpackIeRCPIIE(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERCPIIE *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->rcpi = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRCPIIE. */
+} /*                           */
 
 #define SigIeRCPIIE ( 0x006b )
 
@@ -4503,7 +4503,7 @@ tANI_U32 dot11fUnpackIeRCPIIE(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeRICDataDesc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERICDataDesc *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     (void)pCtx;
@@ -4515,7 +4515,7 @@ tANI_U32 dot11fUnpackIeRICDataDesc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
                      ( tANI_U8* )pDst,
                      sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeRICDataDesc. */
+} /*                                */
 
 #define SigIeRICDataDesc ( 0x006c )
 
@@ -4523,7 +4523,7 @@ tANI_U32 dot11fUnpackIeRICDataDesc(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeRSN(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERSN *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->version, pBuf, 0);
@@ -4618,7 +4618,7 @@ tANI_U32 dot11fUnpackIeRSN(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRSN. */
+} /*                        */
 
 #define SigIeRSN ( 0x006d )
 
@@ -4626,13 +4626,13 @@ tANI_U32 dot11fUnpackIeRSN(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeRSNIIE(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERSNIIE *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->rsni = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRSNIIE. */
+} /*                           */
 
 #define SigIeRSNIIE ( 0x006e )
 
@@ -4640,7 +4640,7 @@ tANI_U32 dot11fUnpackIeRSNIIE(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeRSNOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIERSNOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -4652,7 +4652,7 @@ tANI_U32 dot11fUnpackIeRSNOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeRSNOpaque. */
+} /*                              */
 
 #define SigIeRSNOpaque ( 0x006f )
 
@@ -4660,7 +4660,7 @@ tANI_U32 dot11fUnpackIeRSNOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeSuppChannels(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIESuppChannels *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_bands = (tANI_U8)( ielen / 2 );
@@ -4672,7 +4672,7 @@ tANI_U32 dot11fUnpackIeSuppChannels(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     DOT11F_MEMCPY(pCtx, pDst->bands, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeSuppChannels. */
+} /*                                 */
 
 #define SigIeSuppChannels ( 0x0070 )
 
@@ -4682,7 +4682,7 @@ tANI_U32 dot11fUnpackIeSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     tANI_U8 i;
     tANI_U8 rate_indx = 0;
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     for (i = 0; i < ielen; i++) {
@@ -4700,7 +4700,7 @@ tANI_U32 dot11fUnpackIeSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     pDst->num_rates = rate_indx;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeSuppRates. */
+} /*                              */
 
 #define SigIeSuppRates ( 0x0071 )
 
@@ -4708,7 +4708,7 @@ tANI_U32 dot11fUnpackIeSuppRates(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeTIM(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETIM *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->dtim_count = *pBuf;
@@ -4729,7 +4729,7 @@ tANI_U32 dot11fUnpackIeTIM(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
     DOT11F_MEMCPY(pCtx, pDst->vbmp, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTIM. */
+} /*                        */
 
 #define SigIeTIM ( 0x0072 )
 
@@ -4737,7 +4737,7 @@ tANI_U32 dot11fUnpackIeTIM(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeTPCReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETPCReport *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->tx_power = *pBuf;
@@ -4746,7 +4746,7 @@ tANI_U32 dot11fUnpackIeTPCReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     pDst->link_margin = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTPCReport. */
+} /*                              */
 
 #define SigIeTPCReport ( 0x0073 )
 
@@ -4754,12 +4754,12 @@ tANI_U32 dot11fUnpackIeTPCReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeTPCRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIETPCRequest *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeTPCRequest. */
+} /*                               */
 
 #define SigIeTPCRequest ( 0x0074 )
 
@@ -4770,7 +4770,7 @@ tANI_U32 dot11fUnpackIeVHTCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     tANI_U32 tmp65__;
     tANI_U16 tmp66__;
     tANI_U16 tmp67__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohl(pCtx, &tmp65__, pBuf, 0);
@@ -4812,7 +4812,7 @@ tANI_U32 dot11fUnpackIeVHTCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     pDst->reserved3 = tmp67__ >> 13 & 0x7;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeVHTCaps. */
+} /*                            */
 
 #define SigIeVHTCaps ( 0x0075 )
 
@@ -4820,7 +4820,7 @@ tANI_U32 dot11fUnpackIeVHTCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 tANI_U32 dot11fUnpackIeVHTExtBssLoad(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEVHTExtBssLoad *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->muMIMOCapStaCount = *pBuf;
@@ -4838,7 +4838,7 @@ tANI_U32 dot11fUnpackIeVHTExtBssLoad(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
     pDst->OneSixtyMHzUtil = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeVHTExtBssLoad. */
+} /*                                  */
 
 #define SigIeVHTExtBssLoad ( 0x0076 )
 
@@ -4846,7 +4846,7 @@ tANI_U32 dot11fUnpackIeVHTExtBssLoad(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8
 tANI_U32 dot11fUnpackIeVHTOperation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEVHTOperation *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->chanWidth = *pBuf;
@@ -4861,7 +4861,7 @@ tANI_U32 dot11fUnpackIeVHTOperation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 
     framesntohs(pCtx, &pDst->basicMCSSet, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeVHTOperation. */
+} /*                                 */
 
 #define SigIeVHTOperation ( 0x0077 )
 
@@ -4870,7 +4870,7 @@ tANI_U32 dot11fUnpackIeWAPI(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U16 tmp68__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->version, pBuf, 0);
@@ -4930,7 +4930,7 @@ tANI_U32 dot11fUnpackIeWAPI(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
     DOT11F_MEMCPY(pCtx, pDst->bkid, pBuf, ( pDst->bkid_count * 16 ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWAPI. */
+} /*                         */
 
 #define SigIeWAPI ( 0x0078 )
 
@@ -4938,7 +4938,7 @@ tANI_U32 dot11fUnpackIeWAPI(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, t
 tANI_U32 dot11fUnpackIeWAPIOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWAPIOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -4950,7 +4950,7 @@ tANI_U32 dot11fUnpackIeWAPIOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWAPIOpaque. */
+} /*                               */
 
 #define SigIeWAPIOpaque ( 0x0079 )
 
@@ -4958,7 +4958,7 @@ tANI_U32 dot11fUnpackIeWAPIOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ie
 tANI_U32 dot11fUnpackIeWFATPC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWFATPC *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->txPower = *pBuf;
@@ -4967,7 +4967,7 @@ tANI_U32 dot11fUnpackIeWFATPC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
     pDst->linkMargin = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWFATPC. */
+} /*                           */
 
 #define SigIeWFATPC ( 0x007a )
 
@@ -4975,7 +4975,7 @@ tANI_U32 dot11fUnpackIeWFATPC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen,
 tANI_U32 dot11fUnpackIeWFDIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWFDIEOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -4987,7 +4987,7 @@ tANI_U32 dot11fUnpackIeWFDIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWFDIEOpaque. */
+} /*                                */
 
 #define SigIeWFDIEOpaque ( 0x007b )
 
@@ -4996,7 +4996,7 @@ tANI_U32 dot11fUnpackIeWMMCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp69__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -5015,7 +5015,7 @@ tANI_U32 dot11fUnpackIeWMMCaps(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen
     pDst->more_ack = tmp69__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMCaps. */
+} /*                            */
 
 #define SigIeWMMCaps ( 0x007c )
 
@@ -5024,7 +5024,7 @@ tANI_U32 dot11fUnpackIeWMMInfoAp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp70__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -5036,7 +5036,7 @@ tANI_U32 dot11fUnpackIeWMMInfoAp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     pDst->uapsd = tmp70__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMInfoAp. */
+} /*                              */
 
 #define SigIeWMMInfoAp ( 0x007d )
 
@@ -5045,7 +5045,7 @@ tANI_U32 dot11fUnpackIeWMMInfoStation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
     tANI_U8 tmp71__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -5061,7 +5061,7 @@ tANI_U32 dot11fUnpackIeWMMInfoStation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
     pDst->reserved2 = tmp71__ >> 7 & 0x1;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMInfoStation. */
+} /*                                   */
 
 #define SigIeWMMInfoStation ( 0x007e )
 
@@ -5077,7 +5077,7 @@ tANI_U32 dot11fUnpackIeWMMParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     tANI_U8 tmp77__;
     tANI_U8 tmp78__;
     tANI_U8 tmp79__;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->version = *pBuf;
@@ -5154,7 +5154,7 @@ tANI_U32 dot11fUnpackIeWMMParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     framesntohs(pCtx, &pDst->acvo_txoplimit, pBuf, 0);
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWMMParams. */
+} /*                              */
 
 #define SigIeWMMParams ( 0x007f )
 
@@ -5162,7 +5162,7 @@ tANI_U32 dot11fUnpackIeWMMParams(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeWPA(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWPA *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     framesntohs(pCtx, &pDst->version, pBuf, 0);
@@ -5236,7 +5236,7 @@ tANI_U32 dot11fUnpackIeWPA(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
     }
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWPA. */
+} /*                        */
 
 #define SigIeWPA ( 0x0080 )
 
@@ -5244,7 +5244,7 @@ tANI_U32 dot11fUnpackIeWPA(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeWPAOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWPAOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -5256,7 +5256,7 @@ tANI_U32 dot11fUnpackIeWPAOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWPAOpaque. */
+} /*                              */
 
 #define SigIeWPAOpaque ( 0x0081 )
 
@@ -5290,11 +5290,11 @@ tANI_U32 dot11fUnpackIeWPAOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeWSC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWSC *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WSC,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWSC. */
+} /*                        */
 
 #define SigIeWSC ( 0x0082 )
 
@@ -5302,7 +5302,7 @@ tANI_U32 dot11fUnpackIeWSC(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tD
 tANI_U32 dot11fUnpackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWiderBWChanSwitchAnn *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->newChanWidth = *pBuf;
@@ -5314,7 +5314,7 @@ tANI_U32 dot11fUnpackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, 
     pDst->newCenterChanFreq1 = *pBuf;
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWiderBWChanSwitchAnn. */
+} /*                                         */
 
 #define SigIeWiderBWChanSwitchAnn ( 0x0083 )
 
@@ -5329,11 +5329,11 @@ tANI_U32 dot11fUnpackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx, tANI_U8 *pBuf, 
 tANI_U32 dot11fUnpackIeWscAssocReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscAssocReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscAssocReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscAssocReq. */
+} /*                                */
 
 #define SigIeWscAssocReq ( 0x0084 )
 
@@ -5348,11 +5348,11 @@ tANI_U32 dot11fUnpackIeWscAssocReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWscAssocRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscAssocRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscAssocRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscAssocRes. */
+} /*                                */
 
 #define SigIeWscAssocRes ( 0x0085 )
 
@@ -5373,11 +5373,11 @@ tANI_U32 dot11fUnpackIeWscAssocRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWscBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscBeacon *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscBeacon,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscBeacon. */
+} /*                              */
 
 #define SigIeWscBeacon ( 0x0086 )
 
@@ -5406,11 +5406,11 @@ tANI_U32 dot11fUnpackIeWscBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 iel
 tANI_U32 dot11fUnpackIeWscBeaconProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscBeaconProbeRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscBeaconProbeRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscBeaconProbeRes. */
+} /*                                      */
 
 #define SigIeWscBeaconProbeRes ( 0x0087 )
 
@@ -5418,7 +5418,7 @@ tANI_U32 dot11fUnpackIeWscBeaconProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tAN
 tANI_U32 dot11fUnpackIeWscIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscIEOpaque *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void) pBuf; (void)ielen; /* Shutup the compiler */
+    (void) pBuf; (void)ielen; /*                     */
     if (pDst->present) status = DOT11F_DUPLICATE_IE;
     pDst->present = 1;
     pDst->num_data = (tANI_U8)( ielen );
@@ -5430,7 +5430,7 @@ tANI_U32 dot11fUnpackIeWscIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
     DOT11F_MEMCPY(pCtx, pDst->data, pBuf, ( ielen ) );
     (void)pCtx;
     return status;
-} /* End dot11fUnpackIeWscIEOpaque. */
+} /*                                */
 
 #define SigIeWscIEOpaque ( 0x0088 )
 
@@ -5457,11 +5457,11 @@ tANI_U32 dot11fUnpackIeWscIEOpaque(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWscProbeReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscProbeReq *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscProbeReq,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscProbeReq. */
+} /*                                */
 
 #define SigIeWscProbeReq ( 0x0089 )
 
@@ -5490,11 +5490,11 @@ tANI_U32 dot11fUnpackIeWscProbeReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWscProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscProbeRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscProbeRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscProbeRes. */
+} /*                                */
 
 #define SigIeWscProbeRes ( 0x008a )
 
@@ -5509,11 +5509,11 @@ tANI_U32 dot11fUnpackIeWscProbeRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 i
 tANI_U32 dot11fUnpackIeWscReassocRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U8 ielen, tDot11fIEWscReassocRes *pDst)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
-    (void)pBuf; (void)ielen; /* Shutup the compiler */
+    (void)pBuf; (void)ielen; /*                     */
     pDst->present = 1;
     status = UnpackTlvCore(pCtx,pBuf,ielen,TLVS_WscReassocRes,(tANI_U8*)pDst,sizeof(*pDst));
     return status;
-} /* End dot11fUnpackIeWscReassocRes. */
+} /*                                  */
 
 #define SigIeWscReassocRes ( 0x008b )
 
@@ -5561,10 +5561,10 @@ tANI_U32 dot11fUnpackAddBAReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBAREQ), FRFL("fragNumber (4): %d\n"), pFrm->BAStartingSequenceControl.fragNumber);
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBAREQ), FRFL("ssn (12): %d\n"), pFrm->BAStartingSequenceControl.ssn);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddBAReq. */
+} /*                           */
 
     static const tFFDefn FFS_AddBARsp[] = {
         { "Category", offsetof(tDot11fAddBARsp, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -5608,10 +5608,10 @@ tANI_U32 dot11fUnpackAddBARsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBARSP), FRFL("BATimeout:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBARSP), ( tANI_U8* )&pFrm->BATimeout.timeout, 2);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddBARsp. */
+} /*                           */
 
     static const tFFDefn FFS_AddTSRequest[] = {
         { "Category", offsetof(tDot11fAddTSRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -5844,10 +5844,10 @@ tANI_U32 dot11fUnpackAddTSRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSREQUEST), ( tANI_U8* ) pFrm->CCXTrafStrmRateSet.tsrates, pFrm->CCXTrafStrmRateSet.num_tsrates);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddTSRequest. */
+} /*                               */
 
     static const tFFDefn FFS_AddTSResponse[] = {
         { "Category", offsetof(tDot11fAddTSResponse, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -6139,10 +6139,10 @@ tANI_U32 dot11fUnpackAddTSResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSRESPONSE), ( tANI_U8* )&pFrm->CCXTrafStrmMet.msmt_interval, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddTSResponse. */
+} /*                                */
 
     static const tFFDefn FFS_AssocRequest[] = {
         { "Capabilities", offsetof(tDot11fAssocRequest, Capabilities), SigFfCapabilities , DOT11F_FF_CAPABILITIES_LEN, },
@@ -6806,10 +6806,10 @@ tANI_U32 dot11fUnpackAssocRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCREQUEST), FRFL("rxNSSType (1): %d\n"), pFrm->OperatingMode.rxNSSType);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAssocRequest. */
+} /*                               */
 
     static const tFFDefn FFS_AssocResponse[] = {
         { "Capabilities", offsetof(tDot11fAssocResponse, Capabilities), SigFfCapabilities , DOT11F_FF_CAPABILITIES_LEN, },
@@ -7962,10 +7962,10 @@ tANI_U32 dot11fUnpackAssocResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCRESPONSE), FRFL("reserved7 (1): %d\n"), pFrm->ExtCap.reserved7);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAssocResponse. */
+} /*                                */
 
     static const tFFDefn FFS_Authentication[] = {
         { "AuthAlgo", offsetof(tDot11fAuthentication, AuthAlgo), SigFfAuthAlgo , DOT11F_FF_AUTHALGO_LEN, },
@@ -8371,10 +8371,10 @@ tANI_U32 dot11fUnpackAuthentication(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAuthentication. */
+} /*                                 */
 
     static const tFFDefn FFS_Beacon[] = {
         { "TimeStamp", offsetof(tDot11fBeacon, TimeStamp), SigFfTimeStamp , DOT11F_FF_TIMESTAMP_LEN, },
@@ -9522,10 +9522,10 @@ tANI_U32 dot11fUnpackBeacon(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, t
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON), ( tANI_U8* )&pFrm->OxygenNetwork.data, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon. */
+} /*                         */
 
     static const tFFDefn FFS_Beacon1[] = {
         { "TimeStamp", offsetof(tDot11fBeacon1, TimeStamp), SigFfTimeStamp , DOT11F_FF_TIMESTAMP_LEN, },
@@ -9614,10 +9614,10 @@ tANI_U32 dot11fUnpackBeacon1(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, 
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON1), ( tANI_U8* )&pFrm->IBSSParams.atim, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon1. */
+} /*                          */
 
     static const tFFDefn FFS_Beacon2[] = {
     { NULL, 0, 0, 0,},
@@ -10599,10 +10599,10 @@ tANI_U32 dot11fUnpackBeacon2(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, 
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON2), ( tANI_U8* )&pFrm->OxygenNetwork.data, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon2. */
+} /*                          */
 
     static const tFFDefn FFS_BeaconIEs[] = {
     { NULL, 0, 0, 0,},
@@ -11856,10 +11856,10 @@ tANI_U32 dot11fUnpackBeaconIEs(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACONIES), ( tANI_U8* )&pFrm->OxygenNetwork.data, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeaconIEs. */
+} /*                            */
 
     static const tFFDefn FFS_ChannelSwitch[] = {
         { "Category", offsetof(tDot11fChannelSwitch, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -11922,10 +11922,10 @@ tANI_U32 dot11fUnpackChannelSwitch(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_CHANNELSWITCH), ( tANI_U8* )&pFrm->WiderBWChanSwitchAnn.newCenterChanFreq1, 1);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackChannelSwitch. */
+} /*                                */
 
     static const tFFDefn FFS_DeAuth[] = {
         { "Reason", offsetof(tDot11fDeAuth, Reason), SigFfReason , DOT11F_FF_REASON_LEN, },
@@ -11969,10 +11969,10 @@ tANI_U32 dot11fUnpackDeAuth(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, t
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeAuth. */
+} /*                         */
 
     static const tFFDefn FFS_DelBAInd[] = {
         { "Category", offsetof(tDot11fDelBAInd, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12009,10 +12009,10 @@ tANI_U32 dot11fUnpackDelBAInd(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELBAIND), FRFL("Reason:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELBAIND), ( tANI_U8* )&pFrm->Reason.code, 2);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDelBAInd. */
+} /*                           */
 
     static const tFFDefn FFS_DelTS[] = {
         { "Category", offsetof(tDot11fDelTS, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12056,10 +12056,10 @@ tANI_U32 dot11fUnpackDelTS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf, tD
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELTS), FRFL("Reason:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELTS), ( tANI_U8* )&pFrm->Reason.code, 2);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDelTS. */
+} /*                        */
 
     static const tFFDefn FFS_DeviceDiscoverabilityReq[] = {
         { "Category", offsetof(tDot11fDeviceDiscoverabilityReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12126,10 +12126,10 @@ tANI_U32 dot11fUnpackDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeviceDiscoverabilityReq. */
+} /*                                           */
 
     static const tFFDefn FFS_DeviceDiscoverabilityRes[] = {
         { "Category", offsetof(tDot11fDeviceDiscoverabilityRes, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12185,10 +12185,10 @@ tANI_U32 dot11fUnpackDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeviceDiscoverabilityRes. */
+} /*                                           */
 
     static const tFFDefn FFS_Disassociation[] = {
         { "Reason", offsetof(tDot11fDisassociation, Reason), SigFfReason , DOT11F_FF_REASON_LEN, },
@@ -12232,10 +12232,10 @@ tANI_U32 dot11fUnpackDisassociation(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDisassociation. */
+} /*                                 */
 
     static const tFFDefn FFS_GODiscoverabilityReq[] = {
         { "Category", offsetof(tDot11fGODiscoverabilityReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12270,10 +12270,10 @@ tANI_U32 dot11fUnpackGODiscoverabilityReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tA
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GODISCOVERABILITYREQ), FRFL("DialogToken:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GODISCOVERABILITYREQ), ( tANI_U8* )&pFrm->DialogToken.token, 1);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGODiscoverabilityReq. */
+} /*                                       */
 
     static const tFFDefn FFS_GONegCnf[] = {
         { "Category", offsetof(tDot11fGONegCnf, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12372,10 +12372,10 @@ tANI_U32 dot11fUnpackGONegCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegCnf. */
+} /*                           */
 
     static const tFFDefn FFS_GONegReq[] = {
         { "Category", offsetof(tDot11fGONegReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12552,10 +12552,10 @@ tANI_U32 dot11fUnpackGONegReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegReq. */
+} /*                           */
 
     static const tFFDefn FFS_GONegRes[] = {
         { "Category", offsetof(tDot11fGONegRes, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12731,10 +12731,10 @@ tANI_U32 dot11fUnpackGONegRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegRes. */
+} /*                           */
 
     static const tFFDefn FFS_InvitationReq[] = {
         { "Category", offsetof(tDot11fInvitationReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12863,10 +12863,10 @@ tANI_U32 dot11fUnpackInvitationReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackInvitationReq. */
+} /*                                */
 
     static const tFFDefn FFS_InvitationRes[] = {
         { "Category", offsetof(tDot11fInvitationRes, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -12963,10 +12963,10 @@ tANI_U32 dot11fUnpackInvitationRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackInvitationRes. */
+} /*                                */
 
     static const tFFDefn FFS_LinkMeasurementReport[] = {
         { "Category", offsetof(tDot11fLinkMeasurementReport, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13022,10 +13022,10 @@ tANI_U32 dot11fUnpackLinkMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREPORT), FRFL("RSNI:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREPORT), ( tANI_U8* )&pFrm->RSNI.rsni, 1);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackLinkMeasurementReport. */
+} /*                                        */
 
     static const tFFDefn FFS_LinkMeasurementRequest[] = {
         { "Category", offsetof(tDot11fLinkMeasurementRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13063,10 +13063,10 @@ tANI_U32 dot11fUnpackLinkMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREQUEST), FRFL("MaxTxPower:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREQUEST), ( tANI_U8* )&pFrm->MaxTxPower.maxTxPower, 1);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackLinkMeasurementRequest. */
+} /*                                         */
 
     static const tFFDefn FFS_MeasurementReport[] = {
         { "Category", offsetof(tDot11fMeasurementReport, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13159,10 +13159,10 @@ tANI_U32 dot11fUnpackMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackMeasurementReport. */
+} /*                                    */
 
     static const tFFDefn FFS_MeasurementRequest[] = {
         { "Category", offsetof(tDot11fMeasurementRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13240,10 +13240,10 @@ tANI_U32 dot11fUnpackMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackMeasurementRequest. */
+} /*                                     */
 
     static const tFFDefn FFS_NeighborReportRequest[] = {
         { "Category", offsetof(tDot11fNeighborReportRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13286,10 +13286,10 @@ tANI_U32 dot11fUnpackNeighborReportRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NEIGHBORREPORTREQUEST), ( tANI_U8* ) pFrm->SSID.ssid, pFrm->SSID.num_ssid);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNeighborReportRequest. */
+} /*                                        */
 
     static const tFFDefn FFS_NeighborReportResponse[] = {
         { "Category", offsetof(tDot11fNeighborReportResponse, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13427,10 +13427,10 @@ tANI_U32 dot11fUnpackNeighborReportResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, 
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNeighborReportResponse. */
+} /*                                         */
 
     static const tFFDefn FFS_NoticeOfAbs[] = {
         { "Category", offsetof(tDot11fNoticeOfAbs, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13486,10 +13486,10 @@ tANI_U32 dot11fUnpackNoticeOfAbs(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nB
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNoticeOfAbs. */
+} /*                              */
 
     static const tFFDefn FFS_OperatingMode[] = {
         { "Category", offsetof(tDot11fOperatingMode, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13524,10 +13524,10 @@ tANI_U32 dot11fUnpackOperatingMode(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_OPERATINGMODE), FRFL("rxNSS (3): %d\n"), pFrm->OperatingMode.rxNSS);
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_OPERATINGMODE), FRFL("rxNSSType (1): %d\n"), pFrm->OperatingMode.rxNSSType);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackOperatingMode. */
+} /*                                */
 
     static const tFFDefn FFS_PresenceReq[] = {
         { "Category", offsetof(tDot11fPresenceReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13583,10 +13583,10 @@ tANI_U32 dot11fUnpackPresenceReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nB
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackPresenceReq. */
+} /*                              */
 
     static const tFFDefn FFS_PresenceRes[] = {
         { "Category", offsetof(tDot11fPresenceRes, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -13651,10 +13651,10 @@ tANI_U32 dot11fUnpackPresenceRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nB
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackPresenceRes. */
+} /*                              */
 
     static const tFFDefn FFS_ProbeRequest[] = {
     { NULL, 0, 0, 0,},
@@ -14076,10 +14076,10 @@ tANI_U32 dot11fUnpackProbeRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBEREQUEST), FRFL("reserved3 (3): %d\n"), pFrm->VHTCaps.reserved3);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProbeRequest. */
+} /*                               */
 
     static const tFFDefn FFS_ProbeResponse[] = {
         { "TimeStamp", offsetof(tDot11fProbeResponse, TimeStamp), SigFfTimeStamp , DOT11F_FF_TIMESTAMP_LEN, },
@@ -15277,10 +15277,10 @@ tANI_U32 dot11fUnpackProbeResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBERESPONSE), ( tANI_U8* )&pFrm->OxygenNetwork.data, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProbeResponse. */
+} /*                                */
 
     static const tFFDefn FFS_ProvisionDiscoveryReq[] = {
         { "Category", offsetof(tDot11fProvisionDiscoveryReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -15369,10 +15369,10 @@ tANI_U32 dot11fUnpackProvisionDiscoveryReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProvisionDiscoveryReq. */
+} /*                                        */
 
     static const tFFDefn FFS_ProvisionDiscoveryRes[] = {
         { "Category", offsetof(tDot11fProvisionDiscoveryRes, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -15428,10 +15428,10 @@ tANI_U32 dot11fUnpackProvisionDiscoveryRes(tpAniSirGlobal pCtx, tANI_U8 *pBuf, t
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProvisionDiscoveryRes. */
+} /*                                        */
 
     static const tFFDefn FFS_RadioMeasurementReport[] = {
         { "Category", offsetof(tDot11fRadioMeasurementReport, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -15527,10 +15527,10 @@ tANI_U32 dot11fUnpackRadioMeasurementReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, 
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackRadioMeasurementReport. */
+} /*                                         */
 
     static const tFFDefn FFS_RadioMeasurementRequest[] = {
         { "Category", offsetof(tDot11fRadioMeasurementRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -15611,10 +15611,10 @@ tANI_U32 dot11fUnpackRadioMeasurementRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf,
             }
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackRadioMeasurementRequest. */
+} /*                                          */
 
     static const tFFDefn FFS_ReAssocRequest[] = {
         { "Capabilities", offsetof(tDot11fReAssocRequest, Capabilities), SigFfCapabilities , DOT11F_FF_CAPABILITIES_LEN, },
@@ -16671,10 +16671,10 @@ tANI_U32 dot11fUnpackReAssocRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCREQUEST), FRFL("rxNSSType (1): %d\n"), pFrm->OperatingMode.rxNSSType);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackReAssocRequest. */
+} /*                                 */
 
     static const tFFDefn FFS_ReAssocResponse[] = {
         { "Capabilities", offsetof(tDot11fReAssocResponse, Capabilities), SigFfCapabilities , DOT11F_FF_CAPABILITIES_LEN, },
@@ -17835,10 +17835,10 @@ tANI_U32 dot11fUnpackReAssocResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U3
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCRESPONSE), FRFL("reserved7 (1): %d\n"), pFrm->ExtCap.reserved7);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackReAssocResponse. */
+} /*                                  */
 
     static const tFFDefn FFS_SMPowerSave[] = {
         { "Category", offsetof(tDot11fSMPowerSave, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -17872,10 +17872,10 @@ tANI_U32 dot11fUnpackSMPowerSave(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nB
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SMPOWERSAVE), FRFL("Mode (1): %d\n"), pFrm->SMPowerModeSet.Mode);
         FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SMPOWERSAVE), FRFL("reserved (6): %d\n"), pFrm->SMPowerModeSet.reserved);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackSMPowerSave. */
+} /*                              */
 
     static const tFFDefn FFS_SaQueryRsp[] = {
         { "Category", offsetof(tDot11fSaQueryRsp, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -17907,10 +17907,10 @@ tANI_U32 dot11fUnpackSaQueryRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBu
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SAQUERYRSP), FRFL("TransactionId:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SAQUERYRSP), ( tANI_U8* )&pFrm->TransactionId.transId, 2);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackSaQueryRsp. */
+} /*                             */
 
     static const tFFDefn FFS_TDLSDisReq[] = {
         { "Category", offsetof(tDot11fTDLSDisReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -17954,10 +17954,10 @@ tANI_U32 dot11fUnpackTDLSDisReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBu
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISREQ), ( tANI_U8* )&pFrm->LinkIdentifier.RespStaAddr, 6);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSDisReq. */
+} /*                             */
 
     static const tFFDefn FFS_TDLSDisRsp[] = {
         { "Category", offsetof(tDot11fTDLSDisRsp, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -18306,10 +18306,10 @@ tANI_U32 dot11fUnpackTDLSDisRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBu
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISRSP), FRFL("reserved3 (3): %d\n"), pFrm->VHTCaps.reserved3);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSDisRsp. */
+} /*                             */
 
     static const tFFDefn FFS_TDLSPeerTrafficInd[] = {
         { "Category", offsetof(tDot11fTDLSPeerTrafficInd, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -18378,10 +18378,10 @@ tANI_U32 dot11fUnpackTDLSPeerTrafficInd(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICIND), FRFL("reserved (4): %d\n"), pFrm->PUBufferStatus.reserved);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSPeerTrafficInd. */
+} /*                                     */
 
     static const tFFDefn FFS_TDLSPeerTrafficRsp[] = {
         { "Category", offsetof(tDot11fTDLSPeerTrafficRsp, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -18425,10 +18425,10 @@ tANI_U32 dot11fUnpackTDLSPeerTrafficRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICRSP), ( tANI_U8* )&pFrm->LinkIdentifier.RespStaAddr, 6);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSPeerTrafficRsp. */
+} /*                                     */
 
     static const tFFDefn FFS_TDLSSetupCnf[] = {
         { "Category", offsetof(tDot11fTDLSSetupCnf, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -18676,10 +18676,10 @@ tANI_U32 dot11fUnpackTDLSSetupCnf(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPCNF), FRFL("rxNSSType (1): %d\n"), pFrm->OperatingMode.rxNSSType);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupCnf. */
+} /*                               */
 
     static const tFFDefn FFS_TDLSSetupReq[] = {
         { "Category", offsetof(tDot11fTDLSSetupReq, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19083,10 +19083,10 @@ tANI_U32 dot11fUnpackTDLSSetupReq(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPREQ), FRFL("reserved3 (3): %d\n"), pFrm->VHTCaps.reserved3);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupReq. */
+} /*                               */
 
     static const tFFDefn FFS_TDLSSetupRsp[] = {
         { "Category", offsetof(tDot11fTDLSSetupRsp, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19506,10 +19506,10 @@ tANI_U32 dot11fUnpackTDLSSetupRsp(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_LOG1(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPRSP), FRFL("rxNSSType (1): %d\n"), pFrm->OperatingMode.rxNSSType);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupRsp. */
+} /*                               */
 
     static const tFFDefn FFS_TDLSTeardown[] = {
         { "Category", offsetof(tDot11fTDLSTeardown, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19612,10 +19612,10 @@ tANI_U32 dot11fUnpackTDLSTeardown(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 n
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSTEARDOWN), ( tANI_U8* )&pFrm->LinkIdentifier.RespStaAddr, 6);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSTeardown. */
+} /*                               */
 
     static const tFFDefn FFS_TPCReport[] = {
         { "Category", offsetof(tDot11fTPCReport, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19658,10 +19658,10 @@ tANI_U32 dot11fUnpackTPCReport(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TPCREPORT), ( tANI_U8* )&pFrm->TPCReport.link_margin, 1);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTPCReport. */
+} /*                            */
 
     static const tFFDefn FFS_TPCRequest[] = {
         { "Category", offsetof(tDot11fTPCRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19702,10 +19702,10 @@ tANI_U32 dot11fUnpackTPCRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBu
         {
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTPCRequest. */
+} /*                             */
 
     static const tFFDefn FFS_WMMAddTSRequest[] = {
         { "Category", offsetof(tDot11fWMMAddTSRequest, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19788,10 +19788,10 @@ tANI_U32 dot11fUnpackWMMAddTSRequest(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U3
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSREQUEST), ( tANI_U8* ) pFrm->CCXTrafStrmRateSet.tsrates, pFrm->CCXTrafStrmRateSet.num_tsrates);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMAddTSRequest. */
+} /*                                  */
 
     static const tFFDefn FFS_WMMAddTSResponse[] = {
         { "Category", offsetof(tDot11fWMMAddTSResponse, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19874,10 +19874,10 @@ tANI_U32 dot11fUnpackWMMAddTSResponse(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSRESPONSE), ( tANI_U8* )&pFrm->CCXTrafStrmMet.msmt_interval, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMAddTSResponse. */
+} /*                                   */
 
     static const tFFDefn FFS_WMMDelTS[] = {
         { "Category", offsetof(tDot11fWMMDelTS, Category), SigFfCategory , DOT11F_FF_CATEGORY_LEN, },
@@ -19948,10 +19948,10 @@ tANI_U32 dot11fUnpackWMMDelTS(tpAniSirGlobal pCtx, tANI_U8 *pBuf, tANI_U32 nBuf,
             FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMDELTS), ( tANI_U8* )&pFrm->WMMTSPEC.medium_time, 2);
         }
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMDelTS. */
+} /*                           */
 
 static tANI_U32 UnpackCore(tpAniSirGlobal pCtx,
                            tANI_U8 *pBuf,
@@ -20529,7 +20529,7 @@ static tANI_U32 UnpackCore(tpAniSirGlobal pCtx,
                         status |= dot11fUnpackIeRCPIIE(pCtx, pBufRemaining, len, ( tDot11fIERCPIIE* )(pFrm + pIe->offset + sizeof(tDot11fIERCPIIE)*countOffset) );
                             break;
                 case SigIeRICDataDesc:
-                        //reset the pointers back since this is a container IE and it doesnt have its own EID and Len.
+                        //                                                                                            
                         pBufRemaining -= 2; nBufRemaining += 2;
                         if ( pIe && pIe->noui ) 
                             { 
@@ -20694,7 +20694,7 @@ MandatoryCheck:
     }
 
     return status;
-} /* End UnpackCore. */
+} /*                 */
 
 static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
                             tANI_U8 *pBuf,
@@ -20708,13 +20708,13 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
     tANI_U16      id, len;
     tANI_U8      *pBufRemaining, *pfFound;
 
-    (void)pCtx;                 // Shutup the compiler
+    (void)pCtx;                 //                    
     (void)nFrm;
     status = DOT11F_PARSE_SUCCESS;
     pBufRemaining = pBuf;
     nBufRemaining = nBuf;
 
-    // While we have data...
+    //                      
     while ( nBufRemaining )
     {
         if ( 3 > nBufRemaining )
@@ -20728,9 +20728,9 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
 
         npec = 0U;
 
-        // Look for a matching TLV definition,
+        //                                    
         pTlv = FindTLVDefn( pCtx, pBufRemaining, nBufRemaining, TLVs );
-        // consume the type,
+        //                  
         if ( pTlv ) 
         { 
            if ( pTlv->sType == 2)
@@ -20744,7 +20744,7 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
               pBufRemaining += 1;
               nBufRemaining -= 1;
            }
-           // & length,
+           //          
            if ( pTlv->sLen == 2)
            {
               framesntohs(pCtx, &len, pBufRemaining, pTlv->fMsb);
@@ -20803,8 +20803,8 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
             len           -= 3;
         }
 
-        // Whether we found a hit or not, we can validate the reported
-        // length of this TLV:
+        //                                                            
+        //                    
         if ( len > nBufRemaining )
         {
             FRAMES_LOG3(pCtx, FRLOGW, FRFL("TLV %d reports length %"
@@ -20819,7 +20819,7 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
             goto MandatoryCheck;
         }
 
-        // Now, *if* we found a hit...
+        //                            
         if ( pTlv )
         {
             if ( nBufRemaining < pTlv->minSize - npec - (pTlv->sType + pTlv->sLen) )
@@ -20989,8 +20989,8 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
                         pTlv->sig);
                     FRAMES_DBG_BREAK();
                     return DOT11F_INTERNAL_ERROR;
-                } // End switch on sig.
-            } // End if on length check.
+                } //                   
+            } //                        
 
         }
         else
@@ -21001,7 +21001,7 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
             status |= DOT11F_UNKNOWN_TLVS;
         }
 
-        // Advance to the next TLV
+        //                        
         pBufRemaining += len;
 
         if (len > nBufRemaining)
@@ -21017,7 +21017,7 @@ static tANI_U32 UnpackTlvCore( tpAniSirGlobal   pCtx,
 
         nBufRemaining -= len;
 
-    } // End iteration over TLVs.
+    } //                         
 
 MandatoryCheck:
     pTlv = &TLVs[0];
@@ -21041,7 +21041,7 @@ MandatoryCheck:
     }
 
     return status;
-} /* End UnpacTlvkCore. */
+} /*                    */
 tANI_U32 dot11fGetPackedIETCLAS(tpAniSirGlobal pCtx, tDot11fIETCLAS *pIe, tANI_U32 *pnNeeded)
 {
     tANI_U32 status = DOT11F_PARSE_SUCCESS;
@@ -21087,7 +21087,7 @@ tANI_U32 dot11fGetPackedIETCLAS(tpAniSirGlobal pCtx, tDot11fIETCLAS *pIe, tANI_U
         break;
     }
     return status;
-} /* End dot11fGetPackedIETCLAS. */
+} /*                             */
 
 tANI_U32 dot11fGetPackedIEWMMTCLAS(tpAniSirGlobal pCtx, tDot11fIEWMMTCLAS *pIe, tANI_U32 *pnNeeded)
 {
@@ -21135,7 +21135,7 @@ tANI_U32 dot11fGetPackedIEWMMTCLAS(tpAniSirGlobal pCtx, tDot11fIEWMMTCLAS *pIe, 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWMMTCLAS. */
+} /*                                */
 
 tANI_U32 dot11fGetPackedIEAirgo(tpAniSirGlobal pCtx, tDot11fIEAirgo *pIe, tANI_U32 *pnNeeded)
 {
@@ -21147,7 +21147,7 @@ tANI_U32 dot11fGetPackedIEAirgo(tpAniSirGlobal pCtx, tDot11fIEAirgo *pIe, tANI_U
         break;
     }
     return status;
-} /* End dot11fGetPackedIEAirgo. */
+} /*                             */
 
 tANI_U32 dot11fGetPackedIECountry(tpAniSirGlobal pCtx, tDot11fIECountry *pIe, tANI_U32 *pnNeeded)
 {
@@ -21164,7 +21164,7 @@ tANI_U32 dot11fGetPackedIECountry(tpAniSirGlobal pCtx, tDot11fIECountry *pIe, tA
         break;
     }
     return status;
-} /* End dot11fGetPackedIECountry. */
+} /*                               */
 
 tANI_U32 dot11fGetPackedIEFTInfo(tpAniSirGlobal pCtx, tDot11fIEFTInfo *pIe, tANI_U32 *pnNeeded)
 {
@@ -21180,7 +21180,7 @@ tANI_U32 dot11fGetPackedIEFTInfo(tpAniSirGlobal pCtx, tDot11fIEFTInfo *pIe, tANI
         break;
     }
     return status;
-} /* End dot11fGetPackedIEFTInfo. */
+} /*                              */
 
 tANI_U32 dot11fGetPackedIEMeasurementReport(tpAniSirGlobal pCtx, tDot11fIEMeasurementReport *pIe, tANI_U32 *pnNeeded)
 {
@@ -21239,7 +21239,7 @@ tANI_U32 dot11fGetPackedIEMeasurementReport(tpAniSirGlobal pCtx, tDot11fIEMeasur
         break;
     }
     return status;
-} /* End dot11fGetPackedIEMeasurementReport. */
+} /*                                         */
 
 tANI_U32 dot11fGetPackedIEMeasurementRequest(tpAniSirGlobal pCtx, tDot11fIEMeasurementRequest *pIe, tANI_U32 *pnNeeded)
 {
@@ -21280,7 +21280,7 @@ tANI_U32 dot11fGetPackedIEMeasurementRequest(tpAniSirGlobal pCtx, tDot11fIEMeasu
         break;
     }
     return status;
-} /* End dot11fGetPackedIEMeasurementRequest. */
+} /*                                          */
 
 tANI_U32 dot11fGetPackedIENeighborReport(tpAniSirGlobal pCtx, tDot11fIENeighborReport *pIe, tANI_U32 *pnNeeded)
 {
@@ -21299,7 +21299,7 @@ tANI_U32 dot11fGetPackedIENeighborReport(tpAniSirGlobal pCtx, tDot11fIENeighborR
         break;
     }
     return status;
-} /* End dot11fGetPackedIENeighborReport. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedIEP2PAssocReq(tpAniSirGlobal pCtx, tDot11fIEP2PAssocReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21311,7 +21311,7 @@ tANI_U32 dot11fGetPackedIEP2PAssocReq(tpAniSirGlobal pCtx, tDot11fIEP2PAssocReq 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PAssocReq. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PAssocRes(tpAniSirGlobal pCtx, tDot11fIEP2PAssocRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21323,7 +21323,7 @@ tANI_U32 dot11fGetPackedIEP2PAssocRes(tpAniSirGlobal pCtx, tDot11fIEP2PAssocRes 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PAssocRes. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PBeacon(tpAniSirGlobal pCtx, tDot11fIEP2PBeacon *pIe, tANI_U32 *pnNeeded)
 {
@@ -21335,7 +21335,7 @@ tANI_U32 dot11fGetPackedIEP2PBeacon(tpAniSirGlobal pCtx, tDot11fIEP2PBeacon *pIe
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PBeacon. */
+} /*                                 */
 
 tANI_U32 dot11fGetPackedIEP2PBeaconProbeRes(tpAniSirGlobal pCtx, tDot11fIEP2PBeaconProbeRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21347,7 +21347,7 @@ tANI_U32 dot11fGetPackedIEP2PBeaconProbeRes(tpAniSirGlobal pCtx, tDot11fIEP2PBea
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PBeaconProbeRes. */
+} /*                                         */
 
 tANI_U32 dot11fGetPackedIEP2PDeAuth(tpAniSirGlobal pCtx, tDot11fIEP2PDeAuth *pIe, tANI_U32 *pnNeeded)
 {
@@ -21359,7 +21359,7 @@ tANI_U32 dot11fGetPackedIEP2PDeAuth(tpAniSirGlobal pCtx, tDot11fIEP2PDeAuth *pIe
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PDeAuth. */
+} /*                                 */
 
 tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fIEP2PDeviceDiscoverabilityReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21371,7 +21371,7 @@ tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tDot1
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PDeviceDiscoverabilityReq. */
+} /*                                                   */
 
 tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tDot11fIEP2PDeviceDiscoverabilityRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21383,7 +21383,7 @@ tANI_U32 dot11fGetPackedIEP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tDot1
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PDeviceDiscoverabilityRes. */
+} /*                                                   */
 
 tANI_U32 dot11fGetPackedIEP2PDisAssoc(tpAniSirGlobal pCtx, tDot11fIEP2PDisAssoc *pIe, tANI_U32 *pnNeeded)
 {
@@ -21395,7 +21395,7 @@ tANI_U32 dot11fGetPackedIEP2PDisAssoc(tpAniSirGlobal pCtx, tDot11fIEP2PDisAssoc 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PDisAssoc. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PGONegCnf(tpAniSirGlobal pCtx, tDot11fIEP2PGONegCnf *pIe, tANI_U32 *pnNeeded)
 {
@@ -21407,7 +21407,7 @@ tANI_U32 dot11fGetPackedIEP2PGONegCnf(tpAniSirGlobal pCtx, tDot11fIEP2PGONegCnf 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PGONegCnf. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PGONegReq(tpAniSirGlobal pCtx, tDot11fIEP2PGONegReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21419,7 +21419,7 @@ tANI_U32 dot11fGetPackedIEP2PGONegReq(tpAniSirGlobal pCtx, tDot11fIEP2PGONegReq 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PGONegReq. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PGONegRes(tpAniSirGlobal pCtx, tDot11fIEP2PGONegRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21431,7 +21431,7 @@ tANI_U32 dot11fGetPackedIEP2PGONegRes(tpAniSirGlobal pCtx, tDot11fIEP2PGONegRes 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PGONegRes. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PGONegWPS(tpAniSirGlobal pCtx, tDot11fIEP2PGONegWPS *pIe, tANI_U32 *pnNeeded)
 {
@@ -21443,7 +21443,7 @@ tANI_U32 dot11fGetPackedIEP2PGONegWPS(tpAniSirGlobal pCtx, tDot11fIEP2PGONegWPS 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PGONegWPS. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PInvitationReq(tpAniSirGlobal pCtx, tDot11fIEP2PInvitationReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21455,7 +21455,7 @@ tANI_U32 dot11fGetPackedIEP2PInvitationReq(tpAniSirGlobal pCtx, tDot11fIEP2PInvi
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PInvitationReq. */
+} /*                                        */
 
 tANI_U32 dot11fGetPackedIEP2PInvitationRes(tpAniSirGlobal pCtx, tDot11fIEP2PInvitationRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21467,7 +21467,7 @@ tANI_U32 dot11fGetPackedIEP2PInvitationRes(tpAniSirGlobal pCtx, tDot11fIEP2PInvi
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PInvitationRes. */
+} /*                                        */
 
 tANI_U32 dot11fGetPackedIEP2PNoticeOfAbsence(tpAniSirGlobal pCtx, tDot11fIEP2PNoticeOfAbsence *pIe, tANI_U32 *pnNeeded)
 {
@@ -21479,7 +21479,7 @@ tANI_U32 dot11fGetPackedIEP2PNoticeOfAbsence(tpAniSirGlobal pCtx, tDot11fIEP2PNo
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PNoticeOfAbsence. */
+} /*                                          */
 
 tANI_U32 dot11fGetPackedIEP2PPresenceResponse(tpAniSirGlobal pCtx, tDot11fIEP2PPresenceResponse *pIe, tANI_U32 *pnNeeded)
 {
@@ -21491,7 +21491,7 @@ tANI_U32 dot11fGetPackedIEP2PPresenceResponse(tpAniSirGlobal pCtx, tDot11fIEP2PP
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PPresenceResponse. */
+} /*                                           */
 
 tANI_U32 dot11fGetPackedIEP2PProbeReq(tpAniSirGlobal pCtx, tDot11fIEP2PProbeReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21503,7 +21503,7 @@ tANI_U32 dot11fGetPackedIEP2PProbeReq(tpAniSirGlobal pCtx, tDot11fIEP2PProbeReq 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PProbeReq. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PProbeRes(tpAniSirGlobal pCtx, tDot11fIEP2PProbeRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21515,7 +21515,7 @@ tANI_U32 dot11fGetPackedIEP2PProbeRes(tpAniSirGlobal pCtx, tDot11fIEP2PProbeRes 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PProbeRes. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx, tDot11fIEP2PProvisionDiscoveryReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21527,7 +21527,7 @@ tANI_U32 dot11fGetPackedIEP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx, tDot11fI
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PProvisionDiscoveryReq. */
+} /*                                                */
 
 tANI_U32 dot11fGetPackedIEP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx, tDot11fIEP2PWSCProvisionDiscoveryRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21539,7 +21539,7 @@ tANI_U32 dot11fGetPackedIEP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx, tDot1
         break;
     }
     return status;
-} /* End dot11fGetPackedIEP2PWSCProvisionDiscoveryRes. */
+} /*                                                   */
 
 tANI_U32 dot11fGetPackedIERICDataDesc(tpAniSirGlobal pCtx, tDot11fIERICDataDesc *pIe, tANI_U32 *pnNeeded)
 {
@@ -21551,7 +21551,7 @@ tANI_U32 dot11fGetPackedIERICDataDesc(tpAniSirGlobal pCtx, tDot11fIERICDataDesc 
         break;
     }
     return status;
-} /* End dot11fGetPackedIERICDataDesc. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIERSN(tpAniSirGlobal pCtx, tDot11fIERSN *pIe, tANI_U32 *pnNeeded)
 {
@@ -21592,7 +21592,7 @@ tANI_U32 dot11fGetPackedIERSN(tpAniSirGlobal pCtx, tDot11fIERSN *pIe, tANI_U32 *
         break;
     }
     return status;
-} /* End dot11fGetPackedIERSN. */
+} /*                           */
 
 tANI_U32 dot11fGetPackedIEWAPI(tpAniSirGlobal pCtx, tDot11fIEWAPI *pIe, tANI_U32 *pnNeeded)
 {
@@ -21616,7 +21616,7 @@ tANI_U32 dot11fGetPackedIEWAPI(tpAniSirGlobal pCtx, tDot11fIEWAPI *pIe, tANI_U32
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWAPI. */
+} /*                            */
 
 tANI_U32 dot11fGetPackedIEWPA(tpAniSirGlobal pCtx, tDot11fIEWPA *pIe, tANI_U32 *pnNeeded)
 {
@@ -21650,7 +21650,7 @@ tANI_U32 dot11fGetPackedIEWPA(tpAniSirGlobal pCtx, tDot11fIEWPA *pIe, tANI_U32 *
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWPA. */
+} /*                           */
 
 tANI_U32 dot11fGetPackedIEWSC(tpAniSirGlobal pCtx, tDot11fIEWSC *pIe, tANI_U32 *pnNeeded)
 {
@@ -21662,7 +21662,7 @@ tANI_U32 dot11fGetPackedIEWSC(tpAniSirGlobal pCtx, tDot11fIEWSC *pIe, tANI_U32 *
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWSC. */
+} /*                           */
 
 tANI_U32 dot11fGetPackedIEWscAssocReq(tpAniSirGlobal pCtx, tDot11fIEWscAssocReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21674,7 +21674,7 @@ tANI_U32 dot11fGetPackedIEWscAssocReq(tpAniSirGlobal pCtx, tDot11fIEWscAssocReq 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscAssocReq. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEWscAssocRes(tpAniSirGlobal pCtx, tDot11fIEWscAssocRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21686,7 +21686,7 @@ tANI_U32 dot11fGetPackedIEWscAssocRes(tpAniSirGlobal pCtx, tDot11fIEWscAssocRes 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscAssocRes. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEWscBeacon(tpAniSirGlobal pCtx, tDot11fIEWscBeacon *pIe, tANI_U32 *pnNeeded)
 {
@@ -21698,7 +21698,7 @@ tANI_U32 dot11fGetPackedIEWscBeacon(tpAniSirGlobal pCtx, tDot11fIEWscBeacon *pIe
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscBeacon. */
+} /*                                 */
 
 tANI_U32 dot11fGetPackedIEWscBeaconProbeRes(tpAniSirGlobal pCtx, tDot11fIEWscBeaconProbeRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21710,7 +21710,7 @@ tANI_U32 dot11fGetPackedIEWscBeaconProbeRes(tpAniSirGlobal pCtx, tDot11fIEWscBea
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscBeaconProbeRes. */
+} /*                                         */
 
 tANI_U32 dot11fGetPackedIEWscProbeReq(tpAniSirGlobal pCtx, tDot11fIEWscProbeReq *pIe, tANI_U32 *pnNeeded)
 {
@@ -21722,7 +21722,7 @@ tANI_U32 dot11fGetPackedIEWscProbeReq(tpAniSirGlobal pCtx, tDot11fIEWscProbeReq 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscProbeReq. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEWscProbeRes(tpAniSirGlobal pCtx, tDot11fIEWscProbeRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21734,7 +21734,7 @@ tANI_U32 dot11fGetPackedIEWscProbeRes(tpAniSirGlobal pCtx, tDot11fIEWscProbeRes 
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscProbeRes. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedIEWscReassocRes(tpAniSirGlobal pCtx, tDot11fIEWscReassocRes *pIe, tANI_U32 *pnNeeded)
 {
@@ -21746,7 +21746,7 @@ tANI_U32 dot11fGetPackedIEWscReassocRes(tpAniSirGlobal pCtx, tDot11fIEWscReassoc
         break;
     }
     return status;
-} /* End dot11fGetPackedIEWscReassocRes. */
+} /*                                     */
 
 tANI_U32 dot11fGetPackedAddBAReqSize(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21754,7 +21754,7 @@ tANI_U32 dot11fGetPackedAddBAReqSize(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm,
     *pnNeeded = 9;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AddBAReq);
     return status;
-} /* End dot11fGetPackedAddBAReqSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedAddBARspSize(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21762,7 +21762,7 @@ tANI_U32 dot11fGetPackedAddBARspSize(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm,
     *pnNeeded = 9;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AddBARsp);
     return status;
-} /* End dot11fGetPackedAddBARspSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fAddTSRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21770,7 +21770,7 @@ tANI_U32 dot11fGetPackedAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fAddTSReques
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AddTSRequest);
     return status;
-} /* End dot11fGetPackedAddTSRequestSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fAddTSResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21778,7 +21778,7 @@ tANI_U32 dot11fGetPackedAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fAddTSRespo
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AddTSResponse);
     return status;
-} /* End dot11fGetPackedAddTSResponseSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedAssocRequestSize(tpAniSirGlobal pCtx, tDot11fAssocRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21786,7 +21786,7 @@ tANI_U32 dot11fGetPackedAssocRequestSize(tpAniSirGlobal pCtx, tDot11fAssocReques
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AssocRequest);
     return status;
-} /* End dot11fGetPackedAssocRequestSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedAssocResponseSize(tpAniSirGlobal pCtx, tDot11fAssocResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21794,7 +21794,7 @@ tANI_U32 dot11fGetPackedAssocResponseSize(tpAniSirGlobal pCtx, tDot11fAssocRespo
     *pnNeeded = 6;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_AssocResponse);
     return status;
-} /* End dot11fGetPackedAssocResponseSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedAuthenticationSize(tpAniSirGlobal pCtx, tDot11fAuthentication *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21802,7 +21802,7 @@ tANI_U32 dot11fGetPackedAuthenticationSize(tpAniSirGlobal pCtx, tDot11fAuthentic
     *pnNeeded = 6;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_Authentication);
     return status;
-} /* End dot11fGetPackedAuthenticationSize. */
+} /*                                        */
 
 tANI_U32 dot11fGetPackedBeaconSize(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21810,7 +21810,7 @@ tANI_U32 dot11fGetPackedBeaconSize(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tAN
     *pnNeeded = 12;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_Beacon);
     return status;
-} /* End dot11fGetPackedBeaconSize. */
+} /*                                */
 
 tANI_U32 dot11fGetPackedBeacon1Size(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21818,7 +21818,7 @@ tANI_U32 dot11fGetPackedBeacon1Size(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, t
     *pnNeeded = 12;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_Beacon1);
     return status;
-} /* End dot11fGetPackedBeacon1Size. */
+} /*                                 */
 
 tANI_U32 dot11fGetPackedBeacon2Size(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21826,7 +21826,7 @@ tANI_U32 dot11fGetPackedBeacon2Size(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, t
     *pnNeeded = 0;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_Beacon2);
     return status;
-} /* End dot11fGetPackedBeacon2Size. */
+} /*                                 */
 
 tANI_U32 dot11fGetPackedBeaconIEsSize(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21834,7 +21834,7 @@ tANI_U32 dot11fGetPackedBeaconIEsSize(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFr
     *pnNeeded = 0;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_BeaconIEs);
     return status;
-} /* End dot11fGetPackedBeaconIEsSize. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedChannelSwitchSize(tpAniSirGlobal pCtx, tDot11fChannelSwitch *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21842,7 +21842,7 @@ tANI_U32 dot11fGetPackedChannelSwitchSize(tpAniSirGlobal pCtx, tDot11fChannelSwi
     *pnNeeded = 2;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ChannelSwitch);
     return status;
-} /* End dot11fGetPackedChannelSwitchSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedDeAuthSize(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21850,7 +21850,7 @@ tANI_U32 dot11fGetPackedDeAuthSize(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tAN
     *pnNeeded = 2;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_DeAuth);
     return status;
-} /* End dot11fGetPackedDeAuthSize. */
+} /*                                */
 
 tANI_U32 dot11fGetPackedDelBAIndSize(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21858,7 +21858,7 @@ tANI_U32 dot11fGetPackedDelBAIndSize(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm,
     *pnNeeded = 6;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_DelBAInd);
     return status;
-} /* End dot11fGetPackedDelBAIndSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedDelTSSize(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21866,7 +21866,7 @@ tANI_U32 dot11fGetPackedDelTSSize(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_DelTS);
     return status;
-} /* End dot11fGetPackedDelTSSize. */
+} /*                               */
 
 tANI_U32 dot11fGetPackedDeviceDiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21874,7 +21874,7 @@ tANI_U32 dot11fGetPackedDeviceDiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_DeviceDiscoverabilityReq);
     return status;
-} /* End dot11fGetPackedDeviceDiscoverabilityReqSize. */
+} /*                                                  */
 
 tANI_U32 dot11fGetPackedDeviceDiscoverabilityResSize(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityRes *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21882,7 +21882,7 @@ tANI_U32 dot11fGetPackedDeviceDiscoverabilityResSize(tpAniSirGlobal pCtx, tDot11
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_DeviceDiscoverabilityRes);
     return status;
-} /* End dot11fGetPackedDeviceDiscoverabilityResSize. */
+} /*                                                  */
 
 tANI_U32 dot11fGetPackedDisassociationSize(tpAniSirGlobal pCtx, tDot11fDisassociation *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21890,7 +21890,7 @@ tANI_U32 dot11fGetPackedDisassociationSize(tpAniSirGlobal pCtx, tDot11fDisassoci
     *pnNeeded = 2;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_Disassociation);
     return status;
-} /* End dot11fGetPackedDisassociationSize. */
+} /*                                        */
 
 tANI_U32 dot11fGetPackedGODiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11fGODiscoverabilityReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21898,7 +21898,7 @@ tANI_U32 dot11fGetPackedGODiscoverabilityReqSize(tpAniSirGlobal pCtx, tDot11fGOD
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_GODiscoverabilityReq);
     return status;
-} /* End dot11fGetPackedGODiscoverabilityReqSize. */
+} /*                                              */
 
 tANI_U32 dot11fGetPackedGONegCnfSize(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21906,7 +21906,7 @@ tANI_U32 dot11fGetPackedGONegCnfSize(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm,
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_GONegCnf);
     return status;
-} /* End dot11fGetPackedGONegCnfSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedGONegReqSize(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21914,7 +21914,7 @@ tANI_U32 dot11fGetPackedGONegReqSize(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm,
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_GONegReq);
     return status;
-} /* End dot11fGetPackedGONegReqSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedGONegResSize(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21922,7 +21922,7 @@ tANI_U32 dot11fGetPackedGONegResSize(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm,
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_GONegRes);
     return status;
-} /* End dot11fGetPackedGONegResSize. */
+} /*                                  */
 
 tANI_U32 dot11fGetPackedInvitationReqSize(tpAniSirGlobal pCtx, tDot11fInvitationReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21930,7 +21930,7 @@ tANI_U32 dot11fGetPackedInvitationReqSize(tpAniSirGlobal pCtx, tDot11fInvitation
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_InvitationReq);
     return status;
-} /* End dot11fGetPackedInvitationReqSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedInvitationResSize(tpAniSirGlobal pCtx, tDot11fInvitationRes *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21938,7 +21938,7 @@ tANI_U32 dot11fGetPackedInvitationResSize(tpAniSirGlobal pCtx, tDot11fInvitation
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_InvitationRes);
     return status;
-} /* End dot11fGetPackedInvitationResSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedLinkMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fLinkMeasurementReport *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21946,7 +21946,7 @@ tANI_U32 dot11fGetPackedLinkMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fLi
     *pnNeeded = 11;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_LinkMeasurementReport);
     return status;
-} /* End dot11fGetPackedLinkMeasurementReportSize. */
+} /*                                               */
 
 tANI_U32 dot11fGetPackedLinkMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fLinkMeasurementRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21954,7 +21954,7 @@ tANI_U32 dot11fGetPackedLinkMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fL
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_LinkMeasurementRequest);
     return status;
-} /* End dot11fGetPackedLinkMeasurementRequestSize. */
+} /*                                                */
 
 tANI_U32 dot11fGetPackedMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fMeasurementReport *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21962,7 +21962,7 @@ tANI_U32 dot11fGetPackedMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fMeasur
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_MeasurementReport);
     return status;
-} /* End dot11fGetPackedMeasurementReportSize. */
+} /*                                           */
 
 tANI_U32 dot11fGetPackedMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fMeasurementRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21970,7 +21970,7 @@ tANI_U32 dot11fGetPackedMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fMeasu
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_MeasurementRequest);
     return status;
-} /* End dot11fGetPackedMeasurementRequestSize. */
+} /*                                            */
 
 tANI_U32 dot11fGetPackedNeighborReportRequestSize(tpAniSirGlobal pCtx, tDot11fNeighborReportRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21978,7 +21978,7 @@ tANI_U32 dot11fGetPackedNeighborReportRequestSize(tpAniSirGlobal pCtx, tDot11fNe
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_NeighborReportRequest);
     return status;
-} /* End dot11fGetPackedNeighborReportRequestSize. */
+} /*                                               */
 
 tANI_U32 dot11fGetPackedNeighborReportResponseSize(tpAniSirGlobal pCtx, tDot11fNeighborReportResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21986,7 +21986,7 @@ tANI_U32 dot11fGetPackedNeighborReportResponseSize(tpAniSirGlobal pCtx, tDot11fN
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_NeighborReportResponse);
     return status;
-} /* End dot11fGetPackedNeighborReportResponseSize. */
+} /*                                                */
 
 tANI_U32 dot11fGetPackedNoticeOfAbsSize(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs *pFrm, tANI_U32 *pnNeeded)
 {
@@ -21994,7 +21994,7 @@ tANI_U32 dot11fGetPackedNoticeOfAbsSize(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs 
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_NoticeOfAbs);
     return status;
-} /* End dot11fGetPackedNoticeOfAbsSize. */
+} /*                                     */
 
 tANI_U32 dot11fGetPackedOperatingModeSize(tpAniSirGlobal pCtx, tDot11fOperatingMode *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22002,7 +22002,7 @@ tANI_U32 dot11fGetPackedOperatingModeSize(tpAniSirGlobal pCtx, tDot11fOperatingM
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_OperatingMode);
     return status;
-} /* End dot11fGetPackedOperatingModeSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedPresenceReqSize(tpAniSirGlobal pCtx, tDot11fPresenceReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22010,7 +22010,7 @@ tANI_U32 dot11fGetPackedPresenceReqSize(tpAniSirGlobal pCtx, tDot11fPresenceReq 
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_PresenceReq);
     return status;
-} /* End dot11fGetPackedPresenceReqSize. */
+} /*                                     */
 
 tANI_U32 dot11fGetPackedPresenceResSize(tpAniSirGlobal pCtx, tDot11fPresenceRes *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22018,7 +22018,7 @@ tANI_U32 dot11fGetPackedPresenceResSize(tpAniSirGlobal pCtx, tDot11fPresenceRes 
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_PresenceRes);
     return status;
-} /* End dot11fGetPackedPresenceResSize. */
+} /*                                     */
 
 tANI_U32 dot11fGetPackedProbeRequestSize(tpAniSirGlobal pCtx, tDot11fProbeRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22026,7 +22026,7 @@ tANI_U32 dot11fGetPackedProbeRequestSize(tpAniSirGlobal pCtx, tDot11fProbeReques
     *pnNeeded = 0;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ProbeRequest);
     return status;
-} /* End dot11fGetPackedProbeRequestSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedProbeResponseSize(tpAniSirGlobal pCtx, tDot11fProbeResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22034,7 +22034,7 @@ tANI_U32 dot11fGetPackedProbeResponseSize(tpAniSirGlobal pCtx, tDot11fProbeRespo
     *pnNeeded = 12;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ProbeResponse);
     return status;
-} /* End dot11fGetPackedProbeResponseSize. */
+} /*                                       */
 
 tANI_U32 dot11fGetPackedProvisionDiscoveryReqSize(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22042,7 +22042,7 @@ tANI_U32 dot11fGetPackedProvisionDiscoveryReqSize(tpAniSirGlobal pCtx, tDot11fPr
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ProvisionDiscoveryReq);
     return status;
-} /* End dot11fGetPackedProvisionDiscoveryReqSize. */
+} /*                                               */
 
 tANI_U32 dot11fGetPackedProvisionDiscoveryResSize(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryRes *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22050,7 +22050,7 @@ tANI_U32 dot11fGetPackedProvisionDiscoveryResSize(tpAniSirGlobal pCtx, tDot11fPr
     *pnNeeded = 8;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ProvisionDiscoveryRes);
     return status;
-} /* End dot11fGetPackedProvisionDiscoveryResSize. */
+} /*                                               */
 
 tANI_U32 dot11fGetPackedRadioMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fRadioMeasurementReport *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22058,7 +22058,7 @@ tANI_U32 dot11fGetPackedRadioMeasurementReportSize(tpAniSirGlobal pCtx, tDot11fR
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_RadioMeasurementReport);
     return status;
-} /* End dot11fGetPackedRadioMeasurementReportSize. */
+} /*                                                */
 
 tANI_U32 dot11fGetPackedRadioMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11fRadioMeasurementRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22066,7 +22066,7 @@ tANI_U32 dot11fGetPackedRadioMeasurementRequestSize(tpAniSirGlobal pCtx, tDot11f
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_RadioMeasurementRequest);
     return status;
-} /* End dot11fGetPackedRadioMeasurementRequestSize. */
+} /*                                                 */
 
 tANI_U32 dot11fGetPackedReAssocRequestSize(tpAniSirGlobal pCtx, tDot11fReAssocRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22074,7 +22074,7 @@ tANI_U32 dot11fGetPackedReAssocRequestSize(tpAniSirGlobal pCtx, tDot11fReAssocRe
     *pnNeeded = 10;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ReAssocRequest);
     return status;
-} /* End dot11fGetPackedReAssocRequestSize. */
+} /*                                        */
 
 tANI_U32 dot11fGetPackedReAssocResponseSize(tpAniSirGlobal pCtx, tDot11fReAssocResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22082,7 +22082,7 @@ tANI_U32 dot11fGetPackedReAssocResponseSize(tpAniSirGlobal pCtx, tDot11fReAssocR
     *pnNeeded = 6;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_ReAssocResponse);
     return status;
-} /* End dot11fGetPackedReAssocResponseSize. */
+} /*                                         */
 
 tANI_U32 dot11fGetPackedSMPowerSaveSize(tpAniSirGlobal pCtx, tDot11fSMPowerSave *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22090,7 +22090,7 @@ tANI_U32 dot11fGetPackedSMPowerSaveSize(tpAniSirGlobal pCtx, tDot11fSMPowerSave 
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_SMPowerSave);
     return status;
-} /* End dot11fGetPackedSMPowerSaveSize. */
+} /*                                     */
 
 tANI_U32 dot11fGetPackedSaQueryRspSize(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22098,7 +22098,7 @@ tANI_U32 dot11fGetPackedSaQueryRspSize(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *p
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_SaQueryRsp);
     return status;
-} /* End dot11fGetPackedSaQueryRspSize. */
+} /*                                    */
 
 tANI_U32 dot11fGetPackedTDLSDisReqSize(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22106,7 +22106,7 @@ tANI_U32 dot11fGetPackedTDLSDisReqSize(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *p
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSDisReq);
     return status;
-} /* End dot11fGetPackedTDLSDisReqSize. */
+} /*                                    */
 
 tANI_U32 dot11fGetPackedTDLSDisRspSize(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22114,7 +22114,7 @@ tANI_U32 dot11fGetPackedTDLSDisRspSize(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *p
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSDisRsp);
     return status;
-} /* End dot11fGetPackedTDLSDisRspSize. */
+} /*                                    */
 
 tANI_U32 dot11fGetPackedTDLSPeerTrafficIndSize(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficInd *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22122,7 +22122,7 @@ tANI_U32 dot11fGetPackedTDLSPeerTrafficIndSize(tpAniSirGlobal pCtx, tDot11fTDLSP
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSPeerTrafficInd);
     return status;
-} /* End dot11fGetPackedTDLSPeerTrafficIndSize. */
+} /*                                            */
 
 tANI_U32 dot11fGetPackedTDLSPeerTrafficRspSize(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficRsp *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22130,7 +22130,7 @@ tANI_U32 dot11fGetPackedTDLSPeerTrafficRspSize(tpAniSirGlobal pCtx, tDot11fTDLSP
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSPeerTrafficRsp);
     return status;
-} /* End dot11fGetPackedTDLSPeerTrafficRspSize. */
+} /*                                            */
 
 tANI_U32 dot11fGetPackedTDLSSetupCnfSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupCnf *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22138,7 +22138,7 @@ tANI_U32 dot11fGetPackedTDLSSetupCnfSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupCn
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSSetupCnf);
     return status;
-} /* End dot11fGetPackedTDLSSetupCnfSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedTDLSSetupReqSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupReq *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22146,7 +22146,7 @@ tANI_U32 dot11fGetPackedTDLSSetupReqSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupRe
     *pnNeeded = 5;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSSetupReq);
     return status;
-} /* End dot11fGetPackedTDLSSetupReqSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedTDLSSetupRspSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupRsp *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22154,7 +22154,7 @@ tANI_U32 dot11fGetPackedTDLSSetupRspSize(tpAniSirGlobal pCtx, tDot11fTDLSSetupRs
     *pnNeeded = 7;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSSetupRsp);
     return status;
-} /* End dot11fGetPackedTDLSSetupRspSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedTDLSTeardownSize(tpAniSirGlobal pCtx, tDot11fTDLSTeardown *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22162,7 +22162,7 @@ tANI_U32 dot11fGetPackedTDLSTeardownSize(tpAniSirGlobal pCtx, tDot11fTDLSTeardow
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TDLSTeardown);
     return status;
-} /* End dot11fGetPackedTDLSTeardownSize. */
+} /*                                      */
 
 tANI_U32 dot11fGetPackedTPCReportSize(tpAniSirGlobal pCtx, tDot11fTPCReport *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22170,7 +22170,7 @@ tANI_U32 dot11fGetPackedTPCReportSize(tpAniSirGlobal pCtx, tDot11fTPCReport *pFr
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TPCReport);
     return status;
-} /* End dot11fGetPackedTPCReportSize. */
+} /*                                   */
 
 tANI_U32 dot11fGetPackedTPCRequestSize(tpAniSirGlobal pCtx, tDot11fTPCRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22178,7 +22178,7 @@ tANI_U32 dot11fGetPackedTPCRequestSize(tpAniSirGlobal pCtx, tDot11fTPCRequest *p
     *pnNeeded = 3;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_TPCRequest);
     return status;
-} /* End dot11fGetPackedTPCRequestSize. */
+} /*                                    */
 
 tANI_U32 dot11fGetPackedWMMAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fWMMAddTSRequest *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22186,7 +22186,7 @@ tANI_U32 dot11fGetPackedWMMAddTSRequestSize(tpAniSirGlobal pCtx, tDot11fWMMAddTS
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_WMMAddTSRequest);
     return status;
-} /* End dot11fGetPackedWMMAddTSRequestSize. */
+} /*                                         */
 
 tANI_U32 dot11fGetPackedWMMAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fWMMAddTSResponse *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22194,7 +22194,7 @@ tANI_U32 dot11fGetPackedWMMAddTSResponseSize(tpAniSirGlobal pCtx, tDot11fWMMAddT
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_WMMAddTSResponse);
     return status;
-} /* End dot11fGetPackedWMMAddTSResponseSize. */
+} /*                                          */
 
 tANI_U32 dot11fGetPackedWMMDelTSSize(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm, tANI_U32 *pnNeeded)
 {
@@ -22202,7 +22202,7 @@ tANI_U32 dot11fGetPackedWMMDelTSSize(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm,
     *pnNeeded = 4;
     status = GetPackedSizeCore(pCtx, ( tANI_U8* )pFrm, pnNeeded, IES_WMMDelTS);
     return status;
-} /* End dot11fGetPackedWMMDelTSSize. */
+} /*                                  */
 
 static tANI_U32 GetPackedSizeCore(tpAniSirGlobal pCtx,
                                       tANI_U8 *pFrm,
@@ -22220,7 +22220,7 @@ static tANI_U32 GetPackedSizeCore(tpAniSirGlobal pCtx,
     
     status = DOT11F_PARSE_SUCCESS;
 
-    (void)pCtx; /* Shutup the compiler if we have no FFs nor IEs... */
+    (void)pCtx; /*                                                  */
     i=0; n=0;
     pIe = &( IEs[0] );
     while ( 0xff != pIe->eid )
@@ -22745,7 +22745,7 @@ static tANI_U32 GetPackedSizeCore(tpAniSirGlobal pCtx,
                             break;
                 case SigIeRICDataDesc:
                             offset = sizeof(tDot11fIERICDataDesc);
-                            pnNeeded -= 2  ; //Subtract the length and Oui as this is our container IE to group Ies and it doesnt have its own length and OUI.
+                            pnNeeded -= 2  ; //                                                                                                               
                             status |= dot11fGetPackedIERICDataDesc(pCtx, ( tDot11fIERICDataDesc* )(pFrm + pIe->offset + offset * i ), pnNeeded);
                             break;
                 case SigIeRSN:
@@ -22897,10 +22897,10 @@ static tANI_U32 GetPackedSizeCore(tpAniSirGlobal pCtx,
                        "'t know about the IE signature %d; this is most l"
                        "ikely a bug in 'framesc'.\n"), pIe->sig);
                    return DOT11F_INTERNAL_ERROR;
-               }/*End of switch Case*/
+               }/*                  */
                if( byteCount && pIePresent )
                  *pnNeeded += byteCount;
-           } /*End of for loop*/
+           } /*               */
         }
         ++pIe;
     }
@@ -23130,7 +23130,7 @@ void dot11fPackFfAID(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->associd, 0);
     (void)pCtx;
-} /* End dot11fPackFfAID. */
+} /*                      */
 
 void dot11fPackFfAction(tpAniSirGlobal pCtx,
                         tDot11fFfAction *pSrc,
@@ -23138,7 +23138,7 @@ void dot11fPackFfAction(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->action;
     (void)pCtx;
-} /* End dot11fPackFfAction. */
+} /*                         */
 
 void dot11fPackFfAddBAParameterSet(tpAniSirGlobal pCtx,
                                    tDot11fFfAddBAParameterSet *pSrc,
@@ -23152,7 +23152,7 @@ void dot11fPackFfAddBAParameterSet(tpAniSirGlobal pCtx,
     tmp80__ |= ( pSrc->bufferSize << 6 );
     frameshtons(pCtx, pBuf, tmp80__, 0);
     (void)pCtx;
-} /* End dot11fPackFfAddBAParameterSet. */
+} /*                                    */
 
 void dot11fPackFfAuthAlgo(tpAniSirGlobal pCtx,
                           tDot11fFfAuthAlgo *pSrc,
@@ -23160,7 +23160,7 @@ void dot11fPackFfAuthAlgo(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->algo, 0);
     (void)pCtx;
-} /* End dot11fPackFfAuthAlgo. */
+} /*                           */
 
 void dot11fPackFfAuthSeqNo(tpAniSirGlobal pCtx,
                            tDot11fFfAuthSeqNo *pSrc,
@@ -23168,7 +23168,7 @@ void dot11fPackFfAuthSeqNo(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->no, 0);
     (void)pCtx;
-} /* End dot11fPackFfAuthSeqNo. */
+} /*                            */
 
 void dot11fPackFfBAStartingSequenceControl(tpAniSirGlobal pCtx,
                                            tDot11fFfBAStartingSequenceControl *pSrc,
@@ -23180,7 +23180,7 @@ void dot11fPackFfBAStartingSequenceControl(tpAniSirGlobal pCtx,
     tmp81__ |= ( pSrc->ssn << 4 );
     frameshtons(pCtx, pBuf, tmp81__, 0);
     (void)pCtx;
-} /* End dot11fPackFfBAStartingSequenceControl. */
+} /*                                            */
 
 void dot11fPackFfBATimeout(tpAniSirGlobal pCtx,
                            tDot11fFfBATimeout *pSrc,
@@ -23188,7 +23188,7 @@ void dot11fPackFfBATimeout(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->timeout, 0);
     (void)pCtx;
-} /* End dot11fPackFfBATimeout. */
+} /*                            */
 
 void dot11fPackFfBeaconInterval(tpAniSirGlobal pCtx,
                                 tDot11fFfBeaconInterval *pSrc,
@@ -23196,7 +23196,7 @@ void dot11fPackFfBeaconInterval(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->interval, 0);
     (void)pCtx;
-} /* End dot11fPackFfBeaconInterval. */
+} /*                                 */
 
 void dot11fPackFfCapabilities(tpAniSirGlobal pCtx,
                               tDot11fFfCapabilities *pSrc,
@@ -23222,7 +23222,7 @@ void dot11fPackFfCapabilities(tpAniSirGlobal pCtx,
     tmp82__ |= ( pSrc->immediateBA << 15 );
     frameshtons(pCtx, pBuf, tmp82__, 0);
     (void)pCtx;
-} /* End dot11fPackFfCapabilities. */
+} /*                               */
 
 void dot11fPackFfCategory(tpAniSirGlobal pCtx,
                           tDot11fFfCategory *pSrc,
@@ -23230,7 +23230,7 @@ void dot11fPackFfCategory(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->category;
     (void)pCtx;
-} /* End dot11fPackFfCategory. */
+} /*                           */
 
 void dot11fPackFfCurrentAPAddress(tpAniSirGlobal pCtx,
                                   tDot11fFfCurrentAPAddress *pSrc,
@@ -23238,7 +23238,7 @@ void dot11fPackFfCurrentAPAddress(tpAniSirGlobal pCtx,
 {
     DOT11F_MEMCPY(pCtx, pBuf, pSrc->mac, 6);
     (void)pCtx;
-} /* End dot11fPackFfCurrentAPAddress. */
+} /*                                   */
 
 void dot11fPackFfDelBAParameterSet(tpAniSirGlobal pCtx,
                                    tDot11fFfDelBAParameterSet *pSrc,
@@ -23251,7 +23251,7 @@ void dot11fPackFfDelBAParameterSet(tpAniSirGlobal pCtx,
     tmp83__ |= ( pSrc->tid << 12 );
     frameshtons(pCtx, pBuf, tmp83__, 0);
     (void)pCtx;
-} /* End dot11fPackFfDelBAParameterSet. */
+} /*                                    */
 
 void dot11fPackFfDialogToken(tpAniSirGlobal pCtx,
                              tDot11fFfDialogToken *pSrc,
@@ -23259,7 +23259,7 @@ void dot11fPackFfDialogToken(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->token;
     (void)pCtx;
-} /* End dot11fPackFfDialogToken. */
+} /*                              */
 
 void dot11fPackFfLinkMargin(tpAniSirGlobal pCtx,
                             tDot11fFfLinkMargin *pSrc,
@@ -23267,7 +23267,7 @@ void dot11fPackFfLinkMargin(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->linkMargin;
     (void)pCtx;
-} /* End dot11fPackFfLinkMargin. */
+} /*                             */
 
 void dot11fPackFfListenInterval(tpAniSirGlobal pCtx,
                                 tDot11fFfListenInterval *pSrc,
@@ -23275,7 +23275,7 @@ void dot11fPackFfListenInterval(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->interval, 0);
     (void)pCtx;
-} /* End dot11fPackFfListenInterval. */
+} /*                                 */
 
 void dot11fPackFfMaxTxPower(tpAniSirGlobal pCtx,
                             tDot11fFfMaxTxPower *pSrc,
@@ -23283,7 +23283,7 @@ void dot11fPackFfMaxTxPower(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->maxTxPower;
     (void)pCtx;
-} /* End dot11fPackFfMaxTxPower. */
+} /*                             */
 
 void dot11fPackFfNumOfRepetitions(tpAniSirGlobal pCtx,
                                   tDot11fFfNumOfRepetitions *pSrc,
@@ -23291,7 +23291,7 @@ void dot11fPackFfNumOfRepetitions(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->repetitions, 0);
     (void)pCtx;
-} /* End dot11fPackFfNumOfRepetitions. */
+} /*                                   */
 
 void dot11fPackFfOperatingMode(tpAniSirGlobal pCtx,
                                tDot11fFfOperatingMode *pSrc,
@@ -23305,7 +23305,7 @@ void dot11fPackFfOperatingMode(tpAniSirGlobal pCtx,
     tmp84__ |= ( pSrc->rxNSSType << 7 );
     *pBuf = tmp84__;
     (void)pCtx;
-} /* End dot11fPackFfOperatingMode. */
+} /*                                */
 
 void dot11fPackFfP2POUI(tpAniSirGlobal pCtx,
                         tDot11fFfP2POUI *pSrc,
@@ -23313,7 +23313,7 @@ void dot11fPackFfP2POUI(tpAniSirGlobal pCtx,
 {
     frameshtonl(pCtx, pBuf, pSrc->oui, 0);
     (void)pCtx;
-} /* End dot11fPackFfP2POUI. */
+} /*                         */
 
 void dot11fPackFfP2POUISubType(tpAniSirGlobal pCtx,
                                tDot11fFfP2POUISubType *pSrc,
@@ -23321,7 +23321,7 @@ void dot11fPackFfP2POUISubType(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->ouiSubtype;
     (void)pCtx;
-} /* End dot11fPackFfP2POUISubType. */
+} /*                                */
 
 void dot11fPackFfRCPI(tpAniSirGlobal pCtx,
                       tDot11fFfRCPI *pSrc,
@@ -23329,7 +23329,7 @@ void dot11fPackFfRCPI(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->rcpi;
     (void)pCtx;
-} /* End dot11fPackFfRCPI. */
+} /*                       */
 
 void dot11fPackFfRSNI(tpAniSirGlobal pCtx,
                       tDot11fFfRSNI *pSrc,
@@ -23337,7 +23337,7 @@ void dot11fPackFfRSNI(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->rsni;
     (void)pCtx;
-} /* End dot11fPackFfRSNI. */
+} /*                       */
 
 void dot11fPackFfReason(tpAniSirGlobal pCtx,
                         tDot11fFfReason *pSrc,
@@ -23345,7 +23345,7 @@ void dot11fPackFfReason(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->code, 0);
     (void)pCtx;
-} /* End dot11fPackFfReason. */
+} /*                         */
 
 void dot11fPackFfRxAntennaId(tpAniSirGlobal pCtx,
                              tDot11fFfRxAntennaId *pSrc,
@@ -23353,7 +23353,7 @@ void dot11fPackFfRxAntennaId(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->antennaId;
     (void)pCtx;
-} /* End dot11fPackFfRxAntennaId. */
+} /*                              */
 
 void dot11fPackFfSMPowerModeSet(tpAniSirGlobal pCtx,
                                 tDot11fFfSMPowerModeSet *pSrc,
@@ -23366,7 +23366,7 @@ void dot11fPackFfSMPowerModeSet(tpAniSirGlobal pCtx,
     tmp85__ |= ( pSrc->reserved << 2 );
     *pBuf = tmp85__;
     (void)pCtx;
-} /* End dot11fPackFfSMPowerModeSet. */
+} /*                                 */
 
 void dot11fPackFfStatus(tpAniSirGlobal pCtx,
                         tDot11fFfStatus *pSrc,
@@ -23374,7 +23374,7 @@ void dot11fPackFfStatus(tpAniSirGlobal pCtx,
 {
     frameshtons(pCtx, pBuf, pSrc->status, 0);
     (void)pCtx;
-} /* End dot11fPackFfStatus. */
+} /*                         */
 
 void dot11fPackFfStatusCode(tpAniSirGlobal pCtx,
                             tDot11fFfStatusCode *pSrc,
@@ -23382,7 +23382,7 @@ void dot11fPackFfStatusCode(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->statusCode;
     (void)pCtx;
-} /* End dot11fPackFfStatusCode. */
+} /*                             */
 
 void dot11fPackFfTPCEleID(tpAniSirGlobal pCtx,
                           tDot11fFfTPCEleID *pSrc,
@@ -23390,7 +23390,7 @@ void dot11fPackFfTPCEleID(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->TPCId;
     (void)pCtx;
-} /* End dot11fPackFfTPCEleID. */
+} /*                           */
 
 void dot11fPackFfTPCEleLen(tpAniSirGlobal pCtx,
                            tDot11fFfTPCEleLen *pSrc,
@@ -23398,7 +23398,7 @@ void dot11fPackFfTPCEleLen(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->TPCLen;
     (void)pCtx;
-} /* End dot11fPackFfTPCEleLen. */
+} /*                            */
 
 void dot11fPackFfTSInfo(tpAniSirGlobal pCtx,
                         tDot11fFfTSInfo *pSrc,
@@ -23418,7 +23418,7 @@ void dot11fPackFfTSInfo(tpAniSirGlobal pCtx,
     tmp86__ |= ( pSrc->unused << 17 );
     frameshtonl(pCtx, pBuf, tmp86__, 0);
     (void)pCtx;
-} /* End dot11fPackFfTSInfo. */
+} /*                         */
 
 void dot11fPackFfTimeStamp(tpAniSirGlobal pCtx,
                            tDot11fFfTimeStamp *pSrc,
@@ -23426,7 +23426,7 @@ void dot11fPackFfTimeStamp(tpAniSirGlobal pCtx,
 {
     frameshtonq(pCtx, pBuf, pSrc->timestamp, 0);
     (void)pCtx;
-} /* End dot11fPackFfTimeStamp. */
+} /*                            */
 
 void dot11fPackFfTransactionId(tpAniSirGlobal pCtx,
                                tDot11fFfTransactionId *pSrc,
@@ -23434,7 +23434,7 @@ void dot11fPackFfTransactionId(tpAniSirGlobal pCtx,
 {
     DOT11F_MEMCPY(pCtx, pBuf, pSrc->transId, 2);
     (void)pCtx;
-} /* End dot11fPackFfTransactionId. */
+} /*                                */
 
 void dot11fPackFfTxAntennaId(tpAniSirGlobal pCtx,
                              tDot11fFfTxAntennaId *pSrc,
@@ -23442,7 +23442,7 @@ void dot11fPackFfTxAntennaId(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->antennaId;
     (void)pCtx;
-} /* End dot11fPackFfTxAntennaId. */
+} /*                              */
 
 void dot11fPackFfTxPower(tpAniSirGlobal pCtx,
                          tDot11fFfTxPower *pSrc,
@@ -23450,7 +23450,7 @@ void dot11fPackFfTxPower(tpAniSirGlobal pCtx,
 {
     *pBuf = pSrc->txPower;
     (void)pCtx;
-} /* End dot11fPackFfTxPower. */
+} /*                          */
 
 tANI_U32 dot11fPackTlvAuthorizedMACs(tpAniSirGlobal pCtx,
                                      tDot11fTLVAuthorizedMACs *pSrc,
@@ -23480,7 +23480,7 @@ tANI_U32 dot11fPackTlvAuthorizedMACs(tpAniSirGlobal pCtx,
         *pTlvLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvAuthorizedMACs. */
+} /*                                  */
 
 tANI_U32 dot11fPackTlvRequestToEnroll(tpAniSirGlobal pCtx,
                                       tDot11fTLVRequestToEnroll *pSrc,
@@ -23510,7 +23510,7 @@ tANI_U32 dot11fPackTlvRequestToEnroll(tpAniSirGlobal pCtx,
         *pTlvLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvRequestToEnroll. */
+} /*                                   */
 
 tANI_U32 dot11fPackTlvVersion2(tpAniSirGlobal pCtx,
                                tDot11fTLVVersion2 *pSrc,
@@ -23545,7 +23545,7 @@ tANI_U32 dot11fPackTlvVersion2(tpAniSirGlobal pCtx,
         *pTlvLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvVersion2. */
+} /*                            */
 
 tANI_U32 dot11fPackTlvAPSetupLocked(tpAniSirGlobal pCtx,
                                     tDot11fTLVAPSetupLocked *pSrc,
@@ -23575,7 +23575,7 @@ tANI_U32 dot11fPackTlvAPSetupLocked(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvAPSetupLocked. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvAssociationState(tpAniSirGlobal pCtx,
                                        tDot11fTLVAssociationState *pSrc,
@@ -23605,7 +23605,7 @@ tANI_U32 dot11fPackTlvAssociationState(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvAssociationState. */
+} /*                                    */
 
 tANI_U32 dot11fPackTlvChannelList(tpAniSirGlobal pCtx,
                                   tDot11fTLVChannelList *pSrc,
@@ -23639,7 +23639,7 @@ tANI_U32 dot11fPackTlvChannelList(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvChannelList. */
+} /*                               */
 
 tANI_U32 dot11fPackTlvConfigMethods(tpAniSirGlobal pCtx,
                                     tDot11fTLVConfigMethods *pSrc,
@@ -23669,7 +23669,7 @@ tANI_U32 dot11fPackTlvConfigMethods(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvConfigMethods. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvConfigurationError(tpAniSirGlobal pCtx,
                                          tDot11fTLVConfigurationError *pSrc,
@@ -23699,7 +23699,7 @@ tANI_U32 dot11fPackTlvConfigurationError(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvConfigurationError. */
+} /*                                      */
 
 tANI_U32 dot11fPackTlvConfigurationTimeout(tpAniSirGlobal pCtx,
                                            tDot11fTLVConfigurationTimeout *pSrc,
@@ -23732,7 +23732,7 @@ tANI_U32 dot11fPackTlvConfigurationTimeout(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvConfigurationTimeout. */
+} /*                                        */
 
 tANI_U32 dot11fPackTlvDeviceName(tpAniSirGlobal pCtx,
                                  tDot11fTLVDeviceName *pSrc,
@@ -23763,7 +23763,7 @@ tANI_U32 dot11fPackTlvDeviceName(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvDeviceName. */
+} /*                              */
 
 tANI_U32 dot11fPackTlvDevicePasswordID(tpAniSirGlobal pCtx,
                                        tDot11fTLVDevicePasswordID *pSrc,
@@ -23793,7 +23793,7 @@ tANI_U32 dot11fPackTlvDevicePasswordID(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvDevicePasswordID. */
+} /*                                    */
 
 tANI_U32 dot11fPackTlvExtendedListenTiming(tpAniSirGlobal pCtx,
                                            tDot11fTLVExtendedListenTiming *pSrc,
@@ -23826,7 +23826,7 @@ tANI_U32 dot11fPackTlvExtendedListenTiming(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvExtendedListenTiming. */
+} /*                                        */
 
 tANI_U32 dot11fPackTlvGOIntent(tpAniSirGlobal pCtx,
                                tDot11fTLVGOIntent *pSrc,
@@ -23856,7 +23856,7 @@ tANI_U32 dot11fPackTlvGOIntent(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvGOIntent. */
+} /*                            */
 
 tANI_U32 dot11fPackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal pCtx,
                                                   tDot11fTLVIntendedP2PInterfaceAddress *pSrc,
@@ -23886,7 +23886,7 @@ tANI_U32 dot11fPackTlvIntendedP2PInterfaceAddress(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvIntendedP2PInterfaceAddress. */
+} /*                                               */
 
 tANI_U32 dot11fPackTlvInvitationFlags(tpAniSirGlobal pCtx,
                                       tDot11fTLVInvitationFlags *pSrc,
@@ -23916,7 +23916,7 @@ tANI_U32 dot11fPackTlvInvitationFlags(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvInvitationFlags. */
+} /*                                   */
 
 tANI_U32 dot11fPackTlvListenChannel(tpAniSirGlobal pCtx,
                                     tDot11fTLVListenChannel *pSrc,
@@ -23952,7 +23952,7 @@ tANI_U32 dot11fPackTlvListenChannel(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvListenChannel. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvManufacturer(tpAniSirGlobal pCtx,
                                    tDot11fTLVManufacturer *pSrc,
@@ -23983,7 +23983,7 @@ tANI_U32 dot11fPackTlvManufacturer(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvManufacturer. */
+} /*                                */
 
 tANI_U32 dot11fPackTlvMinorReasonCode(tpAniSirGlobal pCtx,
                                       tDot11fTLVMinorReasonCode *pSrc,
@@ -24013,7 +24013,7 @@ tANI_U32 dot11fPackTlvMinorReasonCode(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvMinorReasonCode. */
+} /*                                   */
 
 tANI_U32 dot11fPackTlvModelName(tpAniSirGlobal pCtx,
                                 tDot11fTLVModelName *pSrc,
@@ -24044,7 +24044,7 @@ tANI_U32 dot11fPackTlvModelName(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvModelName. */
+} /*                             */
 
 tANI_U32 dot11fPackTlvModelNumber(tpAniSirGlobal pCtx,
                                   tDot11fTLVModelNumber *pSrc,
@@ -24075,7 +24075,7 @@ tANI_U32 dot11fPackTlvModelNumber(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvModelNumber. */
+} /*                               */
 
 tANI_U32 dot11fPackTlvNoticeOfAbsence(tpAniSirGlobal pCtx,
                                       tDot11fTLVNoticeOfAbsence *pSrc,
@@ -24112,7 +24112,7 @@ tANI_U32 dot11fPackTlvNoticeOfAbsence(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvNoticeOfAbsence. */
+} /*                                   */
 
 tANI_U32 dot11fPackTlvOperatingChannel(tpAniSirGlobal pCtx,
                                        tDot11fTLVOperatingChannel *pSrc,
@@ -24148,7 +24148,7 @@ tANI_U32 dot11fPackTlvOperatingChannel(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvOperatingChannel. */
+} /*                                    */
 
 tANI_U32 dot11fPackTlvP2PCapability(tpAniSirGlobal pCtx,
                                     tDot11fTLVP2PCapability *pSrc,
@@ -24181,7 +24181,7 @@ tANI_U32 dot11fPackTlvP2PCapability(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PCapability. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvP2PDeviceId(tpAniSirGlobal pCtx,
                                   tDot11fTLVP2PDeviceId *pSrc,
@@ -24211,7 +24211,7 @@ tANI_U32 dot11fPackTlvP2PDeviceId(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PDeviceId. */
+} /*                               */
 
 tANI_U32 dot11fPackTlvP2PDeviceInfo(tpAniSirGlobal pCtx,
                                     tDot11fTLVP2PDeviceInfo *pSrc,
@@ -24255,7 +24255,7 @@ tANI_U32 dot11fPackTlvP2PDeviceInfo(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return status;
-} /* End dot11fPackTlvP2PDeviceInfo. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvP2PGroupBssid(tpAniSirGlobal pCtx,
                                     tDot11fTLVP2PGroupBssid *pSrc,
@@ -24285,7 +24285,7 @@ tANI_U32 dot11fPackTlvP2PGroupBssid(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PGroupBssid. */
+} /*                                 */
 
 tANI_U32 dot11fPackTlvP2PGroupId(tpAniSirGlobal pCtx,
                                  tDot11fTLVP2PGroupId *pSrc,
@@ -24319,7 +24319,7 @@ tANI_U32 dot11fPackTlvP2PGroupId(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PGroupId. */
+} /*                              */
 
 tANI_U32 dot11fPackTlvP2PGroupInfo(tpAniSirGlobal pCtx,
                                    tDot11fTLVP2PGroupInfo *pSrc,
@@ -24350,7 +24350,7 @@ tANI_U32 dot11fPackTlvP2PGroupInfo(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PGroupInfo. */
+} /*                                */
 
 tANI_U32 dot11fPackTlvP2PStatus(tpAniSirGlobal pCtx,
                                 tDot11fTLVP2PStatus *pSrc,
@@ -24380,7 +24380,7 @@ tANI_U32 dot11fPackTlvP2PStatus(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PStatus. */
+} /*                             */
 
 tANI_U32 dot11fPackTlvPrimaryDeviceType(tpAniSirGlobal pCtx,
                                         tDot11fTLVPrimaryDeviceType *pSrc,
@@ -24416,7 +24416,7 @@ tANI_U32 dot11fPackTlvPrimaryDeviceType(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvPrimaryDeviceType. */
+} /*                                     */
 
 tANI_U32 dot11fPackTlvRFBands(tpAniSirGlobal pCtx,
                               tDot11fTLVRFBands *pSrc,
@@ -24446,7 +24446,7 @@ tANI_U32 dot11fPackTlvRFBands(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvRFBands. */
+} /*                           */
 
 tANI_U32 dot11fPackTlvRequestDeviceType(tpAniSirGlobal pCtx,
                                         tDot11fTLVRequestDeviceType *pSrc,
@@ -24482,7 +24482,7 @@ tANI_U32 dot11fPackTlvRequestDeviceType(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvRequestDeviceType. */
+} /*                                     */
 
 tANI_U32 dot11fPackTlvRequestType(tpAniSirGlobal pCtx,
                                   tDot11fTLVRequestType *pSrc,
@@ -24512,7 +24512,7 @@ tANI_U32 dot11fPackTlvRequestType(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvRequestType. */
+} /*                               */
 
 tANI_U32 dot11fPackTlvResponseType(tpAniSirGlobal pCtx,
                                    tDot11fTLVResponseType *pSrc,
@@ -24542,7 +24542,7 @@ tANI_U32 dot11fPackTlvResponseType(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvResponseType. */
+} /*                                */
 
 tANI_U32 dot11fPackTlvSelectedRegistrar(tpAniSirGlobal pCtx,
                                         tDot11fTLVSelectedRegistrar *pSrc,
@@ -24572,7 +24572,7 @@ tANI_U32 dot11fPackTlvSelectedRegistrar(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvSelectedRegistrar. */
+} /*                                     */
 
 tANI_U32 dot11fPackTlvSelectedRegistrarConfigMethods(tpAniSirGlobal pCtx,
                                                      tDot11fTLVSelectedRegistrarConfigMethods *pSrc,
@@ -24602,7 +24602,7 @@ tANI_U32 dot11fPackTlvSelectedRegistrarConfigMethods(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvSelectedRegistrarConfigMethods. */
+} /*                                                  */
 
 tANI_U32 dot11fPackTlvSerialNumber(tpAniSirGlobal pCtx,
                                    tDot11fTLVSerialNumber *pSrc,
@@ -24633,7 +24633,7 @@ tANI_U32 dot11fPackTlvSerialNumber(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvSerialNumber. */
+} /*                                */
 
 tANI_U32 dot11fPackTlvUUID_E(tpAniSirGlobal pCtx,
                              tDot11fTLVUUID_E *pSrc,
@@ -24663,7 +24663,7 @@ tANI_U32 dot11fPackTlvUUID_E(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvUUID_E. */
+} /*                          */
 
 tANI_U32 dot11fPackTlvUUID_R(tpAniSirGlobal pCtx,
                              tDot11fTLVUUID_R *pSrc,
@@ -24693,7 +24693,7 @@ tANI_U32 dot11fPackTlvUUID_R(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvUUID_R. */
+} /*                          */
 
 tANI_U32 dot11fPackTlvVendorExtension(tpAniSirGlobal pCtx,
                                       tDot11fTLVVendorExtension *pSrc,
@@ -24731,7 +24731,7 @@ tANI_U32 dot11fPackTlvVendorExtension(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return status;
-} /* End dot11fPackTlvVendorExtension. */
+} /*                                   */
 
 tANI_U32 dot11fPackTlvVersion(tpAniSirGlobal pCtx,
                               tDot11fTLVVersion *pSrc,
@@ -24766,7 +24766,7 @@ tANI_U32 dot11fPackTlvVersion(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvVersion. */
+} /*                           */
 
 tANI_U32 dot11fPackTlvWPSState(tpAniSirGlobal pCtx,
                                tDot11fTLVWPSState *pSrc,
@@ -24796,7 +24796,7 @@ tANI_U32 dot11fPackTlvWPSState(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 4, 1);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvWPSState. */
+} /*                            */
 
 tANI_U32 dot11fPackTlvP2PInterface(tpAniSirGlobal pCtx,
                                    tDot11fTLVP2PInterface *pSrc,
@@ -24826,7 +24826,7 @@ tANI_U32 dot11fPackTlvP2PInterface(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PInterface. */
+} /*                                */
 
 tANI_U32 dot11fPackTlvP2PManageability(tpAniSirGlobal pCtx,
                                        tDot11fTLVP2PManageability *pSrc,
@@ -24856,7 +24856,7 @@ tANI_U32 dot11fPackTlvP2PManageability(tpAniSirGlobal pCtx,
         frameshtons( pCtx, pTlvLen, *pnConsumed - nConsumedOnEntry - 3, 0);
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackTlvP2PManageability. */
+} /*                                    */
 
 tANI_U32 dot11fPackIeAPName(tpAniSirGlobal pCtx,
                             tDot11fIEAPName *pSrc,
@@ -24877,7 +24877,7 @@ tANI_U32 dot11fPackIeAPName(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->name ), pSrc->num_name);
         *pnConsumed += pSrc->num_name;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -24886,7 +24886,7 @@ tANI_U32 dot11fPackIeAPName(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeAPName. */
+} /*                         */
 
 tANI_U32 dot11fPackIeBPIndicator(tpAniSirGlobal pCtx,
                                  tDot11fIEBPIndicator *pSrc,
@@ -24910,7 +24910,7 @@ tANI_U32 dot11fPackIeBPIndicator(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->type;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -24919,7 +24919,7 @@ tANI_U32 dot11fPackIeBPIndicator(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeBPIndicator. */
+} /*                              */
 
 tANI_U32 dot11fPackIeCondensedCountryStr(tpAniSirGlobal pCtx,
                                          tDot11fIECondensedCountryStr *pSrc,
@@ -24940,7 +24940,7 @@ tANI_U32 dot11fPackIeCondensedCountryStr(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, pSrc->countryStr, 2);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -24949,7 +24949,7 @@ tANI_U32 dot11fPackIeCondensedCountryStr(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCondensedCountryStr. */
+} /*                                      */
 
 tANI_U32 dot11fPackIeGTK(tpAniSirGlobal pCtx,
                          tDot11fIEGTK *pSrc,
@@ -24984,7 +24984,7 @@ tANI_U32 dot11fPackIeGTK(tpAniSirGlobal pCtx,
         pBuf += 8;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->key ), pSrc->num_key);
         *pnConsumed += pSrc->num_key;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -24993,7 +24993,7 @@ tANI_U32 dot11fPackIeGTK(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeGTK. */
+} /*                      */
 
 tANI_U32 dot11fPackIeHCF(tpAniSirGlobal pCtx,
                          tDot11fIEHCF *pSrc,
@@ -25014,7 +25014,7 @@ tANI_U32 dot11fPackIeHCF(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->enabled;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25023,7 +25023,7 @@ tANI_U32 dot11fPackIeHCF(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeHCF. */
+} /*                      */
 
 tANI_U32 dot11fPackIeIGTK(tpAniSirGlobal pCtx,
                           tDot11fIEIGTK *pSrc,
@@ -25053,7 +25053,7 @@ tANI_U32 dot11fPackIeIGTK(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, pSrc->key, 24);
         *pnConsumed += 24;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25062,7 +25062,7 @@ tANI_U32 dot11fPackIeIGTK(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeIGTK. */
+} /*                       */
 
 tANI_U32 dot11fPackIeLLAttr(tpAniSirGlobal pCtx,
                             tDot11fIELLAttr *pSrc,
@@ -25083,7 +25083,7 @@ tANI_U32 dot11fPackIeLLAttr(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtonl(pCtx, pBuf, pSrc->defer_threshold, 1);
         *pnConsumed += 4;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25092,7 +25092,7 @@ tANI_U32 dot11fPackIeLLAttr(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeLLAttr. */
+} /*                         */
 
 tANI_U32 dot11fPackIeLoadBalance(tpAniSirGlobal pCtx,
                                  tDot11fIELoadBalance *pSrc,
@@ -25116,7 +25116,7 @@ tANI_U32 dot11fPackIeLoadBalance(tpAniSirGlobal pCtx,
         pBuf += 6;
         *pBuf = pSrc->channel;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25125,7 +25125,7 @@ tANI_U32 dot11fPackIeLoadBalance(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeLoadBalance. */
+} /*                              */
 
 tANI_U32 dot11fPackIeLoadInfo(tpAniSirGlobal pCtx,
                               tDot11fIELoadInfo *pSrc,
@@ -25149,7 +25149,7 @@ tANI_U32 dot11fPackIeLoadInfo(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->channel_util, 1);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25158,7 +25158,7 @@ tANI_U32 dot11fPackIeLoadInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeLoadInfo. */
+} /*                           */
 
 tANI_U32 dot11fPackIePropAssocType(tpAniSirGlobal pCtx,
                                    tDot11fIEPropAssocType *pSrc,
@@ -25179,7 +25179,7 @@ tANI_U32 dot11fPackIePropAssocType(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->type;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25188,7 +25188,7 @@ tANI_U32 dot11fPackIePropAssocType(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropAssocType. */
+} /*                                */
 
 tANI_U32 dot11fPackIePropCapability(tpAniSirGlobal pCtx,
                                     tDot11fIEPropCapability *pSrc,
@@ -25209,7 +25209,7 @@ tANI_U32 dot11fPackIePropCapability(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtons(pCtx, pBuf, pSrc->capability, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25218,7 +25218,7 @@ tANI_U32 dot11fPackIePropCapability(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropCapability. */
+} /*                                 */
 
 tANI_U32 dot11fPackIePropChannSwitchAnn(tpAniSirGlobal pCtx,
                                         tDot11fIEPropChannSwitchAnn *pSrc,
@@ -25248,7 +25248,7 @@ tANI_U32 dot11fPackIePropChannSwitchAnn(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->channel_switch_count;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25257,7 +25257,7 @@ tANI_U32 dot11fPackIePropChannSwitchAnn(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropChannSwitchAnn. */
+} /*                                     */
 
 tANI_U32 dot11fPackIePropEDCAParams(tpAniSirGlobal pCtx,
                                     tDot11fIEPropEDCAParams *pSrc,
@@ -25365,7 +25365,7 @@ tANI_U32 dot11fPackIePropEDCAParams(tpAniSirGlobal pCtx,
         nBuf -=  1 ;
         frameshtons(pCtx, pBuf, pSrc->acvo_txoplimit, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25374,7 +25374,7 @@ tANI_U32 dot11fPackIePropEDCAParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropEDCAParams. */
+} /*                                 */
 
 tANI_U32 dot11fPackIePropQuietBSS(tpAniSirGlobal pCtx,
                                   tDot11fIEPropQuietBSS *pSrc,
@@ -25404,7 +25404,7 @@ tANI_U32 dot11fPackIePropQuietBSS(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->quiet_offset, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25413,7 +25413,7 @@ tANI_U32 dot11fPackIePropQuietBSS(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropQuietBSS. */
+} /*                               */
 
 tANI_U32 dot11fPackIePropSuppRates(tpAniSirGlobal pCtx,
                                    tDot11fIEPropSuppRates *pSrc,
@@ -25434,7 +25434,7 @@ tANI_U32 dot11fPackIePropSuppRates(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->rates ), pSrc->num_rates);
         *pnConsumed += pSrc->num_rates;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25443,7 +25443,7 @@ tANI_U32 dot11fPackIePropSuppRates(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePropSuppRates. */
+} /*                                */
 
 tANI_U32 dot11fPackIeR0KH_ID(tpAniSirGlobal pCtx,
                              tDot11fIER0KH_ID *pSrc,
@@ -25464,7 +25464,7 @@ tANI_U32 dot11fPackIeR0KH_ID(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->PMK_R0_ID ), pSrc->num_PMK_R0_ID);
         *pnConsumed += pSrc->num_PMK_R0_ID;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25473,7 +25473,7 @@ tANI_U32 dot11fPackIeR0KH_ID(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeR0KH_ID. */
+} /*                          */
 
 tANI_U32 dot11fPackIeR1KH_ID(tpAniSirGlobal pCtx,
                              tDot11fIER1KH_ID *pSrc,
@@ -25494,7 +25494,7 @@ tANI_U32 dot11fPackIeR1KH_ID(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, pSrc->PMK_R1_ID, 6);
         *pnConsumed += 6;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25503,7 +25503,7 @@ tANI_U32 dot11fPackIeR1KH_ID(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeR1KH_ID. */
+} /*                          */
 
 tANI_U32 dot11fPackIeTSFInfo(tpAniSirGlobal pCtx,
                              tDot11fIETSFInfo *pSrc,
@@ -25527,7 +25527,7 @@ tANI_U32 dot11fPackIeTSFInfo(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->BeaconIntvl, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25536,7 +25536,7 @@ tANI_U32 dot11fPackIeTSFInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTSFInfo. */
+} /*                          */
 
 tANI_U32 dot11fPackIeTaurus(tpAniSirGlobal pCtx,
                             tDot11fIETaurus *pSrc,
@@ -25567,7 +25567,7 @@ tANI_U32 dot11fPackIeTaurus(tpAniSirGlobal pCtx,
         tmp98__ |= ( pSrc->rsvd << 12 );
         frameshtons(pCtx, pBuf, tmp98__, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  2 ;
         break;
     }
@@ -25577,7 +25577,7 @@ tANI_U32 dot11fPackIeTaurus(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTaurus. */
+} /*                         */
 
 tANI_U32 dot11fPackIeTitan(tpAniSirGlobal pCtx,
                            tDot11fIETitan *pSrc,
@@ -25607,7 +25607,7 @@ tANI_U32 dot11fPackIeTitan(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->rev_fcs_state;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25616,7 +25616,7 @@ tANI_U32 dot11fPackIeTitan(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTitan. */
+} /*                        */
 
 tANI_U32 dot11fPackIeTriggerStaBgScan(tpAniSirGlobal pCtx,
                                       tDot11fIETriggerStaBgScan *pSrc,
@@ -25637,7 +25637,7 @@ tANI_U32 dot11fPackIeTriggerStaBgScan(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->enable;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25646,7 +25646,7 @@ tANI_U32 dot11fPackIeTriggerStaBgScan(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTriggerStaBgScan. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeVersion(tpAniSirGlobal pCtx,
                              tDot11fIEVersion *pSrc,
@@ -25673,7 +25673,7 @@ tANI_U32 dot11fPackIeVersion(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->build_version ), pSrc->num_build_version);
         *pnConsumed += pSrc->num_build_version;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25682,7 +25682,7 @@ tANI_U32 dot11fPackIeVersion(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeVersion. */
+} /*                          */
 
 tANI_U32 dot11fPackIeWDS(tpAniSirGlobal pCtx,
                          tDot11fIEWDS *pSrc,
@@ -25703,7 +25703,7 @@ tANI_U32 dot11fPackIeWDS(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->wdsData ), pSrc->num_wdsData);
         *pnConsumed += pSrc->num_wdsData;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25712,7 +25712,7 @@ tANI_U32 dot11fPackIeWDS(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWDS. */
+} /*                      */
 
 tANI_U32 dot11fPackIeAPChannelReport(tpAniSirGlobal pCtx,
                                      tDot11fIEAPChannelReport *pSrc,
@@ -25736,7 +25736,7 @@ tANI_U32 dot11fPackIeAPChannelReport(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->channelList ), pSrc->num_channelList);
         *pnConsumed += pSrc->num_channelList;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25745,7 +25745,7 @@ tANI_U32 dot11fPackIeAPChannelReport(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeAPChannelReport. */
+} /*                                  */
 
 tANI_U32 dot11fPackIeBcnReportingDetail(tpAniSirGlobal pCtx,
                                         tDot11fIEBcnReportingDetail *pSrc,
@@ -25766,7 +25766,7 @@ tANI_U32 dot11fPackIeBcnReportingDetail(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->reportingDetail;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25775,7 +25775,7 @@ tANI_U32 dot11fPackIeBcnReportingDetail(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeBcnReportingDetail. */
+} /*                                     */
 
 tANI_U32 dot11fPackIeBeaconReportFrmBody(tpAniSirGlobal pCtx,
                                          tDot11fIEBeaconReportFrmBody *pSrc,
@@ -25796,7 +25796,7 @@ tANI_U32 dot11fPackIeBeaconReportFrmBody(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->reportedFields ), pSrc->num_reportedFields);
         *pnConsumed += pSrc->num_reportedFields;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25805,7 +25805,7 @@ tANI_U32 dot11fPackIeBeaconReportFrmBody(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeBeaconReportFrmBody. */
+} /*                                      */
 
 tANI_U32 dot11fPackIeBeaconReporting(tpAniSirGlobal pCtx,
                                      tDot11fIEBeaconReporting *pSrc,
@@ -25829,7 +25829,7 @@ tANI_U32 dot11fPackIeBeaconReporting(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->threshold;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25838,7 +25838,7 @@ tANI_U32 dot11fPackIeBeaconReporting(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeBeaconReporting. */
+} /*                                  */
 
 tANI_U32 dot11fPackIeMeasurementPilot(tpAniSirGlobal pCtx,
                                       tDot11fIEMeasurementPilot *pSrc,
@@ -25862,7 +25862,7 @@ tANI_U32 dot11fPackIeMeasurementPilot(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->vendorSpecific ), pSrc->num_vendorSpecific);
         *pnConsumed += pSrc->num_vendorSpecific;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25871,7 +25871,7 @@ tANI_U32 dot11fPackIeMeasurementPilot(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeMeasurementPilot. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeMultiBssid(tpAniSirGlobal pCtx,
                                 tDot11fIEMultiBssid *pSrc,
@@ -25895,7 +25895,7 @@ tANI_U32 dot11fPackIeMultiBssid(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->vendorSpecific ), pSrc->num_vendorSpecific);
         *pnConsumed += pSrc->num_vendorSpecific;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25904,7 +25904,7 @@ tANI_U32 dot11fPackIeMultiBssid(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeMultiBssid. */
+} /*                             */
 
 tANI_U32 dot11fPackIeRICData(tpAniSirGlobal pCtx,
                              tDot11fIERICData *pSrc,
@@ -25931,7 +25931,7 @@ tANI_U32 dot11fPackIeRICData(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtons(pCtx, pBuf, pSrc->statusCode, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25940,7 +25940,7 @@ tANI_U32 dot11fPackIeRICData(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRICData. */
+} /*                          */
 
 tANI_U32 dot11fPackIeRICDescriptor(tpAniSirGlobal pCtx,
                                    tDot11fIERICDescriptor *pSrc,
@@ -25964,7 +25964,7 @@ tANI_U32 dot11fPackIeRICDescriptor(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->variableData ), pSrc->num_variableData);
         *pnConsumed += pSrc->num_variableData;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -25973,7 +25973,7 @@ tANI_U32 dot11fPackIeRICDescriptor(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRICDescriptor. */
+} /*                                */
 
 tANI_U32 dot11fPackIeRRMEnabledCap(tpAniSirGlobal pCtx,
                                    tDot11fIERRMEnabledCap *pSrc,
@@ -26049,7 +26049,7 @@ tANI_U32 dot11fPackIeRRMEnabledCap(tpAniSirGlobal pCtx,
         tmp103__ |= ( pSrc->reserved << 2 );
         *pBuf = tmp103__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -26059,7 +26059,7 @@ tANI_U32 dot11fPackIeRRMEnabledCap(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRRMEnabledCap. */
+} /*                                */
 
 tANI_U32 dot11fPackIeRequestedInfo(tpAniSirGlobal pCtx,
                                    tDot11fIERequestedInfo *pSrc,
@@ -26080,7 +26080,7 @@ tANI_U32 dot11fPackIeRequestedInfo(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->requested_eids ), pSrc->num_requested_eids);
         *pnConsumed += pSrc->num_requested_eids;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26089,7 +26089,7 @@ tANI_U32 dot11fPackIeRequestedInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRequestedInfo. */
+} /*                                */
 
 tANI_U32 dot11fPackIeSSID(tpAniSirGlobal pCtx,
                           tDot11fIESSID *pSrc,
@@ -26110,7 +26110,7 @@ tANI_U32 dot11fPackIeSSID(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->ssid ), pSrc->num_ssid);
         *pnConsumed += pSrc->num_ssid;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26119,7 +26119,7 @@ tANI_U32 dot11fPackIeSSID(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeSSID. */
+} /*                       */
 
 tANI_U32 dot11fPackIeSchedule(tpAniSirGlobal pCtx,
                               tDot11fIESchedule *pSrc,
@@ -26159,7 +26159,7 @@ tANI_U32 dot11fPackIeSchedule(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->spec_interval, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26168,7 +26168,7 @@ tANI_U32 dot11fPackIeSchedule(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeSchedule. */
+} /*                           */
 
 tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal pCtx,
                            tDot11fIETCLAS *pSrc,
@@ -26209,7 +26209,7 @@ tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal pCtx,
                 pBuf += 6;
                 frameshtons(pCtx, pBuf, pSrc->info.EthParams.type, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
             case 1:
                 *pBuf = pSrc->info.IpParams.version;
@@ -26238,7 +26238,7 @@ tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal pCtx,
                         pBuf += 1;
                         *pBuf = pSrc->info.IpParams.params.IpV4Params.reserved;
                         *pnConsumed += 1;
-                        // fieldsEndFlag = 1
+                        //                  
                     break;
                     case 6:
                         DOT11F_MEMCPY(pCtx, pBuf, pSrc->info.IpParams.params.IpV6Params.source, 16);
@@ -26255,14 +26255,14 @@ tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal pCtx,
                         pBuf += 2;
                         DOT11F_MEMCPY(pCtx, pBuf, pSrc->info.IpParams.params.IpV6Params.flow_label, 3);
                         *pnConsumed += 3;
-                        // fieldsEndFlag = 1
+                        //                  
                     break;
                 }
             break;
             case 2:
                 frameshtons(pCtx, pBuf, pSrc->info.Params8021dq.tag_type, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
         }
         break;
@@ -26273,7 +26273,7 @@ tANI_U32 dot11fPackIeTCLAS(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeTCLAS. */
+} /*                        */
 
 tANI_U32 dot11fPackIeTCLASSPROC(tpAniSirGlobal pCtx,
                                 tDot11fIETCLASSPROC *pSrc,
@@ -26294,7 +26294,7 @@ tANI_U32 dot11fPackIeTCLASSPROC(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->processing;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26303,7 +26303,7 @@ tANI_U32 dot11fPackIeTCLASSPROC(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTCLASSPROC. */
+} /*                             */
 
 tANI_U32 dot11fPackIeTSDelay(tpAniSirGlobal pCtx,
                              tDot11fIETSDelay *pSrc,
@@ -26324,7 +26324,7 @@ tANI_U32 dot11fPackIeTSDelay(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtonl(pCtx, pBuf, pSrc->delay, 0);
         *pnConsumed += 4;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26333,7 +26333,7 @@ tANI_U32 dot11fPackIeTSDelay(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTSDelay. */
+} /*                          */
 
 tANI_U32 dot11fPackIeTSPEC(tpAniSirGlobal pCtx,
                            tDot11fIETSPEC *pSrc,
@@ -26423,7 +26423,7 @@ tANI_U32 dot11fPackIeTSPEC(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->medium_time, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26432,7 +26432,7 @@ tANI_U32 dot11fPackIeTSPEC(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTSPEC. */
+} /*                        */
 
 tANI_U32 dot11fPackIeWMMSchedule(tpAniSirGlobal pCtx,
                                  tDot11fIEWMMSchedule *pSrc,
@@ -26485,7 +26485,7 @@ tANI_U32 dot11fPackIeWMMSchedule(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->spec_interval, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26494,7 +26494,7 @@ tANI_U32 dot11fPackIeWMMSchedule(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMSchedule. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal pCtx,
                               tDot11fIEWMMTCLAS *pSrc,
@@ -26548,7 +26548,7 @@ tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal pCtx,
                 pBuf += 6;
                 frameshtons(pCtx, pBuf, pSrc->info.EthParams.type, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
             case 1:
                 *pBuf = pSrc->info.IpParams.version;
@@ -26577,7 +26577,7 @@ tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal pCtx,
                         pBuf += 1;
                         *pBuf = pSrc->info.IpParams.params.IpV4Params.reserved;
                         *pnConsumed += 1;
-                        // fieldsEndFlag = 1
+                        //                  
                     break;
                     case 6:
                         DOT11F_MEMCPY(pCtx, pBuf, pSrc->info.IpParams.params.IpV6Params.source, 10);
@@ -26594,14 +26594,14 @@ tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal pCtx,
                         pBuf += 2;
                         DOT11F_MEMCPY(pCtx, pBuf, pSrc->info.IpParams.params.IpV6Params.flow_label, 3);
                         *pnConsumed += 3;
-                        // fieldsEndFlag = 1
+                        //                  
                     break;
                 }
             break;
             case 2:
                 frameshtons(pCtx, pBuf, pSrc->info.Params8021dq.tag_type, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
         }
         break;
@@ -26612,7 +26612,7 @@ tANI_U32 dot11fPackIeWMMTCLAS(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeWMMTCLAS. */
+} /*                           */
 
 tANI_U32 dot11fPackIeWMMTCLASPROC(tpAniSirGlobal pCtx,
                                   tDot11fIEWMMTCLASPROC *pSrc,
@@ -26646,7 +26646,7 @@ tANI_U32 dot11fPackIeWMMTCLASPROC(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->processing;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26655,7 +26655,7 @@ tANI_U32 dot11fPackIeWMMTCLASPROC(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMTCLASPROC. */
+} /*                               */
 
 tANI_U32 dot11fPackIeWMMTSDelay(tpAniSirGlobal pCtx,
                                 tDot11fIEWMMTSDelay *pSrc,
@@ -26689,7 +26689,7 @@ tANI_U32 dot11fPackIeWMMTSDelay(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtonl(pCtx, pBuf, pSrc->delay, 0);
         *pnConsumed += 4;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26698,7 +26698,7 @@ tANI_U32 dot11fPackIeWMMTSDelay(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMTSDelay. */
+} /*                             */
 
 tANI_U32 dot11fPackIeWMMTSPEC(tpAniSirGlobal pCtx,
                               tDot11fIEWMMTSPEC *pSrc,
@@ -26801,7 +26801,7 @@ tANI_U32 dot11fPackIeWMMTSPEC(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->medium_time, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26810,7 +26810,7 @@ tANI_U32 dot11fPackIeWMMTSPEC(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMTSPEC. */
+} /*                           */
 
 tANI_U32 dot11fPackIeAID(tpAniSirGlobal pCtx,
                          tDot11fIEAID *pSrc,
@@ -26831,7 +26831,7 @@ tANI_U32 dot11fPackIeAID(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtons(pCtx, pBuf, pSrc->assocId, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26840,7 +26840,7 @@ tANI_U32 dot11fPackIeAID(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeAID. */
+} /*                      */
 
 tANI_U32 dot11fPackIeAirgo(tpAniSirGlobal pCtx,
                            tDot11fIEAirgo *pSrc,
@@ -26882,7 +26882,7 @@ tANI_U32 dot11fPackIeAirgo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeAirgo. */
+} /*                        */
 
 tANI_U32 dot11fPackIeCCXCckmOpaque(tpAniSirGlobal pCtx,
                                    tDot11fIECCXCckmOpaque *pSrc,
@@ -26911,7 +26911,7 @@ tANI_U32 dot11fPackIeCCXCckmOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -26920,7 +26920,7 @@ tANI_U32 dot11fPackIeCCXCckmOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXCckmOpaque. */
+} /*                                */
 
 tANI_U32 dot11fPackIeCCXRadMgmtCap(tpAniSirGlobal pCtx,
                                    tDot11fIECCXRadMgmtCap *pSrc,
@@ -26956,7 +26956,7 @@ tANI_U32 dot11fPackIeCCXRadMgmtCap(tpAniSirGlobal pCtx,
         tmp112__ |= ( pSrc->reserved << 3 );
         *pBuf = tmp112__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -26966,7 +26966,7 @@ tANI_U32 dot11fPackIeCCXRadMgmtCap(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXRadMgmtCap. */
+} /*                                */
 
 tANI_U32 dot11fPackIeCCXTrafStrmMet(tpAniSirGlobal pCtx,
                                     tDot11fIECCXTrafStrmMet *pSrc,
@@ -27001,7 +27001,7 @@ tANI_U32 dot11fPackIeCCXTrafStrmMet(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtons(pCtx, pBuf, pSrc->msmt_interval, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27010,7 +27010,7 @@ tANI_U32 dot11fPackIeCCXTrafStrmMet(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXTrafStrmMet. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx,
                                         tDot11fIECCXTrafStrmRateSet *pSrc,
@@ -27042,7 +27042,7 @@ tANI_U32 dot11fPackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->tsrates ), pSrc->num_tsrates);
         *pnConsumed += pSrc->num_tsrates;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27051,7 +27051,7 @@ tANI_U32 dot11fPackIeCCXTrafStrmRateSet(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXTrafStrmRateSet. */
+} /*                                     */
 
 tANI_U32 dot11fPackIeCCXTxmitPower(tpAniSirGlobal pCtx,
                                    tDot11fIECCXTxmitPower *pSrc,
@@ -27083,7 +27083,7 @@ tANI_U32 dot11fPackIeCCXTxmitPower(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->reserved;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27092,7 +27092,7 @@ tANI_U32 dot11fPackIeCCXTxmitPower(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXTxmitPower. */
+} /*                                */
 
 tANI_U32 dot11fPackIeCCXVersion(tpAniSirGlobal pCtx,
                                 tDot11fIECCXVersion *pSrc,
@@ -27121,7 +27121,7 @@ tANI_U32 dot11fPackIeCCXVersion(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->version;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27130,7 +27130,7 @@ tANI_U32 dot11fPackIeCCXVersion(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCCXVersion. */
+} /*                             */
 
 tANI_U32 dot11fPackIeCFParams(tpAniSirGlobal pCtx,
                               tDot11fIECFParams *pSrc,
@@ -27160,7 +27160,7 @@ tANI_U32 dot11fPackIeCFParams(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->cfp_durremaining, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27169,7 +27169,7 @@ tANI_U32 dot11fPackIeCFParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeCFParams. */
+} /*                           */
 
 tANI_U32 dot11fPackIeChallengeText(tpAniSirGlobal pCtx,
                                    tDot11fIEChallengeText *pSrc,
@@ -27190,7 +27190,7 @@ tANI_U32 dot11fPackIeChallengeText(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->text ), pSrc->num_text);
         *pnConsumed += pSrc->num_text;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27199,7 +27199,7 @@ tANI_U32 dot11fPackIeChallengeText(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeChallengeText. */
+} /*                                */
 
 tANI_U32 dot11fPackIeChanSwitchAnn(tpAniSirGlobal pCtx,
                                    tDot11fIEChanSwitchAnn *pSrc,
@@ -27226,7 +27226,7 @@ tANI_U32 dot11fPackIeChanSwitchAnn(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->switchCount;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27235,7 +27235,7 @@ tANI_U32 dot11fPackIeChanSwitchAnn(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeChanSwitchAnn. */
+} /*                                */
 
 tANI_U32 dot11fPackIeCountry(tpAniSirGlobal pCtx,
                              tDot11fIECountry *pSrc,
@@ -27262,7 +27262,7 @@ tANI_U32 dot11fPackIeCountry(tpAniSirGlobal pCtx,
         if ( pSrc->num_triplets )        {
             DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->triplets ), ( pSrc->num_triplets * 3 ));
             *pnConsumed += ( pSrc->num_triplets * 3 );
-            // fieldsEndFlag = 1
+            //                  
         }
         else break;
         break;
@@ -27273,7 +27273,7 @@ tANI_U32 dot11fPackIeCountry(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeCountry. */
+} /*                          */
 
 tANI_U32 dot11fPackIeDSParams(tpAniSirGlobal pCtx,
                               tDot11fIEDSParams *pSrc,
@@ -27294,7 +27294,7 @@ tANI_U32 dot11fPackIeDSParams(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->curr_channel;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27303,7 +27303,7 @@ tANI_U32 dot11fPackIeDSParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeDSParams. */
+} /*                           */
 
 tANI_U32 dot11fPackIeEDCAParamSet(tpAniSirGlobal pCtx,
                                   tDot11fIEEDCAParamSet *pSrc,
@@ -27411,7 +27411,7 @@ tANI_U32 dot11fPackIeEDCAParamSet(tpAniSirGlobal pCtx,
         nBuf -=  1 ;
         frameshtons(pCtx, pBuf, pSrc->acvo_txoplimit, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27420,7 +27420,7 @@ tANI_U32 dot11fPackIeEDCAParamSet(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeEDCAParamSet. */
+} /*                               */
 
 tANI_U32 dot11fPackIeERPInfo(tpAniSirGlobal pCtx,
                              tDot11fIEERPInfo *pSrc,
@@ -27447,7 +27447,7 @@ tANI_U32 dot11fPackIeERPInfo(tpAniSirGlobal pCtx,
         tmp121__ |= ( pSrc->unused << 3 );
         *pBuf = tmp121__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -27457,7 +27457,7 @@ tANI_U32 dot11fPackIeERPInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeERPInfo. */
+} /*                          */
 
 tANI_U32 dot11fPackIeExtCap(tpAniSirGlobal pCtx,
                             tDot11fIEExtCap *pSrc,
@@ -27543,7 +27543,7 @@ tANI_U32 dot11fPackIeExtCap(tpAniSirGlobal pCtx,
         tmp124__ |= ( pSrc->reserved7 << 15 );
         frameshtons(pCtx, pBuf, tmp124__, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  2 ;
         break;
     }
@@ -27553,7 +27553,7 @@ tANI_U32 dot11fPackIeExtCap(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeExtCap. */
+} /*                         */
 
 tANI_U32 dot11fPackIeExtChanSwitchAnn(tpAniSirGlobal pCtx,
                                       tDot11fIEExtChanSwitchAnn *pSrc,
@@ -27574,7 +27574,7 @@ tANI_U32 dot11fPackIeExtChanSwitchAnn(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->secondaryChannelOffset;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27583,7 +27583,7 @@ tANI_U32 dot11fPackIeExtChanSwitchAnn(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeExtChanSwitchAnn. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeExtSuppRates(tpAniSirGlobal pCtx,
                                   tDot11fIEExtSuppRates *pSrc,
@@ -27604,7 +27604,7 @@ tANI_U32 dot11fPackIeExtSuppRates(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->rates ), pSrc->num_rates);
         *pnConsumed += pSrc->num_rates;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27613,7 +27613,7 @@ tANI_U32 dot11fPackIeExtSuppRates(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeExtSuppRates. */
+} /*                               */
 
 tANI_U32 dot11fPackIeFHParamSet(tpAniSirGlobal pCtx,
                                 tDot11fIEFHParamSet *pSrc,
@@ -27643,7 +27643,7 @@ tANI_U32 dot11fPackIeFHParamSet(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->hop_index;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27652,7 +27652,7 @@ tANI_U32 dot11fPackIeFHParamSet(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeFHParamSet. */
+} /*                             */
 
 tANI_U32 dot11fPackIeFHParams(tpAniSirGlobal pCtx,
                               tDot11fIEFHParams *pSrc,
@@ -27676,7 +27676,7 @@ tANI_U32 dot11fPackIeFHParams(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->nchannels;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27685,7 +27685,7 @@ tANI_U32 dot11fPackIeFHParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeFHParams. */
+} /*                           */
 
 tANI_U32 dot11fPackIeFHPattTable(tpAniSirGlobal pCtx,
                                  tDot11fIEFHPattTable *pSrc,
@@ -27718,7 +27718,7 @@ tANI_U32 dot11fPackIeFHPattTable(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->randtable ), pSrc->num_randtable);
         *pnConsumed += pSrc->num_randtable;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27727,7 +27727,7 @@ tANI_U32 dot11fPackIeFHPattTable(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeFHPattTable. */
+} /*                              */
 
 tANI_U32 dot11fPackIeFTInfo(tpAniSirGlobal pCtx,
                             tDot11fIEFTInfo *pSrc,
@@ -27780,7 +27780,7 @@ tANI_U32 dot11fPackIeFTInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeFTInfo. */
+} /*                         */
 
 tANI_U32 dot11fPackIeFTTimeoutInterval(tpAniSirGlobal pCtx,
                                        tDot11fIEFTTimeoutInterval *pSrc,
@@ -27804,7 +27804,7 @@ tANI_U32 dot11fPackIeFTTimeoutInterval(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtonl(pCtx, pBuf, pSrc->timeoutValue, 0);
         *pnConsumed += 4;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27813,7 +27813,7 @@ tANI_U32 dot11fPackIeFTTimeoutInterval(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeFTTimeoutInterval. */
+} /*                                    */
 
 tANI_U32 dot11fPackIeHTCaps(tpAniSirGlobal pCtx,
                             tDot11fIEHTCaps *pSrc,
@@ -27913,7 +27913,7 @@ tANI_U32 dot11fPackIeHTCaps(tpAniSirGlobal pCtx,
         nBuf -=  1 ;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->rsvd ), pSrc->num_rsvd);
         *pnConsumed += pSrc->num_rsvd;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27922,7 +27922,7 @@ tANI_U32 dot11fPackIeHTCaps(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeHTCaps. */
+} /*                         */
 
 tANI_U32 dot11fPackIeHTInfo(tpAniSirGlobal pCtx,
                             tDot11fIEHTInfo *pSrc,
@@ -27984,7 +27984,7 @@ tANI_U32 dot11fPackIeHTInfo(tpAniSirGlobal pCtx,
         pBuf += 16;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->rsvd ), pSrc->num_rsvd);
         *pnConsumed += pSrc->num_rsvd;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -27993,7 +27993,7 @@ tANI_U32 dot11fPackIeHTInfo(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeHTInfo. */
+} /*                         */
 
 tANI_U32 dot11fPackIeIBSSParams(tpAniSirGlobal pCtx,
                                 tDot11fIEIBSSParams *pSrc,
@@ -28014,7 +28014,7 @@ tANI_U32 dot11fPackIeIBSSParams(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtons(pCtx, pBuf, pSrc->atim, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -28023,7 +28023,7 @@ tANI_U32 dot11fPackIeIBSSParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeIBSSParams. */
+} /*                             */
 
 tANI_U32 dot11fPackIeLinkIdentifier(tpAniSirGlobal pCtx,
                                     tDot11fIELinkIdentifier *pSrc,
@@ -28050,7 +28050,7 @@ tANI_U32 dot11fPackIeLinkIdentifier(tpAniSirGlobal pCtx,
         pBuf += 6;
         DOT11F_MEMCPY(pCtx, pBuf, pSrc->RespStaAddr, 6);
         *pnConsumed += 6;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -28059,7 +28059,7 @@ tANI_U32 dot11fPackIeLinkIdentifier(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeLinkIdentifier. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal pCtx,
                                        tDot11fIEMeasurementReport *pSrc,
@@ -28120,7 +28120,7 @@ tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal pCtx,
                     tmp135__ |= ( pSrc->report.Basic.unused << 5 );
                     *pBuf = tmp135__;
                     *pnConsumed += 1;
-                    // fieldsEndFlag  = 1
+                    //                   
                     nBuf -=  1 ;
                 break;
                 case 1:
@@ -28135,7 +28135,7 @@ tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal pCtx,
                     pBuf += 2;
                     *pBuf = pSrc->report.CCA.cca_busy_fraction;
                     *pnConsumed += 1;
-                    // fieldsEndFlag = 1
+                    //                  
                 break;
                 case 2:
                     *pBuf = pSrc->report.RPIHistogram.channel;
@@ -28170,7 +28170,7 @@ tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal pCtx,
                     pBuf += 1;
                     *pBuf = pSrc->report.RPIHistogram.rpi7_density;
                     *pnConsumed += 1;
-                    // fieldsEndFlag = 1
+                    //                  
                 break;
                 case 5:
                     *pBuf = pSrc->report.Beacon.regClass;
@@ -28226,7 +28226,7 @@ tANI_U32 dot11fPackIeMeasurementReport(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeMeasurementReport. */
+} /*                                    */
 
 tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal pCtx,
                                         tDot11fIEMeasurementRequest *pSrc,
@@ -28276,7 +28276,7 @@ tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal pCtx,
                 pBuf += 8;
                 frameshtons(pCtx, pBuf, pSrc->measurement_request.Basic.meas_duration, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
             case 1:
                 *pBuf = pSrc->measurement_request.CCA.channel_no;
@@ -28287,7 +28287,7 @@ tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal pCtx,
                 pBuf += 8;
                 frameshtons(pCtx, pBuf, pSrc->measurement_request.CCA.meas_duration, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
             case 2:
                 *pBuf = pSrc->measurement_request.RPIHistogram.channel_no;
@@ -28298,7 +28298,7 @@ tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal pCtx,
                 pBuf += 8;
                 frameshtons(pCtx, pBuf, pSrc->measurement_request.RPIHistogram.meas_duration, 0);
                 *pnConsumed += 2;
-                // fieldsEndFlag = 1
+                //                  
             break;
             case 5:
                 *pBuf = pSrc->measurement_request.Beacon.regClass;
@@ -28336,7 +28336,7 @@ tANI_U32 dot11fPackIeMeasurementRequest(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeMeasurementRequest. */
+} /*                                     */
 
 tANI_U32 dot11fPackIeMobilityDomain(tpAniSirGlobal pCtx,
                                     tDot11fIEMobilityDomain *pSrc,
@@ -28365,7 +28365,7 @@ tANI_U32 dot11fPackIeMobilityDomain(tpAniSirGlobal pCtx,
         tmp138__ |= ( pSrc->reserved << 2 );
         *pBuf = tmp138__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -28375,7 +28375,7 @@ tANI_U32 dot11fPackIeMobilityDomain(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeMobilityDomain. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeNeighborReport(tpAniSirGlobal pCtx,
                                     tDot11fIENeighborReport *pSrc,
@@ -28449,7 +28449,7 @@ tANI_U32 dot11fPackIeNeighborReport(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeNeighborReport. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeOperatingMode(tpAniSirGlobal pCtx,
                                    tDot11fIEOperatingMode *pSrc,
@@ -28476,7 +28476,7 @@ tANI_U32 dot11fPackIeOperatingMode(tpAniSirGlobal pCtx,
         tmp141__ |= ( pSrc->rxNSSType << 7 );
         *pBuf = tmp141__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -28486,7 +28486,7 @@ tANI_U32 dot11fPackIeOperatingMode(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeOperatingMode. */
+} /*                                */
 
 tANI_U32 dot11fPackIeOxygenNetwork(tpAniSirGlobal pCtx,
                                    tDot11fIEOxygenNetwork *pSrc,
@@ -28513,7 +28513,7 @@ tANI_U32 dot11fPackIeOxygenNetwork(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         frameshtons(pCtx, pBuf, pSrc->data, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -28522,7 +28522,7 @@ tANI_U32 dot11fPackIeOxygenNetwork(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeOxygenNetwork. */
+} /*                                */
 
 tANI_U32 dot11fPackIeP2PAssocReq(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PAssocReq *pSrc,
@@ -28565,7 +28565,7 @@ tANI_U32 dot11fPackIeP2PAssocReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PAssocReq. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PAssocRes(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PAssocRes *pSrc,
@@ -28608,7 +28608,7 @@ tANI_U32 dot11fPackIeP2PAssocRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PAssocRes. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PBeacon(tpAniSirGlobal pCtx,
                                tDot11fIEP2PBeacon *pSrc,
@@ -28651,7 +28651,7 @@ tANI_U32 dot11fPackIeP2PBeacon(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PBeacon. */
+} /*                            */
 
 tANI_U32 dot11fPackIeP2PBeaconProbeRes(tpAniSirGlobal pCtx,
                                        tDot11fIEP2PBeaconProbeRes *pSrc,
@@ -28694,7 +28694,7 @@ tANI_U32 dot11fPackIeP2PBeaconProbeRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PBeaconProbeRes. */
+} /*                                    */
 
 tANI_U32 dot11fPackIeP2PDeAuth(tpAniSirGlobal pCtx,
                                tDot11fIEP2PDeAuth *pSrc,
@@ -28737,7 +28737,7 @@ tANI_U32 dot11fPackIeP2PDeAuth(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PDeAuth. */
+} /*                            */
 
 tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx,
                                                  tDot11fIEP2PDeviceDiscoverabilityReq *pSrc,
@@ -28780,7 +28780,7 @@ tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PDeviceDiscoverabilityReq. */
+} /*                                              */
 
 tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx,
                                                  tDot11fIEP2PDeviceDiscoverabilityRes *pSrc,
@@ -28823,7 +28823,7 @@ tANI_U32 dot11fPackIeP2PDeviceDiscoverabilityRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PDeviceDiscoverabilityRes. */
+} /*                                              */
 
 tANI_U32 dot11fPackIeP2PDisAssoc(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PDisAssoc *pSrc,
@@ -28866,7 +28866,7 @@ tANI_U32 dot11fPackIeP2PDisAssoc(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PDisAssoc. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PGONegCnf(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PGONegCnf *pSrc,
@@ -28909,7 +28909,7 @@ tANI_U32 dot11fPackIeP2PGONegCnf(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PGONegCnf. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PGONegReq(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PGONegReq *pSrc,
@@ -28952,7 +28952,7 @@ tANI_U32 dot11fPackIeP2PGONegReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PGONegReq. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PGONegRes(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PGONegRes *pSrc,
@@ -28995,7 +28995,7 @@ tANI_U32 dot11fPackIeP2PGONegRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PGONegRes. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PGONegWPS(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PGONegWPS *pSrc,
@@ -29038,7 +29038,7 @@ tANI_U32 dot11fPackIeP2PGONegWPS(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PGONegWPS. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PIEOpaque(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PIEOpaque *pSrc,
@@ -29067,7 +29067,7 @@ tANI_U32 dot11fPackIeP2PIEOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29076,7 +29076,7 @@ tANI_U32 dot11fPackIeP2PIEOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeP2PIEOpaque. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PInvitationReq(tpAniSirGlobal pCtx,
                                       tDot11fIEP2PInvitationReq *pSrc,
@@ -29119,7 +29119,7 @@ tANI_U32 dot11fPackIeP2PInvitationReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PInvitationReq. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeP2PInvitationRes(tpAniSirGlobal pCtx,
                                       tDot11fIEP2PInvitationRes *pSrc,
@@ -29162,7 +29162,7 @@ tANI_U32 dot11fPackIeP2PInvitationRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PInvitationRes. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeP2PNoticeOfAbsence(tpAniSirGlobal pCtx,
                                         tDot11fIEP2PNoticeOfAbsence *pSrc,
@@ -29205,7 +29205,7 @@ tANI_U32 dot11fPackIeP2PNoticeOfAbsence(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PNoticeOfAbsence. */
+} /*                                     */
 
 tANI_U32 dot11fPackIeP2PPresenceResponse(tpAniSirGlobal pCtx,
                                          tDot11fIEP2PPresenceResponse *pSrc,
@@ -29248,7 +29248,7 @@ tANI_U32 dot11fPackIeP2PPresenceResponse(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PPresenceResponse. */
+} /*                                      */
 
 tANI_U32 dot11fPackIeP2PProbeReq(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PProbeReq *pSrc,
@@ -29291,7 +29291,7 @@ tANI_U32 dot11fPackIeP2PProbeReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PProbeReq. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PProbeRes(tpAniSirGlobal pCtx,
                                  tDot11fIEP2PProbeRes *pSrc,
@@ -29334,7 +29334,7 @@ tANI_U32 dot11fPackIeP2PProbeRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PProbeRes. */
+} /*                              */
 
 tANI_U32 dot11fPackIeP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx,
                                               tDot11fIEP2PProvisionDiscoveryReq *pSrc,
@@ -29377,7 +29377,7 @@ tANI_U32 dot11fPackIeP2PProvisionDiscoveryReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PProvisionDiscoveryReq. */
+} /*                                           */
 
 tANI_U32 dot11fPackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx,
                                                  tDot11fIEP2PWSCProvisionDiscoveryRes *pSrc,
@@ -29420,7 +29420,7 @@ tANI_U32 dot11fPackIeP2PWSCProvisionDiscoveryRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeP2PWSCProvisionDiscoveryRes. */
+} /*                                              */
 
 tANI_U32 dot11fPackIePTIControl(tpAniSirGlobal pCtx,
                                 tDot11fIEPTIControl *pSrc,
@@ -29444,7 +29444,7 @@ tANI_U32 dot11fPackIePTIControl(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtons(pCtx, pBuf, pSrc->sequence_control, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29453,7 +29453,7 @@ tANI_U32 dot11fPackIePTIControl(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePTIControl. */
+} /*                             */
 
 tANI_U32 dot11fPackIePUBufferStatus(tpAniSirGlobal pCtx,
                                     tDot11fIEPUBufferStatus *pSrc,
@@ -29481,7 +29481,7 @@ tANI_U32 dot11fPackIePUBufferStatus(tpAniSirGlobal pCtx,
         tmp142__ |= ( pSrc->reserved << 4 );
         *pBuf = tmp142__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -29491,7 +29491,7 @@ tANI_U32 dot11fPackIePUBufferStatus(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePUBufferStatus. */
+} /*                                 */
 
 tANI_U32 dot11fPackIePowerCaps(tpAniSirGlobal pCtx,
                                tDot11fIEPowerCaps *pSrc,
@@ -29515,7 +29515,7 @@ tANI_U32 dot11fPackIePowerCaps(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->maxTxPower;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29524,7 +29524,7 @@ tANI_U32 dot11fPackIePowerCaps(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePowerCaps. */
+} /*                            */
 
 tANI_U32 dot11fPackIePowerConstraints(tpAniSirGlobal pCtx,
                                       tDot11fIEPowerConstraints *pSrc,
@@ -29545,7 +29545,7 @@ tANI_U32 dot11fPackIePowerConstraints(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->localPowerConstraints;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29554,7 +29554,7 @@ tANI_U32 dot11fPackIePowerConstraints(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIePowerConstraints. */
+} /*                                   */
 
 tANI_U32 dot11fPackIeQBSSLoad(tpAniSirGlobal pCtx,
                               tDot11fIEQBSSLoad *pSrc,
@@ -29581,7 +29581,7 @@ tANI_U32 dot11fPackIeQBSSLoad(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtons(pCtx, pBuf, pSrc->avail, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29590,7 +29590,7 @@ tANI_U32 dot11fPackIeQBSSLoad(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeQBSSLoad. */
+} /*                           */
 
 tANI_U32 dot11fPackIeQOSCapsAp(tpAniSirGlobal pCtx,
                                tDot11fIEQOSCapsAp *pSrc,
@@ -29618,7 +29618,7 @@ tANI_U32 dot11fPackIeQOSCapsAp(tpAniSirGlobal pCtx,
         tmp143__ |= ( pSrc->reserved << 7 );
         *pBuf = tmp143__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -29628,7 +29628,7 @@ tANI_U32 dot11fPackIeQOSCapsAp(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeQOSCapsAp. */
+} /*                            */
 
 tANI_U32 dot11fPackIeQOSCapsStation(tpAniSirGlobal pCtx,
                                     tDot11fIEQOSCapsStation *pSrc,
@@ -29658,7 +29658,7 @@ tANI_U32 dot11fPackIeQOSCapsStation(tpAniSirGlobal pCtx,
         tmp144__ |= ( pSrc->more_data_ack << 7 );
         *pBuf = tmp144__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -29668,7 +29668,7 @@ tANI_U32 dot11fPackIeQOSCapsStation(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeQOSCapsStation. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeQuiet(tpAniSirGlobal pCtx,
                            tDot11fIEQuiet *pSrc,
@@ -29698,7 +29698,7 @@ tANI_U32 dot11fPackIeQuiet(tpAniSirGlobal pCtx,
         pBuf += 2;
         frameshtons(pCtx, pBuf, pSrc->offset, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29707,7 +29707,7 @@ tANI_U32 dot11fPackIeQuiet(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeQuiet. */
+} /*                        */
 
 tANI_U32 dot11fPackIeRCPIIE(tpAniSirGlobal pCtx,
                             tDot11fIERCPIIE *pSrc,
@@ -29728,7 +29728,7 @@ tANI_U32 dot11fPackIeRCPIIE(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->rcpi;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29737,7 +29737,7 @@ tANI_U32 dot11fPackIeRCPIIE(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRCPIIE. */
+} /*                         */
 
 tANI_U32 dot11fPackIeRICDataDesc(tpAniSirGlobal pCtx,
                                  tDot11fIERICDataDesc *pSrc,
@@ -29763,7 +29763,7 @@ tANI_U32 dot11fPackIeRICDataDesc(tpAniSirGlobal pCtx,
     }
     (void)pCtx;
     return status;
-} /* End dot11fPackIeRICDataDesc. */
+} /*                              */
 
 tANI_U32 dot11fPackIeRSN(tpAniSirGlobal pCtx,
                          tDot11fIERSN *pSrc,
@@ -29826,7 +29826,7 @@ tANI_U32 dot11fPackIeRSN(tpAniSirGlobal pCtx,
         if ( pSrc->gp_mgmt_cipher_suite )        {
             DOT11F_MEMCPY(pCtx, pBuf, pSrc->gp_mgmt_cipher_suite, 4);
             *pnConsumed += 4;
-            // fieldsEndFlag = 1
+            //                  
         }
         else break;
         break;
@@ -29837,7 +29837,7 @@ tANI_U32 dot11fPackIeRSN(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeRSN. */
+} /*                      */
 
 tANI_U32 dot11fPackIeRSNIIE(tpAniSirGlobal pCtx,
                             tDot11fIERSNIIE *pSrc,
@@ -29858,7 +29858,7 @@ tANI_U32 dot11fPackIeRSNIIE(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         *pBuf = pSrc->rsni;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29867,7 +29867,7 @@ tANI_U32 dot11fPackIeRSNIIE(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRSNIIE. */
+} /*                         */
 
 tANI_U32 dot11fPackIeRSNOpaque(tpAniSirGlobal pCtx,
                                tDot11fIERSNOpaque *pSrc,
@@ -29888,7 +29888,7 @@ tANI_U32 dot11fPackIeRSNOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29897,7 +29897,7 @@ tANI_U32 dot11fPackIeRSNOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeRSNOpaque. */
+} /*                            */
 
 tANI_U32 dot11fPackIeSuppChannels(tpAniSirGlobal pCtx,
                                   tDot11fIESuppChannels *pSrc,
@@ -29918,7 +29918,7 @@ tANI_U32 dot11fPackIeSuppChannels(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->bands ), ( pSrc->num_bands * 2 ));
         *pnConsumed += ( pSrc->num_bands * 2 );
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29927,7 +29927,7 @@ tANI_U32 dot11fPackIeSuppChannels(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeSuppChannels. */
+} /*                               */
 
 tANI_U32 dot11fPackIeSuppRates(tpAniSirGlobal pCtx,
                                tDot11fIESuppRates *pSrc,
@@ -29948,7 +29948,7 @@ tANI_U32 dot11fPackIeSuppRates(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->rates ), pSrc->num_rates);
         *pnConsumed += pSrc->num_rates;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29957,7 +29957,7 @@ tANI_U32 dot11fPackIeSuppRates(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeSuppRates. */
+} /*                            */
 
 tANI_U32 dot11fPackIeTIM(tpAniSirGlobal pCtx,
                          tDot11fIETIM *pSrc,
@@ -29987,7 +29987,7 @@ tANI_U32 dot11fPackIeTIM(tpAniSirGlobal pCtx,
         pBuf += 1;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->vbmp ), pSrc->num_vbmp);
         *pnConsumed += pSrc->num_vbmp;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -29996,7 +29996,7 @@ tANI_U32 dot11fPackIeTIM(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTIM. */
+} /*                      */
 
 tANI_U32 dot11fPackIeTPCReport(tpAniSirGlobal pCtx,
                                tDot11fIETPCReport *pSrc,
@@ -30020,7 +30020,7 @@ tANI_U32 dot11fPackIeTPCReport(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->link_margin;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30029,7 +30029,7 @@ tANI_U32 dot11fPackIeTPCReport(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTPCReport. */
+} /*                            */
 
 tANI_U32 dot11fPackIeTPCRequest(tpAniSirGlobal pCtx,
                                 tDot11fIETPCRequest *pSrc,
@@ -30056,7 +30056,7 @@ tANI_U32 dot11fPackIeTPCRequest(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeTPCRequest. */
+} /*                             */
 
 tANI_U32 dot11fPackIeVHTCaps(tpAniSirGlobal pCtx,
                              tDot11fIEVHTCaps *pSrc,
@@ -30121,7 +30121,7 @@ tANI_U32 dot11fPackIeVHTCaps(tpAniSirGlobal pCtx,
         tmp147__ |= ( pSrc->reserved3 << 13 );
         frameshtons(pCtx, pBuf, tmp147__, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  2 ;
         break;
     }
@@ -30131,7 +30131,7 @@ tANI_U32 dot11fPackIeVHTCaps(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeVHTCaps. */
+} /*                          */
 
 tANI_U32 dot11fPackIeVHTExtBssLoad(tpAniSirGlobal pCtx,
                                    tDot11fIEVHTExtBssLoad *pSrc,
@@ -30164,7 +30164,7 @@ tANI_U32 dot11fPackIeVHTExtBssLoad(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->OneSixtyMHzUtil;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30173,7 +30173,7 @@ tANI_U32 dot11fPackIeVHTExtBssLoad(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeVHTExtBssLoad. */
+} /*                                */
 
 tANI_U32 dot11fPackIeVHTOperation(tpAniSirGlobal pCtx,
                                   tDot11fIEVHTOperation *pSrc,
@@ -30203,7 +30203,7 @@ tANI_U32 dot11fPackIeVHTOperation(tpAniSirGlobal pCtx,
         pBuf += 1;
         frameshtons(pCtx, pBuf, pSrc->basicMCSSet, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30212,7 +30212,7 @@ tANI_U32 dot11fPackIeVHTOperation(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeVHTOperation. */
+} /*                               */
 
 tANI_U32 dot11fPackIeWAPI(tpAniSirGlobal pCtx,
                           tDot11fIEWAPI *pSrc,
@@ -30267,7 +30267,7 @@ tANI_U32 dot11fPackIeWAPI(tpAniSirGlobal pCtx,
         else break;
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->bkid ), ( pSrc->bkid_count * 16 ));
         *pnConsumed += ( pSrc->bkid_count * 16 );
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30276,7 +30276,7 @@ tANI_U32 dot11fPackIeWAPI(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeWAPI. */
+} /*                       */
 
 tANI_U32 dot11fPackIeWAPIOpaque(tpAniSirGlobal pCtx,
                                 tDot11fIEWAPIOpaque *pSrc,
@@ -30297,7 +30297,7 @@ tANI_U32 dot11fPackIeWAPIOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30306,7 +30306,7 @@ tANI_U32 dot11fPackIeWAPIOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWAPIOpaque. */
+} /*                             */
 
 tANI_U32 dot11fPackIeWFATPC(tpAniSirGlobal pCtx,
                             tDot11fIEWFATPC *pSrc,
@@ -30340,7 +30340,7 @@ tANI_U32 dot11fPackIeWFATPC(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->linkMargin;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30349,7 +30349,7 @@ tANI_U32 dot11fPackIeWFATPC(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWFATPC. */
+} /*                         */
 
 tANI_U32 dot11fPackIeWFDIEOpaque(tpAniSirGlobal pCtx,
                                  tDot11fIEWFDIEOpaque *pSrc,
@@ -30378,7 +30378,7 @@ tANI_U32 dot11fPackIeWFDIEOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30387,7 +30387,7 @@ tANI_U32 dot11fPackIeWFDIEOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWFDIEOpaque. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWMMCaps(tpAniSirGlobal pCtx,
                              tDot11fIEWMMCaps *pSrc,
@@ -30428,7 +30428,7 @@ tANI_U32 dot11fPackIeWMMCaps(tpAniSirGlobal pCtx,
         tmp149__ |= ( pSrc->more_ack << 7 );
         *pBuf = tmp149__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -30438,7 +30438,7 @@ tANI_U32 dot11fPackIeWMMCaps(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMCaps. */
+} /*                          */
 
 tANI_U32 dot11fPackIeWMMInfoAp(tpAniSirGlobal pCtx,
                                tDot11fIEWMMInfoAp *pSrc,
@@ -30477,7 +30477,7 @@ tANI_U32 dot11fPackIeWMMInfoAp(tpAniSirGlobal pCtx,
         tmp150__ |= ( pSrc->uapsd << 7 );
         *pBuf = tmp150__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -30487,7 +30487,7 @@ tANI_U32 dot11fPackIeWMMInfoAp(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMInfoAp. */
+} /*                            */
 
 tANI_U32 dot11fPackIeWMMInfoStation(tpAniSirGlobal pCtx,
                                     tDot11fIEWMMInfoStation *pSrc,
@@ -30530,7 +30530,7 @@ tANI_U32 dot11fPackIeWMMInfoStation(tpAniSirGlobal pCtx,
         tmp151__ |= ( pSrc->reserved2 << 7 );
         *pBuf = tmp151__;
         *pnConsumed += 1;
-        // fieldsEndFlag  = 1
+        //                   
         nBuf -=  1 ;
         break;
     }
@@ -30540,7 +30540,7 @@ tANI_U32 dot11fPackIeWMMInfoStation(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMInfoStation. */
+} /*                                 */
 
 tANI_U32 dot11fPackIeWMMParams(tpAniSirGlobal pCtx,
                                tDot11fIEWMMParams *pSrc,
@@ -30661,7 +30661,7 @@ tANI_U32 dot11fPackIeWMMParams(tpAniSirGlobal pCtx,
         nBuf -=  1 ;
         frameshtons(pCtx, pBuf, pSrc->acvo_txoplimit, 0);
         *pnConsumed += 2;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30670,7 +30670,7 @@ tANI_U32 dot11fPackIeWMMParams(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWMMParams. */
+} /*                            */
 
 tANI_U32 dot11fPackIeWPA(tpAniSirGlobal pCtx,
                          tDot11fIEWPA *pSrc,
@@ -30729,7 +30729,7 @@ tANI_U32 dot11fPackIeWPA(tpAniSirGlobal pCtx,
         if ( pSrc->caps )        {
             frameshtons(pCtx, pBuf, pSrc->caps, 0);
             *pnConsumed += 2;
-            // fieldsEndFlag = 1
+            //                  
         }
         else break;
         break;
@@ -30740,7 +30740,7 @@ tANI_U32 dot11fPackIeWPA(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return status;
-} /* End dot11fPackIeWPA. */
+} /*                      */
 
 tANI_U32 dot11fPackIeWPAOpaque(tpAniSirGlobal pCtx,
                                tDot11fIEWPAOpaque *pSrc,
@@ -30769,7 +30769,7 @@ tANI_U32 dot11fPackIeWPAOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30778,7 +30778,7 @@ tANI_U32 dot11fPackIeWPAOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWPAOpaque. */
+} /*                            */
 
 tANI_U32 dot11fPackIeWSC(tpAniSirGlobal pCtx,
                          tDot11fIEWSC *pSrc,
@@ -30821,7 +30821,7 @@ tANI_U32 dot11fPackIeWSC(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWSC. */
+} /*                      */
 
 tANI_U32 dot11fPackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx,
                                           tDot11fIEWiderBWChanSwitchAnn *pSrc,
@@ -30848,7 +30848,7 @@ tANI_U32 dot11fPackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx,
         pBuf += 1;
         *pBuf = pSrc->newCenterChanFreq1;
         *pnConsumed += 1;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -30857,7 +30857,7 @@ tANI_U32 dot11fPackIeWiderBWChanSwitchAnn(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWiderBWChanSwitchAnn. */
+} /*                                       */
 
 tANI_U32 dot11fPackIeWscAssocReq(tpAniSirGlobal pCtx,
                                  tDot11fIEWscAssocReq *pSrc,
@@ -30900,7 +30900,7 @@ tANI_U32 dot11fPackIeWscAssocReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscAssocReq. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWscAssocRes(tpAniSirGlobal pCtx,
                                  tDot11fIEWscAssocRes *pSrc,
@@ -30943,7 +30943,7 @@ tANI_U32 dot11fPackIeWscAssocRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscAssocRes. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWscBeacon(tpAniSirGlobal pCtx,
                                tDot11fIEWscBeacon *pSrc,
@@ -30986,7 +30986,7 @@ tANI_U32 dot11fPackIeWscBeacon(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscBeacon. */
+} /*                            */
 
 tANI_U32 dot11fPackIeWscBeaconProbeRes(tpAniSirGlobal pCtx,
                                        tDot11fIEWscBeaconProbeRes *pSrc,
@@ -31029,7 +31029,7 @@ tANI_U32 dot11fPackIeWscBeaconProbeRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscBeaconProbeRes. */
+} /*                                    */
 
 tANI_U32 dot11fPackIeWscIEOpaque(tpAniSirGlobal pCtx,
                                  tDot11fIEWscIEOpaque *pSrc,
@@ -31058,7 +31058,7 @@ tANI_U32 dot11fPackIeWscIEOpaque(tpAniSirGlobal pCtx,
         ++pBuf; ++(*pnConsumed);
         DOT11F_MEMCPY(pCtx, pBuf, &( pSrc->data ), pSrc->num_data);
         *pnConsumed += pSrc->num_data;
-        // fieldsEndFlag = 1
+        //                  
         break;
     }
     (void)pCtx;
@@ -31067,7 +31067,7 @@ tANI_U32 dot11fPackIeWscIEOpaque(tpAniSirGlobal pCtx,
         *pIeLen = *pnConsumed - nConsumedOnEntry - 2;
     }
     return DOT11F_PARSE_SUCCESS;
-} /* End dot11fPackIeWscIEOpaque. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWscProbeReq(tpAniSirGlobal pCtx,
                                  tDot11fIEWscProbeReq *pSrc,
@@ -31110,7 +31110,7 @@ tANI_U32 dot11fPackIeWscProbeReq(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscProbeReq. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWscProbeRes(tpAniSirGlobal pCtx,
                                  tDot11fIEWscProbeRes *pSrc,
@@ -31153,7 +31153,7 @@ tANI_U32 dot11fPackIeWscProbeRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscProbeRes. */
+} /*                              */
 
 tANI_U32 dot11fPackIeWscReassocRes(tpAniSirGlobal pCtx,
                                    tDot11fIEWscReassocRes *pSrc,
@@ -31196,7 +31196,7 @@ tANI_U32 dot11fPackIeWscReassocRes(tpAniSirGlobal pCtx,
         } while (DOT11F_BUFFER_OVERFLOW == status && idxlast != idx);
     }
     return status;
-} /* End dot11fPackIeWscReassocRes. */
+} /*                                */
 
 tANI_U32 dot11fPackAddBAReq(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -31229,10 +31229,10 @@ tANI_U32 dot11fPackAddBAReq(tpAniSirGlobal pCtx, tDot11fAddBAReq *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBAREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBAREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddBAReq. */
+} /*                           */
 
 tANI_U32 dot11fPackAddBARsp(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -31264,10 +31264,10 @@ tANI_U32 dot11fPackAddBARsp(tpAniSirGlobal pCtx, tDot11fAddBARsp *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBARSP), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDBARSP), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddBARsp. */
+} /*                           */
 
 tANI_U32 dot11fPackAddTSRequest(tpAniSirGlobal pCtx, tDot11fAddTSRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -31484,10 +31484,10 @@ tANI_U32 dot11fPackAddTSRequest(tpAniSirGlobal pCtx, tDot11fAddTSRequest *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddTSRequest. */
+} /*                               */
 
 tANI_U32 dot11fPackAddTSResponse(tpAniSirGlobal pCtx, tDot11fAddTSResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -31758,10 +31758,10 @@ tANI_U32 dot11fPackAddTSResponse(tpAniSirGlobal pCtx, tDot11fAddTSResponse *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSRESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ADDTSRESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAddTSResponse. */
+} /*                                */
 
 tANI_U32 dot11fPackAssocRequest(tpAniSirGlobal pCtx, tDot11fAssocRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -32394,10 +32394,10 @@ tANI_U32 dot11fPackAssocRequest(tpAniSirGlobal pCtx, tDot11fAssocRequest *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAssocRequest. */
+} /*                               */
 
 tANI_U32 dot11fPackAssocResponse(tpAniSirGlobal pCtx, tDot11fAssocResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -33517,10 +33517,10 @@ tANI_U32 dot11fPackAssocResponse(tpAniSirGlobal pCtx, tDot11fAssocResponse *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCRESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_ASSOCRESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAssocResponse. */
+} /*                                */
 
 tANI_U32 dot11fPackAuthentication(tpAniSirGlobal pCtx, tDot11fAuthentication *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -33911,10 +33911,10 @@ tANI_U32 dot11fPackAuthentication(tpAniSirGlobal pCtx, tDot11fAuthentication *pF
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_AUTHENTICATION), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_AUTHENTICATION), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackAuthentication. */
+} /*                                 */
 
 tANI_U32 dot11fPackBeacon(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -35009,10 +35009,10 @@ tANI_U32 dot11fPackBeacon(tpAniSirGlobal pCtx, tDot11fBeacon *pFrm, tANI_U8 *pBu
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon. */
+} /*                         */
 
 tANI_U32 dot11fPackBeacon1(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -35088,10 +35088,10 @@ tANI_U32 dot11fPackBeacon1(tpAniSirGlobal pCtx, tDot11fBeacon1 *pFrm, tANI_U8 *p
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON1), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON1), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon1. */
+} /*                          */
 
 tANI_U32 dot11fPackBeacon2(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -36034,10 +36034,10 @@ tANI_U32 dot11fPackBeacon2(tpAniSirGlobal pCtx, tDot11fBeacon2 *pFrm, tANI_U8 *p
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON2), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACON2), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeacon2. */
+} /*                          */
 
 tANI_U32 dot11fPackBeaconIEs(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37240,10 +37240,10 @@ tANI_U32 dot11fPackBeaconIEs(tpAniSirGlobal pCtx, tDot11fBeaconIEs *pFrm, tANI_U
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACONIES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_BEACONIES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackBeaconIEs. */
+} /*                            */
 
 tANI_U32 dot11fPackChannelSwitch(tpAniSirGlobal pCtx, tDot11fChannelSwitch *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37295,10 +37295,10 @@ tANI_U32 dot11fPackChannelSwitch(tpAniSirGlobal pCtx, tDot11fChannelSwitch *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_CHANNELSWITCH), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_CHANNELSWITCH), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackChannelSwitch. */
+} /*                                */
 
 tANI_U32 dot11fPackDeAuth(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37334,10 +37334,10 @@ tANI_U32 dot11fPackDeAuth(tpAniSirGlobal pCtx, tDot11fDeAuth *pFrm, tANI_U8 *pBu
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEAUTH), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEAUTH), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeAuth. */
+} /*                         */
 
 tANI_U32 dot11fPackDelBAInd(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37364,10 +37364,10 @@ tANI_U32 dot11fPackDelBAInd(tpAniSirGlobal pCtx, tDot11fDelBAInd *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELBAIND), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELBAIND), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDelBAInd. */
+} /*                           */
 
 tANI_U32 dot11fPackDelTS(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37401,10 +37401,10 @@ tANI_U32 dot11fPackDelTS(tpAniSirGlobal pCtx, tDot11fDelTS *pFrm, tANI_U8 *pBuf,
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELTS), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DELTS), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDelTS. */
+} /*                        */
 
 tANI_U32 dot11fPackDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37459,10 +37459,10 @@ tANI_U32 dot11fPackDeviceDiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fDeviceDi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEVICEDISCOVERABILITYREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEVICEDISCOVERABILITYREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeviceDiscoverabilityReq. */
+} /*                                           */
 
 tANI_U32 dot11fPackDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tDot11fDeviceDiscoverabilityRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37506,10 +37506,10 @@ tANI_U32 dot11fPackDeviceDiscoverabilityRes(tpAniSirGlobal pCtx, tDot11fDeviceDi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEVICEDISCOVERABILITYRES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DEVICEDISCOVERABILITYRES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDeviceDiscoverabilityRes. */
+} /*                                           */
 
 tANI_U32 dot11fPackDisassociation(tpAniSirGlobal pCtx, tDot11fDisassociation *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37545,10 +37545,10 @@ tANI_U32 dot11fPackDisassociation(tpAniSirGlobal pCtx, tDot11fDisassociation *pF
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DISASSOCIATION), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_DISASSOCIATION), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackDisassociation. */
+} /*                                 */
 
 tANI_U32 dot11fPackGODiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fGODiscoverabilityReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37573,10 +37573,10 @@ tANI_U32 dot11fPackGODiscoverabilityReq(tpAniSirGlobal pCtx, tDot11fGODiscoverab
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GODISCOVERABILITYREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GODISCOVERABILITYREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGODiscoverabilityReq. */
+} /*                                       */
 
 tANI_U32 dot11fPackGONegCnf(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37663,10 +37663,10 @@ tANI_U32 dot11fPackGONegCnf(tpAniSirGlobal pCtx, tDot11fGONegCnf *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGCNF), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGCNF), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegCnf. */
+} /*                           */
 
 tANI_U32 dot11fPackGONegReq(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37830,10 +37830,10 @@ tANI_U32 dot11fPackGONegReq(tpAniSirGlobal pCtx, tDot11fGONegReq *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegReq. */
+} /*                           */
 
 tANI_U32 dot11fPackGONegRes(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -37996,10 +37996,10 @@ tANI_U32 dot11fPackGONegRes(tpAniSirGlobal pCtx, tDot11fGONegRes *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGRES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_GONEGRES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackGONegRes. */
+} /*                           */
 
 tANI_U32 dot11fPackInvitationReq(tpAniSirGlobal pCtx, tDot11fInvitationReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38116,10 +38116,10 @@ tANI_U32 dot11fPackInvitationReq(tpAniSirGlobal pCtx, tDot11fInvitationReq *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_INVITATIONREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_INVITATIONREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackInvitationReq. */
+} /*                                */
 
 tANI_U32 dot11fPackInvitationRes(tpAniSirGlobal pCtx, tDot11fInvitationRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38204,10 +38204,10 @@ tANI_U32 dot11fPackInvitationRes(tpAniSirGlobal pCtx, tDot11fInvitationRes *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_INVITATIONRES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_INVITATIONRES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackInvitationRes. */
+} /*                                */
 
 tANI_U32 dot11fPackLinkMeasurementReport(tpAniSirGlobal pCtx, tDot11fLinkMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38246,10 +38246,10 @@ tANI_U32 dot11fPackLinkMeasurementReport(tpAniSirGlobal pCtx, tDot11fLinkMeasure
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREPORT), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREPORT), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackLinkMeasurementReport. */
+} /*                                        */
 
 tANI_U32 dot11fPackLinkMeasurementRequest(tpAniSirGlobal pCtx, tDot11fLinkMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38276,10 +38276,10 @@ tANI_U32 dot11fPackLinkMeasurementRequest(tpAniSirGlobal pCtx, tDot11fLinkMeasur
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_LINKMEASUREMENTREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackLinkMeasurementRequest. */
+} /*                                         */
 
 tANI_U32 dot11fPackMeasurementReport(tpAniSirGlobal pCtx, tDot11fMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38362,10 +38362,10 @@ tANI_U32 dot11fPackMeasurementReport(tpAniSirGlobal pCtx, tDot11fMeasurementRepo
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_MEASUREMENTREPORT), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_MEASUREMENTREPORT), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackMeasurementReport. */
+} /*                                    */
 
 tANI_U32 dot11fPackMeasurementRequest(tpAniSirGlobal pCtx, tDot11fMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38433,10 +38433,10 @@ tANI_U32 dot11fPackMeasurementRequest(tpAniSirGlobal pCtx, tDot11fMeasurementReq
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_MEASUREMENTREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_MEASUREMENTREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackMeasurementRequest. */
+} /*                                     */
 
 tANI_U32 dot11fPackNeighborReportRequest(tpAniSirGlobal pCtx, tDot11fNeighborReportRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38469,10 +38469,10 @@ tANI_U32 dot11fPackNeighborReportRequest(tpAniSirGlobal pCtx, tDot11fNeighborRep
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NEIGHBORREPORTREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NEIGHBORREPORTREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNeighborReportRequest. */
+} /*                                        */
 
 tANI_U32 dot11fPackNeighborReportResponse(tpAniSirGlobal pCtx, tDot11fNeighborReportResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38600,10 +38600,10 @@ tANI_U32 dot11fPackNeighborReportResponse(tpAniSirGlobal pCtx, tDot11fNeighborRe
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NEIGHBORREPORTRESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NEIGHBORREPORTRESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNeighborReportResponse. */
+} /*                                         */
 
 tANI_U32 dot11fPackNoticeOfAbs(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38648,10 +38648,10 @@ tANI_U32 dot11fPackNoticeOfAbs(tpAniSirGlobal pCtx, tDot11fNoticeOfAbs *pFrm, tA
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NOTICEOFABS), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_NOTICEOFABS), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackNoticeOfAbs. */
+} /*                              */
 
 tANI_U32 dot11fPackOperatingMode(tpAniSirGlobal pCtx, tDot11fOperatingMode *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38677,10 +38677,10 @@ tANI_U32 dot11fPackOperatingMode(tpAniSirGlobal pCtx, tDot11fOperatingMode *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_OPERATINGMODE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_OPERATINGMODE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackOperatingMode. */
+} /*                                */
 
 tANI_U32 dot11fPackPresenceReq(tpAniSirGlobal pCtx, tDot11fPresenceReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38725,10 +38725,10 @@ tANI_U32 dot11fPackPresenceReq(tpAniSirGlobal pCtx, tDot11fPresenceReq *pFrm, tA
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PRESENCEREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PRESENCEREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackPresenceReq. */
+} /*                              */
 
 tANI_U32 dot11fPackPresenceRes(tpAniSirGlobal pCtx, tDot11fPresenceRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -38782,10 +38782,10 @@ tANI_U32 dot11fPackPresenceRes(tpAniSirGlobal pCtx, tDot11fPresenceRes *pFrm, tA
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PRESENCERES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PRESENCERES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackPresenceRes. */
+} /*                              */
 
 tANI_U32 dot11fPackProbeRequest(tpAniSirGlobal pCtx, tDot11fProbeRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -39191,10 +39191,10 @@ tANI_U32 dot11fPackProbeRequest(tpAniSirGlobal pCtx, tDot11fProbeRequest *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBEREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBEREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProbeRequest. */
+} /*                               */
 
 tANI_U32 dot11fPackProbeResponse(tpAniSirGlobal pCtx, tDot11fProbeResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -40343,10 +40343,10 @@ tANI_U32 dot11fPackProbeResponse(tpAniSirGlobal pCtx, tDot11fProbeResponse *pFrm
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBERESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROBERESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProbeResponse. */
+} /*                                */
 
 tANI_U32 dot11fPackProvisionDiscoveryReq(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -40423,10 +40423,10 @@ tANI_U32 dot11fPackProvisionDiscoveryReq(tpAniSirGlobal pCtx, tDot11fProvisionDi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROVISIONDISCOVERYREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROVISIONDISCOVERYREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProvisionDiscoveryReq. */
+} /*                                        */
 
 tANI_U32 dot11fPackProvisionDiscoveryRes(tpAniSirGlobal pCtx, tDot11fProvisionDiscoveryRes *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -40470,10 +40470,10 @@ tANI_U32 dot11fPackProvisionDiscoveryRes(tpAniSirGlobal pCtx, tDot11fProvisionDi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROVISIONDISCOVERYRES), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_PROVISIONDISCOVERYRES), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackProvisionDiscoveryRes. */
+} /*                                        */
 
 tANI_U32 dot11fPackRadioMeasurementReport(tpAniSirGlobal pCtx, tDot11fRadioMeasurementReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -40559,10 +40559,10 @@ tANI_U32 dot11fPackRadioMeasurementReport(tpAniSirGlobal pCtx, tDot11fRadioMeasu
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_RADIOMEASUREMENTREPORT), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_RADIOMEASUREMENTREPORT), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackRadioMeasurementReport. */
+} /*                                         */
 
 tANI_U32 dot11fPackRadioMeasurementRequest(tpAniSirGlobal pCtx, tDot11fRadioMeasurementRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -40632,10 +40632,10 @@ tANI_U32 dot11fPackRadioMeasurementRequest(tpAniSirGlobal pCtx, tDot11fRadioMeas
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_RADIOMEASUREMENTREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_RADIOMEASUREMENTREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackRadioMeasurementRequest. */
+} /*                                          */
 
 tANI_U32 dot11fPackReAssocRequest(tpAniSirGlobal pCtx, tDot11fReAssocRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -41655,10 +41655,10 @@ tANI_U32 dot11fPackReAssocRequest(tpAniSirGlobal pCtx, tDot11fReAssocRequest *pF
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackReAssocRequest. */
+} /*                                 */
 
 tANI_U32 dot11fPackReAssocResponse(tpAniSirGlobal pCtx, tDot11fReAssocResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -42785,10 +42785,10 @@ tANI_U32 dot11fPackReAssocResponse(tpAniSirGlobal pCtx, tDot11fReAssocResponse *
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCRESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_REASSOCRESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackReAssocResponse. */
+} /*                                  */
 
 tANI_U32 dot11fPackSMPowerSave(tpAniSirGlobal pCtx, tDot11fSMPowerSave *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -42813,10 +42813,10 @@ tANI_U32 dot11fPackSMPowerSave(tpAniSirGlobal pCtx, tDot11fSMPowerSave *pFrm, tA
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SMPOWERSAVE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SMPOWERSAVE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackSMPowerSave. */
+} /*                              */
 
 tANI_U32 dot11fPackSaQueryRsp(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -42839,10 +42839,10 @@ tANI_U32 dot11fPackSaQueryRsp(tpAniSirGlobal pCtx, tDot11fSaQueryRsp *pFrm, tANI
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SAQUERYRSP), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_SAQUERYRSP), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackSaQueryRsp. */
+} /*                             */
 
 tANI_U32 dot11fPackTDLSDisReq(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -42876,10 +42876,10 @@ tANI_U32 dot11fPackTDLSDisReq(tpAniSirGlobal pCtx, tDot11fTDLSDisReq *pFrm, tANI
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSDisReq. */
+} /*                             */
 
 tANI_U32 dot11fPackTDLSDisRsp(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -43207,10 +43207,10 @@ tANI_U32 dot11fPackTDLSDisRsp(tpAniSirGlobal pCtx, tDot11fTDLSDisRsp *pFrm, tANI
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISRSP), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSDISRSP), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSDisRsp. */
+} /*                             */
 
 tANI_U32 dot11fPackTDLSPeerTrafficInd(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficInd *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -43267,10 +43267,10 @@ tANI_U32 dot11fPackTDLSPeerTrafficInd(tpAniSirGlobal pCtx, tDot11fTDLSPeerTraffi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICIND), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICIND), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSPeerTrafficInd. */
+} /*                                     */
 
 tANI_U32 dot11fPackTDLSPeerTrafficRsp(tpAniSirGlobal pCtx, tDot11fTDLSPeerTrafficRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -43304,10 +43304,10 @@ tANI_U32 dot11fPackTDLSPeerTrafficRsp(tpAniSirGlobal pCtx, tDot11fTDLSPeerTraffi
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICRSP), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSPEERTRAFFICRSP), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSPeerTrafficRsp. */
+} /*                                     */
 
 tANI_U32 dot11fPackTDLSSetupCnf(tpAniSirGlobal pCtx, tDot11fTDLSSetupCnf *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -43536,10 +43536,10 @@ tANI_U32 dot11fPackTDLSSetupCnf(tpAniSirGlobal pCtx, tDot11fTDLSSetupCnf *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPCNF), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPCNF), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupCnf. */
+} /*                               */
 
 tANI_U32 dot11fPackTDLSSetupReq(tpAniSirGlobal pCtx, tDot11fTDLSSetupReq *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -43918,10 +43918,10 @@ tANI_U32 dot11fPackTDLSSetupReq(tpAniSirGlobal pCtx, tDot11fTDLSSetupReq *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPREQ), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPREQ), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupReq. */
+} /*                               */
 
 tANI_U32 dot11fPackTDLSSetupRsp(tpAniSirGlobal pCtx, tDot11fTDLSSetupRsp *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44314,10 +44314,10 @@ tANI_U32 dot11fPackTDLSSetupRsp(tpAniSirGlobal pCtx, tDot11fTDLSSetupRsp *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPRSP), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSSETUPRSP), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSSetupRsp. */
+} /*                               */
 
 tANI_U32 dot11fPackTDLSTeardown(tpAniSirGlobal pCtx, tDot11fTDLSTeardown *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44409,10 +44409,10 @@ tANI_U32 dot11fPackTDLSTeardown(tpAniSirGlobal pCtx, tDot11fTDLSTeardown *pFrm, 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSTEARDOWN), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TDLSTEARDOWN), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTDLSTeardown. */
+} /*                               */
 
 tANI_U32 dot11fPackTPCReport(tpAniSirGlobal pCtx, tDot11fTPCReport *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44445,10 +44445,10 @@ tANI_U32 dot11fPackTPCReport(tpAniSirGlobal pCtx, tDot11fTPCReport *pFrm, tANI_U
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TPCREPORT), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TPCREPORT), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTPCReport. */
+} /*                            */
 
 tANI_U32 dot11fPackTPCRequest(tpAniSirGlobal pCtx, tDot11fTPCRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44479,10 +44479,10 @@ tANI_U32 dot11fPackTPCRequest(tpAniSirGlobal pCtx, tDot11fTPCRequest *pFrm, tANI
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TPCREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_TPCREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackTPCRequest. */
+} /*                             */
 
 tANI_U32 dot11fPackWMMAddTSRequest(tpAniSirGlobal pCtx, tDot11fWMMAddTSRequest *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44553,10 +44553,10 @@ tANI_U32 dot11fPackWMMAddTSRequest(tpAniSirGlobal pCtx, tDot11fWMMAddTSRequest *
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSREQUEST), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSREQUEST), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMAddTSRequest. */
+} /*                                  */
 
 tANI_U32 dot11fPackWMMAddTSResponse(tpAniSirGlobal pCtx, tDot11fWMMAddTSResponse *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44627,10 +44627,10 @@ tANI_U32 dot11fPackWMMAddTSResponse(tpAniSirGlobal pCtx, tDot11fWMMAddTSResponse
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSRESPONSE), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMADDTSRESPONSE), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMAddTSResponse. */
+} /*                                   */
 
 tANI_U32 dot11fPackWMMDelTS(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm, tANI_U8 *pBuf, tANI_U32 nBuf, tANI_U32 *pnConsumed)
 {
@@ -44690,10 +44690,10 @@ tANI_U32 dot11fPackWMMDelTS(tpAniSirGlobal pCtx, tDot11fWMMDelTS *pFrm, tANI_U8 
         FRAMES_LOG0(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMDELTS), FRFL("to:\n"));
         FRAMES_DUMP(pCtx, FRAMES_SEV_FOR_FRAME(pCtx, DOT11F_WMMDELTS), pBuf, nBuf);
     }
-#   endif // DOT11F_DUMP_FRAMES
+#   endif //                   
     return status;
 
-} /* End dot11fUnpackWMMDelTS. */
+} /*                           */
 
 static tANI_U32 PackCore(tpAniSirGlobal pCtx,
                              tANI_U8 *pSrc,
@@ -44711,7 +44711,7 @@ static tANI_U32 PackCore(tpAniSirGlobal pCtx,
     tANI_U32  nBufRemaining, status, len;
     tANI_U32  countOffset = 0;
 
-    (void)pCtx; /* Shutup the compiler if we have no FFs nor IEs... */
+    (void)pCtx; /*                                                  */
     i=0;
 
     DOT11F_PARAMETER_CHECK2(pSrc, pBuf, nBuf, pnConsumed);
@@ -45483,7 +45483,7 @@ static tANI_U32 PackTlvCore(tpAniSirGlobal pCtx,
             return DOT11F_INTERNAL_ERROR;
         }
 
-        } /* End if on *pfFound */
+        } /*                    */
         pBufRemaining += len;
         nBufRemaining -= len;
         *pnConsumed   += len;

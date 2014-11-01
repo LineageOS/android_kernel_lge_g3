@@ -40,11 +40,11 @@
  */
 
 /*
- * DO NOT EDIT - This file is generated automatically
+                                                     
  */
 
 /*
- * IMPORTANT:  This file is for system that supports STA mode ONLY.
+                                                                   
  */
 
 
@@ -52,7 +52,7 @@
 #define __WNICFGSTA_H
 
 /*
- * Configuration Parameter ID for STA
+                                     
  */
 
 #define WNI_CFG_STA_ID    0
@@ -366,7 +366,7 @@
 #define WNI_CFG_GO_LINK_MONITOR_TIMEOUT    311
 
 /*
- * String parameter lengths 
+                            
  */
 
 #define WNI_CFG_STA_ID_LEN    6
@@ -431,7 +431,7 @@
 #define WNI_CFG_WPS_UUID_LEN    16
 
 /*
- * Integer parameter min/max/default values 
+                                            
  */
 
 #define WNI_CFG_CFP_PERIOD_STAMIN    0

@@ -55,50 +55,50 @@
   Qualcomm Confidential and Proprietary
 ===========================================================================*/
 
-/*===========================================================================
+/*                                                                           
 
-                      EDIT HISTORY FOR FILE
-
-
-  This section contains comments describing changes made to the module.
-  Notice that changes are listed in reverse chronological order.
+                                           
 
 
-   $Header$$DateTime$$Author$
+                                                                       
+                                                                
 
 
-  when        who     what, where, why
-----------    ---    --------------------------------------------------------
-02/19/09      lti     Vos trace fix
-02/06/09      sch     Dereg Bug fix
-12/11/08      sch     Initial creation
+                             
 
-===========================================================================*/
+
+                                      
+                                                                             
+                                   
+                                   
+                                      
+
+                                                                           */
 #include "wlan_qct_tl.h" 
 #include "wlan_qct_wda.h"
 #if defined WLAN_FEATURE_NEIGHBOR_ROAMING
-/*----------------------------------------------------------------------------
- * Include Files
- * -------------------------------------------------------------------------*/
+/*                                                                            
+                
+                                                                            */
 #include "wlan_qct_tl_hosupport.h"
 #include "wlan_qct_tli.h"
 #include "tlDebug.h"
-/*----------------------------------------------------------------------------
- * Preprocessor Definitions and Constants
- * -------------------------------------------------------------------------*/
-//#define WLANTL_HO_DEBUG_MSG
-//#define WLANTL_HO_UTEST
+/*                                                                            
+                                         
+                                                                            */
+//                           
+//                       
 
 #define WLANTL_HO_DEFAULT_RSSI      0xFF
 #define WLANTL_HO_INVALID_RSSI      -100
-/* RSSI sampling period, usec based
- * To reduce performance overhead
- * Current default 500msec */
+/*                                 
+                                 
+                           */
 #define WLANTL_HO_SAMPLING_PERIOD   500000
 
 
 
-/* Get and release lock */
+/*                      */
 #define THSGETLOCK(a, b)                                      \
         do                                                    \
         {                                                     \
@@ -127,10 +127,10 @@ const v_U8_t  WLANTL_HO_TID_2_AC[WLAN_MAX_TID] = {WLANTL_AC_BE,
                                                   WLANTL_AC_VI,
                                                   WLANTL_AC_VO,
                                                   WLANTL_AC_VO};
-/*----------------------------------------------------------------------------
- *  Type Declarations
- * -------------------------------------------------------------------------*/
-/* Temporary threshold store place for BMPS */
+/*                                                                            
+                     
+                                                                            */
+/*                                          */
 typedef struct
 {
    v_S7_t  rssi;
@@ -138,24 +138,24 @@ typedef struct
 } WLANTL_HSTempPSIndType;
 
 #ifdef RSSI_HACK
-/* This is a dummy averaged RSSI value that can be controlled using dump commands 
- * to trigger TL to issue handoff related events. We will be using dump 362 <average RSSI> 
- * value to change its value */
+/*                                                                                
+                                                                                           
+                             */
 int  dumpCmdRSSI = -48;
 #endif
 
 #ifdef WLANTL_HO_UTEST
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 static v_S7_t   rssi;
 static v_S7_t   direction;
 void TLHS_UtestHandleNewRSSI(v_S7_t *newRSSI, v_PVOID_t pAdapter)
@@ -174,20 +174,20 @@ void TLHS_UtestHandleNewRSSI(v_S7_t *newRSSI, v_PVOID_t pAdapter)
 
    return;
 }
-#endif /* WLANTL_HO_UTEST */
+#endif /*                 */
 
 #ifdef WLANTL_HO_DEBUG_MSG
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 void WLANTL_StatDebugDisplay
 (
    v_U8_t                    STAid,
@@ -209,7 +209,7 @@ void WLANTL_StatDebugDisplay
    TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"================================================="));
    return;
 }
-#endif /* WLANTL_HO_DEBUG_MSG */
+#endif /*                     */
 
 #ifdef WLANTL_DEBUG
 void WLANTLPrintPktsRcvdPerRateIdx(v_PVOID_t pAdapter, v_U8_t staId, v_BOOL_t flush)
@@ -251,8 +251,8 @@ void WLANTLPrintPktsRcvdPerRateIdx(v_PVOID_t pAdapter, v_U8_t staId, v_BOOL_t fl
 
     for(ii = 0; ii < MAX_RATE_INDEX; ii++)
     {
-        /* printing int the below format
-         * " rateIndex = pktCount "*/
+        /*                              
+                                   */
         TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
                          "%d = %ld", ii+1,
                          tlCtxt->atlSTAClients[staId]->trafficStatistics.pktCounterRateIdx[ii]));
@@ -306,8 +306,8 @@ void WLANTLPrintPktsRcvdPerRssi(v_PVOID_t pAdapter, v_U8_t staId, v_BOOL_t flush
         for(jj = ii; jj < (ii + MAX_RSSI_INTERVAL); jj++)
             count += tlCtxt->atlSTAClients[staId]->trafficStatistics.pktCounterRssi[jj];
 
-        /* prints are in the below format
-         * " fromRSSI - toRSSI = pktCount " */
+        /*                               
+                                            */
         TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,
                          " %d - %d = %ld",
                          ii, ii+(MAX_RSSI_INTERVAL - 1), count));
@@ -316,17 +316,17 @@ void WLANTLPrintPktsRcvdPerRssi(v_PVOID_t pAdapter, v_U8_t staId, v_BOOL_t flush
 }
 #endif
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 void WLANTL_HSDebugDisplay
 (
    v_PVOID_t pAdapter
@@ -409,17 +409,17 @@ void WLANTL_HSDebugDisplay
    return;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_SetFWRSSIThresholds
 (
    v_PVOID_t                       pAdapter
@@ -508,17 +508,17 @@ VOS_STATUS WLANTL_SetFWRSSIThresholds
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_StatHandleRXFrame
 (
    v_PVOID_t        pAdapter,
@@ -564,10 +564,10 @@ VOS_STATUS WLANTL_StatHandleRXFrame
 
    if(isBroadcast)
    {
-      /* Above flag is set for both broadcast and multicast frame. So
-         find frame type to distinguish between multicast and broadcast.
-         Ideally, it would be better if BD header has a field to indicate
-         multicast frame and then we would not need to call below function */
+      /*                                                             
+                                                                        
+                                                                         
+                                                                           */
 
       v_U8_t ucFrameCastType;
 
@@ -595,7 +595,7 @@ VOS_STATUS WLANTL_StatHandleRXFrame
             break;
 
          case WLANTL_FRAME_TYPE_UCAST:
-            /* error - for unicast frame we should not reach here */
+            /*                                                    */
             TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,"WLAN TL: BD header indicates broadcast but MAC address indicates unicast"));
             return VOS_STATUS_E_INVAL;
             break;
@@ -613,15 +613,15 @@ VOS_STATUS WLANTL_StatHandleRXFrame
       statistics->rxUCBcnt += (packetSize - WLANHAL_RX_BD_HEADER_SIZE);
    }
 
-   /* TODO caculation is needed, dimension of 500kbps */
+   /*                                                 */
    statistics->rxRate = WDA_GET_RX_MAC_RATE_IDX(pBDHeader);
 
 #ifdef WLANTL_DEBUG
    if( (statistics->rxRate - 1) < MAX_RATE_INDEX)
      tlCtxt->atlSTAClients[STAid]->trafficStatistics.pktCounterRateIdx[statistics->rxRate - 1]++;
 
-   /* Check if the +ve value of RSSI is within the valid range.
-    * And increment pkt counter based on RSSI */
+   /*                                                          
+                                              */
    if( (v_U16_t)((WDA_GET_RX_RSSI_DB(pBDHeader)) * (-1)) < MAX_NUM_RSSI)
      tlCtxt->atlSTAClients[STAid]->trafficStatistics.pktCounterRssi[(v_U16_t)((WDA_GET_RX_RSSI_DB(pBDHeader)) * (-1))]++;
 #endif
@@ -633,22 +633,22 @@ VOS_STATUS WLANTL_StatHandleRXFrame
 
 #ifdef WLANTL_HO_DEBUG_MSG
    WLANTL_StatDebugDisplay(STAid, statistics);
-#endif /* WLANTL_HO_DEBUG_MSG */
+#endif /*                     */
 
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_StatHandleTXFrame
 (
    v_PVOID_t        pAdapter,
@@ -682,7 +682,7 @@ VOS_STATUS WLANTL_StatHandleTXFrame
       return VOS_STATUS_E_INVAL;
    }
 
-   /* TODO : BC/MC/UC have to be determined by MAC address */
+   /*                                                      */
    statistics = &tlCtxt->atlSTAClients[STAid]->trafficStatistics;
    vos_pkt_get_packet_length(dataBuffer, &packetSize);
    if(txMetaInfo->ucBcast)
@@ -706,26 +706,26 @@ VOS_STATUS WLANTL_StatHandleTXFrame
 
 #ifdef WLANTL_HO_DEBUG_MSG
    WLANTL_StatDebugDisplay(STAid, statistics);
-#endif /* WLANTL_HO_DEBUG_MSG */
+#endif /*                     */
 
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION  WLANTL_HSTrafficStatusTimerExpired
+                                               
 
-   DESCRIPTION  If traffic status monitoring timer is expiered,
-                Count how may frames have sent and received during 
-                measure period and if traffic status is changed
-                send notification to Client(SME)
+                                                               
+                                                                   
+                                                               
+                                                
     
-   PARAMETERS pAdapter
-              Global handle
+                      
+                           
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 v_VOID_t WLANTL_HSTrafficStatusTimerExpired
 (
    v_PVOID_t pAdapter
@@ -744,14 +744,14 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
       return;
    }
 
-   /* Get rt and nrt frame count sum */
+   /*                                */
    trafficHandle = &tlCtxt->hoSupport.currentTraffic;
    rtFrameCount  = trafficHandle->rtRXFrameCount + trafficHandle->rtTXFrameCount;
    nrtFrameCount = trafficHandle->nrtRXFrameCount + trafficHandle->nrtTXFrameCount;
 
    TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"Traffic status timer expired RT FC %d, NRT FC %d", rtFrameCount, nrtFrameCount));
 
-   /* Get current traffic status */
+   /*                            */
    if(rtFrameCount > trafficHandle->idleThreshold)
    {
       newTraffic.rtTrafficStatus = WLANTL_HO_RT_TRAFFIC_STATUS_ON;
@@ -770,7 +770,7 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
       newTraffic.nrtTrafficStatus = WLANTL_HO_NRT_TRAFFIC_STATUS_OFF;
    }
 
-   /* Differentiate with old traffic status */
+   /*                                       */
    if(trafficHandle->trafficStatus.rtTrafficStatus != newTraffic.rtTrafficStatus)
    {
       TLLOGW(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_WARN,"RT Traffic status changed from %d to %d",
@@ -786,7 +786,7 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
       trafficStatusChanged = VOS_TRUE;
    }
 
-   /* If traffic status is changed send notification to client */
+   /*                                                          */
    if((VOS_TRUE == trafficStatusChanged) && (NULL != trafficHandle->trafficCB))
    {
       trafficHandle->trafficCB(pAdapter, newTraffic, trafficHandle->usrCtxt);
@@ -798,7 +798,7 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
       TLLOGW(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_WARN,"Traffic status is changed but not need to report"));
    }
 
-   /* Reset frame counters */
+   /*                      */
    trafficHandle->rtRXFrameCount = 0;
    trafficHandle->rtTXFrameCount = 0;
    trafficHandle->nrtRXFrameCount = 0;
@@ -806,7 +806,7 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
 
    if(NULL != trafficHandle->trafficCB)
    {
-      /* restart timer  only when the callback is not NULL */
+      /*                                                   */
       vos_timer_start(&trafficHandle->trafficTimer, trafficHandle->measurePeriod);
    }
    
@@ -814,17 +814,17 @@ v_VOID_t WLANTL_HSTrafficStatusTimerExpired
 }
 
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSGetRSSI
 (
    v_PVOID_t        pAdapter,
@@ -853,8 +853,8 @@ VOS_STATUS WLANTL_HSGetRSSI
    }
 
    /* 
-      Compute RSSI only for the last MPDU of an AMPDU.
-      Only last MPDU carries the Phy Stats Values 
+                                                      
+                                                  
    */
     if (WDA_IS_RX_AN_AMPDU (pBDHeader)) {
        if (!WDA_IS_RX_LAST_MPDU(pBDHeader)) {
@@ -873,7 +873,7 @@ VOS_STATUS WLANTL_HSGetRSSI
 
 #ifdef WLANTL_HO_UTEST
    TLHS_UtestHandleNewRSSI(&currentRSSI, pAdapter);
-#endif /* WLANTL_HO_UTEST */
+#endif /*                 */
 
    if(0 == tlCtxt->atlSTAClients[STAid]->rssiAvg)
    {
@@ -896,17 +896,17 @@ VOS_STATUS WLANTL_HSGetRSSI
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSBMPSRSSIRegionChangedNotification
 (
    v_PVOID_t             pAdapter,
@@ -1076,17 +1076,17 @@ VOS_STATUS WLANTL_HSBMPSRSSIRegionChangedNotification
    return VOS_STATUS_SUCCESS;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSHandleRSSIChange
 (
    v_PVOID_t   pAdapter,
@@ -1116,7 +1116,7 @@ VOS_STATUS WLANTL_HSHandleRSSIChange
                 currentHO->numThreshold,
                 currentHO->historyRSSI));
 
-   /* Find where is current region */
+   /*                              */
    for(idx = 0; idx < currentHO->numThreshold; idx++)
    {
       if(hoSupport->registeredInd[idx].rssiValue < currentRSSI)
@@ -1127,15 +1127,15 @@ VOS_STATUS WLANTL_HSHandleRSSIChange
       }
    }
 
-   /* If could not find then new RSSI is belong to bottom region */
+   /*                                                            */
    if(idx == currentHO->numThreshold)
    {
       currentRegion = idx;
       TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"Current region is bottom %d", idx));
    }
 
-   /* This is a hack. Actual assignment was happening after the below checks. This hack is needed till TL
-      posts message and nothing else in the callback indicating UP/DOWN event to the registered module */
+   /*                                                                                                    
+                                                                                                       */
    currentHO->historyRSSI = currentRSSI;
    
    if(currentRegion == currentHO->regionNumber)
@@ -1201,17 +1201,17 @@ VOS_STATUS WLANTL_HSHandleRSSIChange
    return VOS_STATUS_SUCCESS;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSHandleRXFrame
 (
    v_PVOID_t        pAdapter,
@@ -1239,14 +1239,14 @@ VOS_STATUS WLANTL_HSHandleRXFrame
    THSGETLOCK("WLANTL_HSHandleRXFrame", &tlCtxt->hoSupport.hosLock);
    WLANTL_StatHandleRXFrame(pAdapter, pBDHeader, STAid, isBroadcast, dataBuffer);
 
-   /* If this frame is not management frame increase frame count */
+   /*                                                            */
    if((0 != tlCtxt->hoSupport.currentTraffic.idleThreshold) &&
       (WLANTL_MGMT_FRAME_TYPE != frameType))
    {
       tid = WDA_GET_RX_TID( pBDHeader );
       ac = WLANTL_HO_TID_2_AC[(v_U8_t)tid];
 
-      /* Only Voice traffic is handled as real time traffic */
+      /*                                                    */
       if(WLANTL_AC_VO == ac)
       {
          tlCtxt->hoSupport.currentTraffic.rtRXFrameCount++;
@@ -1278,7 +1278,7 @@ VOS_STATUS WLANTL_HSHandleRXFrame
    }
    currentHO->sampleTime = currentTimestamp;
 
-   /* Get Current RSSI from BD Heaser */
+   /*                                 */
    status = WLANTL_HSGetRSSI(pAdapter, pBDHeader, STAid, &currentAvgRSSI);
    if(!VOS_IS_STATUS_SUCCESS(status))
    {
@@ -1290,14 +1290,14 @@ VOS_STATUS WLANTL_HSHandleRXFrame
    if(!IS_ACTIVEMODE_OFFLOAD_FEATURE_ENABLE)
 #endif
    {
-      /* If any threshold is not registerd, DO NOTHING! */
+      /*                                                */
       if(0 == tlCtxt->hoSupport.currentHOState.numThreshold)
       {
          TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"There is no thresholds pass"));
       }
       else
       {
-         /* Handle current RSSI value, region, notification, etc */
+         /*                                                      */
          status = WLANTL_HSHandleRSSIChange(pAdapter, currentAvgRSSI);
          if(!VOS_IS_STATUS_SUCCESS(status))
          {
@@ -1313,17 +1313,17 @@ VOS_STATUS WLANTL_HSHandleRXFrame
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSHandleTXFrame
 (
    v_PVOID_t        pAdapter,
@@ -1342,14 +1342,14 @@ VOS_STATUS WLANTL_HSHandleTXFrame
       return VOS_STATUS_E_INVAL;
    }
 
-   /* Traffic status report is not registered, JUST DO NOTHING */
+   /*                                                          */
    if(0 == tlCtxt->hoSupport.currentTraffic.idleThreshold)
    {
       return VOS_STATUS_SUCCESS;
    }
 
 
-   /* Only Voice traffic is handled as real time traffic */
+   /*                                                    */
    if(WLANTL_AC_VO == ac)
    {
       tlCtxt->hoSupport.currentTraffic.rtTXFrameCount++;
@@ -1366,17 +1366,17 @@ VOS_STATUS WLANTL_HSHandleTXFrame
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSRegRSSIIndicationCB
 (
    v_PVOID_t                       pAdapter,
@@ -1574,8 +1574,8 @@ VOS_STATUS WLANTL_HSRegRSSIIndicationCB
    if((VOS_TRUE == tlCtxt->isBMPS) || (IS_ACTIVEMODE_OFFLOAD_FEATURE_ENABLE))
    {
       TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"Register into FW, now BMPS"));
-      /* this function holds the lock across a downstream WDA function call, this is violates some lock
-         ordering checks done on some HLOS see CR323221*/
+      /*                                                                                               
+                                                       */
       THSRELEASELOCK("WLANTL_HSRegRSSIIndicationCB", &tlCtxt->hoSupport.hosLock);
       WLANTL_SetFWRSSIThresholds(pAdapter);
       THSGETLOCK("WLANTL_HSRegRSSIIndicationCB", &tlCtxt->hoSupport.hosLock);
@@ -1586,17 +1586,17 @@ VOS_STATUS WLANTL_HSRegRSSIIndicationCB
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
 (
    v_PVOID_t                       pAdapter,
@@ -1683,7 +1683,7 @@ VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
          if((currentHO->numThreshold - 1) == idx)
          {
             TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"Remove target is last one"));
-            /* Does not need move any element, just remove last array entry */
+            /*                                                              */
          }
          else
          {
@@ -1696,7 +1696,7 @@ VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
          break;
       }
    }
-   /* Common remove last array entry */
+   /*                                */
    tlCtxt->hoSupport.registeredInd[currentHO->numThreshold - 1].rssiValue    = WLANTL_HO_DEFAULT_RSSI;
    for(idx = 0; idx < WLANTL_HS_NUM_CLIENT; idx++)
    {
@@ -1727,22 +1727,22 @@ VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
                                                       currentHO->regionNumber));
    }
 
-   /* Decrease number of thresholds */
+   /*                               */
    tlCtxt->hoSupport.currentHOState.numThreshold--;
-   /*Reset the FW notification*/
+   /*                         */
    tlCtxt->hoSupport.currentHOState.fwNotification=0;
 
    if((VOS_TRUE == tlCtxt->isBMPS) || (IS_ACTIVEMODE_OFFLOAD_FEATURE_ENABLE))
    {
       TLLOG1(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_INFO,"Register into FW, now BMPS"));
-       /* this function holds the lock across a downstream WDA function call, this is violates some lock
-         ordering checks done on some HLOS see CR323221*/
+       /*                                                                                               
+                                                       */
       THSRELEASELOCK("WLANTL_HSDeregRSSIIndicationCB", &tlCtxt->hoSupport.hosLock);
       WLANTL_SetFWRSSIThresholds(pAdapter); 
       THSGETLOCK("WLANTL_HSDeregRSSIIndicationCB", &tlCtxt->hoSupport.hosLock);
    }
 
-   /* Based on new threshold set recalculated current RSSI status */
+   /*                                                             */
    if(0 < tlCtxt->hoSupport.currentHOState.numThreshold)
    {
    }
@@ -1750,7 +1750,7 @@ VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
    {
       currentHO->regionNumber = 0;
       TLLOGW(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_WARN,"No registered Threshold"));
-      /* What should do? */
+      /*                 */
    }
 
    WLANTL_HSDebugDisplay(pAdapter);
@@ -1758,17 +1758,17 @@ VOS_STATUS WLANTL_HSDeregRSSIIndicationCB
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSSetAlpha
 (
    v_PVOID_t pAdapter,
@@ -1790,17 +1790,17 @@ VOS_STATUS WLANTL_HSSetAlpha
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSRegGetTrafficStatus
 (
    v_PVOID_t                          pAdapter,
@@ -1836,17 +1836,17 @@ VOS_STATUS WLANTL_HSRegGetTrafficStatus
    return status;
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSInit
 (
    v_PVOID_t   pAdapter
@@ -1864,16 +1864,16 @@ VOS_STATUS WLANTL_HSInit
 #ifdef WLANTL_HO_UTEST
    rssi = 0;
    direction = -1;
-#endif /* WLANTL_HO_UTEST */
+#endif /*                 */
 
-   /* set default current HO status */
+   /*                               */
    tlCtxt->hoSupport.currentHOState.alpha        = WLANTL_HO_DEFAULT_ALPHA;
    tlCtxt->hoSupport.currentHOState.historyRSSI  = 0;
    tlCtxt->hoSupport.currentHOState.numThreshold = 0;
    tlCtxt->hoSupport.currentHOState.regionNumber = 0;
    tlCtxt->hoSupport.currentHOState.sampleTime   = 0;
 
-   /* set default current traffic status */
+   /*                                    */
    tlCtxt->hoSupport.currentTraffic.trafficStatus.rtTrafficStatus
                                                     = WLANTL_HO_RT_TRAFFIC_STATUS_OFF;
    tlCtxt->hoSupport.currentTraffic.trafficStatus.nrtTrafficStatus
@@ -1886,7 +1886,7 @@ VOS_STATUS WLANTL_HSInit
    tlCtxt->hoSupport.currentTraffic.nrtTXFrameCount = 0;
    tlCtxt->hoSupport.currentTraffic.trafficCB       = NULL;
 
-   /* Initialize indication array */
+   /*                             */
    for(idx = 0; idx < WLANTL_MAX_AVAIL_THRESHOLD; idx++)
    {
       for(sIdx = 0; sIdx < WLANTL_HS_NUM_CLIENT; sIdx++)
@@ -1913,17 +1913,17 @@ VOS_STATUS WLANTL_HSInit
 }
 
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION    WLANTL_HSDeInit
+                              
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 
 VOS_STATUS WLANTL_HSDeInit
 (
@@ -1939,7 +1939,7 @@ VOS_STATUS WLANTL_HSDeInit
       return VOS_STATUS_E_INVAL;
    }
 
-   // Destroy the timer...      
+   //                           
    status = vos_timer_destroy( &tlCtxt->hoSupport.currentTraffic.trafficTimer );
    if ( !VOS_IS_STATUS_SUCCESS( status ) )
    {
@@ -1949,17 +1949,17 @@ VOS_STATUS WLANTL_HSDeInit
 }
 
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSStop
 (
    v_PVOID_t   pAdapter
@@ -1986,7 +1986,7 @@ VOS_STATUS WLANTL_HSStop
       TLLOGE(VOS_TRACE(VOS_MODULE_ID_TL, VOS_TRACE_LEVEL_ERROR,"Timer Stop Failed, Status %d", status));
    }
 
-   //Deregister the traffic Status
+   //                             
    tlCtxt->hoSupport.currentTraffic.idleThreshold = 0;
    tlCtxt->hoSupport.currentTraffic.measurePeriod = 0;
    tlCtxt->hoSupport.currentTraffic.trafficCB     = NULL;
@@ -1995,17 +1995,17 @@ VOS_STATUS WLANTL_HSStop
    return status;   
 }
 
-/*==========================================================================
+/*                                                                          
 
-   FUNCTION
+           
 
-   DESCRIPTION 
+               
     
-   PARAMETERS 
+              
 
-   RETURN VALUE
+               
 
-============================================================================*/
+                                                                            */
 VOS_STATUS WLANTL_HSSerializeTlIndication
 (
    v_PVOID_t   pAdapter,
@@ -2028,7 +2028,7 @@ VOS_STATUS WLANTL_HSSerializeTlIndication
 
    pMsg->msgType = pal_cpu_to_be16((tANI_U16)eWNI_SME_RSSI_IND);
    pMsg->msgLen = (tANI_U16)sizeof(WLANTL_TlIndicationReq);
-   pMsg->sessionId = 0;//for now just pass 0
+   pMsg->sessionId = 0;//                   
    pMsg->pAdapter = pAdapter;
    pMsg->pUserCtxt = pUserCtxt;
    pMsg->rssiNotification = rssiNotification;
@@ -2050,4 +2050,4 @@ VOS_STATUS WLANTL_HSSerializeTlIndication
    return status;   
 }
 
-#endif //FEATURE_WLAN_GEN6_ROAMING || WLAN_FEATURE_NEIGHBOR_ROAMING
+#endif //                                                          
