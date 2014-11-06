@@ -26,7 +26,7 @@ static void msm_led_torch_brightness_set(struct led_classdev *led_cdev,
 		return;
 	}
 
-	led_trigger_event(torch_trigger, value);
+	led_trigger_event2(torch_trigger, value, value);
 };
 
 static struct led_classdev msm_torch_led = {
