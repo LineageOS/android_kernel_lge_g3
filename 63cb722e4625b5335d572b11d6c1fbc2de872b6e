@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bab6814e_ce4ee2c0",
+        "filename": "drivers/usb/dwc3/dwc3-msm.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 3454,
+      "author": {
+        "id": 2936
+      },
+      "writtenOn": "2014-12-05T15:48:52Z",
+      "side": 0,
+      "message": "Why would you not just turn off LGE_PM in your config instead?",
+      "revId": "63cb722e4625b5335d572b11d6c1fbc2de872b6e",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
