@@ -2027,6 +2027,80 @@ static struct attribute_group dynamic_fps_fs_attrs_group = {
 	.attrs = dynamic_fps_fs_attrs,
 };
 
+#ifdef CONFIG_LGE_SHARPENING
+static ssize_t mdss_mdp_sharpening_show(struct device *dev,
+		struct device_attribute *attr, char *buf)
+{
+	int ret;
+	struct fb_info *fbi = dev_get_drvdata(dev);
+	struct msm_fb_data_type *mfd = (struct msm_fb_data_type *)fbi->par;
+	struct mdss_mdp_ctl *ctl = mfd_to_ctl(mfd);
+
+	if (!ctl) {
+		ret = -ENODEV;
+		goto end;
+	}
+
+	mutex_lock(&ctl->offlock);
+	if (!mfd->panel_power_on) {
+		ret = -EPERM;
+		goto unlock;
+	}
+
+	ret = mdss_mdp_ctl_intf_event(ctl, MDSS_EVENT_GET_SHARPENING, NULL);
+
+unlock:
+	mutex_unlock(&ctl->offlock);
+end:
+	return (ret == -EPERM) ? snprintf(buf, PAGE_SIZE, "display off\n") :
+		snprintf(buf, PAGE_SIZE, "%d\n", ret);
+}
+
+static ssize_t mdss_mdp_sharpening_store(struct device *dev,
+		struct device_attribute *attr, const char *buf, size_t count)
+{
+	int enable, ret;
+	struct fb_info *fbi = dev_get_drvdata(dev);
+	struct msm_fb_data_type *mfd = (struct msm_fb_data_type *)fbi->par;
+	struct mdss_mdp_ctl *ctl = mfd_to_ctl(mfd);
+
+	if (!ctl) {
+		ret = -ENODEV;
+		goto end;
+	}
+
+	ret = kstrtoint(buf, 0, &enable);
+	if (ret || (enable != 0 && enable != 1)) {
+		pr_err("invalid sharpening value\n");
+		ret = -EFAULT;
+		goto end;
+	}
+
+	mutex_lock(&ctl->offlock);
+
+	mdss_mdp_ctl_intf_event(ctl, mfd->panel_power_on ?
+		MDSS_EVENT_SET_SHARPENING : MDSS_EVENT_QUEUE_SHARPENING,
+			(void *) enable);
+
+	mutex_unlock(&ctl->offlock);
+
+end:
+	return ret ? ret : count;
+}
+
+static DEVICE_ATTR(sharpening, S_IRUGO | S_IWUSR | S_IWGRP,
+	mdss_mdp_sharpening_show, mdss_mdp_sharpening_store);
+
+static struct attribute *sharpening_attrs[] = {
+	&dev_attr_sharpening.attr,
+	NULL,
+};
+
+static struct attribute_group sharpening_attrs_group = {
+	.attrs = sharpening_attrs,
+};
+#endif
+
 static ssize_t mdss_mdp_vsync_show_event(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
@@ -3370,6 +3444,13 @@ int mdss_mdp_overlay_init(struct msm_fb_data_type *mfd)
 			goto init_fail;
 		}
 	}
+#ifdef CONFIG_LGE_SHARPENING
+	rc = sysfs_create_group(&dev->kobj, &sharpening_attrs_group);
+	if (rc) {
+		pr_err("Error sharpening sysfs creation ret=%d\n", rc);
+		goto init_fail;
+	}
+#endif
 	mfd->mdp_sync_pt_data.async_wait_fences = true;
 	rc = sysfs_create_link_nowarn(&dev->kobj,
 			&mdp5_data->mdata->pdev->dev.kobj, "mdp");
