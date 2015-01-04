@@ -257,6 +257,9 @@
 		qcom,mdss-dsi-tx-eot-append;
 		qcom,mdss-pan-physical-width-dimension = <68>;
 		qcom,mdss-pan-physical-height-dimension = <120>;
+		qcom,mdss-dsi-sharpening-on = [15 01 00 00 00 00 02 F0 26];
+		qcom,mdss-dsi-sharpening-off = [15 01 00 00 00 00 02 F0 35];
+		qcom,mdss-dsi-sharpening-mode = "dsi_hs_mode";
 
 		// ief
 		qcom,panel-ief-on-cmds = [
@@ -395,6 +398,9 @@
 		qcom,mdss-dsi-tx-eot-append;
 		qcom,mdss-pan-physical-width-dimension = <68>;
 		qcom,mdss-pan-physical-height-dimension = <120>;
+		qcom,mdss-dsi-sharpening-on = [15 01 00 00 00 00 02 F0 26];
+		qcom,mdss-dsi-sharpening-off = [15 01 00 00 00 00 02 F0 35];
+		qcom,mdss-dsi-sharpening-mode = "dsi_hs_mode";
 
 		// ief
 		qcom,panel-ief-on-cmds = [

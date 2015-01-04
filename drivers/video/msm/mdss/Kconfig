@@ -47,3 +47,9 @@ config LGE_SUPPORT_LCD_MAKER_ID
 	bool "LGE LCD MAKER ID support configuration"
 	---help---
 	  Say Y here to enable support for LCD MAKER ID lge feature
+
+config LGE_SHARPENING
+	depends on MACH_LGE
+	bool "LGE display sharpening control"
+	---help---
+	  Allow control of the display sharpening via sysfs node.

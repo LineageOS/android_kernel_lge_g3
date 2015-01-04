@@ -215,6 +215,9 @@ struct mdss_mdp_ctl {
 	struct mdss_mdp_mixer *mixer_left;
 	struct mdss_mdp_mixer *mixer_right;
 	struct mutex lock;
+#ifdef CONFIG_LGE_SHARPENING
+	struct mutex offlock;
+#endif
 	struct mutex *shared_lock;
 	struct mutex *wb_lock;
 	spinlock_t spin_lock;
