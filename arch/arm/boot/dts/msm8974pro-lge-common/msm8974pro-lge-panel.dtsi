@@ -255,6 +255,9 @@
 		qcom,mdss-dsi-lp11-init;
 		qcom,cont-splash-enabled;
 		qcom,mdss-dsi-tx-eot-append;
+		qcom,mdss-dsi-sharpening-on = [15 01 00 00 00 00 02 F0 26];
+		qcom,mdss-dsi-sharpening-off = [15 01 00 00 00 00 02 F0 35];
+		qcom,mdss-dsi-sharpening-mode = "dsi_hs_mode";
 
 		// ief
 		qcom,panel-ief-on-cmds = [
@@ -391,6 +394,9 @@
 		qcom,mdss-dsi-lp11-init;
 		qcom,cont-splash-enabled;
 		qcom,mdss-dsi-tx-eot-append;
+		qcom,mdss-dsi-sharpening-on = [15 01 00 00 00 00 02 F0 26];
+		qcom,mdss-dsi-sharpening-off = [15 01 00 00 00 00 02 F0 35];
+		qcom,mdss-dsi-sharpening-mode = "dsi_hs_mode";
 
 		// ief
 		qcom,panel-ief-on-cmds = [

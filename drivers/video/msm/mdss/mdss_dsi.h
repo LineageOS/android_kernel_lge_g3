@@ -223,6 +223,9 @@ struct dsi_drv_cm_data {
 	struct regulator *vdd_io_vreg;
 	struct regulator *vdda_vreg;
 	int broadcast_enable;
+#ifdef CONFIG_LGE_SHARPENING
+	int sharpening_state;
+#endif
 };
 
 enum {
@@ -247,6 +250,11 @@ struct mdss_dsi_ctrl_pdata {
 	int (*partial_update_fnc) (struct mdss_panel_data *pdata);
 	int (*check_status) (struct mdss_dsi_ctrl_pdata *pdata);
 	int (*cmdlist_commit)(struct mdss_dsi_ctrl_pdata *ctrl, int from_mdp);
+#ifdef CONFIG_LGE_SHARPENING
+	int (*set_sharpening)(struct mdss_dsi_ctrl_pdata *ctrl, int state,
+		void *resuming);
+	int (*get_sharpening)(struct mdss_dsi_ctrl_pdata *ctrl);
+#endif
 	struct mdss_panel_data panel_data;
 	unsigned char *ctrl_base;
 	int reg_size;
@@ -313,6 +321,11 @@ struct mdss_dsi_ctrl_pdata {
 
 	struct dsi_buf tx_buf;
 	struct dsi_buf rx_buf;
+
+#ifdef CONFIG_LGE_SHARPENING
+	struct dsi_panel_cmds sharpening_on;
+	struct dsi_panel_cmds sharpening_off;
+#endif
 };
 
 int dsi_panel_device_register(struct device_node *pan_node,

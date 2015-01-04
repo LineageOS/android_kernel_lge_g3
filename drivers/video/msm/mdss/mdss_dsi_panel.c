@@ -548,6 +548,13 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->on_cmds);
 #endif
 
+#ifdef CONFIG_LGE_SHARPENING
+	/* Change to '1' if LG ever decides to disable by default */
+	if (ctrl->shared_pdata.sharpening_state == 0)
+		ctrl->set_sharpening(ctrl, ctrl->shared_pdata.sharpening_state,
+			(void *) 1);
+#endif
+
 	pr_debug("%s:\n", __func__);
 	return 0;
 }
@@ -955,6 +962,31 @@ static int mdss_dsi_parse_reset_seq(struct device_node *np,
 	return 0;
 }
 
+#ifdef CONFIG_LGE_SHARPENING
+static int mdss_dsi_panel_set_sharpening(struct mdss_dsi_ctrl_pdata *ctrl,
+	int state, void *resuming)
+{
+	if (ctrl->shared_pdata.sharpening_state == state && !resuming) {
+		pr_info("sharpening already in requested state");
+		return 0;
+	}
+
+	mdss_dsi_panel_cmds_send(ctrl, state ? &ctrl->sharpening_on :
+		&ctrl->sharpening_off);
+
+	ctrl->shared_pdata.sharpening_state = state;
+
+	pr_info("%s: sharpening %s for ndx %d\n", __func__,
+		state ?	"enabled" : "disabled", ctrl->ndx);
+
+	return 0;
+}
+
+static int mdss_dsi_panel_get_sharpening(struct mdss_dsi_ctrl_pdata *ctrl)
+{
+	return ctrl->shared_pdata.sharpening_state;
+}
+#endif
 
 static int mdss_panel_parse_dt(struct device_node *np,
 			struct mdss_dsi_ctrl_pdata *ctrl_pdata)
@@ -1268,6 +1300,15 @@ static int mdss_panel_parse_dt(struct device_node *np,
         mdss_dsi_parse_dcs_cmds(np, &ctrl_pdata->set_address_mode_cmds,
             "lge,mdss-set-address-mode-command", "qcom,mdss-dsi-off-command-state");
 #endif
+#ifdef CONFIG_LGE_SHARPENING
+		mdss_dsi_parse_dcs_cmds(np, &ctrl_pdata->sharpening_on,
+			"qcom,mdss-dsi-sharpening-on", "qcom,mdss-dsi-sharpening-mode");
+		mdss_dsi_parse_dcs_cmds(np, &ctrl_pdata->sharpening_off,
+			"qcom,mdss-dsi-sharpening-off", "qcom,mdss-dsi-sharpening-mode");
+
+		/* Change to 'false' if LG ever decides to disable by default */
+		ctrl_pdata->shared_pdata.sharpening_state = true;
+#endif
 	return 0;
 
 error:
@@ -1344,6 +1385,10 @@ int mdss_dsi_panel_init(struct device_node *node,
 	ctrl_pdata->on = mdss_dsi_panel_on;
 	ctrl_pdata->off = mdss_dsi_panel_off;
 	ctrl_pdata->panel_data.set_backlight = mdss_dsi_panel_bl_ctrl;
+#ifdef CONFIG_LGE_SHARPENING
+	ctrl_pdata->set_sharpening = mdss_dsi_panel_set_sharpening;
+	ctrl_pdata->get_sharpening = mdss_dsi_panel_get_sharpening;
+#endif
 
 #ifdef CONFIG_MACH_LGE
 	/* Panel device is not created in KK release */

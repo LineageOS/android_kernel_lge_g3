@@ -925,6 +925,9 @@ static struct mdss_mdp_ctl *mdss_mdp_ctl_alloc(struct mdss_data_type *mdata,
 			ctl->mdata = mdata;
 			mutex_init(&ctl->lock);
 			spin_lock_init(&ctl->spin_lock);
+#ifdef CONFIG_LGE_SHARPENING
+			mutex_init(&ctl->offlock);
+#endif
 			BLOCKING_INIT_NOTIFIER_HEAD(&ctl->notifier_head);
 			pr_debug("alloc ctl_num=%d\n", ctl->num);
 			break;
