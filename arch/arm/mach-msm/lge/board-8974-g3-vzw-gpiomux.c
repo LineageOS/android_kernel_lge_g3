@@ -11,6 +11,7 @@
  *
  */
 
+#include <linux/mm.h>
 #include <linux/gpio.h>
 #include <linux/init.h>
 #include <linux/ioport.h>
@@ -2648,5 +2649,6 @@ u32 wcnss_rf_read_reg(u32 rf_reg_addr)
 	gpio_set_value(WLAN_SET, 0);
 	wcnss_switch_to_5wire();
 
+pr_err("invisiblek: %lu", totalram_pages);
 	return rf_data_received;
 }
