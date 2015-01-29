@@ -637,8 +637,8 @@ hw_rev_type lge_get_board_revno(void)
 * change code for LCD KCAL
 * 2013-05-08, seojin.lee@lge.com
 */
-int g_kcal_r = 255;
-int g_kcal_g = 255;
+int g_kcal_r = 242;
+int g_kcal_g = 237;
 int g_kcal_b = 255;
 
 extern int kcal_set_values(int kcal_r, int kcal_g, int kcal_b);
