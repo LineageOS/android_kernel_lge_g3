@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ac371cc_2110794e",
+        "filename": "drivers/media/radio/radio-iris.c",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2015-04-10T02:37:06Z",
+      "side": 1,
+      "message": "please wrap this in an ifndef as well (will cause a warning otherwise)",
+      "revId": "504f9999dbcfce2706729317970582132b94b824",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
