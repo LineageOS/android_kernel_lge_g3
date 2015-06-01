@@ -18,7 +18,7 @@
 #include <linux/time.h>		//struct timeval t_interval[TIME_PROFILE_MAX];
 #include <linux/string.h>	//memset
 #include <linux/i2c.h>
-#include <linux/input/lge_touch_core.h>
+#include "../lge_touch_core.h"
 #if 0
 extern const int DefaultTimeout;
 
