@@ -23,6 +23,12 @@ config USB_DWC3_VERBOSE
 	help
 	  Say Y here to enable verbose debugging messages on DWC3 Driver.
 
+#CONFIG_USB_LGE_USB3_REDRIVER
+config USB_LGE_USB3_REDRIVER
+	bool "LGE specific USB3 Redriver feature"
+	help
+	 Say Y to enalbe LGE specific USB3 Redriver feature.
+	default n
 config USB_DWC3_LGE_SINGLE_PSY
 	bool "Use only usb psy"
 	help
