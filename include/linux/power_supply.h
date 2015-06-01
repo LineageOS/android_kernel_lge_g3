@@ -299,6 +299,7 @@ struct power_supply_info {
 #if defined(CONFIG_POWER_SUPPLY) || defined(CONFIG_POWER_SUPPLY_MODULE)
 #ifdef CONFIG_LGE_PM
 int power_supply_set_floated_charger(struct power_supply *psy, int is_float);
+int power_supply_set_usb_driver_uninstall(struct power_supply *psy, int is_float);
 #endif
 extern struct power_supply *power_supply_get_by_name(char *name);
 extern void power_supply_changed(struct power_supply *psy);

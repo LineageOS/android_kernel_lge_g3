@@ -148,6 +148,10 @@ struct usb_phy {
 	/* for non-OTG B devices: set transceiver into suspend mode */
 	int	(*set_suspend)(struct usb_phy *x,
 				int suspend);
+
+	/* To enable/disable phy autosuspend feature */
+	int	(*set_phy_autosuspend)(struct usb_phy *x,
+					int enable_autosuspend);
 };
 
 

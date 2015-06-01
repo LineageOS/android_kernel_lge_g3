@@ -1755,10 +1755,10 @@ static int dwc3_gadget_vbus_session(struct usb_gadget *_gadget, int is_active)
 	dwc->vbus_active = is_active;
 #ifdef CONFIG_USB_G_LGE_ANDROID
 /*
- * B2-BSP-USB@lge.com
- * If usb has disconnected during gadget reset,
- * gadget doesn't receive both reset interrupt and disconnect interrupt.
- * Thus, check that here.
+                     
+                                               
+                                                                        
+                         
  */
 	if (!dwc->vbus_active
 			&& dwc->softconnect
@@ -1787,7 +1787,11 @@ static int dwc3_gadget_vbus_session(struct usb_gadget *_gadget, int is_active)
 	 * Clearing run/stop bit might occur before disconnect event is seen.
 	 * Make sure to let gadget driver know in that case.
 	 */
+#ifdef CONFIG_USB_G_LGE_ANDROID
+	if (!dwc->vbus_active) {
+#else
 	if (!dwc->vbus_active && dwc->start_config_issued) {
+#endif
 		dev_dbg(dwc->dev, "calling disconnect from %s\n", __func__);
 		dwc3_gadget_disconnect_interrupt(dwc);
 	}
@@ -2093,6 +2097,12 @@ static int dwc3_cleanup_done_reqs(struct dwc3 *dwc, struct dwc3_ep *dep,
 			return 1;
 		}
 
+#ifdef CONFIG_USB_G_LGE_ANDROID
+		if (!(dep->flags & DWC3_EP_ENABLED)) {
+			dev_err(dwc->dev, "%s disabled while endpoint transfer.\n", dep->name);
+			return 1;
+		}
+#endif
 		trb = req->trb;
 
 		if ((trb->ctrl & DWC3_TRB_CTRL_HWO) && status != -ESHUTDOWN)
@@ -2166,6 +2176,8 @@ static int dwc3_cleanup_done_reqs(struct dwc3 *dwc, struct dwc3_ep *dep,
 				(trb->ctrl & DWC3_TRB_CTRL_IOC))
 			break;
 	} while (1);
+
+	dwc->gadget.xfer_isr_count++;
 
 	if (usb_endpoint_xfer_isoc(dep->endpoint.desc) &&
 			list_empty(&dep->req_queued)) {
@@ -2258,6 +2270,7 @@ static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
 			return;
 		}
 
+		dbg_event(dep->number, "XFRCOMP", 0);
 		dwc3_endpoint_transfer_complete(dwc, dep, event, 1);
 		break;
 	case DWC3_DEPEVT_XFERINPROGRESS:
@@ -2267,9 +2280,11 @@ static void dwc3_endpoint_interrupt(struct dwc3 *dwc,
 			return;
 		}
 
+		dbg_event(dep->number, "XFRPROG", 0);
 		dwc3_endpoint_transfer_complete(dwc, dep, event, 0);
 		break;
 	case DWC3_DEPEVT_XFERNOTREADY:
+		dbg_event(dep->number, "XFRNRDY", 0);
 		if (usb_endpoint_xfer_isoc(dep->endpoint.desc)) {
 			dwc3_gadget_start_isoc(dwc, dep, event);
 		} else {
@@ -2327,6 +2342,7 @@ static void dwc3_disconnect_gadget(struct dwc3 *dwc)
 		dwc->gadget_driver->disconnect(&dwc->gadget);
 		spin_lock(&dwc->lock);
 	}
+	dwc->gadget.xfer_isr_count = 0;
 }
 
 static void dwc3_stop_active_transfer(struct dwc3 *dwc, u32 epnum)
@@ -2461,7 +2477,7 @@ static void dwc3_gadget_usb2_phy_suspend(struct dwc3 *dwc, int suspend)
 static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
 {
 	u32			reg;
-#if defined(CONFIG_DWC3_MSM_BC_12_VZW_SUPPORT)
+#ifndef CONFIG_LGE_PM
 	struct dwc3_otg		*dotg = dwc->dotg;
 #endif
 
@@ -2509,14 +2525,7 @@ static void dwc3_gadget_reset_interrupt(struct dwc3 *dwc)
 		dwc3_gadget_usb3_phy_suspend(dwc, false);
 	}
 
-#if defined(CONFIG_LGE_PM) && defined(CONFIG_DWC3_MSM_BC_12_VZW_SUPPORT)
-	if ((dotg && dotg->otg.phy) && !lge_get_factory_cable()) {
-#if defined (CONFIG_SLIMPORT_ANX7816) || defined(CONFIG_SLIMPORT_ANX7808)
-	if (!slimport_is_connected())
-#endif
-	usb_phy_set_power(dotg->otg.phy, 0);
-	}
-#elif !defined(CONFIG_LGE_PM)
+#ifndef CONFIG_LGE_PM
 	usb_phy_set_power(dotg->otg.phy, 0);
 #endif
 
@@ -2763,7 +2772,7 @@ static void dwc3_gadget_linksts_change_interrupt(struct dwc3 *dwc,
 		}
 	} else if (next == DWC3_LINK_STATE_U3) {
 		dbg_event(0xFF, "SUSPEND", 0);
-#ifdef CONFIG_DWC3_MSM_BC_12_VZW_SUPPORT
+#if 0
 		if (dwc->dotg->charger->chg_type == DWC3_SDP_CHARGER) {
 			dwc->dotg->charger->vzw_usb_config_state = VZW_USB_STATE_UNDEFINED;
 			queue_delayed_work(system_nrt_wq, dwc->dotg->charger->drv_check_state_wq, 0);
