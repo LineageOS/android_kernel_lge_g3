@@ -11,7 +11,11 @@ menuconfig INPUT_TOUCHSCREEN
 
 if INPUT_TOUCHSCREEN
 
-source "drivers/input/touchscreen/synaptics_dsx/Kconfig"
+if TOUCHSCREEN_SYNAPTICS_G3
+
+source "drivers/input/touchscreen/g3/synaptics_dsx/Kconfig"
+
+endif
 
 config TOUCHSCREEN_88PM860X
 	tristate "Marvell 88PM860x touchscreen"
@@ -111,6 +115,18 @@ config TOUCHSCREEN_ATMEL_MXT
 
 	  To compile this driver as a module, choose M here: the
 	  module will be called atmel_mxt_ts.
+
+config TOUCHSCREEN_ATMEL_S540
+	tristate "Atmel mXT S540 I2C Touchscreen"
+	depends on I2C
+	help
+	  Say Y here if you have Atmel mXT series I2C touchscreen,
+	  such as AT42QT602240/ATMXT224, connected to your system.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called atmel_s540.
 
 config TOUCHSCREEN_ATMEL_MAXTOUCH_TS
 	tristate "Atmel Maxtouch Touchscreen Family"
@@ -1061,6 +1077,48 @@ config TOUCHSCREEN_GT9XX
 
           If unsure, say N.
 
-source "drivers/input/touchscreen/gt9xx/Kconfig"
+config TOUCHSCREEN_SYNAPTICS_DISNEY
+	bool "LGE CORE with Synaptics for Disney"
+	help
+	  This enables lge core with synaptics driver for disney
+
+if TOUCHSCREEN_SYNAPTICS_DISNEY
+
+source "drivers/input/touchscreen/disney/Kconfig"
+
+endif
+
+config TOUCHSCREEN_SYNAPTICS_G3
+	bool "LGE CORE with Synaptics for G3"
+	help
+	  This enables lge core with synaptics driver for g3
+
+if TOUCHSCREEN_SYNAPTICS_G3
+
+source "drivers/input/touchscreen/g3/Kconfig"
+
+endif
+
+config TOUCHSCREEN_SYNAPTICS_G2
+	bool "LGE CORE with Synaptics for G2"
+	help
+	  This enables lge core with synaptics driver for g2
+
+if TOUCHSCREEN_SYNAPTICS_G2
+
+source "drivers/input/touchscreen/g2/Kconfig"
+
+endif
+
+config TOUCHSCREEN_SYNAPTICS_TIGERS
+	bool "LGE CORE with Synaptics for TIGERS"
+	help
+	  This enables lge core with synaptics driver for TIGERS
+
+if TOUCHSCREEN_SYNAPTICS_TIGERS
+
+source "drivers/input/touchscreen/g2/Kconfig"
+
+endif
 
 endif

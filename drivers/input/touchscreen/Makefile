@@ -15,6 +15,7 @@ obj-$(CONFIG_TOUCHSCREEN_ADS7846)	+= ads7846.o
 obj-$(CONFIG_TOUCHSCREEN_ATMEL_MAXTOUCH)	+= atmel_maxtouch.o
 obj-$(CONFIG_TOUCHSCREEN_ATMEL_MXT)	+= atmel_mxt_ts.o
 obj-$(CONFIG_TOUCHSCREEN_ATMEL_MAXTOUCH_TS)	+= atmel_maxtouch_ts.o
+obj-$(CONFIG_TOUCHSCREEN_ATMEL_S540)	+= atmel_s540.o
 obj-$(CONFIG_TOUCHSCREEN_ATMEL_TSADCC)	+= atmel_tsadcc.o
 obj-$(CONFIG_TOUCHSCREEN_AUO_PIXCIR)	+= auo-pixcir-ts.o
 obj-$(CONFIG_TOUCHSCREEN_BITSY)		+= h3600_ts_input.o
@@ -79,25 +80,8 @@ obj-$(CONFIG_TOUCHSCREEN_TPS6507X)	+= tps6507x-ts.o
 obj-$(CONFIG_TOUCHSCREEN_MSM_LEGACY)		+= msm_touch.o
 obj-$(CONFIG_TOUCHSCREEN_CY8C_TS)	+= cy8c_ts.o
 obj-$(CONFIG_TOUCHSCREEN_CYTTSP_I2C_QC)       += cyttsp-i2c-qc.o
-ifdef CONFIG_MACH_MSM8974_G3_KDDI_EVB
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_RMI4_I2C) +=synaptics/
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += lge_touch_core_kddi_evb.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += touch_synaptics_kddi_evb.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += touch_synaptics_ds4_fw_upgrade.o
-else
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += lge_touch_core.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += touch_synaptics.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += touch_synaptics_proximity.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4_EVB) += lge_touch_core.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4_EVB) += touch_synaptics_evb.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += touch_synaptics_ds5_fw_upgrade.o
-endif
 obj-$(CONFIG_TOUCHSCREEN_FT5X06)	+= ft5x06_ts.o
-
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += DS5/
-
-#obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)		+= synaptics_i2c_rmi4.o
-obj-$(CONFIG_TOUCHSCREEN_GT9XX)		+= gt9xx/
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX)	+= synaptics_dsx/
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_RMI4_DEV)	+= synaptics_rmi_dev.o
-obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_FW_UPDATE) 	+= synaptics_fw_update.o
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DISNEY)+= disney/
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_G3) 	+= g3/
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_G2) 	+= g2/
+obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_TIGERS)  += tigers/
