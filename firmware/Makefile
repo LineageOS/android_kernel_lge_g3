@@ -27,21 +27,11 @@ else
 acenic-objs := acenic/tg1.bin acenic/tg2.bin
 endif
 
-# Use generic/intl synaptics firmware by default.
-synaptics_firmware_subdir := g3
-# Override synaptics firmware for specific variants.
-# There are two variants: g3_clr_pr, g3_kddi_jp.
-# g3_clr_pr does not appear to be referenced in any config files
-# so we can't handle it here.
-ifdef CONFIG_MACH_MSM8974_G3_KDDI
-synaptics_firmware_subdir := g3_kddi_jp
+ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_FW_PATH
+fwpath := $(subst ",,$(CONFIG_TOUCHSCREEN_SYNAPTICS_FW_PATH))
+synaptics_img_file := $(wildcard $(srctree)/firmware/synaptics/$(fwpath)/*.img)
+synaptics_img_file += $(wildcard $(srctree)/firmware/synaptics/$(fwpath)/*.txt)
 endif
-ifdef CONFIG_MACH_MSM8974_G3_KDDI_EVB
-synaptics_firmware_subdir := g3_kddi_jp
-endif
-
-synaptics_img_file := $(wildcard $(srctree)/firmware/synaptics/$(synaptics_firmware_subdir)/*)
-
 synaptics_firmware := $(subst $(srctree)/firmware/,,$(synaptics_img_file))
 
 fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += $(synaptics_firmware)
@@ -172,7 +162,7 @@ quiet_cmd_ihex  = IHEX    $@
       cmd_ihex  = $(OBJCOPY) -Iihex -Obinary $< $@
 
 quiet_cmd_copy  = COPY    $@
-      cmd_copy  = cp $(srctree)/$@ $@
+      cmd_copy  = cp -u $(srctree)/$@ $@
 
 quiet_cmd_ihex2fw  = IHEX2FW $@
       cmd_ihex2fw  = $(objtree)/$(obj)/ihex2fw $< $@
@@ -221,6 +211,11 @@ $(objtree)/$$(%) $(objtree)/$(obj)/$$(%): $(firmware-dirs)
 # For the $$(dir %) trick, where we need % to be expanded first.
 .SECONDEXPANSION:
 
+ifneq ($(objtree),$(srctree))
+$(patsubst %,$(obj)/%, $(fw-shipped-y)): %: %.gen.S
+        $(call cmd,copy)
+endif
+
 $(patsubst %,$(obj)/%.gen.S, $(fw-shipped-y)): %: $(wordsize_deps) \
 		| $(objtree)/$$(dir %)
 	$(call cmd,fwbin,$(patsubst %.gen.S,%,$@))
@@ -236,12 +231,6 @@ $(patsubst %,$(obj)/%.gen.o, $(fw-external-y)): $(obj)/%.gen.o: $(fwdir)/%
 # where binaries are frowned upon. They are directly converted with objcopy.
 $(obj)/%: $(obj)/%.ihex | $(objtree)/$(obj)/$$(dir %)
 	$(call cmd,ihex)
-
-$(obj)/%.img: $(objtree)/$(obj)/$$(dir %.img)
-	$(call cmd,copy)
-
-$(obj)/%.txt: $(objtree)/$(obj)/$$(dir %.txt)
-	$(call cmd,copy)
 
 # Don't depend on ihex2fw if we're installing and it already exists.
 # Putting it after | in the dependencies doesn't seem sufficient when
@@ -274,7 +263,7 @@ obj-$(CONFIG_FIRMWARE_IN_KERNEL) += $(patsubst %,%.gen.o, $(fw-shipped-y))
 
 # Remove .S files and binaries created from ihex
 # (during 'make clean' .config isn't included so they're all in $(fw-shipped-))
-targets := $(patsubst $(obj)/%,%, \
+targets := $(fw-shipped-) $(patsubst $(obj)/%,%, \
 				$(shell find $(obj) -name \*.gen.S 2>/dev/null))
 
 # Without this, built-in.o won't be created when it's empty, and the
