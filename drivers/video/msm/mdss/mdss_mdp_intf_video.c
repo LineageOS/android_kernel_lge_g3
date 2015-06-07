@@ -560,7 +560,7 @@ static int mdss_mdp_video_config_fps(struct mdss_mdp_ctl *ctl,
 	int rc = 0;
 	u32 hsync_period, vsync_period;
 #ifdef CONFIG_LGE_DEVFREQ_DFPS
-	u32 line_count;
+	u32 line_count = 0;
 #endif
 
 	pr_debug("Updating fps for ctl=%d\n", ctl->num);

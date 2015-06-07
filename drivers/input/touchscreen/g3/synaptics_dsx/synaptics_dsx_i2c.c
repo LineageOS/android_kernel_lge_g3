@@ -295,7 +295,7 @@ static int synaptics_rmi4_i2c_probe(struct i2c_client *client,
 	struct synaptics_rmi4_device_info *rmi;
 	const struct synaptics_dsx_board_data *platform_data =
 			client->dev.platform_data;
-	struct synaptics_dsx_board_data *p_data;
+	struct synaptics_dsx_board_data *p_data = NULL;
 
 	printk("[Touch] %s START!!!!!!!!!!!!!!\n",__func__);
 #endif

@@ -3766,10 +3766,7 @@ struct bif_ctrl_dev *bif_ctrl_register(struct bif_ctrl_desc *bif_desc,
 	rc = bif_add_all_slaves(bdev);
 	if (rc)
 		pr_debug("Search for all slaves failed, rc=%d\n", rc);
-	rc = bif_add_known_slaves_from_dt(bdev, of_node);
-	if (rc)
-		pr_err("Adding slaves based on device tree addressed failed, rc=%d.\n",
-			rc);
+	bif_add_known_slaves_from_dt(bdev, of_node);
 	rc = bif_assign_all_slaves_dev_addr(bdev);
 	if (rc)
 		pr_err("Failed to set slave device address, rc=%d\n", rc);

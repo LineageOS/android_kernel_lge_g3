@@ -318,7 +318,7 @@ static void vzw_drv_check_work(struct work_struct *w)
 {
 	struct dwc3_msm *mdwc = container_of(w, struct dwc3_msm, drv_check_work.work);
 	bool tmout = false;
-	unsigned long delay;
+	unsigned long delay = 0;
 
 	pr_debug("%s: drv_state: %d\n", __func__, mdwc->drv_state);
 	switch (mdwc->drv_state) {

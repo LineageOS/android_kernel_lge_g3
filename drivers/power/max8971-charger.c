@@ -1819,7 +1819,7 @@ DEVICE_ATTR(at_pmrst_8971, 0640, at_pmic_reset_show, NULL);
 static ssize_t curr_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
-	int a, b;
+	int a = 0, b = 0;
 	struct max8971 *me = dev_get_drvdata(dev);
 	max8971_get_dcilmt(me, &a);
 	max8971_get_chgcc(me, &b);

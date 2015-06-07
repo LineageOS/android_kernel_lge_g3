@@ -488,7 +488,7 @@ static ssize_t max77819_show_chgint(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGINT, &data);
 
@@ -499,7 +499,7 @@ static ssize_t max77819_show_chgintm1(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGINTM1, &data);
 
@@ -527,7 +527,7 @@ static ssize_t max77819_show_chg_stat(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHG_STAT, &data);
 
@@ -538,7 +538,7 @@ static ssize_t max77819_show_dc_batt_dtls(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, DC_BATT_DTLS, &data);
 
@@ -549,7 +549,7 @@ static ssize_t max77819_show_chg_dtls(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHG_DTLS, &data);
 
@@ -560,7 +560,7 @@ static ssize_t max77819_show_bat2sys_dtls(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, BAT2SYS_DTLS, &data);
 
@@ -571,7 +571,7 @@ static ssize_t max77819_show_bat2soc_ctl(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, BAT2SOC_CTL, &data);
 
@@ -599,7 +599,7 @@ static ssize_t max77819_show_chgctl1(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGCTL1, &data);
 
@@ -627,7 +627,7 @@ static ssize_t max77819_show_fchgcrnt(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, FCHGCRNT, &data);
 
@@ -655,7 +655,7 @@ static ssize_t max77819_show_topoff(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, TOPOFF, &data);
 
@@ -683,7 +683,7 @@ static ssize_t max77819_show_batreg(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, BATREG, &data);
 
@@ -711,7 +711,7 @@ static ssize_t max77819_show_dccrnt(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, DCCRNT, &data);
 
@@ -739,7 +739,7 @@ static ssize_t max77819_show_aiclcntl(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, AICLCNTL, &data);
 
@@ -767,7 +767,7 @@ static ssize_t max77819_show_rboost_ctl1(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, RBOOST_CTL1, &data);
 
@@ -795,7 +795,7 @@ static ssize_t max77819_show_chgctl2(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGCTL2, &data);
 
@@ -823,7 +823,7 @@ static ssize_t max77819_show_batdet(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, BATDET, &data);
 
@@ -851,7 +851,7 @@ static ssize_t max77819_show_usbchgctl(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, USBCHGCTL, &data);
 
@@ -879,7 +879,7 @@ static ssize_t max77819_show_mbatregmax(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, MBATREGMAX, &data);
 
@@ -907,7 +907,7 @@ static ssize_t max77819_show_chgccmax(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGCCMAX, &data);
 
@@ -935,7 +935,7 @@ static ssize_t max77819_show_rboost_ctl2(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, RBOOST_CTL2, &data);
 
@@ -963,7 +963,7 @@ static ssize_t max77819_show_chgint2(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGINT2, &data);
 
@@ -974,7 +974,7 @@ static ssize_t max77819_show_chgintmsk2(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHGINTMSK2, &data);
 
@@ -1002,7 +1002,7 @@ static ssize_t max77819_show_chg_wdtc(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHG_WDTC, &data);
 
@@ -1030,7 +1030,7 @@ static ssize_t max77819_show_chg_wdt_ctl(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHG_WDT_CTL, &data);
 
@@ -1058,7 +1058,7 @@ static ssize_t max77819_show_chg_wdt_dtls(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, CHG_WDT_DTLS, &data);
 
@@ -1070,7 +1070,7 @@ static ssize_t max77819_show_safeoutctl(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
 	struct max77819_charger *me = dev_get_drvdata(dev);
-	u8 data;
+	u8 data = 0;
 
 	max77819_read(me->io, SAFEOUTCTL, &data);
 
@@ -1941,7 +1941,7 @@ static void max77819_charger_log_work(struct work_struct *work)
 #if defined(CONFIG_LGE_PM)
 	char on[] = "O";
 	char off[] = "X";
-	u8 regval;
+	u8 regval = 0;
 
 	max77819_read(me->io, CHG_STAT, &regval);
 	log_info("CHG_STAT=0x%2x, DC_V:%s, CHG_NOK:%s, AICL_NOK:%s\n",
@@ -2226,7 +2226,7 @@ static void max77819_charger_aicl_work(struct max77819_charger *me)
 
 static void max77819_do_chg(struct max77819_charger *me)
 {
-	u8 val;
+	u8 val = 0;
 
 	__lock(me);
 
@@ -2683,7 +2683,7 @@ static int max77819_charger_ac_get_property(struct power_supply *psy,
 	struct max77819_charger *me =
 		container_of(psy, struct max77819_charger, psy);
 	int rc = 0;
-	int value;
+	int value = 0;
 #if defined(CONFIG_SUPPORT_PHIHONG)
 	/* phihong crashes here. Do not remove next 4 lines */
 	if (psp == POWER_SUPPLY_PROP_CYCLE_COUNT) {
@@ -3706,7 +3706,7 @@ static ssize_t at_pmic_reset_show(struct device *dev,
 static ssize_t curr_show(struct device *dev,
 		struct device_attribute *attr, char *buf)
 {
-	int a, b;
+	int a = 0, b = 0;
 	struct max77819_charger *me = dev_get_drvdata(dev);
 	max77819_charger_get_dcilmt(me, &a);
 	max77819_charger_get_chgcc(me, &b);

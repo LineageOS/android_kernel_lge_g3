@@ -759,7 +759,7 @@ static int bq24296_get_ibat_max(struct bq24296_chip *chip, int *mv)
 /* Use bq24296_get_adjust_ibat() instead of bq24296_get_ibat_max() */
 static int bq24296_get_adjust_ibat(struct bq24296_chip *chip, int *mv)
 {
-	int ret, enable;
+	int ret, enable = 0;
 	NULL_CHECK(chip, -EINVAL);
 	ret = bq24296_get_ibat_max(chip, mv);
 	if (ret)
