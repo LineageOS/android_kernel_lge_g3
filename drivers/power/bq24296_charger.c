@@ -381,8 +381,6 @@ struct bq24296_chip {
 int last_batt_temp;
 #endif
 
-int safety_timer_enabled;
-
 #if defined(CONFIG_CHARGER_UNIFIED_WLC)
 static int wireless_charging;
 #endif
@@ -637,7 +635,7 @@ static int bq24296_set_input_i_limit(struct bq24296_chip *chip, int ma)
 	}
 #if defined(CONFIG_VZW_POWER_REQ)
 	bq24296_set_en_hiz(chip, (chip->usb_psy->is_floated_charger &&
-				chip->usb_present) ? true : false);
+		(ma <= 0) && chip->usb_present) ? true : false);
 #endif
 #ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
 	if (ma > iusb_control && iusb_control >= INPUT_CURRENT_LIMIT_USB30 &&
@@ -702,7 +700,7 @@ static int bq24296_get_input_i_limit(struct bq24296_chip *chip, int *ma)
 		defined(CONFIG_MACH_MSM8974_G3_TMO_US)
 #define IBAT_WLC_ADJUST		768		/* IDT IDT9025A(WPC) 768mA */
 #elif	defined(CONFIG_MACH_MSM8974_G3_VZW) || defined(CONFIG_MACH_MSM8974_G3_LRA)
-#define IBAT_WLC_ADJUST		704		/* TI BQ51020(WPC) 704mA */
+#define IBAT_WLC_ADJUST		512		/* TI BQ51020(WPC) 512mA */
 #elif	defined(CONFIG_MACH_MSM8974_G3_ATT) || defined(CONFIG_MACH_MSM8974_G3_CA)
 #define IBAT_WLC_ADJUST		768		/* TI BQ51221(PMA) 768mA */
 #else
@@ -949,7 +947,6 @@ static int bq24296_set_chg_timer(struct bq24296_chip *chip, bool enable)
 	NULL_CHECK(chip, -EINVAL);
 
 	pr_info("enable=%d\n", enable);
-	safety_timer_enabled = enable;
 
 	ret = bq24296_masked_write(chip->client, BQ05_CHARGE_TERM_TIMER_CONT_REG,
 						EN_CHG_TIMER_MASK, val);
@@ -1950,7 +1947,7 @@ static int bq24296_batt_power_get_property(struct power_supply *psy,
 		break;
 #if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	case POWER_SUPPLY_PROP_BATTERY_ID_CHECKER:
-		if (is_factory_cable() && bq24296_is_charger_present(chip))
+		if (is_factory_cable())
 			val->intval = 1;
 		else
 			val->intval = chip->batt_id_smem;
@@ -2231,7 +2228,6 @@ static void bq24296_decide_otg_mode(struct bq24296_chip *chip)
 
 #define	ADC_TO_IINMAX(x) (((int)(x)*198)/100)
 #define VZW_UNDER_CURRENT_CHARGING_MA	400000
-#define VZW_UNDER_CURRENT_CHARGING_A	(VZW_UNDER_CURRENT_CHARGING_MA/1000)
 #define VZW_UNDER_CURRENT_CHARGING_DETECT_MV	4200000
 static void VZW_CHG_director(struct bq24296_chip *chip)
 {
@@ -2243,16 +2239,11 @@ static void VZW_CHG_director(struct bq24296_chip *chip)
 	if (!val.intval)
 		goto normal_charger;
 
-	if (chip->usb_psy->is_usb_driver_uninstall) {
-		chip->vzw_chg_mode = VZW_USB_DRIVER_UNINSTALLED;
-		pr_info("VZW usb driver uninstall detected!!\n");
-		goto exit;
-	}
-
 	/* Invalid charger detect */
 	if (lge_get_board_revno() < HW_REV_1_0)
 		goto normal_charger;
-	if (chip->usb_psy->is_floated_charger) {
+	bq24296_charger_psy_getprop(chip, usb_psy, ONLINE, &val);
+	if (chip->usb_psy->is_floated_charger && !val.intval) {
 		chip->vzw_chg_mode = VZW_NOT_CHARGING;
 		pr_info("VZW invalid charging detected!!\n");
 		goto exit;
@@ -2266,18 +2257,13 @@ static void VZW_CHG_director(struct bq24296_chip *chip)
 	else
 		goto normal_charger;
 	if (val.intval > VZW_UNDER_CURRENT_CHARGING_DETECT_MV)
-		goto normal_charger;
-	bq24296_charger_psy_getprop(chip, psy_this, CURRENT_MAX, &val);
-	if (val.intval < VZW_UNDER_CURRENT_CHARGING_A)
-		goto normal_charger;
-	bq24296_charger_psy_getprop(chip, psy_this, CHARGING_ENABLED, &val);
-	if (!val.intval)
-		goto normal_charger;
-	bq24296_charger_psy_getprop(chip, usb_psy, TYPE, &val);
-	if (val.intval != POWER_SUPPLY_TYPE_USB_DCP)
-		goto normal_charger;
+		//goto normal_charger;
+		goto exit;
 	qpnp_vadc_read(chip->vadc_dev, LR_MUX4_AMUX_THM1, &result);
-	if (ADC_TO_IINMAX(result.physical) < VZW_UNDER_CURRENT_CHARGING_MA) {
+	bq24296_charger_psy_getprop(chip, usb_psy, TYPE, &val);
+	if ((val.intval == POWER_SUPPLY_TYPE_USB_DCP) &&
+			(ADC_TO_IINMAX(result.physical) <
+				VZW_UNDER_CURRENT_CHARGING_MA)) {
 		chip->vzw_chg_mode = VZW_UNDER_CURRENT_CHARGING;
 		pr_info("VZW slow charging detected!!\n");
 		goto exit;
@@ -2333,13 +2319,6 @@ static void bq24296_batt_external_power_changed(struct power_supply *psy)
 #if defined(CONFIG_SUPPORT_PHIHONG)
 	complete(&chip->phihong_complete);
 	bq24296_set_phihong_current(chip, ret.intval);
-	/* For MST, boost current up over 900mA in spite of USB */
-	if (safety_timer_enabled == 0 && ret.intval < 900) {
-		ret.intval = 900;
-		pr_info("safety timer disabled.... input current limit = %d\n",ret.intval);
-	}
-
-	bq24296_charger_psy_setprop(chip, psy_this, INPUT_CURRENT_MAX, ret.intval);
 #else
 #if defined(CONFIG_CHARGER_UNIFIED_WLC)
 	if (wireless_charging) {
@@ -2566,9 +2545,7 @@ static int bq24296_power_get_event_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_FLOATED_CHARGER:
 		val->intval = psy->is_floated_charger;
 		break;
-	case POWER_SUPPLY_PROP_DRIVER_UNINSTALL:
-		val->intval = psy->is_usb_driver_uninstall;
-		break;
+
 	default:
 		break;
 	}
@@ -2966,7 +2943,7 @@ static void pma_workaround_worker(struct work_struct *work)
 		pr_err("[WLC] unset pma workaround\n");
 	}
 
-	if (wake_lock_active(&chip->pma_workaround_wake_lock)) {
+	if (wake_lock_active(&chip->pma_workaround_wake_lock)) {;
 		wake_unlock(&chip->pma_workaround_wake_lock);
 		pr_err("[WLC] unset pma wake lock\n");
 	}
@@ -3079,7 +3056,7 @@ static void bq24296_monitor_batt_temp(struct work_struct *work)
 		(res.force_update == true)) {
 		if (res.change_lvl == STS_CHE_NORMAL_TO_DECCUR ||
 			(res.force_update == true && res.state == CHG_BATT_DECCUR_STATE &&
-			res.dc_current != DC_CURRENT_DEF && res.change_lvl != STS_CHE_STPCHG_TO_DECCUR
+			res.dc_current != DC_CURRENT_DEF
 			)) {
 			chip->otp_ibat_current = res.dc_current;
 		} else if (res.change_lvl == STS_CHE_NORMAL_TO_STPCHG ||
@@ -3759,7 +3736,6 @@ static int bq24296_probe(struct i2c_client *client,
 #ifdef CONFIG_SENSORS_QPNP_ADC_VOLTAGE
 	last_batt_temp = DEFAULT_TEMP;
 #endif
-	safety_timer_enabled = 1;
 
 #ifdef CONFIG_LGE_CHARGER_TEMP_SCENARIO
 	schedule_delayed_work(&chip->battemp_work,

@@ -2582,9 +2582,6 @@ static int dwc3_msm_power_set_event_property_usb(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_FLOATED_CHARGER:
 		psy->is_floated_charger = val->intval;
 		break;
-	case POWER_SUPPLY_PROP_DRIVER_UNINSTALL:
-		psy->is_usb_driver_uninstall = val->intval;
-		break;
 	default:
 		return -EINVAL;
 	}

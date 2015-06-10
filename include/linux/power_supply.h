@@ -199,7 +199,6 @@ enum power_supply_event_type {
 #endif
 #ifdef CONFIG_LGE_PM
 	POWER_SUPPLY_PROP_FLOATED_CHARGER,
-	POWER_SUPPLY_PROP_DRIVER_UNINSTALL,
 #endif
 };
 
@@ -273,7 +272,6 @@ struct power_supply {
 #endif
 #ifdef CONFIG_LGE_PM
 	int is_floated_charger;
-	int is_usb_driver_uninstall;
 #endif
 };
 
