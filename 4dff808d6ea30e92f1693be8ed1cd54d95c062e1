@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff52f3f_bfaa9716",
+        "filename": "include/linux/nfc/pn544.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 6334
+      },
+      "writtenOn": "2015-06-28T05:34:37Z",
+      "side": 1,
+      "message": "ah whitespace",
+      "revId": "4dff808d6ea30e92f1693be8ed1cd54d95c062e1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9ff52f3f_9fa7d350",
+        "filename": "include/linux/nfc/pn544.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 6334
+      },
+      "writtenOn": "2015-06-28T05:34:37Z",
+      "side": 1,
+      "message": "ah",
+      "revId": "4dff808d6ea30e92f1693be8ed1cd54d95c062e1",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
