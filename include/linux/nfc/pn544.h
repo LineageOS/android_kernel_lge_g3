@@ -17,6 +17,7 @@
  *
  */
 
+#ifdef CONFIG_LGE_NFC_PN547_C2
 #ifndef _PN547_LGE_H_
 #define _PN547_LGE_H_
 
@@ -31,4 +32,5 @@
 #define PN544_SET_PWR	_IOW(PN544_MAGIC, 0x01, unsigned int)
 
 #endif /* _PN547_LGE_H_ */
+#endif /* CONFIG_LGE_NFC_PN547_C2 */
 
