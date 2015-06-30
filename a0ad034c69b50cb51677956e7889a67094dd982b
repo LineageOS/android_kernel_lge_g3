@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ff52f3f_b35090d6",
+        "filename": "drivers/nfc/pn544_lge.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2015-06-30T01:05:09Z",
+      "side": 1,
+      "message": "actually, this is wrong",
+      "revId": "a0ad034c69b50cb51677956e7889a67094dd982b",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
