@@ -3396,12 +3396,10 @@ CONFIG_CORESIGHT_EVENT=y
 #
 # LGE Broadcast Device Support
 #
-CONFIG_LGE_BROADCAST_TDMB=y
 
 #
 # LGE Japanese Mobile Broadcast(ISDB-T 1seg/ISDB-Tmm 13seg) Device Support
 #
-CONFIG_LGE_BROADCAST_TDMB_FC8080=y
 CONFIG_BIF=y
 CONFIG_BIF_QPNP=y
 # CONFIG_SENSORS is not set
