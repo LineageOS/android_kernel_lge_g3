@@ -49,7 +49,7 @@
 		eeprom0: qcom,eeprom@a0 {
 			cell-index = <0>;
 			reg = <0xa0 0x0>;
-			qcom,eeprom-name = "imx135_eeprom";
+			qcom,eeprom-name = "sonyimx135";
 			compatible = "qcom,eeprom";
 			qcom,slave-addr = <0xa0>;
 			qcom,cci-master = <0>;
@@ -57,6 +57,38 @@
 			qcom,page0 = <0 0x0 2 0x0 1 20>;
 			qcom,poll0 = <0 0x0 2 0x0 1 20>;
 			qcom,mem0 = <0x900 0x0000 2 0 1 0>; //EEPROM READ
+
+			cam_vdig-supply = <&pm8941_l3>;
+			qcom,cam-vreg-name = "cam_vdig", "cam_vio", "cam_vana", "cam_vaf";
+			qcom,cam-vreg-type = <0 1 1 1 >;
+			qcom,cam-vreg-min-voltage = <1050000 0 0 1800000>;
+			qcom,cam-vreg-max-voltage = <1050000 0 0 1800000>;
+			qcom,cam-vreg-op-mode = <105000 0 0 100000>;
+			qcom,gpio-no-mux = <0>;
+			gpios = <&msmgpio 15 0>, 		// MCLK
+				<&msmgpio 4 0>,			// MAIN_CAM_RESET
+				<&msmgpio 16 0>,			// 13M_VANA_EN
+				<&msmgpio 96 0>,			// 13M_VIO_EN
+				<&msmgpio 145 0>,			// 13M_VCM_EN : OIS_MVDD
+				<&msmgpio 30 0>,		// OIS_LDO_EN : OIS_VDD
+				<&msmgpio 29 0>,		// OIS_RESET
+				<&pm8941_gpios 1 0>;	// LDAF_EN
+			qcom,gpio-reset = <1>; 		// Set gpio_4 as reset
+			qcom,gpio-vana = <2>;		// Set gpio_16 as VANA
+			qcom,gpio-vio = <3>;			// Set gpio_96 as VIO
+			qcom,gpio-vaf = <4>;			// Set pm8941_gpio_4 as VCM
+			qcom,gpio-ois-ldo = <5>;		// Set gpio_145 as OIS_LDO_EN
+			qcom,gpio-ois-reset = <6>;		// Set gpio_29 as OIS_RESET
+			qcom,gpio-ldaf-en = <7>;		// Set gpio_29 as OIS_RESET
+			qcom,gpio-req-tbl-num = <0 1 2 3 4 5 6 7>;
+			qcom,gpio-req-tbl-flags = <0 0 0 0 0 0 0 0>;
+			qcom,gpio-req-tbl-label =  "CAMIF_MCLK", "CAM_RESET1", "MAIN_VANA_EN", "MAIN_VIO_EN", "MAIN_VCM_EN",
+										"OIS_LDO_EN", "OIS_RESET", "LDAF_EN";
+
+			qcom,cam-power-seq-type = "sensor_gpio";	// VIO
+			qcom,cam-power-seq-val = "sensor_gpio_vio";
+			qcom,cam-power-seq-cfg-val = <1>;
+			qcom,cam-power-seq-delay = <20>;
 		};
 
 		qcom,camera_evb1@20 {
@@ -108,7 +140,7 @@
 		qcom,camera_rev_b@20 {
 			status = "ok";
 			compatible = "qcom,imx135";
-			revision = "rev_a1...";
+			revision = "rev_b...";
 			reg = <0x20 0x0>;
 			qcom,slave-id = <0x20 0x16 0x135>;
 			qcom,csiphy-sd-index = <0>;
@@ -200,7 +232,7 @@
 		qcom,camera_rev_b@6e {
 			status = "ok";
 			compatible = "qcom,imx208";
-			revision = "rev_a1...";
+			revision = "rev_b...";
 			reg = <0x6e 0x0>;
 			qcom,slave-id = <0x6e 0x0 0x208>;
 			qcom,csiphy-sd-index = <2>;
