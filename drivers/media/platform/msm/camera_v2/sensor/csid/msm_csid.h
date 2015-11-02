@@ -19,9 +19,11 @@
 #include <media/v4l2-subdev.h>
 #include <media/msm_cam_sensor.h>
 #include "msm_sd.h"
-/* LGE_CHANGE_S [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk*/
+/*                                                                                                                    */
 #include <linux/wakelock.h>
-/* LGE_CHANGE_E [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
+
+#define CSID_NUM_CLK_MAX  16
 
 enum msm_csid_state_t {
 	CSID_POWER_UP,
@@ -41,10 +43,10 @@ struct csid_device {
 	uint32_t hw_version;
 	enum msm_csid_state_t csid_state;
 
-	struct clk *csid_clk[11];
-/* LGE_CHANGE_S [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	struct wake_lock        csid_wake_lock;
-/* LGE_CHANGE_E [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
+	struct clk *csid_clk[CSID_NUM_CLK_MAX];
 };
 
 #define VIDIOC_MSM_CSID_RELEASE \

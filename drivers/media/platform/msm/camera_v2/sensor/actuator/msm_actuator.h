@@ -1,4 +1,4 @@
-/* Copyright (c) 2011-2013, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011-2014, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -18,19 +18,26 @@
 #include <media/v4l2-subdev.h>
 #include <media/msmb_camera.h>
 #include "msm_camera_i2c.h"
-/* LGE_CHANGE_S [20130622][youngbae.choi@lge.com] : To enter the deep sleep after finish camera close */
-#include <linux/wakelock.h>
-/* LGE_CHANGE_E [20130622][youngbae.choi@lge.com] : To enter the deep sleep after finish camera close */
+#include "msm_camera_dt_util.h"
+#include "msm_camera_io_util.h"
+
 
 #define DEFINE_MSM_MUTEX(mutexname) \
 	static struct mutex mutexname = __MUTEX_INITIALIZER(mutexname)
 
-/* LGE_CHANGE_S Exception Lens Pos Default Infinity only enter moment, seongjo.kim@lge.com, 2013-06-23 */
+/*                                                                                                     */
 #define CAMERA_ENTER_MOMENT                      1
 #define CAMERA_ENTER_MOMENT_AFTER                2
 static int current_moment;
-/* LGE_CHANGE_E Exception Lens Pos Default Infinity only enter moment, seongjo.kim@lge.com, 2013-06-23 */
+/*                                                                                                     */
+#define	MSM_ACTUATOT_MAX_VREGS (10)
+
 struct msm_actuator_ctrl_t;
+
+enum msm_actuator_state_t {
+	ACTUATOR_POWER_DOWN,
+	ACTUATOR_POWER_UP,
+};
 
 struct msm_actuator_func_tbl {
 	int32_t (*actuator_i2c_write_b_af)(struct msm_actuator_ctrl_t *,
@@ -39,7 +46,7 @@ struct msm_actuator_func_tbl {
 	int32_t (*actuator_init_step_table)(struct msm_actuator_ctrl_t *,
 		struct msm_actuator_set_info_t *);
 	int32_t (*actuator_init_focus)(struct msm_actuator_ctrl_t *,
-		uint16_t, enum msm_actuator_data_type, struct reg_settings_t *);
+		uint16_t, struct reg_settings_t *);
 	int32_t (*actuator_set_default_focus) (struct msm_actuator_ctrl_t *,
 			struct msm_actuator_move_params_t *);
 	int32_t (*actuator_move_focus) (struct msm_actuator_ctrl_t *,
@@ -58,6 +65,12 @@ struct msm_actuator_func_tbl {
 struct msm_actuator {
 	enum actuator_type act_type;
 	struct msm_actuator_func_tbl func_tbl;
+};
+
+struct msm_actuator_vreg {
+	struct camera_vreg_t *cam_vreg;
+	void *data[MSM_ACTUATOT_MAX_VREGS];
+	int num_vreg;
 };
 
 struct msm_actuator_ctrl_t {
@@ -91,9 +104,8 @@ struct msm_actuator_ctrl_t {
 	uint16_t i2c_tbl_index;
 	enum cci_i2c_master_t cci_master;
 	uint32_t subdev_id;
-/* LGE_CHANGE_S [20130622][youngbae.choi@lge.com] : To enter the deep sleep after finish camera close */
-	struct wake_lock        camera_wake_lock;
-/* LGE_CHANGE_E [20130622][youngbae.choi@lge.com] : To enter the deep sleep after finish camera close */
+	struct msm_actuator_vreg vreg_cfg;
+	enum msm_actuator_state_t actuator_state;
 };
 
 #endif

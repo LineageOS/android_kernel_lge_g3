@@ -192,8 +192,8 @@ struct msm_gpio_set_tbl {
  *  Fix the maximum count to use the msm_sensor_power_seq_gpio_t
  */
 struct msm_camera_gpio_num_info {
-	uint16_t gpio_num[12]; //youngil.yun@lge.com, 2013-10-29 : must check the SENSOR_GPIO_MAX in msm_cam_sensor.h
-//	uint16_t gpio_num[8];
+	uint16_t gpio_num[13]; //youngil.yun@lge.com, 2013-10-29 : must check the SENSOR_GPIO_MAX in msm_cam_sensor.h
+	uint8_t valid[13];
 };
 
 struct msm_camera_gpio_conf {
