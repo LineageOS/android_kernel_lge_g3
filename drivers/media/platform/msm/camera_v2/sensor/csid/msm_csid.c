@@ -13,6 +13,7 @@
 #include <linux/delay.h>
 #include <linux/module.h>
 #include <linux/of.h>
+#include <linux/ratelimit.h>
 #include <linux/irqreturn.h>
 #include "msm_csid.h"
 #include "msm_csid_hwreg.h"
@@ -94,7 +95,7 @@ static void msm_csid_set_debug_reg(void __iomem *csidbase,
 static void msm_csid_reset(struct csid_device *csid_dev)
 {
 	msm_camera_io_w(CSID_RST_STB_ALL, csid_dev->base + CSID_RST_CMD_ADDR);
-	wait_for_completion_interruptible(&csid_dev->reset_complete);
+	wait_for_completion(&csid_dev->reset_complete);
 	return;
 }
 
@@ -333,9 +334,9 @@ static int msm_csid_init(struct csid_device *csid_dev, uint32_t *csid_version)
 
 	msm_csid_reset(csid_dev);
 	csid_dev->csid_state = CSID_POWER_UP;
-/* LGE_CHANGE_S [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	wake_lock_timeout(&csid_dev->csid_wake_lock, 2*HZ);
-/* LGE_CHANGE_E [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	return rc;
 
 clk_enable_failed:
@@ -367,9 +368,9 @@ vreg_config_failed:
 static int msm_csid_release(struct csid_device *csid_dev)
 {
 	uint32_t irq;
-/* LGE_CHANGE_S [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	wake_unlock(&csid_dev->csid_wake_lock);
-/* LGE_CHANGE_E [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 
 	if (csid_dev->csid_state != CSID_POWER_UP) {
 		pr_err("%s: csid invalid state %d\n", __func__,
@@ -462,9 +463,8 @@ static long msm_csid_cmd(struct csid_device *csid_dev, void *arg)
 			break;
 		}
 		for (i = 0; i < csid_params.lut_params.num_cid; i++) {
-			vc_cfg = kzalloc(csid_params.lut_params.num_cid *
-				sizeof(struct msm_camera_csid_vc_cfg),
-				GFP_KERNEL);
+			vc_cfg = kzalloc(sizeof(struct msm_camera_csid_vc_cfg),
+			    GFP_KERNEL);
 			if (!vc_cfg) {
 				pr_err("%s: %d failed\n", __func__, __LINE__);
 				for (i--; i >= 0; i--)
@@ -474,8 +474,7 @@ static long msm_csid_cmd(struct csid_device *csid_dev, void *arg)
 			}
 			if (copy_from_user(vc_cfg,
 				(void *)csid_params.lut_params.vc_cfg[i],
-				(csid_params.lut_params.num_cid *
-				sizeof(struct msm_camera_csid_vc_cfg)))) {
+				sizeof(struct msm_camera_csid_vc_cfg))) {
 				pr_err("%s: %d failed\n", __func__, __LINE__);
 				kfree(vc_cfg);
 				for (i--; i >= 0; i--)
@@ -494,7 +493,7 @@ static long msm_csid_cmd(struct csid_device *csid_dev, void *arg)
 		rc = msm_csid_release(csid_dev);
 		break;
 	default:
-		pr_err("%s: %d failed\n", __func__, __LINE__);
+		pr_err_ratelimited("%s: %d failed\n", __func__, __LINE__);
 		rc = -ENOIOCTLCMD;
 		break;
 	}
@@ -642,9 +641,9 @@ static int __devinit csid_probe(struct platform_device *pdev)
 	}
 
 	new_csid_dev->csid_state = CSID_POWER_DOWN;
-/* LGE_CHANGE_S [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	wake_lock_init(&new_csid_dev->csid_wake_lock, WAKE_LOCK_SUSPEND, "csid_wake_lock");
-/* LGE_CHANGE_E [youngbae.choi@lge.com][20130625] : To enter the deep sleep after finish camera open , for google talk */
+/*                                                                                                                     */
 	return 0;
 
 csid_no_resource:

@@ -16,9 +16,9 @@
 #define IMX208_SENSOR_NAME "imx208"
 DEFINE_MSM_MUTEX(imx208_mut);
 
-// LGE_CHNAGE_S sungsik.kim 2013/04/07 {
+//                                      
 #define CONFIG_IMX208_DEBUG
-// LGE_CHNAGE_E sungsik.kim 2013/04/07 }
+//                                      
 
 #undef CDBG
 #ifdef CONFIG_IMX208_DEBUG
@@ -71,6 +71,69 @@ static struct msm_sensor_power_setting imx208_power_setting_rev_b[] = {
 		.seq_val = 0,
 		.config_val = 0,
 		.delay = 10,
+	},
+};
+#elif defined(CONFIG_MACH_MSM8974_TIGERS_KR) || defined(CONFIG_MACH_MSM8974_B1_KR) || defined(CONFIG_MACH_MSM8974_B1W)
+static struct msm_sensor_power_setting imx208_power_setting_rev_b[] = {
+	{  /* Set GPIO_RESET to low to disable power on reset*/
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_RESET,
+		.config_val = GPIO_OUT_LOW,
+		.delay = 1,
+	},
+#if defined(CONFIG_MACH_MSM8974_TIGERS_KR)
+	{
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_VDIG,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+#else
+	{										//VDIG, PMIC_GPIO 10
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_VANA,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+#endif
+	{
+		.seq_type = SENSOR_VREG,
+		.seq_val = CAM_VIO,
+		.config_val = 0,
+		.delay = 0,
+	},
+#if defined(CONFIG_MACH_MSM8974_TIGERS_KR)
+	{
+		.seq_type = SENSOR_VREG,
+		.seq_val = CAM_VANA,
+		.config_val = 0,
+		.delay = 1,
+	},
+#else
+	{
+		.seq_type = SENSOR_VREG,
+		.seq_val = CAM_VDIG,
+		.config_val = 0,
+		.delay = 1,
+	},
+#endif
+	{
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_RESET,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 10,
+	},
+	{
+		.seq_type = SENSOR_CLK,
+		.seq_val = SENSOR_CAM_MCLK,
+		.config_val = 0,
+		.delay = 30,
+	},
+	{
+		.seq_type = SENSOR_I2C_MUX,
+		.seq_val = 0,
+		.config_val = 0,
+		.delay = 0,
 	},
 };
 #else
@@ -218,15 +281,15 @@ static int32_t imx208_platform_probe(struct platform_device *pdev)
 	const struct of_device_id *match;
 	CDBG("%s E\n", __func__);
 	match = of_match_device(imx208_dt_match, &pdev->dev);
-	
-/* LGE_CHANGE_S : WBT, 2013-5-31, jonghwan.ko@lge.com */
+
+/*                                                    */
 	if(!match)
 	{
 		pr_err(" %s failed ",__func__);
 	      return -ENODEV;
 	}
-/* LGE_CHANGE_E : WBT, 2013-5-31, jonghwan.ko@lge.com */
-	      
+/*                                                    */
+
 	rc = msm_sensor_platform_probe(pdev, match->data);
 	CDBG("%s: X, rc = %d\n", __func__, rc);
 	return rc;
@@ -251,6 +314,13 @@ static int __init imx208_init_module(void)
 				break;
 		}
 #endif
+
+#if defined(CONFIG_MACH_MSM8974_TIGERS_KR) || defined(CONFIG_MACH_MSM8974_B1_KR) || defined(CONFIG_MACH_MSM8974_B1W)
+		CDBG("%s: Sensor power is set for B1\n", __func__);
+		imx208_s_ctrl.power_setting_array.power_setting = imx208_power_setting_rev_b;
+		imx208_s_ctrl.power_setting_array.size = ARRAY_SIZE(imx208_power_setting_rev_b);
+#endif
+
 	rc = platform_driver_probe(&imx208_platform_driver,
 		imx208_platform_probe);
 	if (!rc) {

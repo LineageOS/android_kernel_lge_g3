@@ -254,7 +254,8 @@ int fuji_ois_init_cmd(int limit, int ver)
 		RegWriteA(0x609D,0xFFFF & (uint16_t)gyro_signed_offset_y);	
 
 		RegWriteA(0x6023, 0x04);
-		usleep(200000); /* wait 200ms */
+		pr_info("%s done\n", __func__);
+		usleep(50000); /* wait 50ms */
 
 		break;
 	}
@@ -675,5 +676,3 @@ void fuji_ois_init(struct msm_ois_ctrl_t *msm_ois_t)
     fuji_ois_func_tbl.ois_cur_mode = OIS_MODE_CENTERING_ONLY;
 	msm_ois_t->ois_func_tbl = &fuji_ois_func_tbl;
 }
-
-
