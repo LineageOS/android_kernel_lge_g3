@@ -2202,9 +2202,35 @@ static ssize_t store_lpwg_notify(struct i2c_client *client,
 	return count;
 }
 
-static ssize_t show_lpwg_notify(struct i2c_client *client, char *buf)
+/* Sysfs - tap_to_wake (Low Power Wake-up Gesture Compatibility device)
+ *
+ * write
+ * 0 : DISABLE
+ * 1 : ENABLE
+ */
+static ssize_t store_tap_to_wake(struct i2c_client *client, const char *buf, size_t count)
 {
-	return sprintf(buf, "%d\n", lpwg_status);
+    struct lge_touch_data *ts = i2c_get_clientdata(client);
+    int status = 0;
+
+    sscanf(buf, "%d", &status);
+
+    if (touch_device_func->lpwg) {
+        mutex_lock(&ts->thread_lock);
+
+        TOUCH_DEBUG(DEBUG_BASE_INFO, "TAP2WAKE: %s\n", (status) ? "Enabled" : "Disabled");
+        touch_device_func->lpwg(client, LPWG_ENABLE, status, NULL);
+        lpwg_status = status;
+
+        mutex_unlock(&ts->thread_lock);
+    }
+
+    return count;
+}
+
+static ssize_t show_tap_to_wake(struct i2c_client *client, char *buf)
+{
+    return sprintf(buf, "%d\n", lpwg_status);
 }
 
 /* store_keyguard_info
@@ -2407,7 +2433,8 @@ static LGE_TOUCH_ATTR(notify, S_IRUGO | S_IWUSR, show_notify, store_notify);
 static LGE_TOUCH_ATTR(fw_upgrade, S_IRUGO | S_IWUSR, show_upgrade, store_upgrade);
 static LGE_TOUCH_ATTR(lpwg_data,
 		S_IRUGO | S_IWUSR, show_lpwg_data, store_lpwg_data);
-static LGE_TOUCH_ATTR(lpwg_notify, S_IRUGO | S_IWUSR, show_lpwg_notify, store_lpwg_notify);
+static LGE_TOUCH_ATTR(lpwg_notify, S_IRUGO | S_IWUSR, NULL, store_lpwg_notify);
+static LGE_TOUCH_ATTR(tap_to_wake, S_IRUGO | S_IWUSR, show_tap_to_wake, store_tap_to_wake);
 static LGE_TOUCH_ATTR(keyguard, S_IRUGO | S_IWUSR, NULL, store_keyguard_info);
 static LGE_TOUCH_ATTR(ime_status, S_IRUGO | S_IWUSR, show_ime_drumming_status, store_ime_drumming_status);
 static LGE_TOUCH_ATTR(quick_cover_status, S_IRUGO | S_IWUSR, NULL, store_quick_cover_status);
@@ -2425,6 +2452,7 @@ static struct attribute *lge_touch_attribute_list[] = {
 	&lge_touch_attr_fw_upgrade.attr,
 	&lge_touch_attr_lpwg_data.attr,
 	&lge_touch_attr_lpwg_notify.attr,
+	&lge_touch_attr_tap_to_wake.attr,
 	&lge_touch_attr_keyguard.attr,
 	&lge_touch_attr_ime_status.attr,
 	&lge_touch_attr_quick_cover_status.attr,
