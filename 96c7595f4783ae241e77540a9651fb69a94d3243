@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f2f7f8d_f645a018",
+        "filename": "arch/arm/mach-msm/mpm-of.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 3081
+      },
+      "writtenOn": "2015-11-14T19:29:49Z",
+      "side": 1,
+      "message": "Wut? That would completely bypass waiting. Here the return value MUST always be checked.",
+      "range": {
+        "startLine": 618,
+        "startChar": 2,
+        "endLine": 618,
+        "endChar": 35
+      },
+      "revId": "96c7595f4783ae241e77540a9651fb69a94d3243",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_d64aa425",
+        "filename": "arch/arm/mach-msm/rpm-smd.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 853,
+      "author": {
+        "id": 3081
+      },
+      "writtenOn": "2015-11-14T19:29:49Z",
+      "side": 1,
+      "message": "Same as in mpm-of.c.",
+      "range": {
+        "startLine": 853,
+        "startChar": 0,
+        "endLine": 853,
+        "endChar": 49
+      },
+      "revId": "96c7595f4783ae241e77540a9651fb69a94d3243",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_363c4892",
+        "filename": "drivers/thermal/msm_thermal.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 907,
+      "author": {
+        "id": 3081
+      },
+      "writtenOn": "2015-11-14T19:29:49Z",
+      "side": 1,
+      "message": "Same as in mpm-of.c.",
+      "range": {
+        "startLine": 907,
+        "startChar": 2,
+        "endLine": 907,
+        "endChar": 35
+      },
+      "revId": "96c7595f4783ae241e77540a9651fb69a94d3243",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f2f7f8d_16414c0c",
+        "filename": "drivers/thermal/msm_thermal.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 1349,
+      "author": {
+        "id": 3081
+      },
+      "writtenOn": "2015-11-14T19:29:49Z",
+      "side": 1,
+      "message": "Same as in mpm-of.c.",
+      "range": {
+        "startLine": 1349,
+        "startChar": 2,
+        "endLine": 1349,
+        "endChar": 35
+      },
+      "revId": "96c7595f4783ae241e77540a9651fb69a94d3243",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
