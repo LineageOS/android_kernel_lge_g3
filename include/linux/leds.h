@@ -31,6 +31,9 @@ enum led_brightness {
 struct led_classdev {
 	const char		*name;
 	int			 brightness;
+#ifdef CONFIG_LGE_DUAL_LED
+	int			 brightness2;
+#endif
 	int			 max_brightness;
 	int			 flags;
 
@@ -43,6 +46,10 @@ struct led_classdev {
 	/* Must not sleep, use a workqueue if needed */
 	void		(*brightness_set)(struct led_classdev *led_cdev,
 					  enum led_brightness brightness);
+#ifdef CONFIG_LGE_DUAL_LED
+	void		(*brightness_set2)(struct led_classdev *led_cdev,
+					  enum led_brightness brightness, enum led_brightness brightness2);
+#endif
 	/* Get LED brightness level */
 	enum led_brightness (*brightness_get)(struct led_classdev *led_cdev);
 
@@ -112,6 +119,11 @@ extern void led_blink_set(struct led_classdev *led_cdev,
 extern void led_brightness_set(struct led_classdev *led_cdev,
 			       enum led_brightness brightness);
 
+#ifdef CONFIG_LGE_DUAL_LED
+extern void led_brightness_set2(struct led_classdev *led_cdev,
+			       enum led_brightness brightness, enum led_brightness brightness2);
+#endif
+
 /*
  * LED Triggers
  */
@@ -145,6 +157,10 @@ extern void led_trigger_register_simple(const char *name,
 extern void led_trigger_unregister_simple(struct led_trigger *trigger);
 extern void led_trigger_event(struct led_trigger *trigger,
 				enum led_brightness event);
+#ifdef CONFIG_LGE_DUAL_LED
+extern void led_trigger_event2(struct led_trigger *trigger,
+				enum led_brightness event, enum led_brightness event2);
+#endif
 extern void led_trigger_blink(struct led_trigger *trigger,
 			      unsigned long *delay_on,
 			      unsigned long *delay_off);
@@ -157,6 +173,9 @@ extern void led_trigger_blink(struct led_trigger *trigger,
 #define led_trigger_register_simple(x, y) do {} while(0)
 #define led_trigger_unregister_simple(x) do {} while(0)
 #define led_trigger_event(x, y) do {} while(0)
+#ifdef CONFIG_LGE_DUAL_LED
+#define led_trigger_event2(x, y, z) do {} while(0)
+#endif
 
 #endif
 

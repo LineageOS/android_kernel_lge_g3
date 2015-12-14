@@ -665,8 +665,13 @@ static long venc_set_input_buffer(struct v4l2_subdev *sd, void *arg)
 
 	mregion = kzalloc(sizeof(*mregion), GFP_KERNEL);
 	planes = kzalloc(sizeof(*planes) * inst->num_input_planes, GFP_KERNEL);
-	if (!mregion || !planes)
+	if (!mregion || !planes) {
+#ifdef CONFIG_MACH_LGE
+		if(mregion) kfree(mregion);
+		if(planes) kfree(planes);
+#endif
 		return -ENOMEM;
+	}
 
 	*mregion = *(struct mem_region *)arg;
 	populate_planes(planes, inst->num_input_planes,
@@ -876,6 +881,10 @@ static long venc_set_output_buffer(struct v4l2_subdev *sd, void *arg)
 
 	if (!mregion || !planes) {
 		WFD_MSG_ERR("Failed to allocate memory\n");
+#ifdef CONFIG_MACH_LGE
+		if(mregion) kfree(mregion);
+		if(planes) kfree(planes);
+#endif
 		goto venc_set_output_buffer_fail;
 	}
 
