@@ -52,9 +52,6 @@
 #ifdef WL_NAN
 #include <wl_cfgnan.h>
 #endif /* WL_NAN */
-#if defined(CONFIG_PRE_SELF_DIAGNOSIS)
-#include <soc/qcom/lge/board_lge.h>
-#endif
 
 /*
  * Android private command strings, PLEASE define new private commands here
@@ -1906,9 +1903,6 @@ int wl_android_wifi_on(struct net_device *dev)
 		} while (retry-- > 0);
 		if (ret != 0) {
 			DHD_ERROR(("\nfailed to power up wifi chip, max retry reached **\n\n"));
-#if defined(CONFIG_PRE_SELF_DIAGNOSIS)
-            lge_pre_self_diagnosis((char *) "platform", 15,(char *) "WIFI", "wifi on fail", 20010);
-#endif
 #if defined(CONFIG_CHECK_CPU)
             lge_fac_check_cpu((char *) "platform", 15,(char *) "WIFI", "wifi on fail", 20010);
 #endif

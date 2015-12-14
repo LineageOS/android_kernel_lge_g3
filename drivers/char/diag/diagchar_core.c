@@ -1450,6 +1450,7 @@ exit:
 			flush_workqueue(driver->smd_data[i].wq);
 		wake_up(&driver->smd_wait_q);
 	}
+
 	return ret;
 }
 
@@ -1462,6 +1463,7 @@ static int diagchar_write(struct file *file, const char __user *buf,
 #ifdef DIAG_DEBUG
 	int length = 0, i;
 #endif
+
 	struct diag_send_desc_type send = { NULL, NULL, DIAG_STATE_START, 0 };
 	struct diag_hdlc_dest_type enc = { NULL, NULL, 0 };
 	void *buf_copy = NULL;
@@ -1497,6 +1499,7 @@ static int diagchar_write(struct file *file, const char __user *buf,
 		return -EIO;
 	}
 #endif /* DIAG over USB */
+
 	if (pkt_type == DCI_DATA_TYPE) {
 		user_space_data = diagmem_alloc(driver, payload_size,
 								POOL_TYPE_USER);
@@ -2054,8 +2057,13 @@ static int diagchar_setup_cdev(dev_t devno)
 		return -1;
 	}
 
+#ifndef CONFIG_MACH_LGE
 	driver->diag_dev = device_create(driver->diagchar_class, NULL, devno,
 					 (void *)driver, "diag");
+#else
+	driver->diag_dev = device_create(driver->diagchar_class, NULL, devno,
+					 (void *)driver, "diag_lge");
+#endif
 
 	if (!driver->diag_dev)
 		return -EIO;
