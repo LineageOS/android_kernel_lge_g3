@@ -891,6 +891,10 @@ static int diag_write_to_usb(struct usb_diag_ch *ch,
 }
 #endif
 
+#ifdef CONFIG_MACH_LGE
+extern int wait_mts_read_complete(void);
+#endif
+
 int diag_device_write(void *buf, int data_type, struct diag_request *write_ptr)
 {
 	int i, err = 0, index;
@@ -1018,6 +1022,9 @@ int diag_device_write(void *buf, int data_type, struct diag_request *write_ptr)
 					   " USB: ", 16, 1, DUMP_PREFIX_ADDRESS,
 					    buf, write_ptr->length, 1);
 #endif /* DIAG DEBUG */
+#ifdef CONFIG_MACH_LGE
+			if (!wait_mts_read_complete())
+#endif
 			err = diag_write_to_usb(driver->legacy_ch, write_ptr);
 		}
 #ifdef CONFIG_DIAG_SDIO_PIPE

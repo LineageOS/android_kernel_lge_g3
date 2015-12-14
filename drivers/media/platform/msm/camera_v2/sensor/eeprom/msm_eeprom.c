@@ -25,6 +25,11 @@
 #define CDBG(fmt, args...) pr_debug(fmt, ##args)
 #endif
 
+#ifdef CONFIG_MACH_LGE
+static struct class *camera_vendor_id_class = NULL;
+static int8_t main_sensor_id = -1;
+#endif
+
 DEFINE_MSM_MUTEX(msm_eeprom_mutex);
 
 
@@ -446,7 +451,11 @@ static struct msm_cam_clk_info cam_8960_clk_info[] = {
 };
 
 static struct msm_cam_clk_info cam_8974_clk_info[] = {
+#ifdef CONFIG_MACH_LGE
+	[SENSOR_CAM_MCLK] = {"cam_src_clk", 24000000},
+#else
 	[SENSOR_CAM_MCLK] = {"cam_src_clk", 19200000},
+#endif
 	[SENSOR_CAM_CLK] = {"cam_clk", 0},
 };
 
@@ -457,6 +466,45 @@ static struct v4l2_subdev_core_ops msm_eeprom_subdev_core_ops = {
 static struct v4l2_subdev_ops msm_eeprom_subdev_ops = {
 	.core = &msm_eeprom_subdev_core_ops,
 };
+
+#ifdef CONFIG_MACH_LGE
+static ssize_t show_LGCameraMainID(struct device *dev,struct device_attribute *attr, char *buf)
+{
+	pr_err("show_LGCameraMainID: main_camera_id [%d] \n", main_sensor_id);
+	switch (main_sensor_id) {
+		case 0x01:
+		case 0x02:
+		case 0x05:
+		case 0x06:
+		case 0x07:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "LGIT");
+	  case 0x03:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "Fujifilm");
+		case 0x04:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "Minolta");
+		case 0x10:
+		case 0x11:
+		case 0x12:
+		case 0x13:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "Cowell");
+		case 0x14:
+		case 0x15:
+		case 0x16:
+		case 0x17:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "IM-tech");
+		case 0x20:
+		case 0x21:
+		case 0x22:
+		case 0x23:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "Sunny");
+		default:
+			return sprintf(buf, "id:0x%x, %s\n", main_sensor_id, "Reserved for future");
+	}
+
+}
+
+static DEVICE_ATTR(vendor_id, S_IRUGO, show_LGCameraMainID, NULL);
+#endif
 
 static int msm_eeprom_i2c_probe(struct i2c_client *client,
 			 const struct i2c_device_id *id)
@@ -904,6 +952,130 @@ static int msm_eeprom_spi_remove(struct spi_device *sdev)
 	return 0;
 }
 
+#ifdef CONFIG_MACH_LGE
+static int verify_eeprom_data(struct msm_eeprom_ctrl_t *e_ctrl)
+{
+	int k, r_g, b_g, g_g;
+	int awb_checksum, lsc_checksum_5k, lsc_checksum_4k;
+	int lsc_datasum_5k, lsc_datasum_4k, lsc_cal_5k, lsc_cal_4k;
+	int32_t rc = -EFAULT;
+
+	lsc_datasum_5k = 0;
+	lsc_datasum_4k = 0;
+	lsc_cal_5k = 0;
+	lsc_cal_4k = 0;
+
+	if(e_ctrl->cal_data.mapdata[0x0700] == 0x03) { /* FUJI module */
+		r_g =  (e_ctrl->cal_data.mapdata[0x0000]*256) + e_ctrl->cal_data.mapdata[0x0001];
+		b_g = (e_ctrl->cal_data.mapdata[0x0002]*256) + e_ctrl->cal_data.mapdata[0x0003];
+		g_g = (e_ctrl->cal_data.mapdata[0x0004]*256) + e_ctrl->cal_data.mapdata[0x0005];
+		awb_checksum = (e_ctrl->cal_data.mapdata[0x0006]*256) + e_ctrl->cal_data.mapdata[0x0007];
+	} else if (e_ctrl->cal_data.mapdata[0x0770] == 0xff) { /* IMX219 module */
+		r_g = TRUE; b_g = TRUE;  g_g =  TRUE;
+		awb_checksum = (r_g+b_g+g_g);
+	} else {
+		r_g =  (e_ctrl->cal_data.mapdata[0x0001]*256) + e_ctrl->cal_data.mapdata[0x0000];
+		b_g = (e_ctrl->cal_data.mapdata[0x0003]*256) + e_ctrl->cal_data.mapdata[0x0002];
+		g_g = (e_ctrl->cal_data.mapdata[0x0005]*256) + e_ctrl->cal_data.mapdata[0x0004];
+		awb_checksum = (e_ctrl->cal_data.mapdata[0x0006]*256) + e_ctrl->cal_data.mapdata[0x0007];
+	}
+
+	for (k = 0; k < (17 * 13 * 4); k++) {
+		lsc_datasum_5k += e_ctrl->cal_data.mapdata[0x000C+k];
+		lsc_cal_5k = lsc_datasum_5k & 0xffff;
+	}
+
+	for (k = 0; k < (17 * 13 * 4); k++) {
+		lsc_datasum_4k += (e_ctrl->cal_data.mapdata[0x038A+k]);
+		lsc_cal_4k = lsc_datasum_4k & 0xffff;
+	}
+
+	lsc_checksum_5k = (e_ctrl->cal_data.mapdata[0x0380]*256) + e_ctrl->cal_data.mapdata[0x0381];
+	lsc_checksum_4k = (e_ctrl->cal_data.mapdata[0x06FE]*256) + e_ctrl->cal_data.mapdata[0x06FF];
+
+	if(((r_g + b_g + g_g) == awb_checksum)
+	   && (lsc_cal_5k == lsc_checksum_5k) && (lsc_cal_4k == lsc_checksum_4k)){
+		pr_err("%s is passed!\n", __func__);
+		rc = 0;
+	} else {
+		pr_err("%s is failed!\n", __func__);
+		pr_err("r_g = %d, b_g = %d, g_g = %d, awb_checksum = %d\n", r_g, b_g, g_g, awb_checksum);
+		pr_err("lsc_cal_5k = %d, lsc_checksum_5k = %d\n", lsc_cal_5k, lsc_checksum_5k);
+		pr_err("lsc_cal_4k = %d, lsc_checksum_4k = %d\n", lsc_cal_4k, lsc_checksum_4k);
+	}
+
+	return rc;
+}
+
+static int32_t msm_eeprom_checksum_v0d(struct msm_eeprom_ctrl_t *e_ctrl) {
+	int k, awb_datasum_5k, awb_datasum_3k;
+	int awb_checksum_5k, lsc_checksum_5k, lsc_checksum_4k, awb_checksum_3k;
+	int lsc_datasum_5k, lsc_datasum_4k, lsc_cal_5k, lsc_cal_4k;
+	int32_t rc = -EFAULT;
+
+	lsc_datasum_5k = 0;
+	lsc_datasum_4k = 0;
+	lsc_cal_5k = 0;
+	lsc_cal_4k = 0;
+
+	awb_datasum_5k = 0;
+	for(k = 0; k < 0x06; k++) {
+		awb_datasum_5k += e_ctrl->cal_data.mapdata[k];
+	}
+	awb_checksum_5k = (e_ctrl->cal_data.mapdata[0x0007]*256) + e_ctrl->cal_data.mapdata[0x0006];
+
+	awb_datasum_3k = 0;
+	for(k = 0x382; k < 0x388; k++) {
+		awb_datasum_3k += e_ctrl->cal_data.mapdata[k];
+	}
+	awb_checksum_3k = (e_ctrl->cal_data.mapdata[0x389]*256) + e_ctrl->cal_data.mapdata[0x388];
+
+	for (k = 0x0c; k < 0x380; k++) {
+		lsc_datasum_5k += e_ctrl->cal_data.mapdata[k];
+		lsc_cal_5k = lsc_datasum_5k & 0xffff;
+	}
+
+	for (k = 0x38a; k < 0x6fe; k++) {
+		lsc_datasum_4k += (e_ctrl->cal_data.mapdata[k]);
+		lsc_cal_4k = lsc_datasum_4k & 0xffff;
+	}
+
+	lsc_checksum_5k = (e_ctrl->cal_data.mapdata[0x0381]*256) + e_ctrl->cal_data.mapdata[0x0380];
+	lsc_checksum_4k = (e_ctrl->cal_data.mapdata[0x06FF]*256) + e_ctrl->cal_data.mapdata[0x06FE];
+
+	pr_info("%s %d verify eeprom data, id = 0x%x, ver = 0x%x\n",
+	 __func__, __LINE__, e_ctrl->cal_data.mapdata[0x700], e_ctrl->cal_data.mapdata[0x770]);
+
+	if((awb_datasum_5k == awb_checksum_5k) && (awb_datasum_3k == awb_checksum_3k)
+	   && (lsc_cal_5k == lsc_checksum_5k) && (lsc_cal_4k == lsc_checksum_4k)){
+		rc = 0;
+	} else {
+		pr_err("awb_datasum_5k = %d, awb_checksum_5k = %d\n", awb_datasum_5k, awb_checksum_5k);
+		pr_err("awb_datasum_3k = %d, awb_checksum_3k = %d\n", awb_datasum_3k, awb_checksum_3k);
+		pr_err("lsc_datasum_5k = %d, lsc_cal_5k = %d, lsc_checksum_5k = %d\n", lsc_datasum_5k, lsc_cal_5k, lsc_checksum_5k);
+		pr_err("lsc_datasum_4k = %d, lsc_cal_4k = %d, lsc_checksum_4k = %d\n", lsc_datasum_4k, lsc_cal_4k, lsc_checksum_4k);
+	}
+
+	return rc;
+}
+
+static int32_t msm_eeprom_checksum(struct msm_eeprom_ctrl_t *e_ctrl) {
+	int32_t rc = -1;
+	uint8_t eeprom_ver= e_ctrl->cal_data.mapdata[0x770];
+
+	switch(eeprom_ver) {
+		case 0x0d:
+			rc = msm_eeprom_checksum_v0d(e_ctrl);
+			break;
+		default:
+			pr_info("eeprom ver = 0x%x\n", eeprom_ver);
+			rc = verify_eeprom_data(e_ctrl);
+			break;
+	}
+	return rc;
+}
+#endif
+
 static int msm_eeprom_platform_probe(struct platform_device *pdev)
 {
 	int rc = 0;
@@ -1022,17 +1194,41 @@ static int msm_eeprom_platform_probe(struct platform_device *pdev)
 		pr_err("failed rc %d\n", rc);
 		goto memdata_free;
 	}
+#ifndef CONFIG_MACH_LGE
 	rc = read_eeprom_memory(e_ctrl, &e_ctrl->cal_data);
 	if (rc < 0) {
 		pr_err("%s read_eeprom_memory failed\n", __func__);
 		goto power_down;
 	}
+#else
+	j = 3; //Retry cnt
+	do {
+		rc = read_eeprom_memory(e_ctrl, &e_ctrl->cal_data);
+		if (rc < 0) {
+			pr_err("%s read_eeprom_memory failed\n", __func__);
+			goto power_down;
+		}
+
+		if(!msm_eeprom_checksum(e_ctrl)) {
+			pr_err("%s: eeprom data checksum success!\n", __func__);
+			break;
+		} else {
+			pr_err("%s: eeprom data checksum failed!, retry_cnt = %d\n", __func__, j--);
+		}
+	} while(j);
+#endif
 	for (j = 0; j < e_ctrl->cal_data.num_data; j++)
 		CDBG("memory_data[%d] = 0x%X\n", j,
 		     e_ctrl->cal_data.mapdata[j]);
 
 	e_ctrl->is_supported |= msm_eeprom_match_crc(&e_ctrl->cal_data);
 
+#ifdef CONFIG_MACH_LGE
+	if (!strcmp("imx219", e_ctrl->eboard_info->eeprom_name)) {
+		main_sensor_id = 0x01;
+		pr_err("%s:main_sensor_id 0x%x\n", __func__, main_sensor_id);
+	}
+#endif
 	rc = msm_camera_power_down(power_info, e_ctrl->eeprom_device_type,
 		&e_ctrl->i2c_client);
 	if (rc) {
@@ -1139,18 +1335,30 @@ static struct spi_driver msm_eeprom_spi_driver = {
 static int __init msm_eeprom_init_module(void)
 {
 	int rc = 0;
+#ifdef CONFIG_MACH_LGE
+	struct device*	camera_vendor_id_dev;
+#endif
 	CDBG("%s E\n", __func__);
 	rc = platform_driver_probe(&msm_eeprom_platform_driver,
 		msm_eeprom_platform_probe);
 	CDBG("%s:%d platform rc %d\n", __func__, __LINE__, rc);
 	rc = spi_register_driver(&msm_eeprom_spi_driver);
 	CDBG("%s:%d spi rc %d\n", __func__, __LINE__, rc);
+#ifdef CONFIG_MACH_LGE
+	camera_vendor_id_class = class_create(THIS_MODULE, "camera");
+	camera_vendor_id_dev = device_create(camera_vendor_id_class, NULL,
+	0, NULL, "vendor_id");
+	device_create_file(camera_vendor_id_dev, &dev_attr_vendor_id);
+#endif
 	return i2c_add_driver(&msm_eeprom_i2c_driver);
 }
 
 static void __exit msm_eeprom_exit_module(void)
 {
 	platform_driver_unregister(&msm_eeprom_platform_driver);
+#ifdef CONFIG_MACH_LGE
+	class_destroy(camera_vendor_id_class);
+#endif
 	spi_unregister_driver(&msm_eeprom_spi_driver);
 	i2c_del_driver(&msm_eeprom_i2c_driver);
 }
