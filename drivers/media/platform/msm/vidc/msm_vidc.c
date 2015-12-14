@@ -794,6 +794,9 @@ int msm_vidc_release_buffers(void *instance, int buffer_type)
 				buffer_info.m.planes[0].reserved[0],
 				buffer_info.m.planes[0].reserved[1],
 				buffer_info.m.planes[0].length);
+#ifdef CONFIG_MACH_LGE
+			return rc;
+#endif
 	}
 
 free_and_unmap:

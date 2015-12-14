@@ -177,6 +177,9 @@ config SND_SOC_ALC5632
 config SND_SOC_CQ0093VC
 	tristate
 
+config SND_SOC_CS35L32
+	tristate
+
 config SND_SOC_CS42L51
 	tristate
 
@@ -447,6 +450,9 @@ config SND_SOC_LM4857
 	tristate
 
 config SND_SOC_MAX9877
+	tristate
+
+config SND_SOC_TPA2015D
 	tristate
 
 config SND_SOC_TPA6130A2

@@ -9,3 +9,5 @@ obj-$(CONFIG_DEVFREQ_GOV_MSM_CPUBW_HWMON)	+= governor_cpubw_hwmon.o
 
 # DEVFREQ Drivers
 obj-$(CONFIG_ARM_EXYNOS4_BUS_DEVFREQ)	+= exynos4_bus.o
+obj-$(CONFIG_LGE_DEVFREQ_DFPS)  += g3_display.o
+ccflags-$(CONFIG_LGE_DEVFREQ_DFPS) += -I$(srctree)/drivers/video/msm/mdss

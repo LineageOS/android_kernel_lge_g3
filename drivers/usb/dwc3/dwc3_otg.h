@@ -20,9 +20,24 @@
 #include <linux/power_supply.h>
 
 #include <linux/usb/otg.h>
+#if defined(CONFIG_LGE_PM) && defined(CONFIG_BQ24192_CHARGER)
+#include "../../base/power/power.h"
+#elif defined(CONFIG_LGE_PM) && defined(CONFIG_SMB349_CHARGER)
+#include "../../base/power/power.h"
+#elif defined(CONFIG_LGE_PM) && defined(CONFIG_CHARGER_MAX77819)
+#include "../../base/power/power.h"
+#elif defined(CONFIG_LGE_PM) && defined(CONFIG_BQ24296_CHARGER)
+#include "../../base/power/power.h"
+#else
 #include "power.h"
+#endif
 
 #define DWC3_IDEV_CHG_MAX 1500
+
+#ifdef CONFIG_LGE_PM
+#define DWC3_IDEV_CHG_PROPRIETARY_MAX 1000
+#define DWC3_USB30_CHG_CURRENT 900
+#endif
 
 struct dwc3_charger;
 
