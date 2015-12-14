@@ -4168,6 +4168,9 @@ static int wcd9xxx_init_and_calibrate(struct wcd9xxx_mbhc *mbhc)
 	/* Enable Mic Bias pull down and HPH Switch to GND */
 	snd_soc_update_bits(codec, mbhc->mbhc_bias_regs.ctl_reg, 0x01, 0x01);
 	snd_soc_update_bits(codec, WCD9XXX_A_MBHC_HPH, 0x01, 0x01);
+#ifdef CONFIG_SWITCH_MAX1462X
+	goto skip;
+#endif
 	INIT_WORK(&mbhc->correct_plug_swch, wcd9xxx_correct_swch_plug);
 
 	if (!IS_ERR_VALUE(ret)) {
@@ -4194,6 +4197,9 @@ static int wcd9xxx_init_and_calibrate(struct wcd9xxx_mbhc *mbhc)
 			wcd9xxx_insert_detect_setup(mbhc, true);
 		}
 	}
+#ifdef CONFIG_SWITCH_MAX1462X
+skip:
+#endif
 
 	pr_debug("%s: leave\n", __func__);
 
@@ -5026,6 +5032,9 @@ int wcd9xxx_mbhc_init(struct wcd9xxx_mbhc *mbhc, struct wcd9xxx_resmgr *resmgr,
 		impedance_detect_en = impedance_det_en ? 1 : 0;
 
 	core_res = mbhc->resmgr->core_res;
+#ifdef CONFIG_SWITCH_MAX1462X
+	goto skip;
+#endif
 	ret = wcd9xxx_request_irq(core_res, mbhc->intr_ids->insertion,
 				  wcd9xxx_hs_insert_irq,
 				  "Headset insert detect", mbhc);
@@ -5086,6 +5095,9 @@ int wcd9xxx_mbhc_init(struct wcd9xxx_mbhc *mbhc, struct wcd9xxx_resmgr *resmgr,
 	wcd9xxx_regmgr_cond_register(resmgr, 1 << WCD9XXX_COND_HPH_MIC |
 					     1 << WCD9XXX_COND_HPH);
 
+#ifdef CONFIG_SWITCH_MAX1462X
+skip:
+#endif
 	pr_debug("%s: leave ret %d\n", __func__, ret);
 	return ret;
 

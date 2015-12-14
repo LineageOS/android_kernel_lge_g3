@@ -1,0 +1,24 @@
+#
+# Touchscreen driver configuration
+#
+
+menuconfig TOUCHSCREEN_SYNAPTICS_G3
+        bool "LGE CORE with Synaptics for G3"
+        help
+          This enables lge core with synaptics driver for g3
+
+config TOUCHSCREEN_SYNAPTICS_I2C_RMI4
+	tristate "Synaptics DSX I2C touchscreen"
+	depends on I2C
+	help
+	  Say Y here if you have a Synaptics DSX I2C touchscreen
+	  connected to your system.
+
+	  If unsure, say N.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called synaptics_i2c_rmi4.
+
+source "drivers/input/touchscreen/g3/DS5/Kconfig"
+
+source "drivers/input/touchscreen/g3/synaptics_dsx/Kconfig"
