@@ -190,3 +190,40 @@ usb_copy_descriptors(struct usb_descriptor_header **src)
 	return ret;
 }
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+int usb_assign_descriptors(struct usb_function *f,
+		struct usb_descriptor_header **fs,
+		struct usb_descriptor_header **hs,
+		struct usb_descriptor_header **ss)
+{
+	struct usb_gadget *g = f->config->cdev->gadget;
+
+	if (fs) {
+		f->descriptors = usb_copy_descriptors(fs);
+		if (!f->descriptors)
+			goto err;
+	}
+	if (hs && gadget_is_dualspeed(g)) {
+		f->hs_descriptors = usb_copy_descriptors(hs);
+		if (!f->hs_descriptors)
+			goto err;
+	}
+	if (ss && gadget_is_superspeed(g)) {
+		f->ss_descriptors = usb_copy_descriptors(ss);
+		if (!f->ss_descriptors)
+			goto err;
+	}
+	return 0;
+err:
+	usb_free_all_descriptors(f);
+	return -ENOMEM;
+}
+
+void usb_free_all_descriptors(struct usb_function *f)
+{
+	usb_free_descriptors(f->descriptors);
+	usb_free_descriptors(f->hs_descriptors);
+	if (f->ss_descriptors)
+		usb_free_descriptors(f->ss_descriptors);
+}
+#endif
