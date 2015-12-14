@@ -671,6 +671,7 @@ bool pm_wakeup_pending(void)
 		events_check_enabled = !ret;
 	}
 	spin_unlock_irqrestore(&events_lock, flags);
+
 	return ret;
 }
 
@@ -801,7 +802,6 @@ static int print_wakeup_source_stats(struct seq_file *m,
 	} else {
 		active_time = ktime_set(0, 0);
 	}
-
 	ret = seq_printf(m, "%-12s\t%lu\t\t%lu\t\t%lu\t\t%lu\t\t"
 			"%lld\t\t%lld\t\t%lld\t\t%lld\t\t%lld\n",
 			ws->name, active_count, ws->event_count,
@@ -852,6 +852,7 @@ static int __init wakeup_sources_debugfs_init(void)
 {
 	wakeup_sources_stats_dentry = debugfs_create_file("wakeup_sources",
 			S_IRUGO, NULL, NULL, &wakeup_sources_stats_fops);
+
 	return 0;
 }
 

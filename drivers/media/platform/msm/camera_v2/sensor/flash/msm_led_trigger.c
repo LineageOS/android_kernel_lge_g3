@@ -45,6 +45,7 @@ static int32_t msm_led_trigger_get_subdev_id(struct msm_led_flash_ctrl_t *fctrl,
 	return 0;
 }
 
+#ifndef CONFIG_LGE_DUAL_LED
 static int32_t msm_led_trigger_config(struct msm_led_flash_ctrl_t *fctrl,
 	void *data)
 {
@@ -119,6 +120,104 @@ static int32_t msm_led_trigger_config(struct msm_led_flash_ctrl_t *fctrl,
 	CDBG("flash_set_led_state: return %d\n", rc);
 	return rc;
 }
+#else
+static int32_t msm_led_trigger_config(struct msm_led_flash_ctrl_t *fctrl,
+	void *data)
+{
+	int rc = 0;
+	struct msm_camera_led_cfg_t *cfg = (struct msm_camera_led_cfg_t *)data;
+	uint32_t i;
+	uint32_t curr_l, max_curr_l;
+	uint32_t torch_curr[2] = {0};
+
+	pr_info("called led_state %d, values %d, %d\n",
+		cfg->cfgtype, cfg->flash_current[0], cfg->flash_current[1]);
+
+	if (!fctrl) {
+		pr_err("failed\n");
+		return -EINVAL;
+	}
+
+	switch (cfg->cfgtype) {
+	case MSM_CAMERA_LED_OFF:
+		for (i = 0; i < fctrl->num_sources; i++)
+			if (fctrl->flash_trigger[i])
+				led_trigger_event(fctrl->flash_trigger[i], 0);
+		if (fctrl->torch_trigger)
+			led_trigger_event2(fctrl->torch_trigger, 0, 0);
+		break;
+
+	case MSM_CAMERA_LED_LOW:
+		if (fctrl->torch_trigger) {
+			max_curr_l = fctrl->torch_max_current;
+			for(i = 0; i < fctrl->num_sources; i++) {
+				if (cfg->flash_current[i] > 0 &&
+						cfg->flash_current[i] <= max_curr_l) {
+					torch_curr[i] = cfg->flash_current[i];
+				} else {
+					torch_curr[i] = fctrl->torch_op_current;
+					pr_err("LED %d current clamped to %d\n",
+						i, torch_curr[i]);
+				}
+			}
+			led_trigger_event2(fctrl->torch_trigger,
+				torch_curr[1], torch_curr[0]);
+		}
+		break;
+	case MSM_CAMERA_LED_TORCH:
+		if (fctrl->torch_trigger) {
+			max_curr_l = fctrl->torch_max_current;
+			for(i = 0; i < fctrl->num_sources; i++) {
+				if (cfg->flash_current[i] > 0 &&
+						cfg->flash_current[i] <= max_curr_l) {
+					torch_curr[i] = cfg->flash_current[i];
+				} else {
+					torch_curr[i] = fctrl->torch_op_current;
+					pr_err("LED %d current clamped to %d\n",
+						i, torch_curr[i]);
+				}
+			}
+			led_trigger_event2(fctrl->torch_trigger,
+				torch_curr[1], torch_curr[0]);
+		}
+		break;
+
+	case MSM_CAMERA_LED_HIGH:
+		if (fctrl->torch_trigger)
+			led_trigger_event2(fctrl->torch_trigger, 0, 0);
+		for (i = 0; i < fctrl->num_sources; i++)
+			if (fctrl->flash_trigger[i]) {
+				max_curr_l = fctrl->flash_max_current[i];
+				if (cfg->flash_current[i] > 0 &&
+						cfg->flash_current[i] <= max_curr_l) {
+					curr_l = cfg->flash_current[i];
+				} else {
+					curr_l = fctrl->flash_op_current[i];
+					pr_err("LED %d current clamped to %d\n",
+						i, curr_l);
+				}
+				led_trigger_event(fctrl->flash_trigger[i],
+					curr_l);
+			}
+		break;
+
+	case MSM_CAMERA_LED_INIT:
+	case MSM_CAMERA_LED_RELEASE:
+		for (i = 0; i < fctrl->num_sources; i++)
+			if (fctrl->flash_trigger[i])
+				led_trigger_event(fctrl->flash_trigger[i], 0);
+		if (fctrl->torch_trigger)
+			led_trigger_event2(fctrl->torch_trigger, 0, 0);
+		break;
+
+	default:
+		rc = -EFAULT;
+		break;
+	}
+	CDBG("flash_set_led_state: return %d\n", rc);
+	return rc;
+}
+#endif
 
 static const struct of_device_id msm_led_trigger_dt_match[] = {
 	{.compatible = "qcom,camera-led-flash"},
