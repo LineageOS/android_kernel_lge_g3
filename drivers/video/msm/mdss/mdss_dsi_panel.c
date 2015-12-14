@@ -23,12 +23,49 @@
 #include <linux/err.h>
 
 #include "mdss_dsi.h"
+#ifdef CONFIG_MFD_TPS65132
+#include <linux/mfd/tps65132.h>
+#endif
+#ifdef CONFIG_LGE_SUPPORT_LCD_MAKER_ID
+#include <mach/board_lge.h>
+#include <linux/qpnp/qpnp-adc.h>
+#include <linux/err.h>
+#endif
 
 #define DT_CMD_HDR 6
 
+#ifdef CONFIG_MACH_LGE
+extern struct platform_device *of_find_device_by_node(struct device_node *np);
+static struct dsi_panel_cmds lge_ief_on_cmds;
+static struct dsi_panel_cmds lge_ief_off_cmds;
+struct mdss_panel_data *pdata_base;
+extern struct msm_fb_data_type *mfd_base;
+#include <mach/board_lge.h>
+#include "mdss_mdp.h"
+#endif
+
+#ifdef CONFIG_LGE_SUPPORT_LCD_MAKER_ID
+int g_mvol_for_lcd;
+
+lcd_maker_id get_panel_maker_id(void)
+{
+	lcd_maker_id maker_id = LCD_MAKER_MAX;
+	return maker_id;
+}
+EXPORT_SYMBOL(get_panel_maker_id);
+#endif
+
+#ifdef CONFIG_LGE_DEVFREQ_DFPS
+#define MIN_REFRESH_RATE 50
+#else
 #define MIN_REFRESH_RATE 30
+#endif
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
+#ifdef CONFIG_MACH_LGE_BACKLIGHT_SUPPORT
+#include <linux/backlight.h>
+static struct backlight_device *bl_dev;
+#endif
 
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
@@ -138,6 +175,10 @@ static void mdss_dsi_panel_cmds_send(struct mdss_dsi_ctrl_pdata *ctrl,
 	/*Panel ON/Off commands should be sent in DSI Low Power Mode*/
 	if (pcmds->link_state == DSI_LP_MODE)
 		cmdreq.flags  |= CMD_REQ_LP_MODE;
+#ifdef CONFIG_MACH_LGE
+	else if (pcmds->link_state == DSI_HS_MODE)
+		cmdreq.flags |= CMD_REQ_HS_MODE;
+#endif
 
 	cmdreq.rlen = 0;
 	cmdreq.cb = NULL;
@@ -168,6 +209,34 @@ static void mdss_dsi_panel_bklt_dcs(struct mdss_dsi_ctrl_pdata *ctrl, int level)
 
 	mdss_dsi_cmdlist_put(ctrl, &cmdreq);
 }
+#ifdef CONFIG_MACH_MSM8974_G3
+void mdss_dsi_panel_io(struct mdss_panel_data *pdata, int enable)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl_pdata = NULL;
+
+	if (pdata == NULL) {
+		pr_err("%s: Invalid input data\n", __func__);
+		return;
+	}
+
+	ctrl_pdata = container_of(pdata, struct mdss_dsi_ctrl_pdata,
+				panel_data);
+
+	if (!gpio_is_valid(ctrl_pdata->io_gpio)) {
+		pr_debug("%s:%d, io_gpio not configured\n",
+			   __func__, __LINE__);
+		return;
+	}
+
+	if (enable) {
+		if (gpio_is_valid(ctrl_pdata->io_gpio))
+			gpio_set_value((ctrl_pdata->io_gpio), 1);
+	} else
+		if (gpio_is_valid(ctrl_pdata->disp_en_gpio))
+			gpio_set_value((ctrl_pdata->io_gpio), 0);
+
+}
+#endif
 
 static int mdss_dsi_request_gpios(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 {
@@ -182,6 +251,19 @@ static int mdss_dsi_request_gpios(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 			goto disp_en_gpio_err;
 		}
 	}
+
+#ifdef CONFIG_MFD_TPS65132
+	if (ctrl_pdata->num_of_dsv_enable_pin > 1)
+		if (gpio_is_valid(ctrl_pdata->disp_en_gpio2)) {
+			rc = gpio_request(ctrl_pdata->disp_en_gpio2, "disp_enable2");
+			if (rc) {
+				pr_err("request disp_en2 gpio failed, rc=%d\n",
+						rc);
+				goto disp_en_gpio_err;
+			}
+		}
+#endif
+
 	rc = gpio_request(ctrl_pdata->rst_gpio, "disp_rst_n");
 	if (rc) {
 		pr_err("request reset gpio failed, rc=%d\n",
@@ -242,8 +324,33 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			return rc;
 		}
 		if (!pinfo->panel_power_on) {
+#ifdef CONFIG_MFD_TPS65132
+			if (gpio_is_valid(ctrl_pdata->disp_en_gpio)) {
+				gpio_set_value((ctrl_pdata->disp_en_gpio), 1);
+				if (ctrl_pdata->num_of_dsv_enable_pin >= 1) {
+					mdelay(1);
+					gpio_set_value((ctrl_pdata->disp_en_gpio), 0);
+					mdelay(5);
+					gpio_set_value((ctrl_pdata->disp_en_gpio), 1);
+					udelay(500);
+					rc = tps65132_regulate_voltage(0, 0);
+					if (rc)
+						pr_err("%s, DDVDH restore fail\n", __func__);
+
+					if (ctrl_pdata->num_of_dsv_enable_pin < 2) {
+						rc = tps65132_regulate_voltage(0, 1);
+						if (rc)
+							pr_err("%s, DDVDL restore fail\n", __func__);
+					}
+				}
+			}
+#else
 			if (gpio_is_valid(ctrl_pdata->disp_en_gpio))
 				gpio_set_value((ctrl_pdata->disp_en_gpio), 1);
+#endif
+#ifdef CONFIG_MACH_LGE
+			mdelay(5);
+#endif
 
 			for (i = 0; i < pdata->panel_info.rst_seq_len; ++i) {
 				gpio_set_value((ctrl_pdata->rst_gpio),
@@ -253,6 +360,21 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			}
 		}
 
+#ifdef CONFIG_MFD_TPS65132
+		if (ctrl_pdata->num_of_dsv_enable_pin == 2) {
+			if (gpio_is_valid(ctrl_pdata->disp_en_gpio2)) {
+				gpio_set_value((ctrl_pdata->disp_en_gpio2), 1);
+				mdelay(1);
+				gpio_set_value((ctrl_pdata->disp_en_gpio2), 0);
+				mdelay(5);
+				gpio_set_value((ctrl_pdata->disp_en_gpio2), 1);
+				udelay(500);
+			}
+			rc = tps65132_regulate_voltage(0, 1);
+			if (rc)
+				pr_err("%s, DDVDL restore fail\n", __func__);
+		}
+#endif
 		if (gpio_is_valid(ctrl_pdata->mode_gpio)) {
 			if (pinfo->mode_gpio_state == MODE_GPIO_HIGH)
 				gpio_set_value((ctrl_pdata->mode_gpio), 1);
@@ -266,12 +388,51 @@ int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable)
 			pr_debug("%s: Reset panel done\n", __func__);
 		}
 	} else {
+#ifdef CONFIG_MFD_TPS65132L
+		/*
+		 * TPS65132L chip needs I2C control before enable pin disabled.
+		 */
+		if (ctrl_pdata->num_of_dsv_enable_pin >= 1) {
+			rc = tps65132_regulate_voltage(1, 0);
+			if (rc)
+				pr_err("%s, DDVDH regulation fail\n", __func__);
+
+			rc = tps65132_regulate_voltage(1, 1);
+			if (rc)
+				pr_err("%s, DDVDL regulation fail\n", __func__);
+		}
+#endif
 		if (gpio_is_valid(ctrl_pdata->disp_en_gpio)) {
 			gpio_set_value((ctrl_pdata->disp_en_gpio), 0);
 			gpio_free(ctrl_pdata->disp_en_gpio);
 		}
+#ifdef CONFIG_MFD_TPS65132
+		if (ctrl_pdata->num_of_dsv_enable_pin >= 1) {
+			if (ctrl_pdata->num_of_dsv_enable_pin > 1)
+				if (gpio_is_valid(ctrl_pdata->disp_en_gpio2)) {
+					gpio_set_value((ctrl_pdata->disp_en_gpio2), 0);
+					gpio_free(ctrl_pdata->disp_en_gpio2);
+				}
+		#ifndef CONFIG_MFD_TPS65132L
+			rc = tps65132_regulate_voltage(1, 0);
+			if (rc)
+				pr_err("%s, DDVDH regulation fail\n", __func__);
+
+			rc = tps65132_regulate_voltage(1, 1);
+			if (rc)
+				pr_err("%s, DDVDL regulation fail\n", __func__);
+		#endif
+		}
+#endif
+#ifdef CONFIG_MACH_LGE
+		mdelay(25);
+#endif
 		gpio_set_value((ctrl_pdata->rst_gpio), 0);
 		gpio_free(ctrl_pdata->rst_gpio);
+#ifdef CONFIG_MACH_LGE
+		mdelay(10);
+#endif
+
 		if (gpio_is_valid(ctrl_pdata->mode_gpio))
 			gpio_free(ctrl_pdata->mode_gpio);
 	}
@@ -405,6 +566,19 @@ static void mdss_dsi_panel_bl_ctrl(struct mdss_panel_data *pdata,
 			mdss_dsi_panel_bklt_dcs(sctrl, bl_level);
 		}
 		break;
+#ifdef CONFIG_MACH_LGE_BACKLIGHT_SUPPORT
+	case BL_OTHERS:
+		if (!bl_dev)
+			bl_dev = get_backlight_device();
+
+		if (bl_dev) {
+			bl_dev->props.brightness = bl_level;
+			backlight_update_status(bl_dev);
+		} else {
+			pr_err("%s: There is no backlight_device.", __func__);
+		}
+		break;
+#endif
 	default:
 		pr_err("%s: Unknown bl_ctrl configuration\n",
 			__func__);
@@ -458,6 +632,84 @@ static int mdss_dsi_panel_off(struct mdss_panel_data *pdata)
 	pr_debug("%s:-\n", __func__);
 	return 0;
 }
+#ifdef CONFIG_MACH_LGE
+int mdss_dsi_panel_ief_off(void)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl = NULL;
+
+	if (pdata_base == NULL || mfd_base == NULL) {
+		pr_err("%s: Invalid input data\n", __func__);
+		return -EINVAL;
+	}
+
+	if (mfd_base->panel_power_on == 0) {
+		pr_err("%s: Panel is off\n", __func__);
+		return -EPERM;
+	}
+
+	ctrl = container_of(pdata_base, struct mdss_dsi_ctrl_pdata,	panel_data);
+
+	if (lge_ief_off_cmds.cmd_cnt) {
+		pr_info("sending IEF_OFF code\n");
+		mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_ON, false);
+		mdss_dsi_panel_cmds_send(ctrl, &lge_ief_off_cmds);
+		mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_OFF, false);
+	}
+
+	return 0;
+}
+EXPORT_SYMBOL(mdss_dsi_panel_ief_off);
+
+int mdss_dsi_panel_ief_on(void)
+{
+	struct mdss_dsi_ctrl_pdata *ctrl = NULL;
+	struct mdss_panel_data *pdata;
+
+	if (pdata_base == NULL || mfd_base == NULL) {
+		pr_err("%s: Invalid input data\n", __func__);
+		return -EINVAL;
+	}
+
+	if (mfd_base->panel_power_on == 0) {
+		pr_err("%s: Panel is off\n", __func__);
+		return -EPERM;
+	}
+
+	ctrl = container_of(pdata_base, struct mdss_dsi_ctrl_pdata,	panel_data);
+	pdata = &(ctrl->panel_data);
+
+	if (lge_ief_on_cmds.cmd_cnt) {
+		pr_info("sending IEF_ON cSode\n");
+		mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_ON, false);
+		mdss_dsi_panel_cmds_send(ctrl, &lge_ief_on_cmds);
+		mdss_mdp_clk_ctrl(MDP_BLOCK_POWER_OFF, false);
+	}
+
+	return 0;
+}
+EXPORT_SYMBOL(mdss_dsi_panel_ief_on);
+static ssize_t ief_on_off(struct device *dev,
+		struct device_attribute *attr,
+		const char *buf, size_t count)
+{
+	int on_off;
+
+	if (!count)
+		return -EINVAL;
+
+	on_off = simple_strtoul(buf, NULL, 10);
+
+	pr_debug("[LCD][DEBUG] %s, %d", __func__, on_off);
+
+	if (on_off == 0)
+		mdss_dsi_panel_ief_off();
+	else
+		mdss_dsi_panel_ief_on();
+
+	return count;
+}
+DEVICE_ATTR(ief_on_off, S_IWUSR, NULL, ief_on_off);
+#endif
 
 static void mdss_dsi_parse_lane_swap(struct device_node *np, char *dlane_swap)
 {
@@ -1083,6 +1335,10 @@ static int mdss_panel_parse_dt(struct device_node *np,
 		} else if (!strncmp(data, "bl_ctrl_dcs", 11)) {
 			ctrl_pdata->bklt_ctrl = BL_DCS_CMD;
 		}
+#ifdef CONFIG_MACH_LGE_BACKLIGHT_SUPPORT
+		else if (!strncmp(data, "bl_others", 9))
+			ctrl_pdata->bklt_ctrl = BL_OTHERS;
+#endif
 	}
 	rc = of_property_read_u32(np, "qcom,mdss-brightness-max-level", &tmp);
 	pinfo->brightness_max = (!rc ? tmp : MDSS_MAX_BL_BRIGHTNESS);
@@ -1165,6 +1421,10 @@ static int mdss_panel_parse_dt(struct device_node *np,
 	pinfo->mipi.data_lane3 = of_property_read_bool(np,
 		"qcom,mdss-dsi-lane-3-state");
 
+#ifdef CONFIG_MACH_LGE
+		rc = of_property_read_u32(np, "qcom,mdss-dsi-lane-hs", &tmp);
+		pinfo->mipi.force_clk_lane_hs = (!rc ? tmp : 0);
+#endif
 	rc = of_property_read_u32(np, "qcom,mdss-dsi-t-clk-pre", &tmp);
 	pinfo->mipi.t_clk_pre = (!rc ? tmp : 0x24);
 	rc = of_property_read_u32(np, "qcom,mdss-dsi-t-clk-post", &tmp);
@@ -1250,6 +1510,10 @@ static int mdss_panel_parse_dt(struct device_node *np,
 		goto error;
 	}
 
+#ifdef CONFIG_MACH_LGE
+	mdss_dsi_parse_dcs_cmds(np, &lge_ief_on_cmds, "qcom,panel-ief-on-cmds", "qcom,ief-on-dsi-state");
+	mdss_dsi_parse_dcs_cmds(np, &lge_ief_off_cmds, "qcom,panel-ief-off-cmds", "qcom,ief-off-dsi-state");
+#endif
 	mdss_dsi_parse_dfps_config(np, ctrl_pdata);
 
 	return 0;
@@ -1266,6 +1530,10 @@ int mdss_dsi_panel_init(struct device_node *node,
 	static const char *panel_name;
 	struct mdss_panel_info *pinfo;
 
+#ifdef CONFIG_MACH_LGE
+	struct device_node *dsi_ctrl_np = NULL;
+	struct platform_device *ctrl_pdev = NULL;
+#endif
 	if (!node || !ctrl_pdata) {
 		pr_err("%s: Invalid arguments\n", __func__);
 		return -ENODEV;
@@ -1300,5 +1568,23 @@ int mdss_dsi_panel_init(struct device_node *node,
 	ctrl_pdata->panel_data.set_backlight = mdss_dsi_panel_bl_ctrl;
 	ctrl_pdata->switch_mode = mdss_dsi_panel_switch_mode;
 
+#ifdef CONFIG_MACH_LGE
+	/* Panel device is not created in KK release
+	 * create the node file for controling the ief under the dsi controller device
+	 *  file path: /sys/devices/fd922800.qcom,mdss_dsi/ief_on_off
+	 */
+
+	dsi_ctrl_np = of_parse_phandle(node,
+				"qcom,mdss-dsi-panel-controller", 0);
+
+	if (!dsi_ctrl_np) {
+		pr_err("%s: Dsi controller node not initialized\n", __func__);
+		return -EPROBE_DEFER;
+	}
+
+	ctrl_pdev = of_find_device_by_node(dsi_ctrl_np);
+
+	rc = device_create_file(&ctrl_pdev->dev, &dev_attr_ief_on_off);
+#endif
 	return 0;
 }
