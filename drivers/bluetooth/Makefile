@@ -34,3 +34,6 @@ hci_uart-objs				:= $(hci_uart-y)
 obj-$(CONFIG_BT_MSM_SLEEP)              += msm_bt_sleep.o
 msm_bt_sleep-objs                       := bluesleep.o
 obj-$(CONFIG_MSM_BT_POWER)		+= bluetooth-power.o
+#BT_S : [CONBT-2025] LGC_BT_COMMON_IMP_MOS_V4L2
+obj-$(CONFIG_LGE_BLUESLEEP) += broadcom/
+#BT_E : [CONBT-2025] LGC_BT_COMMON_IMP_MOS_V4L2

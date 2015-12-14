@@ -37,6 +37,10 @@
 #include "msm_watchdog.h"
 #include "timer.h"
 #include "wdog_debug.h"
+#ifdef CONFIG_LGE_HANDLE_PANIC
+#include <mach/lge_handle_panic.h>
+#include <mach/board_lge.h>
+#endif
 
 #define WDT0_RST	0x38
 #define WDT0_EN		0x40
@@ -60,6 +64,11 @@
 #define use_restart_v2()	0
 #endif
 
+#if defined(CONFIG_MACH_LGE)
+static int hard_reset;
+module_param(hard_reset, int, 0644);
+#endif
+
 static int restart_mode;
 void *restart_reason;
 
@@ -74,7 +83,13 @@ static void *emergency_dload_mode_addr;
 
 /* Download mode master kill-switch */
 static int dload_set(const char *val, struct kernel_param *kp);
+
+/*set crash handler's default value to 0 only when  build variant is user*/
+#if defined(CONFIG_LGE_SET_CRASH_HANDLER_DEFAULT_DISABLE)
+static int download_mode = 0;
+#else
 static int download_mode = 1;
+#endif
 module_param_call(download_mode, dload_set, param_get_int,
 			&download_mode, 0644);
 static int panic_prep_restart(struct notifier_block *this,
@@ -139,6 +154,14 @@ static int dload_set(const char *val, struct kernel_param *kp)
 		return -EINVAL;
 	}
 
+#ifdef CONFIG_LGE_HANDLE_PANIC
+	if (lge_get_laf_mode() == LGE_LAF_MODE_LAF)
+		download_mode = 1;
+
+    if (!download_mode)
+        lge_panic_handler_fb_cleanup();
+#endif
+
 	set_dload_mode(download_mode);
 
 	return 0;
@@ -157,9 +180,18 @@ static bool get_dload_mode(void)
 }
 #endif
 
+#ifdef CONFIG_LGE_KERNEL_FTM_ITEM
+extern int set_reboot_reason_ftm_item(int reason);
+#endif
+
 void msm_set_restart_mode(int mode)
 {
 	restart_mode = mode;
+#ifdef CONFIG_LGE_USE_DEFAULT_HARD_RESET
+#ifdef CONFIG_LGE_KERNEL_FTM_ITEM
+	set_reboot_reason_ftm_item(LAF_DLOAD_MODE);
+#endif
+#endif
 }
 EXPORT_SYMBOL(msm_set_restart_mode);
 
@@ -185,7 +217,12 @@ static void __msm_power_off(int lower_pshold)
 	set_dload_mode(0);
 #endif
 	pm8xxx_reset_pwr_off(0);
+#ifdef CONFIG_POWER_OFF_DVDD_SHUTDOWN
+	printk(KERN_CRIT "dVdd shutdown\n");
+	qpnp_pon_system_pwr_off(PON_POWER_OFF_DVDD_SHUTDOWN);
+#else
 	qpnp_pon_system_pwr_off(PON_POWER_OFF_SHUTDOWN);
+#endif
 
 	if (lower_pshold) {
 		if (!use_restart_v2()) {
@@ -250,6 +287,10 @@ static irqreturn_t resout_irq_handler(int irq, void *dev_id)
 
 static void msm_restart_prepare(const char *cmd)
 {
+#ifdef CONFIG_MACH_LGE
+	bool warm_reset = true;
+#endif
+
 #ifdef CONFIG_MSM_DLOAD_MODE
 
 	/* This looks like a normal reboot at this point. */
@@ -258,9 +299,11 @@ static void msm_restart_prepare(const char *cmd)
 	/* Write download mode flags if we're panic'ing */
 	set_dload_mode(in_panic);
 
+#ifndef CONFIG_LGE_HANDLE_PANIC
 	/* Write download mode flags if restart_mode says so */
 	if (restart_mode == RESTART_DLOAD)
 		set_dload_mode(1);
+#endif
 
 	/* Kill download mode if master-kill switch is set */
 	if (!download_mode)
@@ -269,19 +312,81 @@ static void msm_restart_prepare(const char *cmd)
 
 	pm8xxx_reset_pwr_off(1);
 
+#ifdef CONFIG_LGE_USE_DEFAULT_HARD_RESET
+/* default & test purpose reboot should be hard reset since QTI doesn't
+ * gurantee repeated warm boot test */
+	if (cmd) {
+		if(!strncmp(cmd, "bootchart", 9) && (hard_reset == 1)) {
+			warm_reset = false;
+			pr_err("%s: boot time analyzer & hard  reset\n", __func__);
+		}
+		else if (!strncmp(cmd, "bootloader", 10)) warm_reset = true;
+		else if (!strncmp(cmd, "recovery", 8)) warm_reset = false;
+		else if (!strncmp(cmd, "fota", 4)) warm_reset = false;
+		else if (!strncmp(cmd, "--bnr_recovery", 14)) warm_reset = true;
+		else if (!strcmp(cmd, "rtc")) warm_reset = true;
+		else if (!strcmp(cmd, "aat_write")) warm_reset = true;
+#ifdef CONFIG_LGE_LCD_OFF_DIMMING
+		else if (!strncmp(cmd, "FOTA LCD off", 12)) warm_reset = false;
+		else if (!strncmp(cmd, "FOTA OUT LCD off", 16)) warm_reset = false;
+		else if (!strncmp(cmd, "LCD off", 7)) warm_reset = false;
+#endif
+		else if (!strcmp(cmd, "aat_enter")) warm_reset = true;
+		else if (!strncmp(cmd, "oem-", 4)) warm_reset = false;
+		else if (!strncmp(cmd, "edl", 3)) warm_reset = true;
+		else warm_reset = false;
+	}
+	else warm_reset = false;
+
+	if (restart_mode == RESTART_DLOAD) warm_reset = false;
+	if (in_panic) warm_reset = true;
+#endif
+
 	/* Hard reset the PMIC unless memory contents must be maintained. */
+#ifdef CONFIG_MACH_LGE
+	/* LGE_CHANGE : there's no reason to forcing a hard reset on reboot request */
+	if (warm_reset || get_dload_mode()) {
+		pr_err("%s: PON_POWER_OFF_WARM_RESET\n", __func__);
+		qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
+	}
+	else {
+		pr_err("%s: PON_POWER_OFF_HARD_RESET\n", __func__);
+		qpnp_pon_system_pwr_off(PON_POWER_OFF_HARD_RESET);
+	}
+#else
 	if (get_dload_mode() || (cmd != NULL && cmd[0] != '\0'))
 		qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
 	else
 		qpnp_pon_system_pwr_off(PON_POWER_OFF_HARD_RESET);
+#endif
 
 	if (cmd != NULL) {
 		if (!strncmp(cmd, "bootloader", 10)) {
 			__raw_writel(0x77665500, restart_reason);
 		} else if (!strncmp(cmd, "recovery", 8)) {
 			__raw_writel(0x77665502, restart_reason);
+		} else if (!strncmp(cmd, "fota", 4)) {
+			__raw_writel(0x77665566, restart_reason);
+		} else if (!strncmp(cmd, "--bnr_recovery", 14)) {
+			__raw_writel(0x77665555, restart_reason);
 		} else if (!strcmp(cmd, "rtc")) {
 			__raw_writel(0x77665503, restart_reason);
+        } else if (!strcmp(cmd, "aat_write")) {
+            __raw_writel(0x77665580, restart_reason);
+#ifdef CONFIG_LGE_LCD_OFF_DIMMING
+        } else if (!strncmp(cmd, "FOTA LCD off", 12)) {
+			__raw_writel(0x77665560, restart_reason);
+        } else if (!strncmp(cmd, "FOTA OUT LCD off", 16)) {
+			__raw_writel(0x77665561, restart_reason);
+        } else if (!strncmp(cmd, "LCD off", 7)) {
+			__raw_writel(0x77665562, restart_reason);
+#endif
+		} else if (!strcmp(cmd, "aat_enter")) {
+            __raw_writel(0x77665581, restart_reason);
+		}else if (!strncmp(cmd, "dm-verity device corrupted", 26 )) {
+			__raw_writel(0x77665508, restart_reason);
+		} else if (!strncmp(cmd, "wallpaper_fail", 14)) {
+			__raw_writel(0x77665507, restart_reason);
 		} else if (!strncmp(cmd, "oem-", 4)) {
 			unsigned long code;
 			code = simple_strtoul(cmd + 4, NULL, 16) & 0xff;
@@ -293,9 +398,59 @@ static void msm_restart_prepare(const char *cmd)
 		}
 	}
 
+#ifdef CONFIG_LGE_HANDLE_PANIC
+	else
+		__raw_writel(0x77665503, restart_reason);
+
+	if (restart_mode == RESTART_DLOAD)
+		lge_set_restart_reason(LAF_DLOAD_MODE);
+
+	if (in_panic)
+		lge_set_panic_reason();
+#endif
 	flush_cache_all();
 	outer_flush_all();
 }
+
+#ifdef CONFIG_LGE_USE_DEFAULT_HARD_RESET
+static int msm_set_restart_reason
+	    (struct notifier_block *this, unsigned long code, void *_cmd)
+{
+	unsigned int restart_reason = 0;
+	if(_cmd)
+		printk(KERN_ERR "msm_set_restart_reason code:%ld, _cmd:%s\n",code,(char*)_cmd);
+	else
+		printk(KERN_ERR "msm_set_restart_reason code:%ld, _cmd:null\n",code);
+
+    if ((code == SYS_RESTART) && _cmd) {
+		char *cmd = _cmd;
+		if (!strncmp(cmd, "recovery", 8)) {
+			restart_reason = 0x77665502;
+		} else if (!strncmp(cmd, "fota", 4)) {
+			restart_reason = 0x77665566;
+#ifdef CONFIG_LGE_LCD_OFF_DIMMING
+        } else if (!strncmp(cmd, "FOTA LCD off", 12)) {
+			restart_reason = 0x77665560;
+        } else if (!strncmp(cmd, "FOTA OUT LCD off", 16)) {
+			restart_reason = 0x77665561;
+        } else if (!strncmp(cmd, "LCD off", 7)) {
+			restart_reason = 0x77665562;
+#endif
+		}
+	}
+
+#ifdef CONFIG_LGE_KERNEL_FTM_ITEM
+	if(restart_reason != 0)
+		set_reboot_reason_ftm_item(restart_reason);
+#endif
+
+	return NOTIFY_DONE;
+}
+
+static struct notifier_block msm_set_restart_reason_notifier = {
+	.notifier_call = msm_set_restart_reason,
+};
+#endif
 
 void msm_restart(char mode, const char *cmd)
 {
@@ -353,6 +508,13 @@ late_initcall(msm_pmic_restart_init);
 
 static int __init msm_restart_init(void)
 {
+#ifdef CONFIG_LGE_HANDLE_PANIC
+	/* Set default restart_reason to TZ crash.
+	 * If can't be set explicit, it causes by TZ */
+	lge_set_restart_reason(LGE_RB_MAGIC | LGE_ERR_TZ);
+	if (lge_get_laf_mode() == LGE_LAF_MODE_LAF)
+		download_mode = 1;
+#endif
 #ifdef CONFIG_MSM_DLOAD_MODE
 	atomic_notifier_chain_register(&panic_notifier_list, &panic_blk);
 	dload_mode_addr = MSM_IMEM_BASE + DLOAD_MODE_ADDR;
@@ -366,6 +528,10 @@ static int __init msm_restart_init(void)
 
 	if (scm_is_call_available(SCM_SVC_PWR, SCM_IO_DISABLE_PMIC_ARBITER) > 0)
 		scm_pmic_arbiter_disable_supported = true;
+
+#ifdef CONFIG_LGE_USE_DEFAULT_HARD_RESET
+	register_reboot_notifier(&msm_set_restart_reason_notifier);
+#endif
 
 	return 0;
 }

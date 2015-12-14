@@ -470,6 +470,9 @@ struct input_keymap_entry {
 #define KEY_RFKILL		247	/* Key that controls all radios */
 
 #define KEY_MICMUTE		248	/* Mute / unmute the microphone */
+#define KEY_SIMSWITCH		249	/* Multi SIM Switch key */
+#define KEY_HOTKEY		250	/* Quick Clip key*/
+
 
 /* Code 255 is reserved for special needs of AT keyboard driver */
 
@@ -938,7 +941,9 @@ struct input_keymap_entry {
  */
 #define MT_TOOL_FINGER		0
 #define MT_TOOL_PEN		1
-#define MT_TOOL_MAX		1
+#define MT_TOOL_PALM		2
+#define MT_TOOL_LARGEPALM	3
+#define MT_TOOL_MAX		3
 
 /*
  * Values describing the status of a force-feedback effect
