@@ -111,3 +111,9 @@ config MSM_KGSL_DISABLE_SHADOW_WRITES
 	bool "Disable register shadow writes for context switches"
 	default n
 	depends on MSM_KGSL
+
+config LGE_KGSL_OFFSET_SEARCH
+    bool "LGE KGSL Memory allocation fail algorithm"
+    help
+      LGE_KGSL_OFFSET_SEARCH
+	  when system call kgsl_page_alloc_vmfault, reduces the code execution time.
