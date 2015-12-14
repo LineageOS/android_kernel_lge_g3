@@ -117,7 +117,7 @@ bool ap_fw_loaded = FALSE;
 /* Version string to report */
 #ifdef DHD_DEBUG
 #ifndef SRCBASE
-#define SRCBASE        "drivers/net/wireless/bcmdhd"
+#define SRCBASE        "drivers/net/wireless/bcmdhd_g3"
 #endif
 #define DHD_COMPILED "\nCompiled in " SRCBASE
 #endif /* DHD_DEBUG */

@@ -18,6 +18,9 @@
 #include <linux/stat.h>
 
 #include "power_supply.h"
+#ifdef CONFIG_LGE_PM
+#include <mach/board_lge.h>
+#endif
 
 /*
  * This is because the name "current" breaks the device attr macro.
@@ -31,12 +34,42 @@
  * (as a macro let's say).
  */
 
+#ifdef CONFIG_LGE_PM
+#define PSEUDO_BATT_ATTR(_name)						\
+{									\
+	.attr = { .name = #_name, .mode = 0644},			\
+	.show = pseudo_batt_show_property,				\
+	.store = pseudo_batt_store_property,				\
+}
+#define POWER_SUPPLY_CN_ATTR(_name, _mode)				\
+{									\
+	.attr = { .name = #_name, .mode = _mode},			\
+	.show = power_supply_show_property,				\
+	.store = power_supply_store_property,				\
+}
 #define POWER_SUPPLY_ATTR(_name)					\
 {									\
 	.attr = { .name = #_name },					\
 	.show = power_supply_show_property,				\
 	.store = power_supply_store_property,				\
 }
+
+#ifdef CONFIG_LGE_PM_LLK_MODE
+#define STORE_DEMO_ENABLED_ATTR(_name)					\
+{									\
+	.attr = { .name = #_name, .mode = 0644},			\
+	.show =  power_supply_show_property,				\
+	.store =  power_supply_store_property,		 		\
+}
+#endif
+#else
+#define POWER_SUPPLY_ATTR(_name)					\
+{									\
+	.attr = { .name = #_name },					\
+	.show = power_supply_show_property,				\
+	.store = power_supply_store_property,				\
+}
+#endif
 
 static struct device_attribute power_supply_attrs[];
 
@@ -45,7 +78,10 @@ static ssize_t power_supply_show_property(struct device *dev,
 					  char *buf) {
 	static char *type_text[] = {
 		"Unknown", "Battery", "UPS", "Mains", "USB",
-		"USB_DCP", "USB_CDP", "USB_ACA"
+		"USB_DCP", "USB_CDP", "USB_ACA",
+#ifdef CONFIG_CHARGER_UNIFIED_WLC
+		"Wireless"
+#endif
 	};
 	static char *status_text[] = {
 		"Unknown", "Charging", "Discharging", "Not charging", "Full"
@@ -130,6 +166,61 @@ static ssize_t power_supply_store_property(struct device *dev,
 	return count;
 }
 
+#ifdef CONFIG_LGE_PM
+static ssize_t pseudo_batt_show_property(struct device *dev,
+		struct device_attribute *attr,
+		char *buf)
+{
+	ssize_t ret;
+	struct power_supply *psy = dev_get_drvdata(dev);
+	const ptrdiff_t off = attr - power_supply_attrs;
+	union power_supply_propval value;
+
+	static char *pseudo_batt[] = {
+		"NORMAL", "PSEUDO",
+	};
+
+	ret = psy->get_property(psy, off, &value);
+
+	if (ret < 0) {
+		if (ret != -ENODEV)
+			dev_err(dev, "driver failed to report `%s' property\n",
+					attr->attr.name);
+		return ret;
+	}
+	if (off == POWER_SUPPLY_PROP_PSEUDO_BATT)
+		return sprintf(buf, "[%s] \nusage: echo \
+				[mode] [ID] [therm] [temp] \
+				[volt] [cap] [charging] > pseudo_batt\n",
+				pseudo_batt[value.intval]);
+
+	return 0;
+}
+
+static ssize_t pseudo_batt_store_property(struct device *dev,
+		struct device_attribute *attr,
+		const char *buf, size_t count)
+{
+	int ret = -EINVAL;
+	struct pseudo_batt_info_type info;
+
+	if (sscanf(buf, "%d %d %d %d %d %d %d",
+			&info.mode, &info.id, &info.therm, &info.temp,
+			&info.volt, &info.capacity, &info.charging) != 7) {
+		if (info.mode == 1) {
+			printk(KERN_ERR "usage : echo \
+				[mode] [ID] [therm] [temp] \
+				[volt] [cap] [charging] > pseudo_batt");
+			goto out;
+		}
+	}
+	pseudo_batt_set(&info);
+	ret = count;
+out:
+	return ret;
+}
+#endif
+
 /* Must be in the same order as POWER_SUPPLY_PROP_* */
 static struct device_attribute power_supply_attrs[] = {
 	/* Properties of type `int' */
@@ -186,6 +277,33 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(scope),
 	POWER_SUPPLY_ATTR(system_temp_level),
 	POWER_SUPPLY_ATTR(resistance),
+#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+	POWER_SUPPLY_ATTR(valid_batt_id),
+#endif
+#ifdef CONFIG_LGE_PM
+	PSEUDO_BATT_ATTR(pseudo_batt),
+	POWER_SUPPLY_ATTR(ext_pwr),
+	POWER_SUPPLY_ATTR(removed),
+#endif
+#ifdef CONFIG_MACH_MSM8974_G3_VZW
+	POWER_SUPPLY_ATTR(vzw_chg),
+#endif
+#if defined(CONFIG_CHARGER_MAX77819) || defined(CONFIG_CHARGER_MAX8971) || \
+    defined(CONFIG_BQ24296_CHARGER)
+	POWER_SUPPLY_ATTR(safety_timer),
+	POWER_SUPPLY_ATTR(charging_complete),
+#endif
+#ifdef CONFIG_LGE_PM_USB_CURRENT_MAX_MODE
+        POWER_SUPPLY_ATTR(usb_current_max_mode),
+#endif
+#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#ifdef CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT
+	POWER_SUPPLY_ATTR(alignment),
+#endif
+#endif
+#if defined(CONFIG_LGE_PM_LLK_MODE)
+	STORE_DEMO_ENABLED_ATTR(store_demo_enabled),
+#endif
 	/* Properties of type `const char *' */
 	POWER_SUPPLY_ATTR(model_name),
 	POWER_SUPPLY_ATTR(manufacturer),
