@@ -1289,6 +1289,25 @@ extern void free_area_init_node(int nid, unsigned long * zones_size,
 		unsigned long zone_start_pfn, unsigned long *zholes_size);
 extern void free_initmem(void);
 
+static inline void adjust_managed_page_count(struct page *page, long count)
+{
+	totalram_pages += count;
+}
+
+/* Free the reserved page into the buddy system, so it gets managed. */
+static inline void __free_reserved_page(struct page *page)
+{
+	ClearPageReserved(page);
+	init_page_count(page);
+	__free_page(page);
+}
+
+static inline void free_reserved_page(struct page *page)
+{
+	__free_reserved_page(page);
+	adjust_managed_page_count(page, 1);
+}
+
 #ifdef CONFIG_HAVE_MEMBLOCK_NODE_MAP
 /*
  * With CONFIG_HAVE_MEMBLOCK_NODE_MAP set, an architecture may initialise its

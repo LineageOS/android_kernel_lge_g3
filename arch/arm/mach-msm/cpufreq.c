@@ -41,6 +41,10 @@
 #include <linux/seq_file.h>
 #include <asm/div64.h>
 #endif
+#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#include <linux/power/lge_battery_id.h>
+#include <mach/msm_smsm.h>
+#endif
 
 static DEFINE_MUTEX(l2bw_lock);
 
@@ -425,9 +429,33 @@ static int cpufreq_parse_dt(struct device *dev)
 {
 	int ret, len, nf, num_cols = 2, i, j;
 	u32 *data;
+#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+	uint *smem_batt = 0;
+	int IsBattery = 0;
+#endif
 
 	if (l2_clk)
 		num_cols++;
+#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+	smem_batt = (uint *)smem_alloc(SMEM_BATT_INFO, sizeof(smem_batt));
+	if (smem_batt == NULL) {
+		pr_err("%s : smem_alloc returns NULL\n",__func__);
+	}
+	else {
+		pr_err("Batt ID from SBL = %d\n", *smem_batt);
+		if (*smem_batt == BATT_ID_DS2704_L ||
+			*smem_batt == BATT_ID_DS2704_C ||
+			*smem_batt == BATT_ID_ISL6296_L ||
+			*smem_batt == BATT_ID_ISL6296_C) {
+			//To Do if Battery is present
+			IsBattery = 1;
+		}
+		else {
+			//To Do if Battery is absent
+			IsBattery = 0;
+		}
+	}
+#endif
 
 	/* Parse CPU freq -> L2/Mem BW map table. */
 	if (!of_find_property(dev->of_node, PROP_TBL, &len))
