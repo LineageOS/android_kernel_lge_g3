@@ -11,11 +11,16 @@
  *
  */
 #include "msm_sensor.h"
+#ifdef CONFIG_MACH_LGE
+#include <mach/board_lge.h>
+#endif
+
 #define IMX135_SENSOR_NAME "imx135"
 DEFINE_MSM_MUTEX(imx135_mut);
 
 static struct msm_sensor_ctrl_t imx135_s_ctrl;
 
+#ifndef CONFIG_MACH_LGE
 static struct msm_sensor_power_setting imx135_power_setting[] = {
 	{
 		.seq_type = SENSOR_VREG,
@@ -78,6 +83,83 @@ static struct msm_sensor_power_setting imx135_power_setting[] = {
 		.delay = 0,
 	},
 };
+#else
+static struct msm_sensor_power_setting imx135_power_setting[] =
+{
+	{  /* Set GPIO_RESET to low to disable power on reset*/
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_RESET,
+		.config_val = GPIO_OUT_LOW,
+		.delay = 1,
+	},
+	{	// OIS_RESET
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_OIS_RESET,
+		.config_val = GPIO_OUT_LOW,
+		.delay = 1,
+	},
+	{  //VIO, GPIO 96
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_VIO,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+	{  //VDIG
+		.seq_type = SENSOR_VREG,
+		.seq_val = CAM_VDIG,
+		.config_val = 0,
+		.delay = 1,
+	},
+	{  //VANA, GPIO 16
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_VANA,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 2,
+	},
+	{  //LDAF_EN, PMIC_GPIO 1
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_LDAF_EN,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 3,
+	},
+	{  //VCM, GPIO 145
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_VAF,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 3,
+	},
+	{  //OIS_LDO_EN, GPIO 30
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_OIS_LDO_EN,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+	{
+		.seq_type = SENSOR_CLK,
+		.seq_val = SENSOR_CAM_MCLK,
+		.config_val = 0,
+		.delay = 1,
+	},
+	{
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_RESET,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+	{
+		.seq_type = SENSOR_GPIO,
+		.seq_val = SENSOR_GPIO_OIS_RESET,
+		.config_val = GPIO_OUT_HIGH,
+		.delay = 1,
+	},
+	{
+		.seq_type = SENSOR_I2C_MUX,
+		.seq_val = 0,
+		.config_val = 0,
+		.delay = 1,
+	},
+};
+#endif
 
 static struct v4l2_subdev_info imx135_subdev_info[] = {
 	{
@@ -131,6 +213,12 @@ static int32_t imx135_platform_probe(struct platform_device *pdev)
 	int32_t rc = 0;
 	const struct of_device_id *match;
 	match = of_match_device(imx135_dt_match, &pdev->dev);
+#ifdef CONFIG_MACH_LGE
+	if(!match) {
+	      pr_err(" %s failed ",__func__);
+	      return -ENODEV;
+       }
+#endif
 	rc = msm_sensor_platform_probe(pdev, match->data);
 	return rc;
 }
@@ -139,6 +227,16 @@ static int __init imx135_init_module(void)
 {
 	int32_t rc = 0;
 	pr_info("%s:%d\n", __func__, __LINE__);
+#ifdef CONFIG_MACH_LGE
+	switch(lge_get_board_revno()) {
+		case HW_REV_A:
+		case HW_REV_B:
+		default:
+			imx135_s_ctrl.power_setting_array.power_setting = imx135_power_setting;
+			imx135_s_ctrl.power_setting_array.size = ARRAY_SIZE(imx135_power_setting);
+			break;
+	}
+#endif
 	rc = platform_driver_probe(&imx135_platform_driver,
 		imx135_platform_probe);
 	if (!rc)
@@ -160,8 +258,10 @@ static void __exit imx135_exit_module(void)
 
 static struct msm_sensor_ctrl_t imx135_s_ctrl = {
 	.sensor_i2c_client = &imx135_sensor_i2c_client,
+#ifndef CONFIG_MACH_LGE
 	.power_setting_array.power_setting = imx135_power_setting,
 	.power_setting_array.size = ARRAY_SIZE(imx135_power_setting),
+#endif
 	.msm_sensor_mutex = &imx135_mut,
 	.sensor_v4l2_subdev_info = imx135_subdev_info,
 	.sensor_v4l2_subdev_info_size = ARRAY_SIZE(imx135_subdev_info),

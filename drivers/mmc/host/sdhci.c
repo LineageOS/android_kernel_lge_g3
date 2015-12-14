@@ -3173,6 +3173,10 @@ int sdhci_add_host(struct sdhci_host *host)
 	caps[1] = (host->version >= SDHCI_SPEC_300) ?
 		sdhci_readl(host, SDHCI_CAPABILITIES_1) : 0;
 
+#ifdef CONFIG_LGE_MMC_SD_USE_SDCC3
+	if (strcmp(host->hw_name, "msm_sdcc.3") == 0)
+		caps[0] |= (SDHCI_CAN_VDD_330 | SDHCI_CAN_VDD_300 | SDHCI_CAN_VDD_180);
+#endif
 	if (host->quirks & SDHCI_QUIRK_FORCE_DMA)
 		host->flags |= SDHCI_USE_SDMA;
 	else if (!(caps[0] & SDHCI_CAN_DO_SDMA))
