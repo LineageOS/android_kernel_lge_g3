@@ -24,6 +24,18 @@
 #include "io.h"
 #include "xhci.h"
 
+#ifdef CONFIG_LGE_PM
+#include <linux/usb/msm_hsusb.h>
+#include <mach/board_lge.h>
+#include <linux/power_supply.h>
+#if defined (CONFIG_SLIMPORT_ANX7816) || defined(CONFIG_SLIMPORT_ANX7808)
+#include <linux/slimport.h>
+#endif
+#endif
+#ifdef CONFIG_MACH_LGE
+#define PARAMETER_OVERRIDE_X_REG (0xF8814)
+#define DEFAULT_HSPHY_INIT (0x00D195A4) /* qcom,dwc-hsphy-init */
+#endif
 #define VBUS_REG_CHECK_DELAY	(msecs_to_jiffies(1000))
 #define MAX_INVALID_CHRGR_RETRY 3
 static int max_chgr_retry_count = MAX_INVALID_CHRGR_RETRY;
@@ -33,6 +45,9 @@ static void dwc3_otg_reset(struct dwc3_otg *dotg);
 
 static void dwc3_otg_notify_host_mode(struct usb_otg *otg, int host_mode);
 static void dwc3_otg_reset(struct dwc3_otg *dotg);
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G3) && defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+void update_status(int code, int value);
+#endif
 
 /**
  * dwc3_otg_set_host_regs - reset dwc3 otg registers to host operation.
@@ -48,6 +63,13 @@ static void dwc3_otg_set_host_regs(struct dwc3_otg *dotg)
 	struct dwc3 *dwc = dotg->dwc;
 	struct dwc3_ext_xceiv *ext_xceiv = dotg->ext_xceiv;
 
+#ifdef CONFIG_MACH_LGE
+	/* use default qcom,dwc-hsphy-init value for Host Mode */
+	reg = dwc3_readl(dwc->regs, PARAMETER_OVERRIDE_X_REG);
+	reg &= ~(0x03FFFFFF);
+	reg |= (DEFAULT_HSPHY_INIT & 0x03FFFFFF);
+	dwc3_writel(dwc->regs, PARAMETER_OVERRIDE_X_REG, reg);
+#endif
 	if (ext_xceiv && !ext_xceiv->otg_capability) {
 		/* Set OCTL[6](PeriMode) to 0 (host) */
 		reg = dwc3_readl(dotg->regs, DWC3_OCTL);
@@ -544,7 +566,12 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 	if (dotg->charger->charging_disabled)
 		return 0;
 
+#ifdef CONFIG_LGE_PM
+	if (dotg->charger->chg_type == DWC3_SDP_CHARGER ||
+			dotg->charger->chg_type == DWC3_FLOATED_CHARGER)
+#else
 	if (dotg->charger->chg_type == DWC3_SDP_CHARGER)
+#endif
 		power_supply_type = POWER_SUPPLY_TYPE_USB;
 	else if (dotg->charger->chg_type == DWC3_CDP_CHARGER)
 		power_supply_type = POWER_SUPPLY_TYPE_USB_CDP;
@@ -554,7 +581,31 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 	else
 		power_supply_type = POWER_SUPPLY_TYPE_UNKNOWN;
 
+#ifndef CONFIG_LGE_PM
 	power_supply_set_supply_type(dotg->psy, power_supply_type);
+#endif
+
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G3) && defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+	update_status(1, dotg->charger->chg_type);
+#endif
+
+#ifdef CONFIG_LGE_PM
+	if (mA > 2 && lge_pm_get_cable_type() != NO_INIT_CABLE) {
+		if (dotg->charger->chg_type == DWC3_SDP_CHARGER) {
+			if (dotg->dwc->gadget.speed == USB_SPEED_SUPER) {
+				if (dotg->charger->max_power > 2)
+					dotg->charger->max_power = 0;
+				mA = DWC3_USB30_CHG_CURRENT;
+			} else {
+				mA = lge_pm_get_usb_current();
+			}
+		} else if (dotg->charger->chg_type == DWC3_DCP_CHARGER) {
+			mA = lge_pm_get_ta_current();
+		} else if (dotg->charger->chg_type == DWC3_FLOATED_CHARGER) {
+			mA = lge_pm_get_usb_current();
+		}
+	}
+#endif
 
 	if (dotg->charger->chg_type == DWC3_CDP_CHARGER)
 		mA = DWC3_IDEV_CHG_MAX;
@@ -564,7 +615,19 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 
 	dev_info(phy->dev, "Avail curr from USB = %u\n", mA);
 
+#ifdef CONFIG_LGE_PM
+	if (strcmp(dotg->psy->name, "usb")) {
+		pr_info("%s psy name is %s, so change psy to usb.\n", __func__, dotg->psy->name);
+		dotg->psy = power_supply_get_by_name("usb");
+		if (!dotg->psy)
+			goto psy_error;
+	}
+	power_supply_set_supply_type(dotg->psy, power_supply_type);
+
+	if (mA > 2) {
+#else
 	if (dotg->charger->max_power <= 2 && mA > 2) {
+#endif
 		/* Enable charging */
 		if (power_supply_set_online(dotg->psy, true))
 			goto psy_error;
@@ -760,8 +823,14 @@ static void dwc3_otg_sm_work(struct work_struct *w)
 			if (charger) {
 				/* Has charger been detected? If no detect it */
 				switch (charger->chg_type) {
-				case DWC3_DCP_CHARGER:
 				case DWC3_PROPRIETARY_CHARGER:
+#ifdef CONFIG_LGE_PM
+					dwc3_otg_set_power(phy,
+							DWC3_IDEV_CHG_PROPRIETARY_MAX);
+					pm_runtime_put_sync(phy->dev);
+					break;
+#endif
+				case DWC3_DCP_CHARGER:
 					dev_dbg(phy->dev, "lpm, DCP charger\n");
 					dwc3_otg_set_power(phy,
 							DWC3_IDEV_CHG_MAX);
@@ -776,12 +845,19 @@ static void dwc3_otg_sm_work(struct work_struct *w)
 					work = 1;
 					break;
 				case DWC3_SDP_CHARGER:
+#ifdef CONFIG_MACH_LGE
+					dwc3_otg_set_power(phy,
+								IUNIT);
+#endif
 					dwc3_otg_start_peripheral(&dotg->otg,
 									1);
 					phy->state = OTG_STATE_B_PERIPHERAL;
 					work = 1;
 					break;
 				case DWC3_FLOATED_CHARGER:
+#ifdef CONFIG_LGE_PM
+					dwc3_otg_set_power(phy, IUNIT);
+#endif
 					if (dotg->charger_retry_count <
 							max_chgr_retry_count)
 						dotg->charger_retry_count++;
@@ -796,8 +872,21 @@ static void dwc3_otg_sm_work(struct work_struct *w)
 					 */
 					if (dotg->charger_retry_count ==
 						max_chgr_retry_count) {
+#if defined (CONFIG_SLIMPORT_ANX7816) || defined(CONFIG_SLIMPORT_ANX7808)
+						if (slimport_is_connected()) {
+							dwc3_otg_set_power(phy, IDEV_CHG_MIN);
+							pm_runtime_put_sync(phy->dev);
+							break;
+						}
+#endif
+#ifdef CONFIG_LGE_PM
+						dwc3_otg_start_peripheral(&dotg->otg, 1);
+						phy->state = OTG_STATE_B_PERIPHERAL;
+						work = 1;
+#else
 						dwc3_otg_set_power(phy, 0);
 						pm_runtime_put_sync(phy->dev);
+#endif
 						break;
 					}
 					charger->start_detection(dotg->charger,
@@ -855,6 +944,15 @@ static void dwc3_otg_sm_work(struct work_struct *w)
 			work = 1;
 		} else {
 			phy->state = OTG_STATE_A_HOST;
+#ifdef CONFIG_LGE_PM
+			/*
+			 * sangmin978.lee@lge.com, 2013-03-18
+			 * For OTG, set usb as a current power supply on host mode.
+			 */
+			dotg->psy = power_supply_get_by_name("usb");
+			if (!dotg->psy)
+				dev_err(phy->dev, "couldn't get usb power supply\n");
+#endif
 			ret = dwc3_otg_start_host(&dotg->otg, 1);
 			if ((ret == -EPROBE_DEFER) &&
 						dotg->vbus_retry_count < 3) {

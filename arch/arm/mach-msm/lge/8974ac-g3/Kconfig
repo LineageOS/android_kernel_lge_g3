@@ -1,0 +1,61 @@
+config MACH_MSM8974_G3
+	bool
+	select LEDS_PM8941_EMOTIONAL
+	select LGE_PM_BATTERY_ID_CHECKER
+	select LGE_PM_LLK_MODE
+	select LGE_PM_USB_CURRENT_MAX_MODE
+	select MACH_LGE
+	select SND_SOC_CS35L32
+	select SND_SOC_TPA2015D
+
+config MACH_MSM8974_G3_KR
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	select LGE_MMC_SD_USE_SDCC3
+	bool "MSM8974 G3 KR"
+	help
+	  Support for the Qualcomm MSM8974 G3 KR device.
+
+config MACH_MSM8974_G3_VZW
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 VZW"
+	help
+	  Support for the Qualcomm MSM8974 G3 Verizon device.
+
+config MACH_MSM8974_G3_ATT
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 ATT"
+	help
+	  Support for the Qualcomm MSM8974 G3 AT&T device.
+
+config MACH_MSM8974_G3_SPR_US
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	select LGE_MMC_SD_USE_SDCC3
+	bool "MSM8974 G3 SPR US"
+	help
+	  Support for the Qualcomm MSM8974 G3 Sprint device.
+
+config MACH_MSM8974_G3_TMO_US
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	select LGE_MMC_SD_USE_SDCC3
+	bool "MSM8974 G3 TMO US"
+	help
+	  Support for the Qualcomm MSM8974 G3 AT&T device.
+
+config MACH_MSM8974_G3_GLOBAL_COM
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 GLOBAL COM"
+	help
+	  Support for the Qualcomm MSM8974 G3 GLOBAL device.
+
+config MACH_MSM8974_G3_CA
+	depends on ARCH_MSM8974
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 CA"
+	help
+	  Support for the Qualcomm MSM8974 G3 Canada device.
