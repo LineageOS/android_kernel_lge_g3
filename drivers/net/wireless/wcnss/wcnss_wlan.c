@@ -264,11 +264,7 @@ static struct notifier_block wnb = {
 	.notifier_call = wcnss_notif_cb,
 };
 
-#ifdef CONFIG_MACH_LGE
-#define NVBIN_FILE "wlan/prima/WCNSS_qcom_wlan_nv_boot.bin"
-#else
 #define NVBIN_FILE "wlan/prima/WCNSS_qcom_wlan_nv.bin"
-#endif
 
 /*
  * On SMD channel 4K of maximum data can be transferred, including message
