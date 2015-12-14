@@ -27,7 +27,9 @@
 #include <linux/qpnp/qpnp-adc.h>
 #include <linux/qpnp/power-on.h>
 #include <linux/of_batterydata.h>
-
+#ifdef CONFIG_MACH_LGE
+#include <mach/board_lge.h>
+#endif
 /* BMS Register Offsets */
 #define REVISION1			0x0
 #define REVISION2			0x1
@@ -295,11 +297,9 @@ static struct of_device_id qpnp_bms_match_table[] = {
 	{ .compatible = QPNP_BMS_DEV_NAME },
 	{}
 };
-
 static char *qpnp_bms_supplicants[] = {
 	"battery"
 };
-
 static enum power_supply_property msm_bms_power_props[] = {
 	POWER_SUPPLY_PROP_CAPACITY,
 	POWER_SUPPLY_PROP_STATUS,
@@ -1538,7 +1538,6 @@ static int get_prop_bms_current_now(struct qpnp_bms_chip *chip)
 	}
 	return result_ua;
 }
-
 /* Returns coulomb counter in uAh */
 static int get_prop_bms_charge_counter(struct qpnp_bms_chip *chip)
 {
@@ -3361,7 +3360,6 @@ static void battery_status_check(struct qpnp_bms_chip *chip)
 	}
 	mutex_unlock(&chip->status_lock);
 }
-
 #define CALIB_WRKARND_DIG_MAJOR_MAX		0x03
 static void batfet_status_check(struct qpnp_bms_chip *chip)
 {
@@ -3953,7 +3951,6 @@ static int bms_find_irqs(struct qpnp_bms_chip *chip,
 	SPMI_FIND_IRQ(chip, ocv_thr);
 	return 0;
 }
-
 #define SPMI_REQUEST_IRQ(chip, rc, irq_name)				\
 do {									\
 	rc = devm_request_irq(chip->dev, chip->irq_name##_irq.irq,	\
@@ -4267,7 +4264,6 @@ static int __devinit qpnp_bms_probe(struct spmi_device *spmi)
 		pr_err("error registering spmi resource %d\n", rc);
 		goto error_resource;
 	}
-
 	rc = qpnp_read_wrapper(chip, &chip->revision1,
 			chip->base + REVISION1, 1);
 	if (rc) {
@@ -4397,7 +4393,6 @@ static int __devinit qpnp_bms_probe(struct spmi_device *spmi)
 		qpnp_bms_external_power_changed;
 	chip->bms_psy.supplied_to = qpnp_bms_supplicants;
 	chip->bms_psy.num_supplicants = ARRAY_SIZE(qpnp_bms_supplicants);
-
 	rc = power_supply_register(chip->dev, &chip->bms_psy);
 
 	if (rc < 0) {
