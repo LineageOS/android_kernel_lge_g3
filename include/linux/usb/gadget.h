@@ -138,6 +138,9 @@ struct usb_ep_ops {
 
 	int (*fifo_status) (struct usb_ep *ep);
 	void (*fifo_flush) (struct usb_ep *ep);
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	void (*yield_request) (struct usb_ep *ep, struct usb_request *req);
+#endif
 };
 
 /**
@@ -180,6 +183,19 @@ struct usb_ep {
 };
 
 /*-------------------------------------------------------------------------*/
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+/*B2-BSP-USB@lge.com
+ * If some eps need to share the usb_requset,
+ * this function is do that.
+ * Change original ep num of dwc3_request to parameter ep num.
+ */
+static inline void lge_usb_ep_yield_request(struct usb_ep *ep,
+				       struct usb_request *req)
+{
+	if (ep->ops->yield_request)
+		ep->ops->yield_request(ep, req);
+}
+#endif
 
 /**
  * usb_ep_enable - configure endpoint, making it usable
@@ -955,6 +971,15 @@ static inline void usb_free_descriptors(struct usb_descriptor_header **v)
 {
 	kfree(v);
 }
+
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+struct usb_function;
+int usb_assign_descriptors(struct usb_function *f,
+		struct usb_descriptor_header **fs,
+		struct usb_descriptor_header **hs,
+		struct usb_descriptor_header **ss);
+void usb_free_all_descriptors(struct usb_function *f);
+#endif
 
 /*-------------------------------------------------------------------------*/
 
