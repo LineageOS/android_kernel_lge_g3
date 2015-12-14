@@ -143,6 +143,9 @@ enum msm_i2c_state {
 #define QUP_OUT_FIFO_NOT_EMPTY		0x10
 #define I2C_GPIOS_DT_CNT		(2)		/* sda and scl */
 
+#ifdef CONFIG_CHARGER_MAX77819
+bool i2c_suspended;
+#endif
 static char const * const i2c_rsrcs[] = {"i2c_clk", "i2c_sda"};
 
 static struct gpiomux_setting recovery_config = {
@@ -1798,6 +1801,9 @@ static int i2c_qup_pm_suspend_sys(struct device *device)
 	struct qup_i2c_dev *dev = platform_get_drvdata(pdev);
 	/* Acquire mutex to ensure current transaction is over */
 	mutex_lock(&dev->mlock);
+#ifdef CONFIG_CHARGER_MAX77819
+	i2c_suspended = true;
+#endif
 	dev->pwr_state = MSM_I2C_SYS_SUSPENDING;
 	mutex_unlock(&dev->mlock);
 	if (!pm_runtime_enabled(device) || !pm_runtime_suspended(device)) {
@@ -1810,7 +1816,9 @@ static int i2c_qup_pm_suspend_sys(struct device *device)
 		pm_runtime_set_suspended(device);
 		pm_runtime_enable(device);
 	}
+#ifndef CONFIG_CHARGER_MAX77819
 	dev->pwr_state = MSM_I2C_SYS_SUSPENDED;
+#endif
 	return 0;
 }
 
@@ -1825,6 +1833,32 @@ static int i2c_qup_pm_resume_sys(struct device *device)
 	 */
 	dev_dbg(device, "system resume\n");
 	dev->pwr_state = MSM_I2C_PM_SUSPENDED;
+#ifdef CONFIG_MACH_LGE
+	/* Avoid to i2c fail in i2c suspend status. QCT 1387439
+	 *
+	 * The exception-handling when i2c timeout occurs in suspend state.
+	 * When this situation, qup's resume automatically in suspend state.
+	 * Do not need to use the i2c mutex_lock aside from the Touch.
+	 *
+	 */
+	if (pm_runtime_suspended(device)) {
+		dev_info(device, "i2c is runtime suspended status !!! try to runtime resume !!!\n");
+	}
+
+	if (!pm_runtime_enabled(device)) {
+		dev_info(device, "Runtime PM is disabled\n");
+		i2c_qup_pm_resume_runtime(device);
+	} else {
+		pm_runtime_get_sync(device);
+	}
+
+	if (pm_runtime_suspended(device)) {
+		dev_info(device, "i2c can't wake up !!! pm_runtime_get_sync() doesn't work !!!\n");
+	}
+#endif
+#ifdef CONFIG_CHARGER_MAX77819
+	i2c_suspended = false;
+#endif
 	return 0;
 }
 #endif /* CONFIG_PM */

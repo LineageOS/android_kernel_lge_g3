@@ -2191,6 +2191,19 @@ static void sdhci_msm_check_power_status(struct sdhci_host *host, u32 req_type)
 	unsigned long flags;
 	bool done = false;
 
+#ifdef CONFIG_LGE_MMC_SD_USE_SDCC3
+	if (strcmp(host->hw_name, "msm_sdcc.3") == 0) {
+		if (req_type == REQ_IO_HIGH) {
+			/* Switch voltage High */
+			sdhci_msm_set_vdd_io_vol(msm_host->pdata, VDD_IO_HIGH, 0);
+			msm_host->curr_io_level = REQ_IO_HIGH;
+		} else if (req_type == REQ_IO_LOW) {
+			/* Switch voltage Low */
+			sdhci_msm_set_vdd_io_vol(msm_host->pdata, VDD_IO_LOW, 0);
+			msm_host->curr_io_level = REQ_IO_LOW;
+		}
+	}
+#endif
 	spin_lock_irqsave(&host->lock, flags);
 	pr_debug("%s: %s: request %d curr_pwr_state %x curr_io_level %x\n",
 			mmc_hostname(host->mmc), __func__, req_type,
