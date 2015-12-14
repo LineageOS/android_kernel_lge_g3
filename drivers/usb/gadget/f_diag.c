@@ -186,8 +186,10 @@ static void diag_update_pid_and_serial_num(struct diag_context *ctxt)
 	 * update pid and serail number to dload only if diag
 	 * interface is zeroth interface.
 	 */
+#ifndef CONFIG_USB_G_LGE_ANDROID
 	if (intf_desc.bInterfaceNumber)
 		return;
+#endif
 
 	/* pass on product id and serial number to dload */
 	if (!cdev->desc.iSerialNumber) {
