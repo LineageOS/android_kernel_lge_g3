@@ -1,0 +1,23 @@
+#
+# Synaptics DSX touchscreen driver configuration
+#
+menuconfig TOUCHSCREEN_SYNAPTICS_DSX
+	bool "Synaptics DSX touchscreen"
+	default y
+	help
+	  Say Y here if you have a Synaptics DSX touchscreen connected
+	  to your system.
+
+	  If unsure, say N.
+
+if TOUCHSCREEN_SYNAPTICS_DSX
+
+choice
+	default TOUCHSCREEN_SYNAPTICS_DSX_I2C
+	prompt "Synaptics DSX touchscreen bus interface"
+config TOUCHSCREEN_SYNAPTICS_DSX_I2C
+	bool "I2C"
+	depends on I2C
+endchoice
+
+endif
