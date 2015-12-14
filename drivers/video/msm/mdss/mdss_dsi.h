@@ -82,6 +82,9 @@ enum dsi_panel_bl_ctrl {
 	BL_PWM,
 	BL_WLED,
 	BL_DCS_CMD,
+#ifdef CONFIG_MACH_LGE_BACKLIGHT_SUPPORT
+	BL_OTHERS,
+#endif
 	UNKNOWN_CTRL,
 };
 
@@ -271,6 +274,9 @@ struct mdss_dsi_ctrl_pdata {
 	int irq_cnt;
 	int rst_gpio;
 	int disp_en_gpio;
+#ifdef CONFIG_MACH_LGE
+	int disp_en_gpio2;
+#endif
 	int disp_te_gpio;
 	int mode_gpio;
 	int disp_te_gpio_requested;
@@ -281,6 +287,9 @@ struct mdss_dsi_ctrl_pdata {
 	int bklt_max;
 	int new_fps;
 	int pwm_enabled;
+#ifdef CONFIG_MACH_LGE
+	int io_gpio; /* for china model */
+#endif
 	bool dmap_iommu_map;
 	struct pwm_device *pwm_bl;
 	struct dsi_drv_cm_data shared_pdata;
@@ -293,6 +302,10 @@ struct mdss_dsi_ctrl_pdata {
 
 	struct dsi_panel_cmds on_cmds;
 	struct dsi_panel_cmds off_cmds;
+#ifdef CONFIG_MACH_LGE
+	int num_of_dsv_enable_pin;
+	int lm3697_start_rev;
+#endif
 	struct dsi_panel_cmds status_cmds;
 	u32 status_value;
 
@@ -361,6 +374,9 @@ void mdss_dsi_clk_deinit(struct mdss_dsi_ctrl_pdata *ctrl_pdata);
 int mdss_dsi_enable_bus_clocks(struct mdss_dsi_ctrl_pdata *ctrl_pdata);
 void mdss_dsi_disable_bus_clocks(struct mdss_dsi_ctrl_pdata *ctrl_pdata);
 int mdss_dsi_panel_reset(struct mdss_panel_data *pdata, int enable);
+#ifdef CONFIG_MACH_MSM8974_G3
+void mdss_dsi_panel_io(struct mdss_panel_data *pdata, int enable);
+#endif
 void mdss_dsi_phy_disable(struct mdss_dsi_ctrl_pdata *ctrl);
 void mdss_dsi_phy_init(struct mdss_panel_data *pdata);
 void mdss_dsi_phy_sw_reset(unsigned char *ctrl_base);

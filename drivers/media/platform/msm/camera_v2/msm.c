@@ -724,6 +724,11 @@ int msm_post_event(struct v4l2_event *event, int timeout)
 		if (!rc) {
 			pr_err("%s: Timed out\n", __func__);
 			rc = -ETIMEDOUT;
+#ifdef CONFIG_MACH_LGE
+			pr_err("%s: ===== Camera Recovery Start! ===== \n", __func__);
+			dump_stack();
+			send_sig(SIGKILL, current, 0);
+#endif
 		} else {
 			pr_err("%s: Error: No timeout but list empty!",
 					__func__);
