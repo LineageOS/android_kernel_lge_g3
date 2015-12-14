@@ -39,3 +39,10 @@ config DIAGFWD_BRIDGE_CODE
 	help
 	 SMUX/HSIC Transport Layer for DIAG Router
 endmenu
+
+config LGE_DM_APP
+	bool "LGE DM APP Support"
+	default n
+	depends on MACH_LGE
+	help
+	 LGE DM APP Support

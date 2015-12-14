@@ -57,6 +57,10 @@
 
 #define SMD_DRAIN_BUF_SIZE 4096
 
+#ifdef CONFIG_LGE_DM_APP
+#include "lg_dm_tty.h"
+#endif
+
 int diag_debug_buf_idx;
 unsigned char diag_debug_buf[1024];
 /* Number of entries in table of buffers */
@@ -536,6 +540,11 @@ err:
 	     driver->logging_mode == MEMORY_DEVICE_MODE)
 		diag_ws_on_read(0);
 
+#ifdef CONFIG_LGE_DM_APP
+    if (driver->logging_mode == DM_APP_MODE)
+        diag_ws_on_read(0);
+#endif
+
 	return 0;
 }
 
@@ -574,6 +583,15 @@ void diag_smd_queue_read(struct diag_smd_info *smd_info)
 			diag_ws_on_read(0);
 		return;
 	}
+
+#ifdef CONFIG_LGE_DM_APP
+	if (driver->logging_mode == MEMORY_DEVICE_MODE && smd_info->type == SMD_DATA_TYPE)
+		diag_ws_on_notify();
+
+	if (driver->logging_mode == DM_APP_MODE && smd_info->type == SMD_DATA_TYPE)
+		diag_ws_on_notify();
+#endif
+
 }
 
 static int diag_smd_resize_buf(struct diag_smd_info *smd_info, void **buf,
@@ -802,6 +820,12 @@ void diag_smd_send_req(struct diag_smd_info *smd_info)
 		     driver->logging_mode == MEMORY_DEVICE_MODE)
 			diag_ws_on_read(total_recd);
 
+#ifdef CONFIG_LGE_DM_APP
+        if (smd_info->type == SMD_DATA_TYPE &&
+            driver->logging_mode == DM_APP_MODE)
+            diag_ws_on_read(pkt_len);
+#endif
+
 		if (total_recd > 0) {
 			if (!buf) {
 				pr_err("diag: In %s, SMD peripheral: %d, Out of diagmem for Modem\n",
@@ -825,6 +849,20 @@ void diag_smd_send_req(struct diag_smd_info *smd_info)
 	} else if (smd_info->ch && !buf &&
 		(driver->logging_mode == MEMORY_DEVICE_MODE)) {
 			chk_logging_wakeup();
+#ifdef CONFIG_LGE_DM_APP
+    } else if (smd_info->ch && (driver->logging_mode == DM_APP_MODE)) {
+		chk_logging_wakeup();
+		if( buf != NULL && smd_info->in_busy_1 == 0){
+			smd_info->in_busy_1 = 1;
+		}
+		else if(buf != NULL && smd_info->in_busy_2 == 0){
+			smd_info->in_busy_2 = 1;
+		}
+
+		lge_dm_tty->set_logging = 1;
+		wake_up_interruptible(&lge_dm_tty->waitq);
+#endif
+
 	} else {
 		if ((smd_info->type == SMD_DATA_TYPE ||
 		     smd_info->type == SMD_CMD_TYPE) &&
@@ -839,6 +877,12 @@ fail_return:
 	     smd_info->type == SMD_CMD_TYPE) &&
 	     driver->logging_mode == MEMORY_DEVICE_MODE)
 		diag_ws_on_read(0);
+
+#ifdef CONFIG_LGE_DM_APP
+    if (smd_info->type == SMD_DATA_TYPE &&
+        driver->logging_mode == DM_APP_MODE)
+        diag_ws_on_read(0);
+#endif
 
 	if (smd_info->type == SMD_DCI_TYPE ||
 					smd_info->type == SMD_DCI_CMD_TYPE)
@@ -889,6 +933,10 @@ static int diag_write_to_usb(struct usb_diag_ch *ch,
 	}
 	return err;
 }
+#endif
+
+#ifdef CONFIG_MACH_LGE
+extern int wait_mts_read_complete(void);
 #endif
 
 int diag_device_write(void *buf, int data_type, struct diag_request *write_ptr)
@@ -1018,6 +1066,10 @@ int diag_device_write(void *buf, int data_type, struct diag_request *write_ptr)
 					   " USB: ", 16, 1, DUMP_PREFIX_ADDRESS,
 					    buf, write_ptr->length, 1);
 #endif /* DIAG DEBUG */
+
+#ifdef CONFIG_MACH_LGE
+			if (!wait_mts_read_complete())
+#endif
 			err = diag_write_to_usb(driver->legacy_ch, write_ptr);
 		}
 #ifdef CONFIG_DIAG_SDIO_PIPE
@@ -1077,6 +1129,36 @@ int diag_device_write(void *buf, int data_type, struct diag_request *write_ptr)
 		APPEND_DEBUG('d');
 	}
 #endif /* DIAG OVER USB */
+
+#ifdef CONFIG_LGE_DM_APP
+	if (driver->logging_mode == DM_APP_MODE) {
+		/* only diag cmd #250 for supporting testmode tool */
+		if (data_type == APPS_DATA) {
+			driver->write_ptr_svc = (struct diag_request *)
+			(diagmem_alloc(driver, sizeof(struct diag_request),
+				 POOL_TYPE_WRITE_STRUCT));
+			if (driver->write_ptr_svc) {
+				driver->write_ptr_svc->length = driver->used;
+				driver->write_ptr_svc->buf = buf;
+
+				queue_work(lge_dm_tty->dm_wq,
+					&(lge_dm_tty->dm_usb_work));
+				flush_work(&(lge_dm_tty->dm_usb_work));
+
+			} else {
+				err = -1;
+			}
+
+			return err;
+
+		}
+
+		lge_dm_tty->set_logging = 1;
+		wake_up_interruptible(&lge_dm_tty->waitq);
+
+	}
+#endif
+
     return err;
 }
 
@@ -1318,7 +1400,6 @@ int diag_process_apps_pkt(unsigned char *buf, int len)
 #if defined(CONFIG_DIAG_OVER_USB)
 	unsigned char *ptr;
 #endif
-
 	/* Check if the command is a supported mask command */
 	mask_ret = diag_process_apps_masks(buf, len);
 	if (mask_ret <= 0)
@@ -1967,6 +2048,23 @@ int diagfwd_connect(void)
 	int err;
 	int i;
 
+#ifdef CONFIG_LGE_DM_APP
+	if (driver->logging_mode == DM_APP_MODE) {
+		printk(KERN_DEBUG "diag: USB connected in DM_APP_MODE\n");
+		driver->usb_connected = 1;
+
+		err = usb_diag_alloc_req(driver->legacy_ch, N_LEGACY_WRITE,
+				N_LEGACY_READ);
+		if (err)
+			printk(KERN_ERR "diag: unable to alloc USB req on legacy ch");
+
+		/* Poll USB channel to check for data*/
+		queue_work(driver->diag_wq, &(driver->diag_read_work));
+
+		return 0;
+	}
+#endif
+
 	printk(KERN_DEBUG "diag: USB connected\n");
 	err = usb_diag_alloc_req(driver->legacy_ch,
 			(driver->supports_separate_cmdrsp ?
@@ -2005,6 +2103,15 @@ int diagfwd_disconnect(void)
 	int i;
 	unsigned long flags;
 	struct diag_smd_info *smd_info = NULL;
+
+#ifdef CONFIG_LGE_DM_APP
+	if (driver->logging_mode == DM_APP_MODE) {
+		printk(KERN_DEBUG "diag: USB disconnected in DM_APP_MODE\n");
+		driver->usb_connected = 0;
+
+		return 0;
+	}
+#endif
 
 	printk(KERN_DEBUG "diag: USB disconnected\n");
 	driver->usb_connected = 0;
@@ -2135,6 +2242,27 @@ int diagfwd_read_complete(struct diag_request *diag_read_ptr)
 				queue_work(driver->diag_wq,
 						 &(driver->diag_read_work));
 		}
+
+#ifdef CONFIG_LGE_DM_APP
+		if (driver->logging_mode == DM_APP_MODE) {
+            if((*(buf) == 0xEF) && (*(buf + 1) == 0x00)) {
+                queue_work(lge_dm_tty->dm_wq,
+                    &(lge_dm_tty->dm_dload_work));
+
+                mutex_lock(&driver->diagchar_mutex);
+                driver->logging_mode = USB_MODE;
+                mutex_unlock(&driver->diagchar_mutex);
+            }
+
+			if (status != -ECONNRESET && status != -ESHUTDOWN)
+				queue_work(driver->diag_wq,
+					&(driver->diag_proc_hdlc_work));
+			else
+				queue_work(driver->diag_wq,
+						 &(driver->diag_read_work));
+		}
+#endif
+
 	}
 #ifdef CONFIG_DIAG_SDIO_PIPE
 	else if (buf == (void *)driver->usb_buf_mdm_out) {
@@ -2706,6 +2834,12 @@ void diagfwd_init(void)
 		goto err;
 	}
 #endif
+
+#ifdef CONFIG_USB_G_LGE_ANDROID_DIAG_OSP_SUPPORT
+	driver->diag_read_status = 1;
+	init_waitqueue_head(&driver->diag_read_wait_q);
+#endif
+
 	platform_driver_register(&msm_smd_ch1_driver);
 	platform_driver_register(&diag_smd_lite_driver);
 

@@ -34,6 +34,9 @@
 #include "mdss_fb.h"
 #include "mdss_mdp.h"
 #include "mdss_mdp_rotator.h"
+#ifdef CONFIG_MACH_LGE
+#include <mach/board_lge.h>
+#endif
 
 #define VSYNC_PERIOD 16
 #define BORDERFILL_NDX	0x0BF000BF
@@ -977,6 +980,9 @@ static void mdss_mdp_overlay_cleanup(struct msm_fb_data_type *mfd,
 		else
 			__mdss_mdp_overlay_free_list_add(mfd, &pipe->front_buf);
 		mdss_mdp_overlay_free_buf(&pipe->back_buf);
+#ifdef CONFIG_MACH_LGE
+		list_del_init(&pipe->list);
+#endif
 		mdss_mdp_pipe_destroy(pipe);
 	}
 	mutex_unlock(&mdp5_data->list_lock);
@@ -2565,6 +2571,11 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 	u32 new_reqs = 0;
 	u32 left_lm_w = left_lm_w_from_mfd(mfd);
 
+#ifdef MDP_BW_LIMIT_AB
+	bool bw_limit = false;
+	bool bw_limit_vt = false;
+#endif
+
 	ret = mutex_lock_interruptible(&mdp5_data->ov_lock);
 	if (ret)
 		return ret;
@@ -2580,6 +2591,19 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 	for (i = 0; i < ovlist->num_overlays; i++) {
 		req = overlays + i;
 
+#ifdef MDP_BW_LIMIT_AB
+		/* MDP_BLUR is used only MDP3 so we can use it on MDSS to check bw limit */
+		if (req->flags & MDP_BLUR) {
+			pr_debug("[QC] B/W limit flag detected !!!\n");
+			bw_limit = true;
+		}
+
+		if (req->flags & MDP_DITHER) {
+			pr_debug("[QC] B/W limit flag detected !!!\n");
+			bw_limit = true;
+			bw_limit_vt = true;
+		}
+#endif
 		req->z_order += MDSS_MDP_STAGE_0;
 		ret = mdss_mdp_overlay_pipe_setup(mfd, req, &pipe);
 		req->z_order -= MDSS_MDP_STAGE_0;
@@ -2616,6 +2640,12 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 validate_exit:
 	if (IS_ERR_VALUE(ret))
 		mdss_mdp_overlay_release(mfd, new_reqs);
+#ifdef MDP_BW_LIMIT_AB
+	else {
+		mdp5_data->bw_limit = bw_limit;
+		mdp5_data->bw_limit_vt = bw_limit_vt;
+	}
+#endif
 	mutex_unlock(&mdp5_data->ov_lock);
 
 	ovlist->processed_overlays = i;

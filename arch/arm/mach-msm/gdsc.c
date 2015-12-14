@@ -73,8 +73,7 @@ static int gdsc_enable(struct regulator_dev *rdev)
 		regval = readl_relaxed(sc->gdscr);
 		regval &= ~SW_COLLAPSE_MASK;
 		writel_relaxed(regval, sc->gdscr);
-
-		ret = readl_tight_poll_timeout(sc->gdscr, regval,
+			ret = readl_tight_poll_timeout(sc->gdscr, regval,
 					regval & PWR_ON_MASK, TIMEOUT_US);
 		if (ret) {
 			dev_err(&rdev->dev, "%s enable timed out\n",
@@ -122,8 +121,7 @@ static int gdsc_disable(struct regulator_dev *rdev)
 		regval = readl_relaxed(sc->gdscr);
 		regval |= SW_COLLAPSE_MASK;
 		writel_relaxed(regval, sc->gdscr);
-
-		ret = readl_tight_poll_timeout(sc->gdscr, regval,
+			ret = readl_tight_poll_timeout(sc->gdscr, regval,
 					       !(regval & PWR_ON_MASK),
 						TIMEOUT_US);
 		if (ret)
@@ -146,7 +144,7 @@ static struct regulator_ops gdsc_ops = {
 
 static int __devinit gdsc_probe(struct platform_device *pdev)
 {
-	static atomic_t gdsc_count __initdata = ATOMIC_INIT(-1);
+	static atomic_t gdsc_count = ATOMIC_INIT(-1);
 	struct regulator_init_data *init_data;
 	struct resource *res;
 	struct gdsc *sc;
@@ -204,7 +202,6 @@ static int __devinit gdsc_probe(struct platform_device *pdev)
 			return rc;
 		}
 	}
-
 	sc->rdesc.id = atomic_inc_return(&gdsc_count);
 	sc->rdesc.ops = &gdsc_ops;
 	sc->rdesc.type = REGULATOR_VOLTAGE;
@@ -274,7 +271,7 @@ static int __devexit gdsc_remove(struct platform_device *pdev)
 	return 0;
 }
 
-static struct of_device_id gdsc_match_table[] __initdata = {
+static struct of_device_id gdsc_match_table[] = {
 	{ .compatible = "qcom,gdsc" },
 	{}
 };
