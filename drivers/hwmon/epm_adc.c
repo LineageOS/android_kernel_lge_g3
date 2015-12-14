@@ -133,6 +133,9 @@ struct epm_adc_drv {
 	struct miscdevice		misc;
 	uint32_t			channel_mask;
 	struct epm_chan_properties	epm_psoc_ch_prop[0];
+#ifdef CONFIG_MACH_LGE
+	bool                            do_not_create_sysfs_file;
+#endif
 };
 
 static struct epm_adc_drv *epm_adc_drv;
@@ -2001,6 +2004,11 @@ static int __devinit epm_adc_psoc_init_hwmon(struct spi_device *spi,
 {
 	int i, rc, num_chans = 31;
 
+#ifdef CONFIG_MACH_LGE
+	if (epm_adc->do_not_create_sysfs_file)
+		return 0;
+#endif
+
 	for (i = 0; i < num_chans; i++) {
 		rc = device_create_file(&spi->dev,
 				&epm_adc_psoc_in_attrs[i].dev_attr);
@@ -2081,6 +2089,11 @@ static int get_device_tree_data(struct spi_device *spi)
 		epm_adc->epm_psoc_ch_prop[i].gain =
 							epm_ch_gain[i];
 	}
+
+#ifdef CONFIG_MACH_LGE
+	epm_adc->do_not_create_sysfs_file = of_property_read_bool(node,
+			"lge,do-not-create-sysfs-file");
+#endif
 
 	epm_adc->channel_mask = channel_mask;
 	epm_adc_drv = epm_adc;
