@@ -665,9 +665,13 @@ static long venc_set_input_buffer(struct v4l2_subdev *sd, void *arg)
 
 	mregion = kzalloc(sizeof(*mregion), GFP_KERNEL);
 	planes = kzalloc(sizeof(*planes) * inst->num_input_planes, GFP_KERNEL);
-	if (!mregion || !planes)
+	if (!mregion || !planes) {
+//(2015.11.6) jinhee0207.jo@lge.com, Fix WBT #120299 of Memory Leak [START]
+		if(mregion) kfree(mregion);
+		if(planes) kfree(planes);
+//(2015.11.6) jinhee0207.jo@lge.com, Fix WBT #120299 of Memory Leak [END]
 		return -ENOMEM;
-
+	}
 	*mregion = *(struct mem_region *)arg;
 	populate_planes(planes, inst->num_input_planes,
 			mregion->paddr, mregion->size);
@@ -876,6 +880,10 @@ static long venc_set_output_buffer(struct v4l2_subdev *sd, void *arg)
 
 	if (!mregion || !planes) {
 		WFD_MSG_ERR("Failed to allocate memory\n");
+//(2015.11.6) jinhee0207.jo@lge.com, Fix WBT #120300 of Memory Leak [START]
+		if(mregion) kfree(mregion);
+		if(planes) kfree(planes);
+//(2015.11.6) jinhee0207.jo@lge.com, Fix WBT #120300 of Memory Leak [END]
 		goto venc_set_output_buffer_fail;
 	}
 

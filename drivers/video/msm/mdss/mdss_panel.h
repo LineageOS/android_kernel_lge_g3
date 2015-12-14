@@ -358,7 +358,17 @@ struct mdss_panel_info {
 	struct mipi_panel_info mipi;
 	struct lvds_panel_info lvds;
 	struct edp_panel_info edp;
+#if defined(CONFIG_T1_TOVIS_NT51021_WUXGA_VIDEO_PANEL)
+	int panel_type;
+#endif
 };
+
+#if defined(CONFIG_T1_TOVIS_NT51021_WUXGA_VIDEO_PANEL)
+enum lcd_panel_type {
+	TOVIS_NT51021_VIDEO_PANEL,
+	UNKNOWN_PANEL
+};
+#endif
 
 struct mdss_panel_data {
 	struct mdss_panel_info panel_info;

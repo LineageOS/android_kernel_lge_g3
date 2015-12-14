@@ -315,7 +315,11 @@ static void mdss_dsi_bus_clk_stop(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 
 static int mdss_dsi_link_clk_set_rate(struct mdss_dsi_ctrl_pdata *ctrl_pdata)
 {
+#if defined(CONFIG_T1_TOVIS_NT51021_WUXGA_VIDEO_PANEL)
+	u32 esc_clk_rate = 12800000;
+#else
 	u32 esc_clk_rate = 19200000;
+#endif
 	int rc = 0;
 
 	if (!ctrl_pdata) {

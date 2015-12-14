@@ -29,7 +29,12 @@
 #define CYCLES_PER_MICRO_SEC 4915
 #define CCI_MAX_DELAY 10000
 
+#if defined(CONFIG_MACH_LGE)
+#define CCI_TIMEOUT msecs_to_jiffies(300)
+#else
 #define CCI_TIMEOUT msecs_to_jiffies(100)
+#endif
+
 
 /* TODO move this somewhere else */
 #define MSM_CCI_DRV_NAME "msm_cci"

@@ -295,6 +295,9 @@ static void modem_fatal_fn(struct work_struct *work)
 
 	modem_state = smsm_get_state(SMSM_MODEM_STATE);
 	pr_err("Modem SMSM state = 0x%x!\n", modem_state);
+#if defined(CONFIG_PRE_SELF_DIAGNOSIS)
+	lge_pre_self_diagnosis((char *) "modem",1,(char *) "Watchdog bite",(char *) "_", modem_state);
+#endif
 
 	if (modem_state == 0 || modem_state & panic_smsm_states) {
 		subsystem_restart_dev(drv->subsys);

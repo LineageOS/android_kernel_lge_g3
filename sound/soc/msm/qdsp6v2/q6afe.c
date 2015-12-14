@@ -17,6 +17,9 @@
 #include <linux/wait.h>
 #include <linux/jiffies.h>
 #include <linux/sched.h>
+#ifdef CONFIG_SND_SOC_CS35L32
+#include <linux/device.h>
+#endif
 #include <linux/msm_audio_ion.h>
 #include <sound/apr_audio-v2.h>
 #include <sound/q6afe-v2.h>
@@ -3268,7 +3271,84 @@ int afe_spk_prot_feed_back_cfg(int src_port, int dst_port,
 fail_cmd:
 	return ret;
 }
+#ifdef CONFIG_SND_SOC_CS35L32
+int q6afe_set_rtip(int enable)
+{
+	struct afe_rtip_v1 set_param;
+	int ret = 0;
 
+	pr_debug("%s\n", __func__);
+	if (this_afe.apr == NULL) {
+		this_afe.apr = apr_register("ADSP", "AFE",afe_callback,
+					    0xFFFFFFFF, &this_afe);
+		pr_info("%s: Register AFE\n", __func__);
+		if (this_afe.apr == NULL) {
+			pr_err("%s: Unable to register AFE\n",__func__);
+			ret = -ENODEV;
+			return ret;
+		}
+	}
+	set_param.hdr.hdr_field = APR_HDR_FIELD(APR_MSG_TYPE_SEQ_CMD,
+						APR_HDR_LEN(20), APR_PKT_VER);
+
+	set_param.hdr.pkt_size = APR_PKT_SIZE(APR_HDR_SIZE,
+					      sizeof(set_param) - APR_HDR_SIZE);
+	set_param.hdr.src_port = 0;
+	set_param.hdr.dest_port = 0;
+	set_param.hdr.token = 0;
+	set_param.hdr.opcode = AFE_PORT_CMD_SET_PARAM_V2;
+	set_param.param.port_id = AFE_PORT_ID_QUATERNARY_MI2S_TX;
+	set_param.param.payload_size = (sizeof(set_param) - sizeof(struct apr_hdr) -
+				sizeof(struct afe_port_cmd_set_param_v2) -
+				sizeof(struct afe_param_rtip_enable));
+
+	set_param.param.payload_address_lsw = 0;
+	set_param.param.payload_address_msw = 0;
+	set_param.param.mem_map_handle = 0x00;
+	set_param.pdata.module_id = AFE_MODULE_RTIP_ENABLE;
+
+	switch (enable){
+		case 0:
+		case 1:
+			pr_debug("%s: enable/disable the module", __func__);
+			set_param.pdata.param_id = AFE_PARAM_RTIP_ENABLE;
+			set_param.pdata.param_size = sizeof(struct afe_param_rtip_enable);
+			set_param.rtip_t.enable = enable;
+			set_param.rtip_t.reserved = 0;
+		break;
+		case 2:
+		case 3:
+			pr_debug("%s: set/reset debugging of the module", __func__);
+			set_param.pdata.param_id = AFE_PARAM_RTIP_DEBUG;
+			set_param.pdata.param_size = sizeof(struct afe_param_rtip_enable);
+			set_param.rtip_t.enable = enable - 2;
+			set_param.rtip_t.reserved = 0;
+		break;
+		case 4:
+		case 5:
+			pr_debug("%s: set/reset performance monitoring of the module", __func__);
+			set_param.pdata.param_id = AFE_PARAM_RTIP_PERF;
+			set_param.pdata.param_size      = sizeof(struct afe_param_rtip_enable);
+			set_param.rtip_t.enable           = enable - 4;
+			set_param.rtip_t.reserved                 = 0;
+		break;
+		default:
+			return ret;
+	}
+
+	ret = afe_apr_send_pkt(&set_param, &this_afe.wait[0]);
+	if (ret < 0) {
+		pr_err("%s: AFE enable or disable RTIP failed\n", __func__);
+		ret = -EINVAL;
+		goto fail_cmd;
+	}
+
+	return 0;
+
+fail_cmd:
+	return	ret;
+}
+#endif
 static int __init afe_init(void)
 {
 	int i = 0;
