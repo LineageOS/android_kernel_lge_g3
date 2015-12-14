@@ -2961,6 +2961,10 @@ struct msm_spi_platform_data * __init msm_spi_dt_to_pdata(
 			&pdata->bam_consumer_pipe_index, DT_OPT,  DT_U32,   0},
 		{"qcom,bam-producer-pipe-index",
 			&pdata->bam_producer_pipe_index, DT_OPT,  DT_U32,   0},
+#ifdef CONFIG_MACH_LGE
+		{"lge,do-not-create-sysfs-file",
+			&pdata->do_not_create_sysfs_file,DT_OPT,  DT_BOOL,  0},
+#endif
 		{"qcom,gpio-clk",
 			&dd->spi_gpios[0],               DT_OPT,  DT_GPIO, -1},
 		{"qcom,gpio-miso",
@@ -3317,6 +3321,10 @@ skip_dma_resources:
 	if (rc)
 		goto err_probe_reg_master;
 
+#ifdef CONFIG_MACH_LGE
+	if (pdata->do_not_create_sysfs_file)
+		return 0;
+#endif
 	rc = sysfs_create_group(&(dd->dev->kobj), &dev_attr_grp);
 	if (rc) {
 		dev_err(&pdev->dev, "failed to create dev. attrs : %d\n", rc);

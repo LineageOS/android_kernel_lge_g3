@@ -147,3 +147,6 @@ obj-$(CONFIG_MFD_PM8XXX_MISC) 	+= pm8xxx-misc.o
 obj-$(CONFIG_MFD_PM8XXX_SPK) 	+= pm8xxx-spk.o
 obj-$(CONFIG_MFD_PM8XXX_BATT_ALARM) 	+= pm8xxx-batt-alarm.o
 obj-$(CONFIG_MFD_ANATOP)	+= anatop-mfd.o
+obj-$(CONFIG_MFD_MAX77819) 	+= max77819.o
+obj-$(CONFIG_MFD_TPS65132)	+= tps65132.o
+obj-$(CONFIG_MFD_LM3631)	+= lm3631.o

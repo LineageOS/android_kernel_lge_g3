@@ -28,6 +28,10 @@
 #include <linux/debugfs.h>
 #include <linux/kmemleak.h>
 
+#ifdef CONFIG_USB_G_LGE_ANDROID_DIAG_OSP_SUPPORT
+#include "../../char/diag/diagchar.h"
+#endif
+
 static DEFINE_SPINLOCK(ch_lock);
 static LIST_HEAD(usb_diag_ch_list);
 
@@ -186,8 +190,10 @@ static void diag_update_pid_and_serial_num(struct diag_context *ctxt)
 	 * update pid and serail number to dload only if diag
 	 * interface is zeroth interface.
 	 */
+#ifndef CONFIG_USB_G_LGE_ANDROID
 	if (intf_desc.bInterfaceNumber)
 		return;
+#endif
 
 	/* pass on product id and serial number to dload */
 	if (!cdev->desc.iSerialNumber) {
@@ -244,13 +250,23 @@ static void diag_write_complete(struct usb_ep *ep,
 		ctxt->ch->notify(ctxt->ch->priv, USB_DIAG_WRITE_DONE, d_req);
 }
 
+#ifdef CONFIG_USB_G_LGE_ANDROID_DIAG_OSP_SUPPORT
+#define DIAG_OSP_TYPE 0xf7
+#endif
 static void diag_read_complete(struct usb_ep *ep,
 		struct usb_request *req)
 {
 	struct diag_context *ctxt = ep->driver_data;
 	struct diag_request *d_req = req->context;
 	unsigned long flags;
+#ifdef CONFIG_USB_G_LGE_ANDROID_DIAG_OSP_SUPPORT
+	struct diagchar_dev *driver = ctxt->ch->priv;
 
+	if (((unsigned char *)(d_req->buf))[0] == DIAG_OSP_TYPE)
+		driver->diag_read_status = 0;
+	else
+		driver->diag_read_status = 1;
+#endif
 	d_req->actual = req->actual;
 	d_req->status = req->status;
 
@@ -424,6 +440,16 @@ int usb_diag_read(struct usb_diag_ch *ch, struct diag_request *d_req)
 	unsigned long flags;
 	struct usb_request *req;
 	static DEFINE_RATELIMIT_STATE(rl, 10*HZ, 1);
+#ifdef CONFIG_USB_G_LGE_ANDROID_DIAG_OSP_SUPPORT
+	struct diagchar_dev *driver = ch->priv;
+
+	if (!driver)
+		return -ENODEV;
+
+	wait_event_interruptible_timeout(driver->diag_read_wait_q,
+			driver->diag_read_status, 1*HZ);
+	ctxt = ch->priv_usb;
+#endif
 
 	if (!ctxt)
 		return -ENODEV;
