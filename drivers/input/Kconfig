@@ -188,6 +188,10 @@ source "drivers/input/touchscreen/Kconfig"
 
 source "drivers/input/misc/Kconfig"
 
+# LGE_CHANGE_S: include sensor sub-directory for manuconfig
+source "drivers/input/sensor/Kconfig"
+# LGE_CHANGE_E
+
 endif
 
 menu "Hardware I/O ports"

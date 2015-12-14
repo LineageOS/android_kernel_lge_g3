@@ -45,6 +45,8 @@ enum pon_trigger_source {
 enum pon_power_off_type {
 	PON_POWER_OFF_WARM_RESET	= 0x01,
 	PON_POWER_OFF_SHUTDOWN		= 0x04,
+	PON_POWER_OFF_DVDD_SHUTDOWN	= 0x05,
+	PON_POWER_OFF_XVDD_SHUTDOWN	= 0x06,
 	PON_POWER_OFF_HARD_RESET	= 0x07,
 };
 

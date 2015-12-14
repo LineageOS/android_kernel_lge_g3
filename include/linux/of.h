@@ -191,10 +191,13 @@ extern struct device_node *of_get_next_child(const struct device_node *node,
 					     struct device_node *prev);
 extern struct device_node *of_get_next_available_child(
 	const struct device_node *node, struct device_node *prev);
-
 #define for_each_child_of_node(parent, child) \
 	for (child = of_get_next_child(parent, NULL); child != NULL; \
-	     child = of_get_next_child(parent, child))
+			child = of_get_next_child(parent, child))
+
+#define for_each_available_child_of_node(parent, child) \
+	for (child = of_get_next_available_child(parent, NULL); child != NULL; \
+			child = of_get_next_available_child(parent, child))
 
 #define for_each_available_child_of_node(parent, child) \
 	for (child = of_get_next_available_child(parent, NULL); child != NULL; \
@@ -230,6 +233,9 @@ extern int of_property_count_strings(struct device_node *np,
 extern int of_device_is_compatible(const struct device_node *device,
 				   const char *);
 extern int of_device_is_available(const struct device_node *device);
+#ifdef CONFIG_MACH_LGE
+extern int of_device_is_available_revision(struct device_node *device);
+#endif
 extern const void *of_get_property(const struct device_node *node,
 				const char *name,
 				int *lenp);
