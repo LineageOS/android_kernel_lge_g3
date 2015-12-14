@@ -31,6 +31,7 @@
 #define UART_MODE			4
 #define SOCKET_MODE			5
 #define CALLBACK_MODE			6
+
 /* different values that go in for diag_data_type */
 #define DATA_TYPE_EVENT         	0
 #define DATA_TYPE_F3            	1

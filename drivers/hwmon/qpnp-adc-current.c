@@ -1576,6 +1576,7 @@ static int __devinit qpnp_iadc_probe(struct spmi_device *spmi)
 
 	dev_set_drvdata(&spmi->dev, iadc);
 	list_add(&iadc->list, &qpnp_iadc_device_list);
+
 	rc = qpnp_iadc_calibrate_for_trim(iadc, true);
 	if (rc)
 		dev_err(&spmi->dev, "failed to calibrate for USR trim\n");
@@ -1594,7 +1595,6 @@ fail:
 		i++;
 	}
 	hwmon_device_unregister(iadc->iadc_hwmon);
-
 	return rc;
 }
 

@@ -36,6 +36,9 @@ struct mfd_cell {
 	/* platform data passed to the sub devices drivers */
 	void			*platform_data;
 	size_t			pdata_size;
+#ifdef CONFIG_MFD_LM3631
+	const char		*of_compatible;
+#endif
 
 	/*
 	 * These resources can be specified relative to the parent device.

@@ -1290,12 +1290,28 @@ static int diag_process_dci_pkt_rsp(unsigned char *buf, int len)
 				 * If its a Mode reset command, make sure it is
 				 * registered on the Apps Processor
 				 */
+#if CONFIG_MACH_LGE
+#define MODE_RESET 2
+
+				if (entry.cmd_code_lo == MODE_CMD &&
+					entry.cmd_code_hi == MODE_CMD){
+					if (header->subsys_id == MODE_RESET){
+						if (entry.client_id != APPS_DATA)
+							continue;
+					}
+					else {
+						if (entry.client_id != MODEM_DATA)
+							continue;
+					}
+				}
+#else
 				if (entry.cmd_code_lo == MODE_CMD &&
 				    entry.cmd_code_hi == MODE_CMD &&
 					header->subsys_id == RESET_ID) {
 					if (entry.client_id != APPS_DATA)
 						continue;
 				}
+#endif
 					ret = diag_send_dci_pkt(entry, buf, len,
 								req_entry->tag);
 					found = 1;
