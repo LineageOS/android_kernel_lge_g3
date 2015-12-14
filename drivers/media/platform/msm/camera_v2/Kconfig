@@ -7,6 +7,18 @@ config MSM_CAMERA_SENSOR
           data for camera support. The driver support V4L2
           subdev APIs.
 
+config LG_OIS
+	bool "Qualcomm MSM camera ois support"
+	depends on MSMB_CAMERA
+	---help---
+	Enable support for ois for msm camera.
+
+config LG_PROXY
+        bool "Qualcomm MSM camera proxy support"
+        depends on MSMB_CAMERA
+        ---help---
+        Enable support for proxy sensor for msm camera.
+
 config MSM_CPP
         bool "Qualcomm MSM Camera Post Processing Engine support"
         depends on MSMB_CAMERA
@@ -100,6 +112,21 @@ config MSM_ISPIF_V1
           This module acts as a crossbar between CSID and VFE. Output
           of any CID of MSM_CSI22_HEADER can be routed to of pixel
           or raw data interface in VFE.
+
+config IMX135
+	bool "Sensor IMX135 (BAYER 12M)"
+	depends on MSMB_CAMERA
+	---help---
+	  Sony 12 MP Bayer Sensor with auto focus, uses
+	  4 mipi lanes, preview config = 2104 x 1560 at 49 fps,
+	  snapshot config = 4208 x 3120 at 24 fps,
+	  Video HDR support.
+
+config IMX208
+        bool "Sensor IMX208 2.1MP MIPI (Bayer 2.1M)"
+	depends on MSMB_CAMERA
+	---help---
+	  SONY 2.1M BAYER MIPI Sensor without Autofocus
 
 config IMX134
 	bool "Sensor IMX134 (BAYER 8M)"
@@ -222,3 +249,6 @@ config MSM_GEMINI
 	depends on MSMB_CAMERA && (ARCH_MSM7X30 || ARCH_MSM8X60 || ARCH_MSM8960)
 	---help---
 	  Enables support for the Gemini JPEG encoder engine for 8x60.
+
+config LGE_DUAL_LED
+	bool "LGE dual led support"

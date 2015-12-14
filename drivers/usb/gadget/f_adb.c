@@ -59,6 +59,19 @@ struct adb_dev {
 	bool close_notified;
 };
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+struct adb_function {
+	struct usb_configuration *conf;
+	struct adb_dev *dev;
+
+	struct usb_ep *ep_in;
+	struct usb_ep *ep_out;
+	struct usb_request *rx_req;
+
+	struct usb_function function;
+};
+#endif
+
 static struct usb_interface_descriptor adb_interface_desc = {
 	.bLength                = USB_DT_INTERFACE_SIZE,
 	.bDescriptorType        = USB_DT_INTERFACE,
@@ -162,10 +175,22 @@ static void adb_closed_callback(void);
 /* temporary variable used between adb_open() and adb_gadget_bind() */
 static struct adb_dev *_adb_dev;
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+static inline struct adb_function *func_to_adbf(struct usb_function *f)
+{
+	return container_of(f, struct adb_function, function);
+}
+
+static inline struct adb_dev *func_to_adb(struct usb_function *f)
+{
+	return func_to_adbf(f)->dev;
+}
+#else
 static inline struct adb_dev *func_to_adb(struct usb_function *f)
 {
 	return container_of(f, struct adb_dev, function);
 }
+#endif
 
 
 static struct usb_request *adb_request_new(struct usb_ep *ep, int buffer_size)
@@ -536,6 +561,9 @@ adb_function_bind(struct usb_configuration *c, struct usb_function *f)
 	struct adb_dev	*dev = func_to_adb(f);
 	int			id;
 	int			ret;
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	struct adb_function *func = func_to_adbf(f);
+#endif
 
 	dev->cdev = cdev;
 	DBG(cdev, "adb_function_bind dev: %p\n", dev);
@@ -567,9 +595,17 @@ adb_function_bind(struct usb_configuration *c, struct usb_function *f)
 			adb_fullspeed_out_desc.bEndpointAddress;
 	}
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	func->ep_in = dev->ep_in;
+	func->ep_out = dev->ep_out;
+	func->rx_req = dev->rx_req;
+	usb_assign_descriptors(f, fs_adb_descs, hs_adb_descs, ss_adb_descs);
+#endif
+
 	DBG(cdev, "%s speed %s: IN/%s, OUT/%s\n",
 			gadget_is_dualspeed(c->cdev->gadget) ? "dual" : "full",
 			f->name, dev->ep_in->name, dev->ep_out->name);
+
 	return 0;
 }
 
@@ -578,16 +614,27 @@ adb_function_unbind(struct usb_configuration *c, struct usb_function *f)
 {
 	struct adb_dev	*dev = func_to_adb(f);
 	struct usb_request *req;
-
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	struct adb_function *func = func_to_adbf(f);
+#endif
 
 	atomic_set(&dev->online, 0);
 	atomic_set(&dev->error, 1);
 
 	wake_up(&dev->read_wq);
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	adb_request_free(func->rx_req, func->ep_out);
+#else
 	adb_request_free(dev->rx_req, dev->ep_out);
+#endif
 	while ((req = adb_req_get(dev, &dev->tx_idle)))
 		adb_request_free(req, dev->ep_in);
+
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	usb_free_all_descriptors(f);
+	kfree(func);
+#endif
 }
 
 static int adb_function_set_alt(struct usb_function *f,
@@ -639,6 +686,9 @@ static void adb_function_disable(struct usb_function *f)
 {
 	struct adb_dev	*dev = func_to_adb(f);
 	struct usb_composite_dev	*cdev = dev->cdev;
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	struct adb_function *func = func_to_adbf(f);
+#endif
 
 	DBG(cdev, "adb_function_disable cdev %p\n", cdev);
 	/*
@@ -649,21 +699,76 @@ static void adb_function_disable(struct usb_function *f)
 	dev->notify_close = false;
 	atomic_set(&dev->online, 0);
 	atomic_set(&dev->error, 1);
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	usb_ep_disable(func->ep_in);
+	usb_ep_disable(func->ep_out);
+#else
 	usb_ep_disable(dev->ep_in);
 	usb_ep_disable(dev->ep_out);
+#endif
 
 	/* readers may be blocked waiting for us to go online */
 	wake_up(&dev->read_wq);
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	VDBG(cdev, "%s disabled\n", f->name);
+#else
 	VDBG(cdev, "%s disabled\n", dev->function.name);
+#endif
 }
+
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+static int adb_function_set_config(struct usb_function *f)
+{
+	struct adb_dev *dev = func_to_adb(f);
+	struct adb_function *func = func_to_adbf(f);
+	struct usb_request *req;
+
+	dev->ep_in = func->ep_in;
+	dev->ep_out = func->ep_out;
+	dev->rx_req = func->rx_req;
+
+	list_for_each_entry(req, &dev->tx_idle, list) {
+		lge_usb_ep_yield_request(dev->ep_in, req);
+	}
+
+	return 0;
+}
+#endif
 
 static int adb_bind_config(struct usb_configuration *c)
 {
 	struct adb_dev *dev = _adb_dev;
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	struct adb_function *func;
+#endif
 
 	pr_debug("adb_bind_config\n");
 
+#ifdef CONFIG_USB_G_LGE_MULTIPLE_CONFIGURATION
+	func = kzalloc(sizeof(*func), GFP_KERNEL);
+	if (!func) {
+		return -ENOMEM;
+	}
+
+	dev->cdev = c->cdev;
+
+	func->function.name = "adb";
+	func->function.descriptors = fs_adb_descs;
+	func->function.hs_descriptors = hs_adb_descs;
+	if (gadget_is_superspeed(c->cdev->gadget))
+		func->function.ss_descriptors = ss_adb_descs;
+	func->function.bind = adb_function_bind;
+	func->function.unbind = adb_function_unbind;
+	func->function.set_alt = adb_function_set_alt;
+	func->function.disable = adb_function_disable;
+	func->function.set_config = adb_function_set_config;
+
+	func->conf = c;
+	func->dev = dev;
+
+	return usb_add_function(c, &func->function);
+#else
 	dev->cdev = c->cdev;
 	dev->function.name = "adb";
 	dev->function.descriptors = fs_adb_descs;
@@ -676,6 +781,7 @@ static int adb_bind_config(struct usb_configuration *c)
 	dev->function.disable = adb_function_disable;
 
 	return usb_add_function(c, &dev->function);
+#endif
 }
 
 static int adb_setup(void)
