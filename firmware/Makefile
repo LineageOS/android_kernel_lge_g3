@@ -26,6 +26,13 @@ fw-shipped- += acenic/tg1.bin
 else
 acenic-objs := acenic/tg1.bin acenic/tg2.bin
 endif
+
+synaptics_firmware_subdir := g3
+synaptics_img_file := $(wildcard $(srctree)/firmware/synaptics/$(synaptics_firmware_subdir)/*.img)
+synaptics_img_file += $(wildcard $(srctree)/firmware/synaptics/$(synaptics_firmware_subdir)/*.txt)
+synaptics_firmware := $(subst $(srctree)/firmware/,,$(synaptics_img_file))
+
+fw-shipped-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4) += $(synaptics_firmware)
 fw-shipped-$(CONFIG_3C359) += 3com/3C359.bin
 fw-shipped-$(CONFIG_ACENIC) += $(acenic-objs)
 fw-shipped-$(CONFIG_ADAPTEC_STARFIRE) += adaptec/starfire_rx.bin \
@@ -146,6 +153,9 @@ fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
 # Directories which we _might_ need to create, so we have a rule for them.
 firmware-dirs := $(sort $(addprefix $(objtree)/$(obj)/,$(dir $(fw-external-y) $(fw-shipped-all))))
 
+quiet_cmd_copy  = COPY    $@
+      cmd_copy  = cp $(srctree)/$@ $@
+
 quiet_cmd_mkdir = MKDIR   $(patsubst $(objtree)/%,%,$@)
       cmd_mkdir = mkdir -p $@
 
@@ -215,6 +225,12 @@ $(patsubst %,$(obj)/%.gen.o, $(fw-external-y)): $(obj)/%.gen.o: $(fwdir)/%
 $(obj)/%: $(obj)/%.ihex | $(objtree)/$(obj)/$$(dir %)
 	$(call cmd,ihex)
 
+$(obj)/%.img: $(objtree)/$(obj)/$$(dir %.img)
+	$(call cmd,copy)
+
+$(obj)/%.txt: $(objtree)/$(obj)/$$(dir %.txt)
+	$(call cmd,copy)
+
 # Don't depend on ihex2fw if we're installing and it already exists.
 # Putting it after | in the dependencies doesn't seem sufficient when
 # we're installing after a cross-compile, because ihex2fw has dependencies
@@ -246,7 +262,7 @@ obj-$(CONFIG_FIRMWARE_IN_KERNEL) += $(patsubst %,%.gen.o, $(fw-shipped-y))
 
 # Remove .S files and binaries created from ihex
 # (during 'make clean' .config isn't included so they're all in $(fw-shipped-))
-targets := $(fw-shipped-) $(patsubst $(obj)/%,%, \
+targets := $(patsubst $(obj)/%,%, \
 				$(shell find $(obj) -name \*.gen.S 2>/dev/null))
 
 # Without this, built-in.o won't be created when it's empty, and the
