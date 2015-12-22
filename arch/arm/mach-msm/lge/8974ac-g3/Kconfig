@@ -56,6 +56,7 @@ config MACH_MSM8974_G3_GLOBAL_COM
 config MACH_MSM8974_G3_CA
 	depends on ARCH_MSM8974
 	select MACH_MSM8974_G3
+	select SHITTY_VARIANT
 	bool "MSM8974 G3 CA"
 	help
 	  Support for the Qualcomm MSM8974 G3 Canada device.
