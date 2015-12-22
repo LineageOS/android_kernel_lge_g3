@@ -57,4 +57,17 @@ config LGE_QFPROM_INTERFACE
 	help
 	  LGE QFPROM DRIVER.
 
+config NO_ERROR_ON_MISMATCH
+	bool "Don't error on section mismatches"
+	default n
+	help
+	  Some variants (looking at you d852) won't
+	  boot when built with gcc 4.9. Building our
+	  current base with gcc 4.8 fails on section
+	  mismatches, so add a config option to disable
+	  erroring on section mismatches.
+
+	  For the record, this is an absolutely terrible
+	  thing to do.
+
 endmenu
