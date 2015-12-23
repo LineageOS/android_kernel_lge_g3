@@ -40,7 +40,7 @@
 #define DRIVER_VERSION "7.2"
 #define DRIVER_AUTHOR	"Clark Kim <clark.kim@maxim-ic.com>"
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 /* LGE specific */
 #include <mach/board_lge.h>
 #include <linux/max17048_battery.h>
@@ -357,7 +357,7 @@ struct max8971 {
 #endif
 };
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 #define __lock(_me)	{}
 #define __unlock(_me)	{}
 #else
@@ -514,7 +514,7 @@ static struct max8971_bitdesc max8971_cfg_bitdesc[] = {
 };
 #define __cfg_bitdesc(_cfg) (&max8971_cfg_bitdesc[CFG_##_cfg])
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static int max8971_charger_lge_probe(struct max8971 *me);
 #endif
 
@@ -1266,7 +1266,7 @@ static int max8971_set_property(struct power_supply *psy,
 	__lock(me);
 
 	switch (psp) {
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	case POWER_SUPPLY_PROP_ONLINE:
 #endif
 	case POWER_SUPPLY_PROP_CHARGING_ENABLED:
@@ -1367,7 +1367,7 @@ static enum power_supply_property max8971_psy_props[] = {
 	POWER_SUPPLY_PROP_CHARGE_TYPE,
 	POWER_SUPPLY_PROP_HEALTH,
 	POWER_SUPPLY_PROP_PRESENT,
-#ifndef CONFIG_LGE_PM
+#if !defined(CONFIG_LGE_PM)
 #ifndef POWER_SUPPLY_PROP_CHARGING_ENABLED_REPLACED
 	POWER_SUPPLY_PROP_ONLINE,
 #endif /* !POWER_SUPPLY_PROP_CHARGING_ENABLED_REPLACED */
@@ -1672,7 +1672,7 @@ static __devinit int max8971_probe(struct i2c_client *client,
 
 	max8971_resume_log_work(me);
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	rc = max8971_charger_lge_probe(me);
 	if (rc)
 		goto lge_probe_fail;
@@ -1725,7 +1725,7 @@ static int max8971_resume(struct device *dev)
 }
 #endif
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static ssize_t at_chg_status_show(struct device *dev,
 				struct device_attribute *attr, char *buf)
 {

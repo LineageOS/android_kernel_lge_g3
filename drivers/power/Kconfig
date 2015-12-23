@@ -511,22 +511,20 @@ config LGE_PM
 	tristate "PM8941 LGE Feature"
 	depends on SPMI
 	help
-	Say Y here to enable support for pm8941 chip lge feature.
+      Say Y here to enable support for pm8941 chip lge feature.
 	  LGE_PM releasted changed.
 	  Power Management, Battery charging, Battery Monitoring System
 	  with battery FET and fuel gauge.
 
-config LGE_PM_BATTERY_ID_CHECKER
-	tristate "Virtual Device for LGE Battery ID Checker"
-	default n
+config ADC_READY_CHECK_JB
+	tristate "PM8941 and PM8841 combibation JB ADC ready check feature"
+	depends on LGE_PM
 	help
-	  Say Y here to enable LGE Battery ID Checker
+	  Say Y here to enable support for JB adc ready check feature
+	  QCT changed ADC read way in KK for next MSM8974 AC and later version
+	  thease platform have two channel ADC in each PMICs
+	  This Feature MUST used in MSM8974 AA/AB only
 
-config LGE_PM_LLK_MODE
-	tristate "implementation power requirements of retail mode"
-	default n
-	help
-	  Power requirements for retail mode
 
 config LGE_CHARGER_TEMP_SCENARIO
 	depends on LGE_PM
@@ -543,6 +541,12 @@ config MAX17048_FUELGAUGE
 	  MAX17048 is fuel-gauge systems for lithium-ion (Li+) batteries
 	  in handheld and portable equipment. The MAX17048 is configured
 	  to operate with a single lithium cell
+
+config LGE_PM_BATTERY_ID_CHECKER
+	tristate "Virtual Device for LGE Battery ID Checker"
+	default n
+	help
+	  Say Y here to enable LGE Battery ID Checker
 
 config LGE_CURRENTNOW
 	bool "Virtual Device for LGE current now reading"
@@ -567,38 +571,38 @@ config CHARGER_MAX77819
 	default n
 	help
 	  Say Y to enable support for the MAX77819 PMIC battery charger.
-
 config CHARGER_MAX8971
 	tristate "Maxim MAX8971 Charger driver"
 	depends on I2C
 	default n
-	help
-	  Say Y to enable support for the Max8971 switching mode based charger
-	  and sysfs. The driver supports controlling charger-enable and current
-	  limiting capavilities. The driver also supports dual-charging with
-	  Max77819
-
+	help 
+		Say Y to enable support for the Max8971 switching mode based charger
+		and sysfs. The driver supports controlling charger-enable and current
+		limiting capavilities. The driver also supports dual-charging with
+		Max77819
 config CHARGER_MAX8971_FORCE_SINGLE_CHARGING
 	tristate "Maxim MAX77819 PMIC battery charger driver"
 	depends on CHARGER_MAX8971
 	default n
 	help
 	  Say Y to enable support for the MAX8971 PMIC force-single charger.
-
 config CHARGER_UNIFIED_WLC
 	tristate "wireless charger control driver"
 	default n
-
+	help
+		wireless charger control driver
 config CHARGER_UNIFIED_WLC_BQ5102X
 	tristate "wireless charger control driver"
 	depends on CHARGER_UNIFIED_WLC
 	default n
-
+	help
+		wireless charger control driver
 config CHARGER_UNIFIED_WLC_ALIGNMENT
 	tristate "wireless charger alignment"
 	depends on CHARGER_UNIFIED_WLC
 	default n
-
+	help
+		wireless charger alignment
 choice
 	prompt "WLC Alignment"
 	depends on CHARGER_UNIFIED_WLC
@@ -606,13 +610,34 @@ choice
 config CHARGER_UNIFIED_WLC_ALIGNMENT_IDT9025A
 	tristate "wireless charger alignment"
 	select CHARGER_UNIFIED_WLC_ALIGNMENT
-
+	default n
+	help
+		wireless charger alignment
 config CHARGER_UNIFIED_WLC_ALIGNMENT_BQ5102X
 	tristate "wireless charger alignment"
 	select CHARGER_UNIFIED_WLC_ALIGNMENT
-
+	default n
+	help
+		wireless charger alignment
 endchoice
 
+config VZW_POWER_REQ
+    tristate "implementation power requirements of Verizon"
+    depends on BQ24296_CHARGER
+    default n
+    help
+		power requirements for verizon
+config LGE_PM_CHARGING_SUPPORT_PHIHONG
+    tristate "Support Phihong travel charger"
+    depends on BQ24296_CHARGER
+    default n
+    help
+		Chargers which is not support AICL need this feature.
+config LGE_PM_LLK_MODE
+    tristate "implementation power requirements of retail mode"
+	default n
+    help
+		power requirements for retail mode
 config LGE_LOW_BATT_LIMIT
 	tristate "to prevent UVLO at low voltage"
 	default n
@@ -624,5 +649,4 @@ config LGE_PM_USB_CURRENT_MAX_MODE
 	help
 	  Say Y to enable LGE PM USB current max mode
 	  for MST, Auto Testing with USB
-
 endif # POWER_SUPPLY

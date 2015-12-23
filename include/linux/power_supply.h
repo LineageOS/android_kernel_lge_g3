@@ -144,7 +144,7 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_SCOPE,
 	POWER_SUPPLY_PROP_SYSTEM_TEMP_LEVEL,
 	POWER_SUPPLY_PROP_RESISTANCE,
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	POWER_SUPPLY_PROP_BATTERY_ID_CHECKER,
 #endif
 #ifdef CONFIG_LGE_PM
@@ -152,22 +152,23 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_EXT_PWR_CHECK,
 	POWER_SUPPLY_PROP_BAT_REMOVED,
 #endif
-#ifdef CONFIG_MACH_MSM8974_G3_VZW
+#if defined(CONFIG_VZW_POWER_REQ)
 	POWER_SUPPLY_PROP_VZW_CHG,
 #endif
-#ifdef CONFIG_CHARGER_MAX77819
+#if defined(CONFIG_CHARGER_MAX77819) || defined(CONFIG_CHARGER_MAX8971) || \
+    defined(CONFIG_BQ24296_CHARGER) || defined(CONFIG_SMB349_CHARGER)
 	POWER_SUPPLY_PROP_SAFTETY_CHARGER_TIMER,
 	POWER_SUPPLY_PROP_CHARGING_COMPLETE,
 #endif
 #ifdef CONFIG_LGE_PM_USB_CURRENT_MAX_MODE
-	POWER_SUPPLY_PROP_USB_CURRENT_MAX_MODE,
+        POWER_SUPPLY_PROP_USB_CURRENT_MAX_MODE,
 #endif
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#if defined(CONFIG_CHARGER_UNIFIED_WLC)
 #ifdef CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT
 	POWER_SUPPLY_PROP_ALIGNMENT,
 #endif
 #endif
-#ifdef CONFIG_LGE_PM_LLK_MODE
+#if defined(CONFIG_LGE_PM_LLK_MODE)
 	POWER_SUPPLY_PROP_STORE_DEMO_ENABLED,
 #endif
 	/* Properties of type `const char *' */
@@ -176,10 +177,9 @@ enum power_supply_property {
 	POWER_SUPPLY_PROP_SERIAL_NUMBER,
 };
 
-#ifdef CONFIG_MACH_LGE
 enum power_supply_event_type {
 	POWER_SUPPLY_PROP_UNKNOWN,
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#if defined(CONFIG_CHARGER_UNIFIED_WLC)
 	POWER_SUPPLY_PROP_WIRELESS_DCIN_PRESENT,
 	POWER_SUPPLY_PROP_WIRELESS_USB_PRESENT,
 	POWER_SUPPLY_PROP_WIRELESS_CHARGE_ENABLED,
@@ -187,15 +187,21 @@ enum power_supply_event_type {
 	POWER_SUPPLY_PROP_WIRELESS_ONLINE,
 	POWER_SUPPLY_PROP_WIRELESS_ONLINE_OTG,
 	POWER_SUPPLY_PROP_WIRELESS_FAKE_OTG,
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL_FOR_WLC
 	POWER_SUPPLY_PROP_WIRELESS_THERMAL_MITIGATION,
 #endif
+#endif
 	POWER_SUPPLY_PROP_ABNORMAL_TA,
+#if defined(CONFIG_LGE_SMART_CHARGING)
+	POWER_SUPPLY_PROP_SMART_CHARGING_ENABLE,
+	POWER_SUPPLY_PROP_SMART_CHARGING_CHG_CURRENT,
+	POWER_SUPPLY_PROP_SMART_CHARGING_FORCE_UPDATE,
+#endif
 #ifdef CONFIG_LGE_PM
 	POWER_SUPPLY_PROP_FLOATED_CHARGER,
 	POWER_SUPPLY_PROP_DRIVER_UNINSTALL,
 #endif
 };
-#endif
 
 enum power_supply_type {
 	POWER_SUPPLY_TYPE_UNKNOWN = 0,
@@ -206,7 +212,7 @@ enum power_supply_type {
 	POWER_SUPPLY_TYPE_USB_DCP,	/* Dedicated Charging Port */
 	POWER_SUPPLY_TYPE_USB_CDP,	/* Charging Downstream Port */
 	POWER_SUPPLY_TYPE_USB_ACA,	/* Accessory Charger Adapters */
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#if defined(CONFIG_CHARGER_UNIFIED_WLC)
 	POWER_SUPPLY_TYPE_WIRELESS,
 #endif
 	POWER_SUPPLY_TYPE_BMS,		/* Battery Monitor System */
@@ -232,14 +238,12 @@ struct power_supply {
 	int (*set_property)(struct power_supply *psy,
 			    enum power_supply_property psp,
 			    const union power_supply_propval *val);
-#ifdef CONFIG_LGE_PM
 	int (*get_event_property)(struct power_supply *psy,
 			enum power_supply_event_type psp,
 			union power_supply_propval *val);
 	int (*set_event_property)(struct power_supply *psy,
 			enum power_supply_event_type psp,
 			    const union power_supply_propval *val);
-#endif
 	int (*property_is_writeable)(struct power_supply *psy,
 				     enum power_supply_property psp);
 	void (*external_power_changed)(struct power_supply *psy);

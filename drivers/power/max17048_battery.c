@@ -138,7 +138,9 @@ struct max17048_chip {
 static struct max17048_chip *ref;
 int lge_power_test_flag = 1;
 #endif
+
 #ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+/* using to cal rcomp */
 int cell_info;
 #endif
 
@@ -593,6 +595,18 @@ static void max17048_work(struct work_struct *work)
 				MAX17048_LOW_POLLING_PERIOD)));
 	} else {
 		cancel_delayed_work(&chip->low_polling_work);
+	}
+#endif
+
+#ifdef CONFIG_VZW_LLK
+	if (external_smb349_is_charger_present()) {
+		if (chip->capacity_level == 35) {
+			vzw_llk_smb349_enable_charging(0);
+			printk(KERN_INFO "%s : VZW LLK Charging Stop!!\n", __func__);
+		} else if (chip->capacity_level == 30) {
+			vzw_llk_smb349_enable_charging(1);
+			printk(KERN_INFO "%s : VZW LLK Charging Enable!!\n", __func__);
+		}
 	}
 #endif
 
@@ -1098,12 +1112,12 @@ static int __devinit max17048_probe(struct i2c_client *client,
 	uint16_t version;
 #ifdef CONFIG_LGE_PM
 	unsigned int smem_size = 0;
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 	uint	_batt_id_ = 0;
 #endif
 	unsigned int *batt_id = (unsigned int *)
 		(smem_get_entry(SMEM_BATT_INFO, &smem_size));
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 	if (smem_size != 0 && batt_id) {
 		_batt_id_ = (*batt_id >> 8) & 0x00ff;
 		if (_batt_id_ == BATT_NOT_PRESENT) {
@@ -1112,7 +1126,7 @@ static int __devinit max17048_probe(struct i2c_client *client,
 			return 0;
 		}
 #ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
-		else if (_batt_id_ == BATT_DS2704_L
+		 else if (_batt_id_ == BATT_DS2704_L
 			|| _batt_id_ == BATT_ISL6296_C) {
 			cell_info = LGC_LLL; /* LGC Battery */
 		} else if (_batt_id_ == BATT_DS2704_C

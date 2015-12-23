@@ -46,6 +46,10 @@ static enum lge_states_changes states_change;
 static int change_charger;
 static int pseudo_chg_ui;
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+static int last_thermal_current;
+#endif
+
 static enum lge_battemp_states determine_batt_temp_state(int batt_temp)
 {
 	int cnt;
@@ -200,9 +204,30 @@ void lge_monitor_batt_temp(struct charging_info req, struct charging_rsp *res)
 	res->disable_chg =
 		charging_state == CHG_BATT_STPCHG_STATE ? true : false;
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	if (charging_state == CHG_BATT_NORMAL_STATE) {
+		if (req.chg_current_te <= req.chg_current_ma)
+			res->dc_current = req.chg_current_te;
+		else
+			res->dc_current = req.chg_current_ma;
+	} else if (charging_state == CHG_BATT_DECCUR_STATE) {
+		if (req.chg_current_te <= DC_IUSB_CURRENT)
+			res->dc_current = req.chg_current_te;
+		else
+			res->dc_current = DC_IUSB_CURRENT;
+	} else {
+		res->dc_current = DC_CURRENT_DEF;
+	}
+
+	if (last_thermal_current ^ res->dc_current) {
+		last_thermal_current = res->dc_current;
+		res->force_update = true;
+	}
+#else
 	res->dc_current =
 		charging_state ==
 		CHG_BATT_DECCUR_STATE ? DC_IUSB_CURRENT : DC_CURRENT_DEF;
+#endif
 
 	res->btm_state = BTM_HEALTH_GOOD;
 
@@ -215,6 +240,16 @@ void lge_monitor_batt_temp(struct charging_info req, struct charging_rsp *res)
 
 	res->pseudo_chg_ui = pseudo_chg_ui;
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	pr_err("LGE charging scenario : state %d -> %d(%d-%d),"\
+		" temp=%d, volt=%d, BTM=%d,"\
+		" charger=%d, cur_set=%d/%d, chg_cur = %d\n",
+		pre_state, charging_state, res->change_lvl,
+		res->force_update ? 1 : 0,
+		req.batt_temp, req.batt_volt / 1000,
+		res->btm_state, req.is_charger,
+		req.chg_current_te, res->dc_current, req.current_now);
+#else
 	pr_err("LGE charging scenario : state %d -> %d(%d-%d),"\
 		" temp=%d, volt=%d, BTM=%d,"\
 		" charger=%d, chg_cur = %d\n",
@@ -222,6 +257,7 @@ void lge_monitor_batt_temp(struct charging_info req, struct charging_rsp *res)
 		res->force_update ? 1 : 0,
 		req.batt_temp, req.batt_volt / 1000,
 		res->btm_state, req.is_charger, req.current_now);
+#endif
 }
 
 
