@@ -154,7 +154,7 @@ fw-shipped-all := $(fw-shipped-y) $(fw-shipped-m) $(fw-shipped-)
 firmware-dirs := $(sort $(addprefix $(objtree)/$(obj)/,$(dir $(fw-external-y) $(fw-shipped-all))))
 
 quiet_cmd_copy  = COPY    $@
-      cmd_copy  = cp $(srctree)/$@ $@
+      cmd_copy  = cp -u $(srctree)/$@ $@
 
 quiet_cmd_mkdir = MKDIR   $(patsubst $(objtree)/%,%,$@)
       cmd_mkdir = mkdir -p $@
@@ -225,11 +225,10 @@ $(patsubst %,$(obj)/%.gen.o, $(fw-external-y)): $(obj)/%.gen.o: $(fwdir)/%
 $(obj)/%: $(obj)/%.ihex | $(objtree)/$(obj)/$$(dir %)
 	$(call cmd,ihex)
 
-$(obj)/%.img: $(objtree)/$(obj)/$$(dir %.img)
+ifneq ($(objtree),$(srctree))
+$(patsubst %,$(obj)/%, $(fw-shipped-y)): %: %.gen.S
 	$(call cmd,copy)
-
-$(obj)/%.txt: $(objtree)/$(obj)/$$(dir %.txt)
-	$(call cmd,copy)
+endif
 
 # Don't depend on ihex2fw if we're installing and it already exists.
 # Putting it after | in the dependencies doesn't seem sufficient when
