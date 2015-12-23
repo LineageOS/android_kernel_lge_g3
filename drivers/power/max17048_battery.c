@@ -138,7 +138,9 @@ struct max17048_chip {
 static struct max17048_chip *ref;
 int lge_power_test_flag = 1;
 #endif
+
 #ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+/* using to cal rcomp */
 int cell_info;
 #endif
 
@@ -269,6 +271,31 @@ static int max17048_get_capacity_from_soc(void)
 	batt_soc /= 10000000;
 
 	batt_soc = max17048_capacity_evaluator((int)batt_soc);
+#ifdef CONFIG_LGE_UPSCALING_LOW_SOC
+#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+	/* Report 0.42%(0x300) ~ 1% to 1% */
+	/* If Full and Emplty is changed, need to modify the value, 3 */
+	else if (batt_soc == 0 && buf[0] >= 3) {
+		if (cell_info == LGC_LLL && buf[0] >= 3) {
+			printk(KERN_ERR "%s : buf[0] is %d, upscale to 1%%\n"
+				, __func__, buf[0]);
+			batt_soc = 1;
+		} else if (cell_info == TCD_AAC && buf[0] >= 6) {
+			printk(KERN_ERR "%s : buf[0] is %d, upscale to 1%%\n"
+				, __func__, buf[0]);
+			batt_soc = 1;
+		}
+	}
+#else
+	/* Report 0.42%(0x300) ~ 1% to 1% */
+	/* If Full and Emplty is changed, need to modify the value, 3 */
+	else if (batt_soc == 0 && buf[0] >= 3) {
+		printk(KERN_ERR "%s : buf[0] is %d, upscale to 1%%\n"
+				, __func__, buf[0]);
+		batt_soc = 1;
+	}
+#endif
+#endif
 	return batt_soc;
 }
 #endif
@@ -596,6 +623,18 @@ static void max17048_work(struct work_struct *work)
 	}
 #endif
 
+#ifdef CONFIG_VZW_LLK
+	if (external_smb349_is_charger_present()) {
+		if (chip->capacity_level == 35) {
+			vzw_llk_smb349_enable_charging(0);
+			printk(KERN_INFO "%s : VZW LLK Charging Stop!!\n", __func__);
+		} else if (chip->capacity_level == 30) {
+			vzw_llk_smb349_enable_charging(1);
+			printk(KERN_INFO "%s : VZW LLK Charging Enable!!\n", __func__);
+		}
+	}
+#endif
+
 #ifdef CONFIG_MAX17048_SOC_ALERT
 	enable_irq(gpio_to_irq(chip->model_data->alert_gpio));
 #else
@@ -816,9 +855,17 @@ int max17048_set_rcomp_by_temperature(struct i2c_client *client)
 
 	/* Calculate RCOMP by temperature*/
 	if (temp > 20)
+#ifdef CONFIG_MACH_MSM8974_DZNY_DCM
+		new_rcomp = init_rcomp + (int)((temp - 20)*temp_hot/(-10000));
+#else
 		new_rcomp = init_rcomp + (int)((temp - 20)*temp_hot/(-1000));
+#endif
 	else if (temp < 20)
+#ifdef CONFIG_MACH_MSM8974_DZNY_DCM
+		new_rcomp = init_rcomp + (int)((temp - 20)*temp_cold/(-10000));
+#else
 		new_rcomp = init_rcomp + (int)((temp - 20)*temp_cold/(-1000));
+#endif
 	else
 		new_rcomp = init_rcomp;
 
@@ -1098,12 +1145,12 @@ static int __devinit max17048_probe(struct i2c_client *client,
 	uint16_t version;
 #ifdef CONFIG_LGE_PM
 	unsigned int smem_size = 0;
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 	uint	_batt_id_ = 0;
 #endif
 	unsigned int *batt_id = (unsigned int *)
 		(smem_get_entry(SMEM_BATT_INFO, &smem_size));
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 	if (smem_size != 0 && batt_id) {
 		_batt_id_ = (*batt_id >> 8) & 0x00ff;
 		if (_batt_id_ == BATT_NOT_PRESENT) {
@@ -1112,7 +1159,7 @@ static int __devinit max17048_probe(struct i2c_client *client,
 			return 0;
 		}
 #ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
-		else if (_batt_id_ == BATT_DS2704_L
+		 else if (_batt_id_ == BATT_DS2704_L
 			|| _batt_id_ == BATT_ISL6296_C) {
 			cell_info = LGC_LLL; /* LGC Battery */
 		} else if (_batt_id_ == BATT_DS2704_C

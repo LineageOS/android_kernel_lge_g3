@@ -18,6 +18,7 @@
 #include <linux/stat.h>
 
 #include "power_supply.h"
+
 #ifdef CONFIG_LGE_PM
 #include <mach/board_lge.h>
 #endif
@@ -34,6 +35,8 @@
  * (as a macro let's say).
  */
 
+/* BEGIN : janghyun.baek@lge.com 2012-12-26 Temporarily change mode to 777
+ * debug power sysfs node */
 #ifdef CONFIG_LGE_PM
 #define PSEUDO_BATT_ATTR(_name)						\
 {									\
@@ -70,6 +73,8 @@
 	.store = power_supply_store_property,				\
 }
 #endif
+/* QCT origin */
+/* END : janghyun.baek@lge.com 2012-12-26 */
 
 static struct device_attribute power_supply_attrs[];
 
@@ -79,8 +84,11 @@ static ssize_t power_supply_show_property(struct device *dev,
 	static char *type_text[] = {
 		"Unknown", "Battery", "UPS", "Mains", "USB",
 		"USB_DCP", "USB_CDP", "USB_ACA",
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#if defined(CONFIG_CHARGER_UNIFIED_WLC) || defined(CONFIG_WIRELESS_CHARGER)
 		"Wireless"
+#endif
+#if defined CONFIG_LGE_PM_BATTERY_RT9428_FUELGAUGE
+		"Rt9428"
 #endif
 	};
 	static char *status_text[] = {
@@ -277,7 +285,7 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(scope),
 	POWER_SUPPLY_ATTR(system_temp_level),
 	POWER_SUPPLY_ATTR(resistance),
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	POWER_SUPPLY_ATTR(valid_batt_id),
 #endif
 #ifdef CONFIG_LGE_PM
@@ -285,20 +293,37 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(ext_pwr),
 	POWER_SUPPLY_ATTR(removed),
 #endif
-#ifdef CONFIG_MACH_MSM8974_G3_VZW
+#if defined(CONFIG_VZW_POWER_REQ) || defined(CONFIG_SMB349_VZW_FAST_CHG)
 	POWER_SUPPLY_ATTR(vzw_chg),
 #endif
 #if defined(CONFIG_CHARGER_MAX77819) || defined(CONFIG_CHARGER_MAX8971) || \
-    defined(CONFIG_BQ24296_CHARGER)
+    defined(CONFIG_BQ24296_CHARGER) || defined(CONFIG_SMB349_CHARGER)
 	POWER_SUPPLY_ATTR(safety_timer),
 	POWER_SUPPLY_ATTR(charging_complete),
 #endif
 #ifdef CONFIG_LGE_PM_USB_CURRENT_MAX_MODE
         POWER_SUPPLY_ATTR(usb_current_max_mode),
 #endif
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#ifdef CONFIG_FTT_CHARGER_V3
+	POWER_SUPPLY_ATTR(ftt_anntena_level),
+#endif
+#ifdef CONFIG_MAX17050_FUELGAUGE
+	POWER_SUPPLY_ATTR(battery_condition),
+	POWER_SUPPLY_ATTR(battery_age),
+#endif
+#if defined CONFIG_LGE_PM_BATTERY_EXTERNAL_FUELGAUGE
+	POWER_SUPPLY_ATTR(use_fuelgauge),
+#endif
+#if defined(CONFIG_CHARGER_UNIFIED_WLC)
 #ifdef CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT
 	POWER_SUPPLY_ATTR(alignment),
+#if defined(CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT_IDT9025A) && defined(CONFIG_CHARGER_FACTORY_MODE)
+	/* only for debugging */
+	POWER_SUPPLY_ATTR(frequency),
+#elif defined(CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT_BQ5102X)  && defined(CONFIG_CHARGER_FACTORY_MODE)
+	/* only for debugging */
+	POWER_SUPPLY_ATTR(vrect),
+#endif
 #endif
 #endif
 #if defined(CONFIG_LGE_PM_LLK_MODE)

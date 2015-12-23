@@ -54,7 +54,7 @@
 
 #define I2C_SUSPEND_WORKAROUND (1)
 
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL_FOR_WLC
 #define THERMALE_NOT_TRIGGER -1
 #define THERMALE_ALL_CLEAR 0
 #define THERMALE_SETTABLE_RANGE_MAX 3008
@@ -169,9 +169,6 @@ static int
 set_wlc_thermal_mitigation(const char *val, struct kernel_param *kp)
 {
 	int ret;
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
-	struct unified_wlc_chip *chip;
-#endif
 
 	ret = param_set_int(val, kp);
 	if (ret) {
@@ -184,20 +181,24 @@ set_wlc_thermal_mitigation(const char *val, struct kernel_param *kp)
 		return ret;
 	}
 
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL_FOR_WLC
 	pr_info("%s : thermal-engine set wlc_thermal_mitigation to %d\n",
 		__func__, wlc_thermal_mitigation);
 
 	if(!(wlc_thermal_mitigation == THERMALE_ALL_CLEAR)
-	   && !(wlc_thermal_mitigation >= THERMALE_SETTABLE_RANGE_MIN
-	   && wlc_thermal_mitigation <= THERMALE_SETTABLE_RANGE_MAX)) {
+		&& !(wlc_thermal_mitigation >= THERMALE_SETTABLE_RANGE_MIN
+		&& wlc_thermal_mitigation <= THERMALE_SETTABLE_RANGE_MAX)) {
 		pr_err("invalid input!\n");
 		return ret;
 	}
 
-        chip = the_chip;
-	wlc_charger_psy_setprop_event(chip, psy_ext,
-	    WIRELESS_THERMAL_MITIGATION, wlc_thermal_mitigation, _EXT_);
+	{
+		struct unified_wlc_chip *chip = the_chip;
+		wlc_charger_psy_setprop_event(chip, psy_ext,
+			WIRELESS_THERMAL_MITIGATION, wlc_thermal_mitigation, _EXT_);
+	}
+#else
+	pr_err("thermal-engine wlc chg current control not enabled\n");
 #endif
 
 	return 0;
@@ -406,11 +407,11 @@ static int pm_power_get_event_property_wireless(struct power_supply *psy,
 				__func__, val->intval);
 		}
 		break;
-#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL_FOR_WLC
 	case POWER_SUPPLY_PROP_WIRELESS_THERMAL_MITIGATION:
 		val->intval = wlc_thermal_mitigation;
 		pr_info("%s : POWER_SUPPLY_PROP_WIRELESS_THERMAL_MITIGATION : %d\n",
-		    __func__, val->intval);
+			__func__, val->intval);
 		break;
 #endif
 	default:

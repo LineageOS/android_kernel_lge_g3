@@ -21,6 +21,9 @@ struct unified_wlc_platform_data {
 	//int (*wlc_is_plugged)(void);
 };
 #ifdef CONFIG_CHARGER_UNIFIED_WLC_ALIGNMENT
+#ifdef CONFIG_CHARGER_FACTORY_MODE
+#define WLC_ALIGN_DEBUG
+#endif
 #define WLC_ALIGN_INTERVAL	(300)
 #endif
 

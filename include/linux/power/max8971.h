@@ -49,7 +49,7 @@ struct max8971_platform_data {
 };
 
 /* for compatibility with kernel not from android/kernel/msm */
-#ifndef CONFIG_LGE_PM
+#if !defined(CONFIG_LGE_PM)
 #ifndef POWER_SUPPLY_PROP_CHARGING_ENABLED
 #define POWER_SUPPLY_PROP_CHARGING_ENABLED_REPLACED
 #define POWER_SUPPLY_PROP_CHARGING_ENABLED \

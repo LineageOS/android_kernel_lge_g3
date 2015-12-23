@@ -42,7 +42,7 @@
 #include "../usb/dwc3/core.h"
 #include <linux/gpio.h>
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 /* LGE specific */
 #include <linux/power/max77819.h>
 #include <mach/board_lge.h>
@@ -53,11 +53,12 @@
 #include <linux/pm_wakeup.h>
 #include <mach/board_lge.h>
 #include <mach/msm_smsm.h>
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
-#include <linux/power/lge_battery_id.h>
-#endif
 
 #define CHG_STEP	50000
+#endif
+
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
+#include <linux/power/lge_battery_id.h>
 #endif
 
 #define DRIVER_DESC    "MAX77819 Charger Driver"
@@ -162,7 +163,7 @@
 #define CHG_WDT_DTLS                0x48
 #define SAFEOUTCTL		0x49
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 #define INPUT_CURRENT_LIMIT_USB20_uA (500 * 1000)
 #define INPUT_CURRENT_LIMIT_USB30_uA (900 * 1000)
 
@@ -214,7 +215,7 @@ struct max77819_charger {
 #if defined(CONFIG_CHARGER_UNIFIED_WLC)
 	int                                    wlc_online;
 #endif
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	int                                    health;
 	int                                    status;
 	int                                    charge_type;
@@ -232,8 +233,8 @@ struct max77819_charger {
 	int					otg_en_gpio;
 	int					battery_present;
 #endif
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
-	int					batt_id_smem;
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
+	int batt_id_smem;
 #endif
 
 #if I2C_SUSPEND_WORKAROUND
@@ -246,7 +247,7 @@ struct max77819_charger {
 #endif
 };
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 #define __lock(_me)    {}
 #define __unlock(_me)  {}
 #else
@@ -430,7 +431,7 @@ enum {
 	CFG_CHGRSTRT,
 	CFG_TOPOFFTIME,
 	CFG_ITOPOFF,
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	CFG_OTG_EN,
 	CFG_RBOOSTEN,
 	CFG_VBYPSET
@@ -462,14 +463,14 @@ static struct max77819_bitdesc max77819_charger_cfg_bitdesc[] = {
 	CFG_BITDESC(TOPOFFTIME,	TOPOFF),
 	CFG_BITDESC(ITOPOFF,	TOPOFF),
 	CFG_BITDESC(OTG_EN, BAT2SOC_CTL),
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	CFG_BITDESC(RBOOSTEN, RBOOST_CTL1),
 	CFG_BITDESC(VBYPSET, RBOOST_CTL2)
 #endif
 };
 #define __cfg_bitdesc(_cfg) (&max77819_charger_cfg_bitdesc[CFG_##_cfg])
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static struct attribute_group max77819_charger_attribute_group_lge;
 static int max77819_get_phy_chgcc(struct max77819_charger *me,
 	uint32_t channel);
@@ -1163,7 +1164,7 @@ static struct attribute_group max77819_charger_attribute_group = {
 	.attrs	= max77819_charger_attributes,
 };
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 
 static bool is_factory_cable(void)
 {
@@ -1303,7 +1304,7 @@ static int max77819_charger_set_dcilmt(struct max77819_charger *me, int ua)
 		goto out;
 	}
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	dcilmt = ua <  250000 ? 0x00 :
 		ua < 275000 ? 0x03 :
 		ua < 1500000 ? (ua -  275000)/25000 + 0x03 :
@@ -1354,7 +1355,7 @@ static inline int max77819_charger_get_enable(struct max77819_charger *me,
 out:
 	return rc;
 }
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static bool max77819_is_otg_mode(struct max77819_charger *me)
 {
 	int rc;
@@ -1424,7 +1425,7 @@ static int max77819_charger_set_chgcc(struct max77819_charger *me, int ua)
 {
 	u8 chgcc;
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	if (me->te < ua)
 		ua = me->te;
 #endif
@@ -1440,7 +1441,7 @@ static int max77819_charger_set_chgcc(struct max77819_charger *me, int ua)
 
 	return max77819_charger_write_config(me, CHGCC, chgcc);
 }
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static int max77819_charger_otg_enable(struct max77819_charger *me, bool en)
 {
 	int rc = 0;
@@ -1556,7 +1557,7 @@ static int max77819_charger_init_dev(struct max77819_charger *me)
 	u8 val;
 
 	val  = 0;
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	if (likely(!is_factory_cable())) {
 		val |= CHGINT1_AICLOTG;
 	}
@@ -1591,7 +1592,7 @@ static int max77819_charger_init_dev(struct max77819_charger *me)
 			me->charge_current_volatile);
 	if (unlikely(IS_ERR_VALUE(rc)))
 		goto out;
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	/* JEITA DISABLE */
 	rc = max77819_charger_write_config(me , JEITA_EN , true);
 #endif
@@ -1663,6 +1664,9 @@ static int max77819_charger_init_dev(struct max77819_charger *me)
 		if (unlikely(IS_ERR_VALUE(rc)))
 			goto out;
 	}
+#if defined(CONFIG_CHARGER_FACTORY_MODE)
+	max77819_charger_write_config(me, FCHGTIME, 0);
+#endif
 
 	/* DCILMT enable */
 	rc = max77819_charger_write_config(me, DCILIM_EN, true);
@@ -1711,7 +1715,7 @@ out:
 				 POWER_SUPPLY_PROP_##prop, val))
 
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 /* Charger wake lock */
 static void max77819_charger_wake_lock(struct max77819_charger *me, bool enable)
 {
@@ -1913,7 +1917,7 @@ out:
 		}	\
 	} while (0)
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 #define max77819_charger_resume_log_work_now(_me)	\
 	do {	\
 		if (likely(log_worker)) {	\
@@ -1934,7 +1938,7 @@ static void max77819_charger_log_work(struct work_struct *work)
 {
 	struct max77819_charger *me =
 		container_of(work, struct max77819_charger, log_work.work);
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	char on[] = "O";
 	char off[] = "X";
 	u8 regval;
@@ -2284,7 +2288,7 @@ static void max77819_do_irq(struct max77819_charger *me, int irq_current)
 			"before max77819_charger_init_dev\n");
 			max77819_charger_init_dev(me);
 		/* start work queue for checking CC mode */
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 			max77819_charger_wake_lock(me, true);
 #endif
 			schedule_delayed_work(&me->cc_work,
@@ -2295,11 +2299,11 @@ static void max77819_do_irq(struct max77819_charger *me, int irq_current)
 			/* cancel CC work */
 			cancel_delayed_work(&me->cc_work);
 			max77819_charger_exit_dev(me);
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 			max77819_charger_wake_lock(me, false);
 #endif
 		}
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 		do_factory_cable_action(me, present_input);
 		max77819_charger_set_charge_current(me,
 			me->current_limit_volatile,
@@ -2390,7 +2394,7 @@ done:
 		enable_irq(me->irq);
 	}
 #endif
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	power_supply_changed(&me->batt);
 #endif
 	return;
@@ -2409,7 +2413,7 @@ static irqreturn_t max77819_charger_isr(int irq, void *data)
 	return IRQ_HANDLED;
 }
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static int
 max77819_charger_batt_get_property(struct power_supply *psy,
 	enum power_supply_property psp, union power_supply_propval *val)
@@ -2483,7 +2487,7 @@ max77819_charger_batt_get_property(struct power_supply *psy,
 	case POWER_SUPPLY_PROP_EXT_PWR_CHECK:
 		val->intval = 1;
 		break;
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	case POWER_SUPPLY_PROP_BATTERY_ID_CHECKER:
 		if (is_factory_cable())
 			val->intval = 1;
@@ -2680,8 +2684,8 @@ static int max77819_charger_ac_get_property(struct power_supply *psy,
 		container_of(psy, struct max77819_charger, psy);
 	int rc = 0;
 	int value;
-
-#ifdef CONFIG_MACH_MSM8974_G3
+#if defined(CONFIG_LGE_PM_CHARGING_SUPPORT_PHIHONG)
+	/* phihong crashes here. Do not remove next 4 lines */
 	if (psp == POWER_SUPPLY_PROP_CYCLE_COUNT) {
 		val->intval = 0;
 		goto out;
@@ -2805,6 +2809,7 @@ static int max77819_charger_ac_set_property(struct power_supply *psy,
 		break;
 
 	case POWER_SUPPLY_PROP_SAFTETY_CHARGER_TIMER:
+#if !defined(CONFIG_CHARGER_FACTORY_MODE)
 		rc = max77819_charger_write_config(me,
 				FCHGTIME, (val->intval == 0) ? 0 : 0x02);
 		if (unlikely(IS_ERR_VALUE(rc)))
@@ -2812,6 +2817,7 @@ static int max77819_charger_ac_set_property(struct power_supply *psy,
 		pr_info("%s    timer :%d(D)\n", __func__, val->intval);
 		max77819_charger_psy_setprop(me , psy_coop,
 					SAFTETY_CHARGER_TIMER, (val->intval == 0) ? 0 : 0x02);
+#endif
 		break;
 	default:
 		rc = -EINVAL;
@@ -3130,7 +3136,7 @@ static void *max77819_charger_get_platdata(struct max77819_charger *me)
 				pdata->supplied_to[i]);
 		}
 	}
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	pdata->current_limit_usb = 500000;
 	of_property_read_u32(np, "current_limit_usb",
 			&pdata->current_limit_usb);
@@ -3198,7 +3204,7 @@ static void *max77819_charger_get_platdata(struct max77819_charger *me)
 			&pdata->aicl_reset_threshold);
 	log_dbg("property:AICL RESET      %uuV\n", pdata->aicl_reset_threshold);
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	pdata->otg_en =  of_get_named_gpio(np, "maxim,otg-en-gpio", 0);
 #endif
 out:
@@ -3252,9 +3258,9 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 	struct max77819_dev *chip = dev_get_drvdata(dev->parent);
 	struct max77819_charger *me;
 	int rc = 0;
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	uint *smem_batt = 0;
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 	uint _smem_batt_ = 0;
 #endif
 #endif
@@ -3276,26 +3282,33 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 	me->kobj = &dev->kobj;
 	me->irq  = -1;
 
-#ifdef CONFIG_LGE_PM_BATTERY_ID_CHECKER
+#if defined(CONFIG_LGE_PM_BATTERY_ID_CHECKER)
 	smem_batt = (uint *)smem_alloc(SMEM_BATT_INFO, sizeof(smem_batt));
 	if (smem_batt == NULL) {
 		pr_err("%s : smem_alloc returns NULL\n",__func__);
 		me->batt_id_smem = 0;
 	} else {
 		pr_info("Battery was read in sbl is = %d\n", *smem_batt);
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 		_smem_batt_ = (*smem_batt >>8) & 0x00ff; /* batt id -> HSB */
 		if (_smem_batt_ == BATT_ID_DS2704_L ||
 			_smem_batt_ == BATT_ID_DS2704_C ||
 			_smem_batt_ == BATT_ID_ISL6296_L ||
 			_smem_batt_ == BATT_ID_ISL6296_C)
+#else
+		if (*smem_batt == BATT_ID_DS2704_L ||
+			*smem_batt == BATT_ID_DS2704_C ||
+			*smem_batt == BATT_ID_ISL6296_L ||
+			*smem_batt == BATT_ID_ISL6296_C)
 #endif
 			me->batt_id_smem = 1;
 		else
 			me->batt_id_smem = 0;
 	}
 #endif
-#ifdef CONFIG_LGE_PM
+
+
+#if defined(CONFIG_LGE_PM)
 	wake_lock_init(&me->chg_wake_lock, WAKE_LOCK_SUSPEND, "chg_wakelock");
 	wake_lock_init(&me->plug_lock, WAKE_LOCK_SUSPEND, "plug_wakelock");
 #endif
@@ -3320,7 +3333,7 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 		goto abort;
 	}
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	/* Init OTG */
 	if (me->pdata->otg_en < 0) {
 		pr_err("otg_en = %d  is not available\n", me->pdata->otg_en);
@@ -3365,7 +3378,7 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 	me->current_limit_volatile    = me->current_limit_permanent;
 	me->charge_current_volatile   = me->charge_current_permanent;
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	me->te			= 1800000;
 	me->dev_initialized	= false;
 	/* Initialize power supply here! */
@@ -3410,7 +3423,7 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 	}
 
 #endif
-#ifdef CONFIG_LGE_PM /* LGE probe here */
+#if defined(CONFIG_LGE_PM) /* LGE probe here */
 	me->vadc_dev = qpnp_get_vadc(me->dev, "max77819");
 
 	if (IS_ERR(me->vadc_dev)) {
@@ -3430,7 +3443,7 @@ static __devinit int max77819_charger_probe(struct platform_device *pdev)
 
 #endif
 	if (likely(max77819_charger_present_input(me))) {
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 		max77819_charger_wake_lock(me, true);
 		lge_pm_read_cable_info(me->vadc_dev);
 		max77819_charger_psy_setprop(me,
@@ -3489,7 +3502,7 @@ ac_psy_fail:
 batt_psy_fail:
 usb_psy_fail:
 abort:
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	wake_lock_destroy(&me->chg_wake_lock);
 	wake_lock_destroy(&me->plug_lock);
 #endif
@@ -3504,7 +3517,7 @@ static __devexit int max77819_charger_remove(struct platform_device *pdev)
 	struct max77819_charger *me = dev_get_drvdata(dev);
 
 	sysfs_remove_group(&dev->kobj, &max77819_charger_attribute_group);
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 	wake_lock_destroy(&me->chg_wake_lock);
 	wake_lock_destroy(&me->plug_lock);
 	sysfs_remove_group(&dev->kobj, &max77819_charger_attribute_group_lge);
@@ -3553,7 +3566,7 @@ static struct platform_driver max77819_charger_driver = {
 	.remove                 = __devexit_p(max77819_charger_remove),
 };
 
-#ifdef CONFIG_LGE_PM
+#if defined(CONFIG_LGE_PM)
 static int is_battery_present(struct max77819_charger *me)
 {
 	u8 batdet_dtls = 0;

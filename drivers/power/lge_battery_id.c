@@ -90,7 +90,7 @@ static __devinit int lge_battery_id_probe(struct platform_device *pdev)
 		pr_err("%s : smem_alloc returns NULL\n", __func__);
 		info->batt_info = 0;
 	} else {
-#ifdef CONFIG_LGE_LOW_BATT_LIMIT
+#if defined(CONFIG_LGE_LOW_BATT_LIMIT)
 		info->batt_info = (*smem_batt >> 8) & 0x00ff;
 #else
 		info->batt_info = *smem_batt;
@@ -128,6 +128,7 @@ static int __devexit lge_battery_id_remove(struct platform_device *pdev)
 	return 0;
 }
 
+#if defined(CONFIG_PM)
 static int lge_battery_id_suspend(struct device *dev)
 {
 	/*struct lge_battery_id_info *info = dev_get_drvdata(dev);*/
@@ -146,12 +147,15 @@ static const struct dev_pm_ops lge_battery_id_pm_ops = {
 	.suspend	= lge_battery_id_suspend,
 	.resume		= lge_battery_id_resume,
 };
+#endif
 
 static struct platform_driver lge_battery_id_driver = {
 	.driver = {
 		.name   = "lge_battery_id",
 		.owner  = THIS_MODULE,
+#if defined(CONFIG_PM)
 		.pm     = &lge_battery_id_pm_ops,
+#endif
 	},
 	.probe  = lge_battery_id_probe,
 	.remove = __devexit_p(lge_battery_id_remove),
@@ -167,9 +171,11 @@ static void __exit lge_battery_id_exit(void)
 	platform_driver_unregister(&lge_battery_id_driver);
 }
 
+
 module_init(lge_battery_id_init);
 module_exit(lge_battery_id_exit);
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Cowboy");
 MODULE_DESCRIPTION("LGE Battery ID Checker");
+
