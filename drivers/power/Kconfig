@@ -625,4 +625,8 @@ config LGE_PM_USB_CURRENT_MAX_MODE
 	  Say Y to enable LGE PM USB current max mode
 	  for MST, Auto Testing with USB
 
+config LGE_THERMALE_CHG_CONTROL
+	bool "LG charger thermal control"
+	default n
+
 endif # POWER_SUPPLY

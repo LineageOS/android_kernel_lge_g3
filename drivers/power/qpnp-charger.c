@@ -440,6 +440,9 @@ struct qpnp_chg_chip {
 	int 					pseudo_ui_chg;
 	int						not_chg;
 #endif
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	int			chg_current_te
+#endif
 };
 
 #ifdef CONFIG_LGE_PM
@@ -5153,7 +5156,16 @@ qpnp_set_thermal_chg_current(const char *val, struct kernel_param *kp)
 		pr_err("called before init\n");
 		return ret;
 	}
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	pr_err("thermal-engine set chg current to %d\n",
+		qpnp_thermal_mitigation);
+	qpnp_chg->chg_current_te = qpnp_thermal_mitigation;
+
+	cancel_delayed_work_sync(&qpnp_chg->battemp_work);
+	schedule_delayed_work(&qpnp_chg->battemp_work, HZ*1);
+#else
 	pr_err("thermal-engine chg current control not enabled\n");
+#endif
 	return 0;
 }
 module_param_call(qpnp_thermal_mitigation, qpnp_set_thermal_chg_current,
@@ -5901,7 +5913,9 @@ qpnp_charger_read_dt_props(struct qpnp_chg_chip *chip)
 
 	of_get_property(chip->spmi->dev.of_node, "qcom,thermal-mitigation",
 		&(chip->thermal_levels));
-
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	chip->chg_current_te = chip->max_bat_chg_current;
+#endif
 	if (chip->thermal_levels > sizeof(int)) {
 		chip->thermal_mitigation = devm_kzalloc(chip->dev,
 			chip->thermal_levels,
@@ -5954,6 +5968,10 @@ static void qpnp_monitor_batt_temp(struct work_struct *work)
 			  POWER_SUPPLY_PROP_CURRENT_NOW, &ret);
 	req.current_now = ret.intval / 1000;
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	req.chg_current_ma = chip->max_bat_chg_current;
+	req.chg_current_te = chip->chg_current_te;
+#endif
 	req.is_charger = qpnp_chg_is_usb_chg_plugged_in(chip);
 
 	lge_monitor_batt_temp(req, &res);
@@ -5976,16 +5994,29 @@ static void qpnp_monitor_batt_temp(struct work_struct *work)
 			wake_lock(&chip->lcs_wake_lock);
 			qpnp_chg_charge_pause(chip, res.disable_chg);
 		} else if (res.change_lvl == STS_CHE_DECCUR_TO_NORAML) {
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+			qpnp_chg_ibatmax_set(chip, res.dc_current);
+#else
 			qpnp_chg_ibatmax_set(chip, chip->max_bat_chg_current);
+#endif
 		} else if (res.change_lvl == STS_CHE_DECCUR_TO_STPCHG) {
 			wake_lock(&chip->lcs_wake_lock);
 			qpnp_chg_ibatmax_set(chip, chip->max_bat_chg_current);
 			qpnp_chg_charge_pause(chip, res.disable_chg);
 		} else if (res.change_lvl == STS_CHE_STPCHG_TO_NORMAL) {
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+			qpnp_chg_ibatmax_set(chip, res.dc_current);
+#endif
 			qpnp_chg_charge_pause(chip, res.disable_chg);
 			schedule_delayed_work(&chip->eoc_work,
 				msecs_to_jiffies(EOC_CHECK_PERIOD_MS));
 			wake_unlock(&chip->lcs_wake_lock);
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+		} else if (res.force_update == true && res.state == CHG_BATT_NORMAL_STATE &&
+				res.dc_current != DC_CURRENT_DEF) {
+			qpnp_chg_ibatmax_set(chip, res.dc_current);
+			qpnp_chg_charge_pause(chip, res.disable_chg);
+#endif
 		}
 
 		chip->pseudo_ui_chg = res.pseudo_chg_ui;

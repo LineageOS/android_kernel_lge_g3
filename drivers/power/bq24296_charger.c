@@ -139,6 +139,13 @@
 #define LT_CABLE_130K		7
 #define LT_CABLE_910K		11
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+#ifdef CONFIG_CHARGER_UNIFIED_WLC
+#define THERMALE_NOT_TRIGGER -1
+#define THERMALE_ALL_CLEAR 0
+#endif
+#endif
+
 #ifdef CONFIG_LGE_PM_LLK_MODE
 bool battemp_work_cancel = false;
 bool llk_mode = false;
@@ -307,6 +314,13 @@ struct bq24296_chip {
 	enum   lge_btm_states	btm_state;
 	int pseudo_ui_chg;
 	int otp_ibat_current;
+#endif
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	int chg_current_te;
+#ifdef CONFIG_CHARGER_UNIFIED_WLC
+	int wlc_input_current_te;
+	int wlc_chg_current_te;
+#endif
 #endif
 	struct wake_lock  chg_wake_lock;
 #ifdef CONFIG_CHARGER_UNIFIED_WLC
@@ -567,6 +581,25 @@ static struct input_ma_limit_entry icl_ma_table[] = {
 	{3000, 0x07},
 };
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+static int iusb_control;
+static int
+bq24296_set_iusb_control(const char *val, struct kernel_param *kp)
+{
+	int ret;
+
+	ret = param_set_int(val, kp);
+	if (ret) {
+		pr_err("error setting value %d\n", ret);
+		return ret;
+	}
+
+	return 0;
+}
+module_param_call(iusb_control, bq24296_set_iusb_control,
+	param_get_uint, &iusb_control, 0644);
+#endif
+
 #define INPUT_CURRENT_LIMIT_MIN_MA  100
 #define INPUT_CURRENT_LIMIT_MAX_MA  3000
 #define INPUT_CURRENT_LIMIT_TA      2000
@@ -600,6 +633,13 @@ static int bq24296_set_input_i_limit(struct bq24296_chip *chip, int ma)
 	if (chip->usb_psy->is_floated_charger && !chip->wlc_present) {
 		pr_info("IUSB limit %dmA due to the floated charger.\n", INPUT_CURRENT_LIMIT_USB20);
 		ma = INPUT_CURRENT_LIMIT_USB20;
+	}
+#endif
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	if (ma > iusb_control && iusb_control >= INPUT_CURRENT_LIMIT_USB30 &&
+			ma >= INPUT_CURRENT_LIMIT_USB30) {
+		ma = iusb_control;
+		pr_info("IUSB limit %dmA\n", iusb_control);
 	}
 #endif
 
@@ -2545,7 +2585,12 @@ static int bq24296_power_set_event_property(struct power_supply *psy,
 	int vin_limit_wlc;
 	int iterm_wlc;
 	int ret;
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	int wlc_thermal_mitigation = -1;
+	int i;
 #endif
+#endif
+
 	NULL_CHECK(chip, -EINVAL);
 
 	switch (psp) {
@@ -2600,7 +2645,40 @@ static int bq24296_power_set_event_property(struct power_supply *psy,
 		wake_lock_timeout(&chip->uevent_wake_lock, HZ*2);
 		power_supply_set_present(chip->usb_psy, val->intval);
 		break;
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	case POWER_SUPPLY_PROP_WIRELESS_THERMAL_MITIGATION:
+		wlc_thermal_mitigation = val->intval;
+
+		if (wlc_thermal_mitigation == THERMALE_ALL_CLEAR) {
+			chip->wlc_input_current_te = INPUT_CURRENT_LIMIT_WLC;
+		} else if (wlc_thermal_mitigation >= IBAT_MIN_MA && wlc_thermal_mitigation <= IBAT_WLC_ADJUST) {
+			chip->wlc_input_current_te = INPUT_CURRENT_LIMIT_WLC_ADJUST;
+		} else {
+			/* When WLC thermal mitigation is triggered, upscaling input current limit. */
+			for (i = 0; i < ARRAY_SIZE(icl_ma_table) - 1; i++) {
+				if (wlc_thermal_mitigation <= icl_ma_table[i].icl_ma)
+					break;
+			}
+			chip->wlc_input_current_te = icl_ma_table[i].icl_ma;
+		}
+
+		if (wlc_thermal_mitigation == THERMALE_ALL_CLEAR) {
+			chip->wlc_chg_current_te = IBAT_WLC;
+		} else if (wlc_thermal_mitigation >= IBAT_MIN_MA && wlc_thermal_mitigation <= IBAT_WLC_ADJUST) {
+			chip->wlc_chg_current_te = IBAT_WLC_ADJUST;
+		} else {
+			chip->wlc_chg_current_te = wlc_thermal_mitigation;
+		}
+
+		pr_info("thermal-engine set wlc_input_current_te = %d, wlc_chg_current_te = %d\n",
+			chip->wlc_input_current_te, chip->wlc_chg_current_te);
+
+		cancel_delayed_work_sync(&chip->battemp_work);
+		schedule_delayed_work(&chip->battemp_work, HZ*1);
+		break;
 #endif
+#endif
+
 	default:
 		break;
 	}
@@ -2848,7 +2926,22 @@ bq24296_set_thermal_chg_current_set(const char *val, struct kernel_param *kp)
 		return 0;
 	}
 
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	pr_info("thermal-engine set chg current to %d\n",
+			bq24296_thermal_mitigation);
+
+	the_chip->chg_current_te = bq24296_thermal_mitigation;
+
+	cancel_delayed_work_sync(&the_chip->battemp_work);
+#ifdef CONFIG_LGE_PM_LLK_MODE
+	if (!battemp_work_cancel)
+		schedule_delayed_work(&the_chip->battemp_work, HZ*1);
+#else
+	schedule_delayed_work(&the_chip->battemp_work, HZ*1);
+#endif
+#else
 	pr_err("thermal-engine chg current control not enabled\n");
+#endif
 	return 0;
 }
 module_param_call(bq24296_thermal_mitigation, bq24296_set_thermal_chg_current_set,
@@ -2874,6 +2967,20 @@ static void pma_workaround_worker(struct work_struct *work)
 		pr_err("[WLC] unset pma wake lock\n");
 	}
 }
+
+static void pma_workaround(struct bq24296_chip *chip, int temp)
+{
+	if (temp >= 55) {
+		gpio_set_value(chip->otg_en, 1);
+		bq24296_enable_otg(chip, true);
+		pr_err("[WLC] set pma workaround\n");
+
+		schedule_delayed_work(&chip->pma_workaround_work, 15 * HZ);
+		wake_lock(&chip->pma_workaround_wake_lock);
+		pr_err("[WLC] set pma wake lock\n");
+		pr_err("[WLC] after 15sec, unset pma workaround\n");
+	}
+}
 #endif
 
 static int temp_before;
@@ -2885,6 +2992,11 @@ static void bq24296_monitor_batt_temp(struct work_struct *work)
 	struct charging_rsp res;
 	bool is_changed = false;
 	union power_supply_propval ret = {0,};
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	union power_supply_propval wlc_ret = {0,};
+	int wlc_thermal_mitigation = -1;
+	int wlc_online = -1;
+#endif
 	NULL_CHECK_VOID(chip);
 	if (chip->chg_timeout) {
 		int ret;
@@ -2910,6 +3022,47 @@ static void bq24296_monitor_batt_temp(struct work_struct *work)
 	chip->batt_psy.get_property(&(chip->batt_psy),
 			  POWER_SUPPLY_PROP_CURRENT_NOW, &ret);
 	req.current_now = ret.intval;
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	bq24296_thermal_mitigation = chip->chg_current_ma;
+	req.chg_current_ma = chip->chg_current_ma;
+	req.chg_current_te = chip->chg_current_te;
+
+#if defined(CONFIG_CHARGER_UNIFIED_WLC)
+	bq24296_charger_psy_getprop_event(chip, wlc_psy, WIRELESS_ONLINE,
+		&wlc_ret, _WIRELESS_);
+	wlc_online = wlc_ret.intval;
+
+	if (wlc_online) {
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+#ifdef NEED_PM_WORKAROUND
+		pma_workaround(chip, req.batt_temp);
+#endif
+		bq24296_charger_psy_getprop_event(chip, wlc_psy,
+			WIRELESS_THERMAL_MITIGATION, &wlc_ret, _WIRELESS_);
+		wlc_thermal_mitigation = wlc_ret.intval;
+
+		/* When WLC tharmal mitigation is not triggered first yet. */
+		if (wlc_thermal_mitigation == THERMALE_NOT_TRIGGER) {
+			chip->wlc_input_current_te = INPUT_CURRENT_LIMIT_WLC;
+			chip->wlc_chg_current_te = IBAT_WLC;
+		}
+
+		req.input_current_te = chip->wlc_input_current_te;
+		req.chg_current_te = chip->wlc_chg_current_te;
+
+		/* In WLC tharmal mitigation, adjust wireless charging Iin limit.*/
+		pr_info("thermal-engine set req.input_current_te = %d\n",
+			req.input_current_te);
+		bq24296_set_input_i_limit(chip, req.input_current_te);
+#else
+		req.chg_current_te = IBAT_WLC;
+#endif
+	}
+
+#endif
+	pr_info("thermal-engine set req.chg_current_ma = %d, req.chg_current_te = %d\n",
+		req.chg_current_ma, req.chg_current_te);
+#endif
 
 	req.is_charger = bq24296_is_charger_present(chip);
 
@@ -3185,6 +3338,10 @@ static int bq24296_parse_dt(struct device_node *dev_node,
 
 	ret = of_property_read_u32(dev_node, "ti,chg-current-ma",
 				   &(chip->chg_current_ma));
+#ifdef CONFIG_LGE_THERMALE_CHG_CONTROL
+	bq24296_thermal_mitigation = chip->chg_current_ma;
+	chip->chg_current_te = chip->chg_current_ma;
+#endif
 	pr_debug("bq24296 chg_current_ma = %d.\n",
 			chip->chg_current_ma);
 	if (ret) {
