@@ -23,7 +23,7 @@
 #include <linux/err.h>
 
 #include "mdss_dsi.h"
-<<<<<<< HEAD
+#include "mdss_livedisplay.h"
 #ifdef CONFIG_MFD_TPS65132
 #include <linux/mfd/tps65132.h>
 #endif
@@ -32,9 +32,6 @@
 #include <linux/qpnp/qpnp-adc.h>
 #include <linux/err.h>
 #endif
-=======
-#include "mdss_livedisplay.h"
->>>>>>> 21be0ac31a1... video: mdss: LiveDisplay driver
 
 #define DT_CMD_HDR 6
 
@@ -609,17 +606,13 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 	if (ctrl->on_cmds.cmd_cnt)
 		mdss_dsi_panel_cmds_send(ctrl, &ctrl->on_cmds);
 
-<<<<<<< HEAD
 #ifdef CONFIG_LGE_SHARPENING
 	/* Change to '1' if LG ever decides to disable by default */
 	if (ctrl->shared_pdata.sharpening_state == 0)
 		ctrl->set_sharpening(ctrl, ctrl->shared_pdata.sharpening_state,
 			(void *) 1);
 #endif
-=======
-	mdss_livedisplay_update(ctrl, MODE_UPDATE_ALL);
 
->>>>>>> 21be0ac31a1... video: mdss: LiveDisplay driver
 	pr_debug("%s:-\n", __func__);
 	return 0;
 }
