@@ -7,6 +7,7 @@ config MACH_MSM8974_G3
 	select LGE_PM_USB_CURRENT_MAX_MODE
 	select LGE_SHARPENING
 	select MACH_LGE
+	select MMC_FFU
 	select SND_SOC_CS35L32
 	select SND_SOC_TPA2015D
 
