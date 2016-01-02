@@ -33,6 +33,108 @@
       "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_53185380",
+        "filename": "drivers/hwmon/qpnp-adc-current.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "probably unecessary, if we\u0027re enabling CONFIG_LGE_PM, we\u0027re CONFIG_MACH_LGE anyway",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_f30cdf43",
+        "filename": "drivers/hwmon/qpnp-adc-current.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1279,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_130acb25",
+        "filename": "drivers/hwmon/qpnp-adc-voltage.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "we are CONFIG_MACH_LGE, so these additions aren\u0027t really necessary",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_b3065720",
+        "filename": "drivers/hwmon/qpnp-adc-voltage.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1368,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "same as above",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_d303e30e",
+        "filename": "drivers/hwmon/qpnp-adc-voltage.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1511,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "we enable both of these, so the addition of TOUCHSCREEN_SYNAPTICS_I2C_RMI4 isn\u0027t really necessary here",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_36081527",
+        "filename": "drivers/hwmon/qpnp-adc-voltage.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:58:47Z",
+      "side": 1,
+      "message": "unnecessary whitespace addition",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
     }
   ]
 }
