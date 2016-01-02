@@ -151,6 +151,9 @@ struct qpnp_iadc_chip {
 	bool					external_rsense;
 	bool					default_internal_rsense;
 	struct device				*iadc_hwmon;
+#ifdef CONFIG_MACH_LGE
+	bool 					iadc_initialized;
+#endif
 	struct list_head			list;
 	int64_t					die_temp;
 	struct delayed_work			iadc_work;
@@ -167,7 +170,9 @@ struct qpnp_iadc_chip {
 	int32_t					rsense_workaround_value;
 	struct sensor_device_attribute		sens_attr[0];
 };
-
+#ifdef CONFIG_MACH_LGE
+struct qpnp_iadc_chip *qpnp_iadc;
+#endif
 LIST_HEAD(qpnp_iadc_device_list);
 
 enum qpnp_iadc_rsense_rds_workaround {
@@ -218,6 +223,18 @@ static int qpnp_iadc_is_valid(struct qpnp_iadc_chip *iadc)
 
 	return -EINVAL;
 }
+
+#ifdef CONFIG_LGE_PM
+int32_t qpnp_iadc_is_ready(void)
+{
+	struct qpnp_iadc_chip *iadc = qpnp_iadc;
+	if (!iadc || !iadc->iadc_initialized)
+		return -EPROBE_DEFER;
+	else
+		return 0;
+}
+EXPORT_SYMBOL(qpnp_iadc_is_ready);
+#endif
 
 static void qpnp_iadc_trigger_completion(struct work_struct *work)
 {
@@ -1251,6 +1268,18 @@ fail:
 }
 EXPORT_SYMBOL(qpnp_iadc_read);
 
+#ifdef CONFIG_LGE_PM
+int32_t qpnp_iadc_read_lge(enum qpnp_iadc_channels channel,
+		struct qpnp_iadc_result *result)
+{
+	 if (qpnp_iadc)
+		return qpnp_iadc_read(qpnp_iadc, channel, result);
+	 return -ENODEV;
+}
+
+EXPORT_SYMBOL(qpnp_iadc_read_lge);
+#endif
+
 int32_t qpnp_iadc_get_gain_and_offset(struct qpnp_iadc_chip *iadc,
 					struct qpnp_iadc_calib *result)
 {
@@ -1576,6 +1605,10 @@ static int __devinit qpnp_iadc_probe(struct spmi_device *spmi)
 
 	dev_set_drvdata(&spmi->dev, iadc);
 	list_add(&iadc->list, &qpnp_iadc_device_list);
+#ifdef CONFIG_MACH_LGE
+	qpnp_iadc = iadc;
+	iadc->iadc_initialized = true;
+#endif
 	rc = qpnp_iadc_calibrate_for_trim(iadc, true);
 	if (rc)
 		dev_err(&spmi->dev, "failed to calibrate for USR trim\n");
@@ -1594,7 +1627,10 @@ fail:
 		i++;
 	}
 	hwmon_device_unregister(iadc->iadc_hwmon);
-
+#ifdef CONFIG_MACH_LGE
+	qpnp_iadc = NULL;
+	iadc->iadc_initialized = false;
+#endif
 	return rc;
 }
 
