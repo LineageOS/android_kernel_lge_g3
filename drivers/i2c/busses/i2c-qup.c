@@ -1804,7 +1804,9 @@ static int i2c_qup_pm_suspend_sys(struct device *device)
 #ifdef CONFIG_CHARGER_MAX77819
 	i2c_suspended = true;
 #endif
+#ifndef CONFIG_CHARGER_MAX77819
 	dev->pwr_state = MSM_I2C_SYS_SUSPENDING;
+#endif
 	mutex_unlock(&dev->mlock);
 	if (!pm_runtime_enabled(device) || !pm_runtime_suspended(device)) {
 		dev_dbg(device, "system suspend\n");
