@@ -1129,14 +1129,19 @@ int32_t qpnp_get_vadc_gain_and_offset(struct qpnp_vadc_chip *vadc,
 EXPORT_SYMBOL(qpnp_get_vadc_gain_and_offset);
 
 #ifdef CONFIG_LGE_PM
+/* MUST USE ONLY MSM8974 AA/AB */
 int32_t qpnp_vadc_is_ready(void)
 {
+#ifdef CONFIG_MACH_LGE
 	struct qpnp_vadc_chip *vadc = qpnp_vadc;
 
 	if (!vadc || !vadc->vadc_initialized)
 		return -EPROBE_DEFER;
 	else
 		return 0;
+#else
+	return -EPROBE_DEFER;
+#endif
 }
 EXPORT_SYMBOL(qpnp_vadc_is_ready);
 #endif
@@ -1356,13 +1361,18 @@ int32_t qpnp_vadc_read(struct qpnp_vadc_chip *vadc,
 EXPORT_SYMBOL(qpnp_vadc_read);
 
 #ifdef CONFIG_LGE_PM
+/* MUST USE ONLY MSM8974 AA/AB */
 int32_t qpnp_vadc_read_lge(enum qpnp_vadc_channels channel,
 				struct qpnp_vadc_result *result)
 {
+#ifdef CONFIG_MACH_LGE
 	if (qpnp_vadc)
 		return qpnp_vadc_read(qpnp_vadc, channel, result);
 
 	return -ENODEV;
+#else
+	return -ENODEV;
+#endif
 }
 EXPORT_SYMBOL(qpnp_vadc_read_lge);
 #endif
@@ -1497,7 +1507,8 @@ void xo_therm_logging(void)
 		else {
 			printk(KERN_INFO "[XO_THERM] Result:%lld Raw:%d\n",
 					tmp.physical, tmp.adc_code);
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_G3
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G3)
 #define TOUCH_HIGH_TEMPERATURE	55
 #define TOUCH_LOW_TEMPERATURE	52
 			{
@@ -1507,7 +1518,8 @@ void xo_therm_logging(void)
 				else if (tmp.physical <= TOUCH_LOW_TEMPERATURE)
 					touch_thermal_status = 0;
 			}
-#endif
+#endif /*  CONFIG_TOUCHSCREEN_SYNAPTICS_G3 */
+#endif /* CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4  */
 		}
 	} else
 		pr_err("Can't find vadc_chip\n");
@@ -1699,6 +1711,7 @@ static int __devinit qpnp_vadc_probe(struct spmi_device *spmi)
 	vadc->vadc_initialized = true;
 #endif
 	vadc->vadc_iadc_sync_lock = false;
+
 	dev_set_drvdata(&spmi->dev, vadc);
 	list_add(&vadc->list, &qpnp_vadc_device_list);
 
