@@ -30,6 +30,9 @@
 #include <linux/hwmon-sysfs.h>
 #include <linux/qpnp/qpnp-adc.h>
 #include <linux/platform_device.h>
+#ifdef CONFIG_MAX17050_FUELGAUGE
+#include <linux/max17050_battery.h>
+#endif
 
 #ifdef CONFIG_MACH_LGE
 #include <mach/board_lge.h>
@@ -114,6 +117,13 @@
 #define QPNP_VADC_CONV_TIME_MAX					2100
 #define QPNP_ADC_COMPLETION_TIMEOUT				HZ
 #define QPNP_VADC_ERR_COUNT					20
+
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G2) || defined (CONFIG_MACH_MSM8974_TIGERS_KR)
+extern void check_touch_xo_therm(int type);
+int touch_thermal_mode = 0;
+#endif
+#endif
 
 struct qpnp_vadc_chip {
 	struct device			*dev;
@@ -1129,14 +1139,19 @@ int32_t qpnp_get_vadc_gain_and_offset(struct qpnp_vadc_chip *vadc,
 EXPORT_SYMBOL(qpnp_get_vadc_gain_and_offset);
 
 #ifdef CONFIG_LGE_PM
+/* MUST USE ONLY MSM8974 AA/AB */
 int32_t qpnp_vadc_is_ready(void)
 {
+#ifdef CONFIG_MACH_LGE
 	struct qpnp_vadc_chip *vadc = qpnp_vadc;
 
 	if (!vadc || !vadc->vadc_initialized)
 		return -EPROBE_DEFER;
 	else
 		return 0;
+#else
+	return -EPROBE_DEFER;
+#endif
 }
 EXPORT_SYMBOL(qpnp_vadc_is_ready);
 #endif
@@ -1356,13 +1371,18 @@ int32_t qpnp_vadc_read(struct qpnp_vadc_chip *vadc,
 EXPORT_SYMBOL(qpnp_vadc_read);
 
 #ifdef CONFIG_LGE_PM
+/* MUST USE ONLY MSM8974 AA/AB */
 int32_t qpnp_vadc_read_lge(enum qpnp_vadc_channels channel,
 				struct qpnp_vadc_result *result)
 {
+#ifdef CONFIG_MACH_LGE
 	if (qpnp_vadc)
 		return qpnp_vadc_read(qpnp_vadc, channel, result);
 
 	return -ENODEV;
+#else
+	return -ENODEV;
+#endif
 }
 EXPORT_SYMBOL(qpnp_vadc_read_lge);
 #endif
@@ -1490,6 +1510,39 @@ void xo_therm_logging(void)
 	int rc = -1;
 
 /* LIMIT: Include ONLY A1, B1, Vu3, Z models used MSM8974 AA/AB */
+#ifdef CONFIG_ADC_READY_CHECK_JB
+	if (qpnp_vadc_is_ready()) {
+		pr_err("vadc is not ready\n");
+		return;
+	}
+#if defined(CONFIG_MACH_MSM8974_T1WIFI_GLOBAL_COM) || \
+    defined (CONFIG_MACH_MSM8974_T1WIFIN_GLOBAL_COM)
+	rc = qpnp_vadc_read_lge(LR_MUX8_PU2_AMUX_THM4, &tmp);
+	if (rc)
+		pr_err("VADC read error with %d\n", rc);
+	printk(KERN_INFO "[PA_THERM] Result:%lld Raw:%d\n",
+		tmp.physical, tmp.adc_code);
+#else
+	rc = qpnp_vadc_read_lge(LR_MUX3_PU2_XO_THERM, &tmp);
+	if (rc)
+		pr_err("VADC read error with %d\n", rc);
+	printk(KERN_INFO "[XO_THERM] Result:%lld Raw:%d\n",
+		tmp.physical, tmp.adc_code);
+#endif
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G2) || defined (CONFIG_MACH_MSM8974_TIGERS_KR)
+#define TOUCH_HIGH_TEMPERATURE	50
+#define TOUCH_LOW_TEMPERATURE	47
+			if (touch_thermal_mode == 0 && tmp.physical >= TOUCH_HIGH_TEMPERATURE) {
+				touch_thermal_mode = 1;
+				check_touch_xo_therm(1);
+			} else if (touch_thermal_mode == 1 && tmp.physical < TOUCH_LOW_TEMPERATURE) {
+				touch_thermal_mode = 0;
+				check_touch_xo_therm(0);
+			}
+#endif /*  CONFIG_TOUCHSCREEN_SYNAPTICS_G2 */
+#endif /*  CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4 */
+#else
 	if (qpnp_vadc) {
 		rc = qpnp_vadc_read(qpnp_vadc, LR_MUX3_PU2_XO_THERM, &tmp);
 		if (rc)
@@ -1497,7 +1550,8 @@ void xo_therm_logging(void)
 		else {
 			printk(KERN_INFO "[XO_THERM] Result:%lld Raw:%d\n",
 					tmp.physical, tmp.adc_code);
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_G3
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G3)
 #define TOUCH_HIGH_TEMPERATURE	55
 #define TOUCH_LOW_TEMPERATURE	52
 			{
@@ -1507,10 +1561,12 @@ void xo_therm_logging(void)
 				else if (tmp.physical <= TOUCH_LOW_TEMPERATURE)
 					touch_thermal_status = 0;
 			}
-#endif
+#endif /*  CONFIG_TOUCHSCREEN_SYNAPTICS_G3 */
+#endif /* CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4  */
 		}
 	} else
 		pr_err("Can't find vadc_chip\n");
+#endif
 }
 #endif
 
@@ -1567,6 +1623,41 @@ hwmon_err_sens:
 	pr_err("Init HWMON failed for qpnp_adc with %d\n", rc);
 	return rc;
 }
+
+#ifdef CONFIG_MAX17050_FUELGAUGE
+static void __devinit max17050_initial_quickstart_check_with_batt_temp(void)
+{
+	int rc;
+	int batt_temp;
+	struct qpnp_vadc_result results;
+
+/* LIMIT: Include ONLY A1, B1, Vu3, Z models used MSM8974 AA/AB */
+#ifdef CONFIG_ADC_READY_CHECK_JB
+	rc = qpnp_vadc_read_lge(LR_MUX1_BATT_THERM, &results);
+#else
+	/* MUST BE IMPLEMENT :
+	 * After MSM8974 AC and later version(PMIC combination change),
+	 * ADC AMUX of PMICs are separated in each dual PMIC.
+	 *
+	 * Ref.
+	 * qpnp-adc-voltage.c : *qpnp_get_vadc(), qpnp_vadc_read().
+	 * qpnp-charger.c     : new implementation by QCT.
+	 */
+	 return;
+#endif
+	if (rc) {
+		pr_err("Unable to read batt temperature rc=%d\n", rc);
+		return;
+	}
+
+	batt_temp = (int)results.physical;
+	if ((batt_temp/10) > 0)
+		max17050_initial_quickstart_check();
+	pr_info("batt_temp(%d)\n", batt_temp);
+
+	return;
+}
+#endif
 
 static int __devinit qpnp_vadc_probe(struct spmi_device *spmi)
 {
@@ -1699,6 +1790,11 @@ static int __devinit qpnp_vadc_probe(struct spmi_device *spmi)
 	vadc->vadc_initialized = true;
 #endif
 	vadc->vadc_iadc_sync_lock = false;
+
+#ifdef CONFIG_MAX17050_FUELGAUGE
+	max17050_initial_quickstart_check_with_batt_temp();
+#endif
+
 	dev_set_drvdata(&spmi->dev, vadc);
 	list_add(&vadc->list, &qpnp_vadc_device_list);
 
