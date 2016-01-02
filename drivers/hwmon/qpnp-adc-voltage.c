@@ -1497,7 +1497,7 @@ void xo_therm_logging(void)
 		else {
 			printk(KERN_INFO "[XO_THERM] Result:%lld Raw:%d\n",
 					tmp.physical, tmp.adc_code);
-#ifdef CONFIG_TOUCHSCREEN_SYNAPTICS_G3
+#if defined (CONFIG_TOUCHSCREEN_SYNAPTICS_G3)
 #define TOUCH_HIGH_TEMPERATURE	55
 #define TOUCH_LOW_TEMPERATURE	52
 			{
