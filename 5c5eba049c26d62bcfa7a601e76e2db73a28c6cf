@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fce034c_f3237fbd",
+        "filename": "drivers/hwmon/qpnp-adc-common.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:48:15Z",
+      "side": 1,
+      "message": "this comment isn\u0027t necessary (i\u0027ve been leaving them out in the interest of keeping our LG footprint minimal)",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3fce034c_13216bb5",
+        "filename": "drivers/hwmon/qpnp-adc-common.c",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-02T22:48:15Z",
+      "side": 1,
+      "message": "we don\u0027t support this variant, so this ifdef isn\u0027t needed",
+      "revId": "5c5eba049c26d62bcfa7a601e76e2db73a28c6cf",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
