@@ -250,6 +250,10 @@ static irqreturn_t resout_irq_handler(int irq, void *dev_id)
 
 static void msm_restart_prepare(const char *cmd)
 {
+#ifdef CONFIG_MACH_LGE
+	bool warm_reset = true;
+#endif
+
 #ifdef CONFIG_MSM_DLOAD_MODE
 
 	/* This looks like a normal reboot at this point. */
@@ -270,10 +274,17 @@ static void msm_restart_prepare(const char *cmd)
 	pm8xxx_reset_pwr_off(1);
 
 	/* Hard reset the PMIC unless memory contents must be maintained. */
+#ifdef CONFIG_MACH_LGE
+	if (warm_reset || get_dload_mode()) {
+		pr_err("%s: PON_POWER_OFF_WARM_RESET\n", __func__);
+		qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
+	}
+#else
 	if (get_dload_mode() || (cmd != NULL && cmd[0] != '\0'))
 		qpnp_pon_system_pwr_off(PON_POWER_OFF_WARM_RESET);
 	else
 		qpnp_pon_system_pwr_off(PON_POWER_OFF_HARD_RESET);
+#endif
 
 	if (cmd != NULL) {
 		if (!strncmp(cmd, "bootloader", 10)) {
