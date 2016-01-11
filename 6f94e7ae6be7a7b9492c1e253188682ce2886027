@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_0b405d07",
+        "filename": "arch/arm/mach-msm/restart.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-11T20:41:11Z",
+      "side": 1,
+      "message": "this variable is useless, its always true",
+      "revId": "6f94e7ae6be7a7b9492c1e253188682ce2886027",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_2b451918",
+        "filename": "arch/arm/mach-msm/restart.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-11T20:41:11Z",
+      "side": 1,
+      "message": "since warm_reset was always true, this if statement is useless as well",
+      "revId": "6f94e7ae6be7a7b9492c1e253188682ce2886027",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1fcbff3d_cb49f532",
+        "filename": "arch/arm/mach-msm/restart.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-11T20:41:11Z",
+      "side": 1,
+      "message": "i guess it\u0027s not really that important that we log this, it appears we\u0027ll always be doing a warm reset if we ship this",
+      "revId": "6f94e7ae6be7a7b9492c1e253188682ce2886027",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
