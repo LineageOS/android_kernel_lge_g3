@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fcbff3d_a0aa8016",
+        "filename": "arch/arm/mach-msm/restart.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-01-13T23:07:01Z",
+      "side": 1,
+      "message": "0xdeadbeef or 0xcabba6es or 0xbaseba11 would work as well...",
+      "range": {
+        "startLine": 301,
+        "startChar": 15,
+        "endLine": 301,
+        "endChar": 25
+      },
+      "revId": "a4be971f9c2b8949c39117af0012d787ee7de8e8",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
