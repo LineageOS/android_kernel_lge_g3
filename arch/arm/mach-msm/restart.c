@@ -296,6 +296,10 @@ static void msm_restart_prepare(const char *cmd)
 			__raw_writel(0x77665501, restart_reason);
 		}
 	}
+#ifdef CONFIG_MACH_LGE
+	else
+		__raw_writel(0x12345678, restart_reason);
+#endif
 
 	flush_cache_all();
 	outer_flush_all();
