@@ -126,6 +126,8 @@ static char *lpwg_uevent[VALID_LPWG_UEVENT_SIZE][2] = {
 {"TOUCH_GESTURE_WAKEUP=SIGNATURE", NULL}
 };
 
+static int touch_suspend(struct device *dev);
+
 void send_uevent_lpwg(struct i2c_client* client, int type)
 {
 	struct lge_touch_data *ts = i2c_get_clientdata(client);
@@ -2070,7 +2072,6 @@ static ssize_t show_lpwg_data(struct i2c_client *client, char *buf)
 	return ret;
 }
 static int touch_resume(struct device *dev);
-static int touch_suspend(struct device *dev);
 static int lpwg_test_flag = 0;
 
 static ssize_t store_lpwg_data(struct i2c_client *client,
