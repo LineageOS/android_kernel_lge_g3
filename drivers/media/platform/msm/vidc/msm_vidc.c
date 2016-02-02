@@ -788,7 +788,7 @@ int msm_vidc_release_buffers(void *instance, int buffer_type)
 		if (inst->session_type == MSM_VIDC_ENCODER)
 			rc = msm_venc_release_buf(instance,
 				&buffer_info);
-		if (rc)
+		if (rc) {
 			dprintk(VIDC_ERR,
 				"Failed Release buffer: %d, %d, %d\n",
 				buffer_info.m.planes[0].reserved[0],
@@ -797,6 +797,7 @@ int msm_vidc_release_buffers(void *instance, int buffer_type)
 #ifdef CONFIG_MACH_LGE
 			return rc;
 #endif
+		}
 	}
 
 free_and_unmap:
