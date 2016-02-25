@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffb9cba7_7cae5a2f",
+        "filename": "net/wireless/db.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 3671
+      },
+      "writtenOn": "2016-02-25T03:00:57Z",
+      "side": 0,
+      "message": "unnecessary",
+      "revId": "c6520f1b370df8c255b59df1492d6e64fcd66a7c",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": false
+    }
+  ]
+}
