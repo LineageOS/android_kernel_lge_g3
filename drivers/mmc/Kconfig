@@ -39,10 +39,6 @@ config LGE_MMC_RESET_IF_HANG
 	help
 	  Reset eMMC if eMMC is unaccessible. continously error on r/w cmd.
 
-config LGE_MMC_BKOPS_ENABLE
-	bool "enable BKOPS for eMMC"
-	depends on MMC != n
-
 if MMC
 
 source "drivers/mmc/core/Kconfig"
