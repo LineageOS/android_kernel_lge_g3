@@ -1085,10 +1085,6 @@ static int sdhci_msm_dt_parse_vreg_info(struct device *dev,
 			"qcom,%s-lpm-sup", vreg_name);
 	if (of_get_property(np, prop_name, NULL))
 		vreg->lpm_sup = true;
-#ifdef CONFIG_MACH_MSM8974_G3_GLOBAL_COM
-	if (prop != NULL && len > 0 && of_compat_cmp((const char*)prop, "disable", strlen("disable")) == 0)
-		vreg->lpm_sup = false;
-#endif
 
 	snprintf(prop_name, MAX_PROP_SIZE,
 			"qcom,%s-voltage-level", vreg_name);
