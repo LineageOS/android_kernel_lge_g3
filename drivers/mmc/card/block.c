@@ -42,9 +42,6 @@
 #include <linux/mmc/host.h>
 #include <linux/mmc/mmc.h>
 #include <linux/mmc/sd.h>
-#ifdef CONFIG_MMC_FFU
-#include <linux/mmc/ffu.h>
-#endif
 
 #include <asm/uaccess.h>
 
@@ -698,33 +695,6 @@ static int mmc_blk_ioctl_cmd(struct block_device *bdev,
 
 	mmc_rpm_hold(card->host, &card->dev);
 	mmc_claim_host(card->host);
-
-#if defined(CONFIG_MMC_FFU)
-	switch (cmd.opcode) {
-		case MMC_FFU_DOWNLOAD_OP:
-			err = mmc_ffu_download(card, &cmd, idata->buf, idata->buf_bytes);
-			goto cmd_rel_host;
-		case MMC_FFU_INSTALL_OP:
-			err = mmc_ffu_install(card);
-			goto cmd_rel_host;
-		case MMC_FFU_MID_OP:
-			pr_info ("[LGE][FFU][cid : %u]\n", card->cid.manfid);
-			if (copy_to_user((void __user *)(unsigned long) idata->ic.data_ptr,
-						&card->cid.manfid, sizeof(unsigned int)))
-				err = -EFAULT;
-			else
-				err = 0;
-			goto cmd_rel_host;
-		case MMC_FFU_PNM_OP:
-			pr_info ("[LGE][FFU][pnm : %s]\n", card->cid.prod_name);
-			if (copy_to_user((void __user *)(unsigned long) idata->ic.data_ptr,
-						&card->cid.prod_name, idata->ic.blksz))
-				err = -EFAULT;
-			else
-				err = 0;
-			goto cmd_rel_host;
-	}
-#endif
 
 	err = mmc_blk_part_switch(card, md);
 	if (err)

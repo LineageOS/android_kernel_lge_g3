@@ -8,7 +8,6 @@ config MACH_MSM8974_G3
 	select LGE_SHARPENING
 	select LGE_THERMALE_CHG_CONTROL
 	select MACH_LGE
-	select MMC_FFU
 	select SND_SOC_CS35L32
 	select SND_SOC_TPA2015D
 
