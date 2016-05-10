@@ -1285,9 +1285,10 @@ putback_inactive_pages(struct mem_cgroup_zone *mz,
 		add_page_to_lru_list(zone, page, lru);
 
 		file = is_file_lru(lru);
-		if (IS_ENABLED(CONFIG_ZCACHE))
-			if (file)
-				SetPageWasActive(page);
+#if IS_ENABLED(CONFIG_ZCACHE)
+		if (file)
+			SetPageWasActive(page);
+#endif
 		if (is_active_lru(lru)) {
 			int numpages = hpage_nr_pages(page);
 			reclaim_stat->recent_rotated[file] += numpages;
@@ -1564,12 +1565,13 @@ static void shrink_active_list(unsigned long nr_to_scan,
 		}
 
 		ClearPageActive(page);	/* we are de-activating */
-		if (IS_ENABLED(CONFIG_ZCACHE))
-			/*
-			 * For zcache to know whether the page is from active
-			 * file list
-			 */
-			SetPageWasActive(page);
+#if IS_ENABLED(CONFIG_ZCACHE)
+		/*
+		 * For zcache to know whether the page is from active
+		 * file list
+		 */
+		SetPageWasActive(page);
+#endif
 		list_add(&page->lru, &l_inactive);
 	}
 
