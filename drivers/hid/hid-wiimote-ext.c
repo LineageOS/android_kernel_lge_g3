@@ -1,6 +1,6 @@
 /*
- * HID driver for Nintendo Wiimote extension devices
- * Copyright (c) 2011 David Herrmann
+ * HID driver for Nintendo Wii / Wii U peripheral extensions
+ * Copyright (c) 2011-2013 David Herrmann <dh.herrmann@gmail.com>
  */
 
 /*
@@ -378,14 +378,14 @@ static void handler_nunchuck(struct wiimote_ext *ext, const __u8 *payload)
 
 	if (ext->motionp) {
 		input_report_key(ext->input,
-			wiiext_keymap[WIIEXT_KEY_Z], !!(payload[5] & 0x04));
+			wiiext_keymap[WIIEXT_KEY_Z], !(payload[5] & 0x04));
 		input_report_key(ext->input,
-			wiiext_keymap[WIIEXT_KEY_C], !!(payload[5] & 0x08));
+			wiiext_keymap[WIIEXT_KEY_C], !(payload[5] & 0x08));
 	} else {
 		input_report_key(ext->input,
-			wiiext_keymap[WIIEXT_KEY_Z], !!(payload[5] & 0x01));
+			wiiext_keymap[WIIEXT_KEY_Z], !(payload[5] & 0x01));
 		input_report_key(ext->input,
-			wiiext_keymap[WIIEXT_KEY_C], !!(payload[5] & 0x02));
+			wiiext_keymap[WIIEXT_KEY_C], !(payload[5] & 0x02));
 	}
 
 	input_sync(ext->input);
@@ -564,11 +564,6 @@ static DEVICE_ATTR(extension, S_IRUGO, wiiext_show, NULL);
 static int wiiext_input_open(struct input_dev *dev)
 {
 	struct wiimote_ext *ext = input_get_drvdata(dev);
-	int ret;
-
-	ret = hid_hw_open(ext->wdata->hdev);
-	if (ret)
-		return ret;
 
 	atomic_inc(&ext->opened);
 	wiiext_schedule(ext);
@@ -582,17 +577,11 @@ static void wiiext_input_close(struct input_dev *dev)
 
 	atomic_dec(&ext->opened);
 	wiiext_schedule(ext);
-	hid_hw_close(ext->wdata->hdev);
 }
 
 static int wiiext_mp_open(struct input_dev *dev)
 {
 	struct wiimote_ext *ext = input_get_drvdata(dev);
-	int ret;
-
-	ret = hid_hw_open(ext->wdata->hdev);
-	if (ret)
-		return ret;
 
 	atomic_inc(&ext->mp_opened);
 	wiiext_schedule(ext);
@@ -606,7 +595,6 @@ static void wiiext_mp_close(struct input_dev *dev)
 
 	atomic_dec(&ext->mp_opened);
 	wiiext_schedule(ext);
-	hid_hw_close(ext->wdata->hdev);
 }
 
 /* Initializes the extension driver of a wiimote */
