@@ -3260,6 +3260,7 @@ static struct dev_pm_ops touch_pm_ops = {
 
 static struct i2c_device_id lge_ts_id[] = {
 	{LGE_TOUCH_NAME, 0 },
+	{ }
 };
 
 static struct i2c_driver lge_touch_driver = {
