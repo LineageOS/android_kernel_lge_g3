@@ -1569,7 +1569,7 @@ void input_reset_device(struct input_dev *dev)
 
 	if (dev->users) {
 		input_dev_toggle(dev, true);
-
+#ifndef CONFIG_MACH_LGE
 		/*
 		 * Keys that have been pressed at suspend time are unlikely
 		 * to be still pressed when we resume.
@@ -1579,6 +1579,7 @@ void input_reset_device(struct input_dev *dev)
 			input_dev_release_keys(dev);
 			spin_unlock_irq(&dev->event_lock);
 		}
+#endif
 	}
 
 	mutex_unlock(&dev->mutex);
