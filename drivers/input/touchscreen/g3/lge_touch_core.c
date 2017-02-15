@@ -790,11 +790,11 @@ static int report_event(const struct lge_touch_data *ts)
 			++ts->pdata->touch_count_num;
 
 			if(lockscreen_stat == 1) {
-				TOUCH_DEBUG(DEBUG_ABS | DEBUG_BASE_INFO,"%d finger pressed : <%d> x[  xx] y[  xx] z[%3d]\n",
+				TOUCH_DEBUG(DEBUG_ABS,"%d finger pressed : <%d> x[  xx] y[  xx] z[%3d]\n",
 						ts->pdata->touch_count_num, new_id,
 						ts->ts_curr_data.abs_data[i].pressure);
 			} else {
-				TOUCH_DEBUG(DEBUG_ABS | DEBUG_BASE_INFO,"%d finger pressed : <%d> x[%4d] y[%4d] z[%3d]\n",
+				TOUCH_DEBUG(DEBUG_ABS,"%d finger pressed : <%d> x[%4d] y[%4d] z[%3d]\n",
 						ts->pdata->touch_count_num, new_id,
 						ts->ts_curr_data.abs_data[i].x,
 						ts->ts_curr_data.abs_data[i].y,
@@ -834,9 +834,9 @@ static int report_event(const struct lge_touch_data *ts)
 				TOUCH_DEBUG(DEBUG_ABS, "<%d:%d> released\n",ts->ts_prev_data.abs_data[i].id, new_id);
 
 				if(lockscreen_stat == 1) {
-					TOUCH_DEBUG(DEBUG_ABS | DEBUG_BASE_INFO, "touch_release[ ] : <%d> x[  xx] y[  xx]\n", new_id);
+					TOUCH_DEBUG(DEBUG_ABS, "touch_release[ ] : <%d> x[  xx] y[  xx]\n", new_id);
 				} else {
-					TOUCH_DEBUG(DEBUG_ABS | DEBUG_BASE_INFO, "touch_release[ ] : <%d> x[%4d] y[%4d]\n",
+					TOUCH_DEBUG(DEBUG_ABS, "touch_release[ ] : <%d> x[%4d] y[%4d]\n",
 							new_id,
 							ts->ts_prev_data.abs_data[i].x,
 							ts->ts_prev_data.abs_data[i].y);
