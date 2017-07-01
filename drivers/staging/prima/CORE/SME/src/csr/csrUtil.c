@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2011-2014 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2011-2015 The Linux Foundation. All rights reserved.
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -1268,7 +1268,6 @@ get_eRoamCmdStatus_str(eRoamCmdStatus val)
         CASE_RETURN_STR(eCSR_ROAM_FT_RESPONSE);
 #endif
         CASE_RETURN_STR(eCSR_ROAM_FT_START);
-        CASE_RETURN_STR(eCSR_ROAM_INDICATE_MGMT_FRAME);
         CASE_RETURN_STR(eCSR_ROAM_REMAIN_CHAN_READY);
         CASE_RETURN_STR(eCSR_ROAM_SEND_ACTION_CNF);
         CASE_RETURN_STR(eCSR_ROAM_SESSION_OPENED);
@@ -1304,6 +1303,7 @@ get_eRoamCmdStatus_str(eRoamCmdStatus val)
         CASE_RETURN_STR(eCSR_ROAM_ESE_BCN_REPORT_IND);
 #endif /* FEATURE_WLAN_ESE && FEATURE_WLAN_ESE_UPLOAD */
         CASE_RETURN_STR(eCSR_ROAM_UPDATE_MAX_RATE_IND);
+        CASE_RETURN_STR(eCSR_ROAM_LOST_LINK_PARAMS_IND);
     default:
         return "unknown";
     }
@@ -2346,7 +2346,7 @@ eHalStatus csrGetPhyModeFromBss(tpAniSirGlobal pMac, tSirBssDescription *pBSSDes
         {
             phyMode = eCSR_DOT11_MODE_11n;
 #ifdef WLAN_FEATURE_11AC
-            if ( pIes->VHTCaps.present)
+            if (IS_BSS_VHT_CAPABLE(pIes->VHTCaps))
             {
                 phyMode = eCSR_DOT11_MODE_11ac;
             }

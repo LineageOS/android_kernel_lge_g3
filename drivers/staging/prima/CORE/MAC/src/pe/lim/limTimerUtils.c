@@ -40,7 +40,7 @@
 #include "limAssocUtils.h"
 #include "limSecurityUtils.h"
 #include "pmmApi.h"
-
+#include "limApi.h"
 
 // default value 5000 ms for background scan period when it is disabled
 #define LIM_BACKGROUND_SCAN_PERIOD_DEFAULT_MS    5000
@@ -774,7 +774,7 @@ limTimerHandler(void *pMacGlobal, tANI_U32 param)
     msg.bodyptr = NULL;
     msg.bodyval = 0;
 
-    if ((statusCode = limPostMsgApi(pMac, &msg)) != eSIR_SUCCESS)
+    if ((statusCode = limPostMsgApiHighPri(pMac, &msg)) != eSIR_SUCCESS)
         limLog(pMac, LOGE,
                FL("posting message %X to LIM failed, reason=%d"),
                msg.type, statusCode);
@@ -1117,12 +1117,23 @@ limDeactivateAndChangeTimer(tpAniSirGlobal pMac, tANI_U32 timerId)
                     break;
                 }
             }
-            if (tx_timer_change(&pMac->lim.limTimers.gLimPeriodicProbeReqTimer,
-                                val, 0) != TX_SUCCESS)
+            if (val)
             {
-                // Could not change min channel timer.
-                // Log error
-                limLog(pMac, LOGP, FL("Unable to change periodic timer"));
+                if (tx_timer_change(&pMac->lim.limTimers.gLimPeriodicProbeReqTimer,
+                                    val, 0) != TX_SUCCESS)
+                {
+                    // Could not change min channel timer.
+                    // Log error
+                    limLog(pMac, LOGE, FL("Unable to change periodic timer"));
+                }
+            }
+            else
+            {
+                limLog(pMac, LOGE, FL("Do not change gLimPeriodicProbeReqTimer values,"
+                       "value = %d minchannel time = %d"
+                       "maxchannel time = %d"), val,
+                       pMac->lim.gpLimMlmScanReq->minChannelTime,
+                       pMac->lim.gpLimMlmScanReq->maxChannelTime);
             }
 
             break;
