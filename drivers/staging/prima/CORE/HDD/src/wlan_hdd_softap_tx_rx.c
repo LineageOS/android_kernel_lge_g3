@@ -318,6 +318,13 @@ int hdd_softap_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
        return os_status;
    }
 
+   if (pHddCtx == NULL)
+   {
+      VOS_TRACE(VOS_MODULE_ID_HDD_SAP_DATA, VOS_TRACE_LEVEL_ERROR,
+            FL("pHddCtx is NULL"));
+      goto xmit_done;
+   }
+
    pDestMacAddress = (v_MACADDR_t*)skb->data;
    
    ++pAdapter->hdd_stats.hddTxRxStats.txXmitCalled;
@@ -422,8 +429,10 @@ int hdd_softap_hard_start_xmit(struct sk_buff *skb, struct net_device *dev)
    {
       if (pSapCtx->aStaInfo[STAId].wmm_tx_queue[ac].count >= HDD_TX_QUEUE_LOW_WATER_MARK)
       {
-          VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_WARN,
+          if (!(pSapCtx->aStaInfo[STAId].wmm_tx_queue[ac].ratelimit_count % 0x40))
+              VOS_TRACE( VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_WARN,
                      "%s: TX queue for Best Effort AC is 3/4th full", __func__);
+          pSapCtx->aStaInfo[STAId].wmm_tx_queue[ac].ratelimit_count++;
           pSapCtx->aStaInfo[STAId].vosLowResource = VOS_TRUE;
       }
       else
@@ -698,7 +707,7 @@ void __hdd_softap_tx_timeout(struct net_device *dev)
 
    ++pAdapter->hdd_stats.hddTxRxStats.txTimeoutCount;
 
-   for (i = 0; i < 8; i++)
+   for (i = 0; i < NUM_TX_QUEUES; i++)
    {
       txq = netdev_get_tx_queue(dev, i);
       VOS_TRACE( VOS_MODULE_ID_HDD_SAP_DATA, VOS_TRACE_LEVEL_ERROR,
@@ -706,7 +715,7 @@ void __hdd_softap_tx_timeout(struct net_device *dev)
    }
 
    VOS_TRACE( VOS_MODULE_ID_HDD_SAP_DATA, VOS_TRACE_LEVEL_ERROR,
-              "carrier state: %d", netif_carrier_ok(dev));
+             "carrier state: %d", netif_carrier_ok(dev));
 
    ++pAdapter->hdd_stats.hddTxRxStats.continuousTxTimeoutCount;
 
@@ -1031,6 +1040,7 @@ VOS_STATUS hdd_softap_deinit_tx_rx_sta ( hdd_adapter_t *pAdapter, v_U8_t STAId )
    status = hdd_sta_id_hash_remove_entry(pAdapter,
                 STAId, &pSapCtx->aStaInfo[STAId].macAddrSTA);
    if (status != VOS_STATUS_SUCCESS) {
+       spin_unlock_bh( &pSapCtx->staInfo_lock );
        VOS_TRACE(VOS_MODULE_ID_HDD_SAP_DATA, VOS_TRACE_LEVEL_ERROR,
                  FL("Not able to remove staid hash %d"), STAId);
        return VOS_STATUS_E_FAILURE;

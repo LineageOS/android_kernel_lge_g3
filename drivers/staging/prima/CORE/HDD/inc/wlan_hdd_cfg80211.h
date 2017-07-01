@@ -323,6 +323,28 @@ enum qca_wlan_vendor_attr_ll_stats_clr
                         QCA_WLAN_VENDOR_ATTR_LL_STATS_CLR_AFTER_LAST - 1,
 };
 
+/**
+ * enum qca_wlan_vendor_attr_ll_stats_results_type - ll stats result type
+ *
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_INVALID: Initial invalid value
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_RADIO: Link layer stats type radio
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_IFACE: Link layer stats type interface
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_PEER: Link layer stats type peer
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_AFTER_LAST: Last value
+ * @QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_MAX: Max value
+ */
+enum qca_wlan_vendor_attr_ll_stats_results_type {
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_INVALID = 0,
+
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_RADIO = 1,
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_IFACE,
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_PEER,
+
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_AFTER_LAST,
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_MAX =
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE_AFTER_LAST - 1
+};
+
 enum qca_wlan_vendor_attr_ll_stats_results
 {
     QCA_WLAN_VENDOR_ATTR_LL_STATS_INVALID = 0,
@@ -548,6 +570,21 @@ enum qca_wlan_vendor_attr_ll_stats_results
      * Otherwise, it is set to 0.
      */
     QCA_WLAN_VENDOR_ATTR_LL_STATS_RESULTS_MORE_DATA,
+
+    /* Unsigned 64bit value */
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_AVERAGE_TSF_OFFSET,
+
+    /* Unsigned 32bit value */
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_LEAKY_AP_DETECTED,
+
+    /* Unsigned 32bit value */
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_LEAKY_AP_AVG_NUM_FRAMES_LEAKED,
+
+    /* Unsigned 32bit value */
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_IFACE_LEAKY_AP_GUARD_TIME,
+
+    /* Unsigned 32bit value to indicate ll stats result type */
+    QCA_WLAN_VENDOR_ATTR_LL_STATS_TYPE,
 
     /* keep last */
     QCA_WLAN_VENDOR_ATTR_LL_STATS_AFTER_LAST,
@@ -862,6 +899,8 @@ enum qca_wlan_vendor_attr_get_concurrency_matrix {
 #define WIFI_FEATURE_EPR                0x4000   /* Enhanced power reporting */
 #define WIFI_FEATURE_AP_STA             0x8000   /* Support for AP STA
                                                     Concurrency */
+#define WIFI_FEATURE_LINK_LAYER_STATS   0x10000  /* Link layer stats */
+
 /* Add more features here */
 enum qca_wlan_vendor_attr_set_no_dfs_flag
 {
@@ -920,7 +959,7 @@ VOS_STATUS wlan_hdd_cfg80211_roam_metrics_handover(hdd_adapter_t *pAdapter,
 
 #ifdef FEATURE_WLAN_WAPI
 void wlan_hdd_cfg80211_set_key_wapi(hdd_adapter_t* pAdapter,
-              u8 key_index, const u8 *mac_addr, u8 *key , int key_Len);
+              u8 key_index, const u8 *mac_addr, const u8 *key , int key_Len);
 #endif
 struct wiphy *wlan_hdd_cfg80211_wiphy_alloc(int priv_size);
 
@@ -969,6 +1008,13 @@ extern void wlan_hdd_cfg80211_update_replayCounterCallback(void *callbackContext
 void* wlan_hdd_change_country_code_cb(void *pAdapter);
 void hdd_select_cbmode( hdd_adapter_t *pAdapter,v_U8_t operationChannel);
 
+v_U8_t* wlan_hdd_cfg80211_get_ie_ptr(
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+                                     const v_U8_t *pIes,
+#else
+                                     v_U8_t *pIes,
+#endif
+                                     int length, v_U8_t eid);
 
 #ifdef FEATURE_WLAN_CH_AVOID
 int wlan_hdd_send_avoid_freq_event(hdd_context_t *pHddCtx,
@@ -981,5 +1027,19 @@ void wlan_hdd_cfg80211_extscan_callback(void *ctx, const tANI_U16 evType,
 #endif /* WLAN_FEATURE_EXTSCAN */
 
 void wlan_hdd_cfg80211_nan_init(hdd_context_t *pHddCtx);
+
+#if !(defined (SUPPORT_WDEV_CFG80211_VENDOR_EVENT_ALLOC))
+static inline struct sk_buff *
+backported_cfg80211_vendor_event_alloc(struct wiphy *wiphy,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+    struct wireless_dev *wdev,
+#endif
+    int approxlen,
+    int event_idx, gfp_t gfp)
+{
+    return cfg80211_vendor_event_alloc(wiphy, approxlen, event_idx, gfp);
+}
+#define cfg80211_vendor_event_alloc backported_cfg80211_vendor_event_alloc
+#endif
 
 #endif

@@ -282,6 +282,8 @@ typedef enum
 
   WLANTL_TX_FW_DEBUG = 8,
 
+  WLANTL_TX_KICKDXE = 9,
+
   WLANTL_TX_MAX
 }WLANTL_TxSignalsType;
 
@@ -698,6 +700,7 @@ typedef struct
 #endif
   /* BD Rate for transmitting ARP packets */
   v_U8_t arpRate;
+  v_BOOL_t arpOnWQ5;
 }WLANTL_STAClientType;
 
 /*---------------------------------------------------------------------------
