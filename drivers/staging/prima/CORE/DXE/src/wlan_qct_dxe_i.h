@@ -688,17 +688,19 @@ typedef struct
    wpt_uint32                      interruptPath;
    wpt_msg                        *rxIsrMsg;
    wpt_msg                        *txIsrMsg;
-   wpt_msg                        *rxPktAvailMsg;   
+   wpt_msg                        *rxPktAvailMsg;
    volatile WLANDXE_PowerStateType hostPowerState;
    wpt_boolean                     rxIntDisabledByIMPS;
    wpt_boolean                     txIntDisabledByIMPS;
    WLANDXE_SetPowerStateCbType     setPowerStateCb;
    volatile WLANDXE_RivaPowerStateType rivaPowerState;
-   wpt_boolean                     ringNotEmpty; 
+   wpt_boolean                     ringNotEmpty;
    wpt_boolean                     txIntEnable;
-   wpt_uint32                      txCompletedFrames; 
-   wpt_uint8                       ucTxMsgCnt; 
-   wpt_uint16                      lastKickOffDxe; 
+   wpt_uint32                      txCompletedFrames;
+   wpt_uint8                       ucTxMsgCnt;
+   wpt_uint16                      lastKickOffDxe;
+   wpt_uint32                      smsmRingsEmptyHistogram;
+   wpt_uint32                      smsmDxeHistogram;
    wpt_uint32                      dxeCookie;
    wpt_packet                     *freeRXPacket;
    wpt_boolean                     rxPalPacketUnavailable;
@@ -712,6 +714,12 @@ typedef struct
    wpt_timer                       dxeSSRTimer;
 } WLANDXE_CtrlBlkType;
 
+typedef struct
+{
+   u64                             *rxIntDisableReturn;
+   wpt_uint8                       rxIntChanlSrc;
+   wpt_uint8                       txCmpIntChanlSrc;
+} WLANDXE_EnvInformation;
 /*==========================================================================
   @  Function Name 
       dxeCommonDefaultConfig
