@@ -474,7 +474,6 @@ typedef enum
     eCSR_ROAM_FT_RESPONSE,
 #endif
     eCSR_ROAM_FT_START,
-    eCSR_ROAM_INDICATE_MGMT_FRAME,
     eCSR_ROAM_REMAIN_CHAN_READY,
     eCSR_ROAM_SEND_ACTION_CNF,
     //this mean error happens before association_start or roaming_start is called.
@@ -511,6 +510,7 @@ typedef enum
     eCSR_ROAM_ESE_BCN_REPORT_IND,
 #endif /* FEATURE_WLAN_ESE && FEATURE_WLAN_ESE_UPLOAD */
     eCSR_ROAM_UPDATE_MAX_RATE_IND,
+    eCSR_ROAM_LOST_LINK_PARAMS_IND,
 }eRoamCmdStatus;
 
 
@@ -1192,6 +1192,9 @@ typedef struct tagCsrConfigParam
 #endif
     tANI_U32 nOBSSScanWidthTriggerInterval;
     tANI_U8 roamDelayStatsEnabled;
+    tANI_BOOLEAN ignorePeerHTopMode;
+    tANI_BOOLEAN disableP2PMacSpoofing;
+    tANI_U8 max_chan_for_dwell_time_cfg;
 }tCsrConfigParam;
 
 //Tush
@@ -1242,6 +1245,7 @@ typedef struct tagCsrRoamInfo
         tSirMicFailureInfo *pMICFailureInfo;
         tCsrRoamConnectedProfile *pConnectedProfile;
         tSirWPSPBCProbeReq *pWPSPBCProbeReq;
+        tSirLostLinkParamsInfo *pLostLinkParams;
     } u;
 
     tANI_BOOLEAN wmmEnabledSta;   //set to true if WMM enabled STA
@@ -1495,6 +1499,18 @@ struct tagCsrDelStaParams
     tCsrBssid peerMacAddr;
     u16 reason_code;
     u8 subtype;
+};
+
+
+/**
+ * struct csr_set_tx_max_pwr_per_band - Req params to
+ * set max tx power per band
+ * @band: band for which power to be set
+ * @power: power to set in dB
+ */
+struct csr_set_tx_max_pwr_per_band {
+    eCsrBand band;
+    tPowerdBm power;
 };
 
 ////////////////////////////////////////////Common SCAN starts

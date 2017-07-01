@@ -690,13 +690,13 @@ limCleanupRxPath(tpAniSirGlobal pMac, tpDphHashNode pStaDs,tpPESession psessionE
              * There is no context at Polaris to delete.
              * Release our assigned AID back to the free pool
              */
-            if ((psessionEntry->limSystemRole == eLIM_AP_ROLE) || 
+            if ((psessionEntry->limSystemRole == eLIM_AP_ROLE) ||
                 (psessionEntry->limSystemRole == eLIM_BT_AMP_AP_ROLE))
-            {    
+            {
+                limDelSta(pMac, pStaDs, false, psessionEntry);
                 limReleasePeerIdx(pMac, pStaDs->assocId, psessionEntry);
             }
             limDeleteDphHashEntry(pMac, pStaDs->staAddr, pStaDs->assocId,psessionEntry);
-
             return retCode;
         }
     }
@@ -743,12 +743,15 @@ limCleanupRxPath(tpAniSirGlobal pMac, tpDphHashNode pStaDs,tpPESession psessionE
     pMac->lim.gLimNumRxCleanup++;
 #endif
 
-    if (psessionEntry->limSmeState == eLIM_SME_JOIN_FAILURE_STATE) {
-        retCode = limDelBss( pMac, pStaDs, psessionEntry->bssIdx, psessionEntry);
+    /* Do DEL BSS or DEL STA only if ADD BSS was success */
+    if (!psessionEntry->addBssfailed)
+    {
+        if (psessionEntry->limSmeState == eLIM_SME_JOIN_FAILURE_STATE)
+           retCode = limDelBss( pMac, pStaDs,
+                          psessionEntry->bssIdx, psessionEntry);
+        else
+           retCode = limDelSta( pMac, pStaDs, true, psessionEntry);
     }
-    else
-        retCode = limDelSta( pMac, pStaDs, true, psessionEntry);
-
     return retCode;
 
 } /*** end limCleanupRxPath() ***/
@@ -3729,7 +3732,8 @@ tSirRetStatus limStaSendAddBss( tpAniSirGlobal pMac, tpSirAssocRsp pAssocRsp,
             pAddBssParams->staContext.greenFieldCapable,
             pAddBssParams->staContext.lsigTxopProtection);
 #ifdef WLAN_FEATURE_11AC
-            if (psessionEntry->vhtCapability && pBeaconStruct->VHTCaps.present)
+            if (psessionEntry->vhtCapability &&
+                IS_BSS_VHT_CAPABLE(pBeaconStruct->VHTCaps))
             {
                 pAddBssParams->staContext.vhtCapable = 1;
                 if ((pAssocRsp->VHTCaps.suBeamFormerCap ||
@@ -4117,7 +4121,8 @@ tSirRetStatus limStaSendAddBssPreAssoc( tpAniSirGlobal pMac, tANI_U8 updateEntry
     limLog(pMac, LOG1, FL("currentOperChannel %d"),
     pAddBssParams->currentOperChannel);
 #ifdef WLAN_FEATURE_11AC
-    if (psessionEntry->vhtCapability && ( pBeaconStruct->VHTCaps.present ))
+    if (psessionEntry->vhtCapability &&
+        IS_BSS_VHT_CAPABLE(pBeaconStruct->VHTCaps))
     {
         pAddBssParams->vhtCapable = pBeaconStruct->VHTCaps.present;
         pAddBssParams->vhtTxChannelWidthSet = pBeaconStruct->VHTOperation.chanWidth; 
@@ -4170,7 +4175,8 @@ tSirRetStatus limStaSendAddBssPreAssoc( tpAniSirGlobal pMac, tANI_U8 updateEntry
             pAddBssParams->staContext.greenFieldCapable,
             pAddBssParams->staContext.lsigTxopProtection);
 #ifdef WLAN_FEATURE_11AC
-            if (psessionEntry->vhtCapability && pBeaconStruct->VHTCaps.present)
+            if (psessionEntry->vhtCapability &&
+                IS_BSS_VHT_CAPABLE(pBeaconStruct->VHTCaps))
             {
                 pAddBssParams->staContext.vhtCapable = 1;
                 if ((pBeaconStruct->VHTCaps.suBeamFormerCap ||

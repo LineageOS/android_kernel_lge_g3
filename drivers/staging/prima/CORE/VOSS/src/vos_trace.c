@@ -268,8 +268,7 @@ void vos_trace_msg( VOS_MODULE_ID module, VOS_TRACE_LEVEL level, char *strFormat
       va_start(val, strFormat);
 
       // print the prefix string into the string buffer...
-      n = snprintf(strBuffer, VOS_TRACE_BUFFER_SIZE, "wlan: [%d:%2s:%3s] ",
-                   in_interrupt() ? 0 : current->pid,
+      n = snprintf(strBuffer, VOS_TRACE_BUFFER_SIZE, "wlan: [%2s:%3s] ",
                    (char *) TRACE_LEVEL_STR[ level ],
                    (char *) gVosTraceInfo[ module ].moduleNameStr );
 
@@ -590,7 +589,7 @@ void vosTraceDumpAll(void *pMac, v_U8_t code, v_U8_t session,
         return;
     }
 
-    VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_ERROR,
+    VOS_TRACE( VOS_MODULE_ID_SYS, VOS_TRACE_LEVEL_INFO,
                "Total Records: %d, Head: %d, Tail: %d",
                gvosTraceData.num, gvosTraceData.head, gvosTraceData.tail);
 

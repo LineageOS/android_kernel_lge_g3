@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2012-2015 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2012-2016 The Linux Foundation. All rights reserved.
  *
  * Previously licensed under the ISC license by Qualcomm Atheros, Inc.
  *
@@ -289,6 +289,11 @@ extern spinlock_t hdd_context_lock;
 #define BCN_MISS_RATE_CONTEXT_MAGIC 0x513F5753
 #define FW_STATS_CONTEXT_MAGIC  0x5022474E //FW STATS
 #define GET_FRAME_LOG_MAGIC   0x464c4f47   //FLOG
+#define MON_MODE_MSG_MAGIC 0x51436B3A //MON_MODE
+
+#define MON_MODE_MSG_TIMEOUT 5000
+#define MON_MODE_START 1
+#define MON_MODE_STOP  0
 
 /*
  * Driver miracast parameters 0-Disabled
@@ -1060,6 +1065,7 @@ struct hdd_adapter_s
 #endif
    
    v_S7_t rssi;
+   v_S7_t rssi_on_disconnect;
 
    tANI_U8 snr;
 
@@ -1205,6 +1211,23 @@ typedef struct
    v_U8_t       isEnabled;
    struct mutex macSpoofingLock;
 }macAddrSpoof_t;
+
+#define WLAN_WAIT_TIME_LL_STATS 5000
+
+#ifdef WLAN_FEATURE_LINK_LAYER_STATS
+/**
+ * struct hdd_ll_stats_context - hdd link layer stats context
+ *
+ * @request_id: userspace-assigned link layer stats request id
+ * @request_bitmap: userspace-assigned link layer stats request bitmap
+ * @response_event: LL stats request wait event
+ */
+struct hdd_ll_stats_context {
+    uint32_t request_id;
+    uint32_t request_bitmap;
+    struct completion response_event;
+};
+#endif /* End of WLAN_FEATURE_LINK_LAYER_STATS */
 
 /** Adapter stucture definition */
 
@@ -1426,6 +1449,12 @@ struct hdd_context_s
     //Lock to avoid race condition during wmm operations
     struct mutex   wmmLock;
     v_BOOL_t mgmt_frame_logging;
+    v_BOOL_t isSetBandByNL;
+#ifdef WLAN_FEATURE_LINK_LAYER_STATS
+    struct hdd_ll_stats_context ll_stats_context;
+#endif /* End of WLAN_FEATURE_LINK_LAYER_STATS */
+    unsigned long  last_suspend_success;
+    v_U32_t  continuous_suspend_fail_cnt;
 };
 
 
@@ -1514,6 +1543,8 @@ VOS_STATUS hdd_reconnect_all_adapters( hdd_context_t *pHddCtx );
 void hdd_dump_concurrency_info(hdd_context_t *pHddCtx);
 hdd_adapter_t * hdd_get_adapter_by_name( hdd_context_t *pHddCtx, tANI_U8 *name );
 hdd_adapter_t * hdd_get_adapter_by_macaddr( hdd_context_t *pHddCtx, tSirMacAddr macAddr );
+hdd_adapter_t *hdd_get_adapter_by_sme_session_id( hdd_context_t *pHddCtx,
+                                        tANI_U32 sme_session_id );
 hdd_adapter_t * hdd_get_mon_adapter( hdd_context_t *pHddCtx );
 VOS_STATUS hdd_init_station_mode( hdd_adapter_t *pAdapter );
 hdd_adapter_t * hdd_get_adapter( hdd_context_t *pHddCtx, device_mode_t mode );
@@ -1525,8 +1556,9 @@ tANI_U8* wlan_hdd_get_intf_addr(hdd_context_t* pHddCtx);
 void wlan_hdd_release_intf_addr(hdd_context_t* pHddCtx, tANI_U8* releaseAddr);
 v_U8_t hdd_get_operating_channel( hdd_context_t *pHddCtx, device_mode_t mode );
 void wlan_hdd_mon_set_typesubtype( hdd_mon_ctx_t *pMonCtx,int type);
-VOS_STATUS wlan_hdd_mon_poststartmsg( hdd_mon_ctx_t *pMonCtx );
-void wlan_hdd_mon_poststopmsg( void );
+void hdd_monPostMsgCb(tANI_U32 *magic, struct completion *cmpVar);
+VOS_STATUS wlan_hdd_mon_postMsg(tANI_U32 *magic, struct completion *cmpVar,
+                                hdd_mon_ctx_t *pMonCtx , void* callback);
 void hdd_set_conparam ( v_UINT_t newParam );
 tVOS_CON_MODE hdd_get_conparam( void );
 
@@ -1670,4 +1702,33 @@ VOS_STATUS hdd_sta_id_hash_remove_entry(hdd_adapter_t *pAdapter,
 int hdd_sta_id_find_from_mac_addr(hdd_adapter_t *pAdapter,
                                   v_MACADDR_t *mac_addr_in);
 void hdd_init_frame_logging(hdd_context_t *pHddCtx);
+
+int hdd_enable_disable_ca_event(hdd_context_t *pHddCtx,
+                                tANI_U8* command, tANI_U8 cmd_len);
+void hdd_indicate_mgmt_frame(tSirSmeMgmtFrameInd *frame_ind);
+
+#ifdef WLAN_FEATURE_LINK_LAYER_STATS
+/**
+ * hdd_init_ll_stats_ctx() - initialize link layer stats context
+ * @hdd_ctx: Pointer to hdd context
+ *
+ * Return: none
+ */
+static inline void hdd_init_ll_stats_ctx(hdd_context_t *hdd_ctx)
+{
+    init_completion(&hdd_ctx->ll_stats_context.response_event);
+    hdd_ctx->ll_stats_context.request_bitmap = 0;
+
+     return;
+}
+#else
+static inline void hdd_init_ll_stat_ctx(void)
+{
+    return;
+}
+#endif /* WLAN_FEATURE_LINK_LAYER_STATS */
+void hdd_wlan_free_wiphy_channels(struct wiphy *wiphy);
+void hdd_initialize_adapter_common(hdd_adapter_t *pAdapter);
+
+
 #endif    // end #if !defined( WLAN_HDD_MAIN_H )
