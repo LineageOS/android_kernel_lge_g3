@@ -131,6 +131,10 @@ ADD_VNV_ITEM( VNV_TABLE_VIRTUAL_RATE, 1, 4, VNV_TABLE_VIRTUAL_RATE_I ) \
  * to esp_dpp.h where the WLAN_PROVISION_DATA is present.
  */
 #define CLPC_PROVISION_DATA L"WLAN_CLPC.PROVISION"
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,14,0))
+#define IEEE80211_CHAN_PASSIVE_SCAN IEEE80211_CHAN_NO_IR
+#define IEEE80211_CHAN_NO_IBSS IEEE80211_CHAN_NO_IR
+#endif
 /*--------------------------------------------------------------------------
   Type declarations
   ------------------------------------------------------------------------*/
@@ -776,6 +780,15 @@ v_BOOL_t vos_is_nv_country_non_zero
 (
    void
 );
+
+/**------------------------------------------------------------------------
+  \brief vos_is_channel_valid_for_vht80 -
+  \param   chan
+  \return TRUE if channel is 80 mhz
+  \sa
+  -------------------------------------------------------------------------*/
+
+v_BOOL_t vos_is_channel_valid_for_vht80(v_U32_t chan);
 
 #ifdef CONFIG_ENABLE_LINUX_REG
 /**------------------------------------------------------------------------

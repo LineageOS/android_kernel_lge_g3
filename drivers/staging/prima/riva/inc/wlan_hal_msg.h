@@ -566,6 +566,10 @@ typedef enum
    WLAN_HAL_FW_MEMORY_DUMP_REQ              = 309,
    WLAN_HAL_FW_MEMORY_DUMP_RSP              = 310,
    WLAN_HAL_FW_LOGGING_DXE_DONE_IND         = 311,
+   WLAN_HAL_LOST_LINK_PARAMETERS_IND        = 312,
+   WLAN_HAL_SEND_FREQ_RANGE_CONTROL_IND     = 313,
+
+   WLAN_HAL_SET_ALLOWED_ACTION_FRAMES_IND    = 333,
 
    WLAN_HAL_MSG_MAX = WLAN_HAL_MSG_TYPE_MAX_ENUM_SIZE
 }tHalHostMsgType;
@@ -7889,6 +7893,22 @@ typedef PACKED_PRE struct PACKED_POST
    tHalBcnMissRateRspParams bcnMissRateRspParams;
 }tHalBcnMissRateRspMsg, *tpHalBcnMissRateRspMsg;
 
+/*---------------------------------------------------------------------------
+ * WLAN_HAL_SET_ALLOWED_ACTION_FRAMES_IND
+ *-------------------------------------------------------------------------*/
+
+typedef PACKED_PRE struct PACKED_POST
+{
+   tANI_U32  actionFramesBitMask;
+   tANI_U32  reserved;
+}tHalAllowedActionFrames, *tpHalAllowedActionFrames;
+
+typedef PACKED_PRE struct PACKED_POST
+{
+   tHalMsgHeader header;
+   tHalAllowedActionFrames allowedActionFrames;
+}tHalAllowedActionFramesReqInd, *tpHalAllowedActionFramesReqInd;
+
 /*--------------------------------------------------------------------------
 * WLAN_HAL_LL_SET_STATS_REQ
 *---------------------------------------------------------------------------*/
@@ -8555,6 +8575,26 @@ typedef PACKED_PRE struct PACKED_POST
     tHalFatalEventLoggingRspParams tFatalEventLoggingRspParams;
 }tHalFatalEventLoggingRspMsg, *tpHalFatalEventLoggingRspMsg;
 
+/*---------------------------------------------------------------------------
+  * WLAN_HAL_LOST_LINK_PARAMETERS_IND
+  *-------------------------------------------------------------------------*/
+typedef PACKED_PRE struct PACKED_POST
+{
+    tANI_U8  bssIdx;
+    tANI_U8  rssi;
+    tSirMacAddr selfMacAddr;
+    tANI_U32 linkFlCnt;
+    tANI_U32 linkFlTx;
+    tANI_U32 lastDataRate;
+    tANI_U32 rsvd1;
+    tANI_U32 rsvd2;
+}tHalLostLinkParametersIndParams, *tpHalLostLinkParametersIndParams;
+
+typedef PACKED_PRE struct PACKED_POST
+{
+    tHalMsgHeader header;
+    tHalLostLinkParametersIndParams lostLinkParameters;
+}tHalLostLinkParametersIndMsg, *tpHalLostLinkParametersIndMsg;
 
 
 /*---------------------------------------------------------------------------
@@ -8739,6 +8779,11 @@ typedef PACKED_PRE struct PACKED_POST
    tHalMsgHeader header;
    tHalDisableMonitorModeRspParams disableMonitorModeRspParams;
 }tHalDisableMonitorModeRspMsg, *tpHalDisableMonitorModeRspMsg;
+
+typedef PACKED_PRE struct PACKED_POST
+{
+  tANI_U8   status;
+}tHalAvoidFreqRangeCtrlParam, *tpHalAvoidFreqRangeCtrlParam;
 
 #if defined(__ANI_COMPILER_PRAGMA_PACK_STACK)
 #pragma pack(pop)

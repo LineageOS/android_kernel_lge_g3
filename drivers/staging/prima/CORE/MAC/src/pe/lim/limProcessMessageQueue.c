@@ -80,7 +80,7 @@
 #include "vos_memory.h"
 
 /* This value corresponds to 500 ms */
-#define MAX_PROBEREQ_TIME 5000
+#define MAX_PROBEREQ_TIME 50
 
 #ifdef WLAN_FEATURE_EXTSCAN
 #define  SIZE_OF_FIXED_PARAM 12
@@ -151,6 +151,19 @@ defMsgDecision(tpAniSirGlobal pMac, tpSirMsgQ  limMsg)
         (limMsg->type != WDA_START_OEM_DATA_RSP) &&
 #endif
         (limMsg->type != WDA_ADD_TS_RSP) &&
+
+        /* LIM won't process any defer queue commands if gLimAddtsSent is set to
+           TRUE. gLimAddtsSent will be set TRUE to while sending ADDTS REQ. Say,
+           when deferring is enabled, if SIR_LIM_ADDTS_RSP_TIMEOUT is posted
+           (because of not receiving ADDTS RSP) then this command will be added
+           to defer queue and as gLimAddtsSent is set TRUE LIM will never
+           process any commands from defer queue, including
+           SIR_LIM_ADDTS_RSP_TIMEOUT. Hence allowing SIR_LIM_ADDTS_RSP_TIMEOUT
+           command to be processed with deferring enabled, so that this will be
+           processed immediately and sets gLimAddtsSent to FALSE.
+         */
+        (limMsg->type != SIR_LIM_ADDTS_RSP_TIMEOUT) &&
+        (limMsg->type != WDA_LOST_LINK_PARAMS_IND) &&
         /* Allow processing of RX frames while awaiting reception of
            ADD TS response over the air. This logic particularly handles the
            case when host sends ADD BA request to FW after ADD TS request
@@ -577,7 +590,7 @@ limProcessEXTScanRealTimeData(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
         if ( DOT11F_FAILED( status ) )
         {
             limLog(pMac, LOGE, FL("Failed to parse a Beacons"
-                        "(%d):\n"), status);
+                        "(%d)"), status);
             vos_mem_free(pBeacon);
             return;
         }
@@ -615,7 +628,7 @@ limProcessEXTScanRealTimeData(tpAniSirGlobal pMac, tANI_U8 *pRxPacketInfo)
         if ( DOT11F_FAILED( status ) )
         {
             limLog(pMac, LOGE, FL("Failed to parse a Probe"
-                        "Response (%d:\n"), status);
+                        "Response (%d"), status);
             vos_mem_free(pProbeResponse);
             return;
         }
@@ -1552,6 +1565,7 @@ limProcessMessages(tpAniSirGlobal pMac, tpSirMsgQ  limMsg)
         case eWNI_SME_GET_TSM_STATS_REQ:
 #endif /* FEATURE_WLAN_ESE && FEATURE_WLAN_ESE_UPLOAD */
         case eWNI_SME_MAC_SPOOF_ADDR_IND:
+        case eWNI_SME_REGISTER_MGMT_FRAME_CB:
             // These messages are from HDD
             limProcessNormalHddMsg(pMac, limMsg, false);   //no need to response to hdd
             break;
@@ -1753,7 +1767,11 @@ limProcessMessages(tpAniSirGlobal pMac, tpSirMsgQ  limMsg)
            limMsg->bodyptr = NULL;
            break;
     
-
+        case WDA_LOST_LINK_PARAMS_IND:
+            limProcessLostLinkParamsInd(pMac,limMsg);
+            vos_mem_free(limMsg->bodyptr);
+            limMsg->bodyptr = NULL;
+            break;
 
         case SIR_LIM_ADDTS_RSP_TIMEOUT:
             limProcessSmeReqMessages(pMac,limMsg);
@@ -2166,7 +2184,7 @@ limProcessMessages(tpAniSirGlobal pMac, tpSirMsgQ  limMsg)
                                                      pTdlsLinkEstablishParams->staIdx,
                                                      &sessionId))== NULL)
             {
-                limLog(pMac, LOGE, FL("session %u  does not exist.\n"), sessionId);
+                limLog(pMac, LOGE, FL("session %u  does not exist"), sessionId);
                 /* Still send the eWNI_SME_TDLS_LINK_ESTABLISH_RSP message to SME
                    with session id as zero and status as FAILURE so, that message
                    queued in SME queue can be freed to prevent the SME cmd buffer leak */
@@ -2200,7 +2218,7 @@ limProcessMessages(tpAniSirGlobal pMac, tpSirMsgQ  limMsg)
                                                      pTdlsChanSwitchParams->staIdx,
                                                      &sessionId))== NULL)
             {
-                limLog(pMac, LOGE, FL("session %u  does not exist.\n"), sessionId);
+                limLog(pMac, LOGE, FL("session %u  does not exist"), sessionId);
                 /* Still send the eWNI_SME_TDLS_LINK_ESTABLISH_RSP message to SME
                    with session id as zero and status as FAILURE so, that message
                    queued in SME queue can be freed to prevent the SME cmd buffer leak */
