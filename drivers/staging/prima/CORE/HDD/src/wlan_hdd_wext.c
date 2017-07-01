@@ -172,6 +172,7 @@ static const hdd_freq_chan_map_t freq_chan_map[] = { {2412, 1}, {2417, 2},
 #endif
 #define  WE_SET_RTS_CTS_HTVHT             21
 #define  WE_SET_MONITOR_STATE             22
+#define  WE_SET_PROXIMITY_ENABLE          23
 
 /* Private ioctls and their sub-ioctls */
 #define WLAN_PRIV_SET_NONE_GET_INT    (SIOCIWFIRSTPRIV + 1)
@@ -365,6 +366,22 @@ static const hdd_freq_chan_map_t freq_chan_map[] = { {2412, 1}, {2417, 2},
 
 #define WLAN_ADAPTER 0
 #define P2P_ADAPTER  1
+
+#define TX_PWR_MIN  6
+#define TX_PWR_MAX 22
+#define TX_PWR_DEF 50
+
+/*
+ * When supplicant sends SETBAND ioctl it queries for channels from
+ * cfg80211 layer by sending itself EVENT_CHANNEL_LIST_CHANGED command.
+ * This is not required if the return type from ioctl is
+ * DO_NOT_SEND_CHANNEL_CHANGE_EVENT as wiphy will send channel change
+ * event as part of regulatory_hint.
+ */
+enum {
+    SEND_CHANNEL_CHANGE_EVENT = 0,
+    DO_NOT_SEND_CHANNEL_CHANGE_EVENT,
+};
 
 /*MCC Configuration parameters */
 enum {
@@ -759,8 +776,12 @@ static void hdd_GetRssiCB( v_S7_t rssi, tANI_U32 staId, void *pContext )
    /* paranoia: invalidate the magic */
    pStatsContext->magic = 0;
 
-   /* copy over the rssi */
-   pAdapter->rssi = rssi;
+   /* copy over the rssi.FW will return RSSI as -100
+    * if there are no samples to calculate the average
+    * RSSI
+    */
+   if (rssi != -100)
+       pAdapter->rssi = rssi;
    if (pAdapter->rssi > 0)
        pAdapter->rssi = 0;
    /* notify the caller */
@@ -855,8 +876,9 @@ VOS_STATUS wlan_hdd_get_rssi(hdd_adapter_t *pAdapter, v_S7_t *rssi_value)
 
    if (eConnectionState_Associated != pHddStaCtx->conn_info.connState)
    {
-       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s:Not associated!",__func__);
-       *rssi_value = 0;
+       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s:Not associated, rssi on Disconnect : %d",
+                    __func__, pAdapter->rssi_on_disconnect);
+       *rssi_value = pAdapter->rssi_on_disconnect;
        return VOS_STATUS_SUCCESS;
    }
 
@@ -1052,6 +1074,7 @@ VOS_STATUS wlan_hdd_get_snr(hdd_adapter_t *pAdapter, v_S7_t *snr)
    EXIT();
    return VOS_STATUS_SUCCESS;
 }
+
 #if defined WLAN_FEATURE_VOWIFI_11R || defined FEATURE_WLAN_ESE || defined(FEATURE_WLAN_LFR)
 
 static void hdd_GetRoamRssiCB( v_S7_t rssi, tANI_U32 staId, void *pContext )
@@ -1101,8 +1124,13 @@ static void hdd_GetRoamRssiCB( v_S7_t rssi, tANI_U32 staId, void *pContext )
    /* paranoia: invalidate the magic */
    pStatsContext->magic = 0;
 
-   /* copy over the rssi */
-   pAdapter->rssi = rssi;
+   /* copy over the rssi.FW will return RSSI as -100
+    * if there are no samples to calculate the average
+    * RSSI
+    */
+   if (rssi != -100)
+       pAdapter->rssi = rssi;
+
    if (pAdapter->rssi > 0)
        pAdapter->rssi = 0;
    /* notify the caller */
@@ -2362,13 +2390,20 @@ static int __iw_set_genie(struct net_device *dev,
         hddLog(VOS_TRACE_LEVEL_INFO, "%s: IE[0x%X], LEN[%d]",
             __func__, elementId, eLen);
 
+        if (remLen < eLen) {
+            hddLog(LOGE, "Remaining len: %u less than ie len: %u",
+                   remLen, eLen);
+            ret = -EINVAL;
+            goto exit;
+        }
+
         switch ( elementId )
          {
             case IE_EID_VENDOR:
                 if ((IE_LEN_SIZE+IE_EID_SIZE+IE_VENDOR_OUI_SIZE) > eLen) /* should have at least OUI */
                 {
-                    kfree(base_genie);
-                    return -EINVAL;
+                    ret = -EINVAL;
+                    goto exit;
                 }
 
                 if (0 == memcmp(&genie[0], "\x00\x50\xf2\x04", 4))
@@ -2382,8 +2417,8 @@ static int __iw_set_genie(struct net_device *dev,
                        hddLog(VOS_TRACE_LEVEL_FATAL, "Cannot accommodate genIE. "
                                                       "Need bigger buffer space");
                        VOS_ASSERT(0);
-                       kfree(base_genie);
-                       return -ENOMEM;
+                       ret = -EINVAL;
+                       goto exit;
                     }
                     // save to Additional IE ; it should be accumulated to handle WPS IE + other IE
                     memcpy( pWextState->genIE.addIEdata + curGenIELen, genie - 2, eLen + 2);
@@ -2392,6 +2427,14 @@ static int __iw_set_genie(struct net_device *dev,
                 else if (0 == memcmp(&genie[0], "\x00\x50\xf2", 3))
                 {
                     hddLog (VOS_TRACE_LEVEL_INFO, "%s Set WPA IE (len %d)",__func__, eLen + 2);
+                    if ((eLen + 2) > (sizeof(pWextState->WPARSNIE)))
+                    {
+                       hddLog(VOS_TRACE_LEVEL_FATAL, "Cannot accommodate genIE. "
+                                                      "Need bigger buffer space");
+                       ret = -EINVAL;
+                       VOS_ASSERT(0);
+                       goto exit;
+                    }
                     memset( pWextState->WPARSNIE, 0, MAX_WPA_RSN_IE_LEN );
                     memcpy( pWextState->WPARSNIE, genie - 2, (eLen + 2));
                     pWextState->roamProfile.pWPAReqIE = pWextState->WPARSNIE;
@@ -2408,8 +2451,8 @@ static int __iw_set_genie(struct net_device *dev,
                        hddLog(VOS_TRACE_LEVEL_FATAL, "Cannot accommodate genIE. "
                                                       "Need bigger buffer space");
                        VOS_ASSERT(0);
-                       kfree(base_genie);
-                       return -ENOMEM;
+                       ret = -ENOMEM;
+                       goto exit;
                     }
                     // save to Additional IE ; it should be accumulated to handle WPS IE + other IE
                     memcpy( pWextState->genIE.addIEdata + curGenIELen, genie - 2, eLen + 2);
@@ -2418,6 +2461,14 @@ static int __iw_set_genie(struct net_device *dev,
               break;
          case DOT11F_EID_RSN:
                 hddLog (LOG1, "%s Set RSN IE (len %d)",__func__, eLen+2);
+                if ((eLen + 2) > (sizeof(pWextState->WPARSNIE)))
+                {
+                    hddLog(VOS_TRACE_LEVEL_FATAL, "Cannot accommodate genIE. "
+                                                  "Need bigger buffer space");
+                    ret = -EINVAL;
+                    VOS_ASSERT(0);
+                    goto exit;
+                }
                 memset( pWextState->WPARSNIE, 0, MAX_WPA_RSN_IE_LEN );
                 memcpy( pWextState->WPARSNIE, genie - 2, (eLen + 2));
                 pWextState->roamProfile.pRSNReqIE = pWextState->WPARSNIE;
@@ -2426,16 +2477,19 @@ static int __iw_set_genie(struct net_device *dev,
 
          default:
                 hddLog (LOGE, "%s Set UNKNOWN IE %X",__func__, elementId);
-            kfree(base_genie);
-            return 0;
+                goto exit;
     }
-        genie += eLen;
         remLen -= eLen;
+
+        /* Move genie only if next element is present */
+        if (remLen >= 2)
+            genie += eLen;
     }
 
+exit:
     EXIT();
     kfree(base_genie);
-    return 0;
+    return ret;
 }
 
 static int iw_set_genie(struct net_device *dev,
@@ -2514,16 +2568,21 @@ static int __iw_get_genie(struct net_device *dev,
                                    pAdapter->sessionId,
                                    &length,
                                    genIeBytes);
-    length = VOS_MIN((u_int16_t) length, DOT11F_IE_RSN_MAX_LEN);
-    if (wrqu->data.length < length)
-    {
-        hddLog(LOG1, "%s: failed to copy data to user buffer", __func__);
+    if (eHAL_STATUS_SUCCESS != status) {
+        hddLog(LOGE, FL("failed to get WPA-RSN IE data"));
         return -EFAULT;
     }
-    vos_mem_copy( extra, (v_VOID_t*)genIeBytes, length);
-    wrqu->data.length = length;
 
-    hddLog(LOG1,"%s: RSN IE of %d bytes returned", __func__, wrqu->data.length );
+    wrqu->data.length = length;
+    if (length > DOT11F_IE_RSN_MAX_LEN) {
+        hddLog(LOGE,
+               FL("invalid buffer length length:%d"), length);
+        return -E2BIG;
+    }
+
+    vos_mem_copy( extra, (v_VOID_t*)genIeBytes, length);
+
+    hddLog(LOG1, FL("RSN IE of %d bytes returned"), wrqu->data.length );
 
     EXIT();
 
@@ -3841,6 +3900,7 @@ VOS_STATUS  wlan_hdd_enter_bmps(hdd_adapter_t *pAdapter, int mode)
    struct statsContext context;
    eHalStatus status;
    hdd_context_t *pHddCtx;
+   hdd_station_ctx_t *pHddStaCtx = WLAN_HDD_GET_STATION_CTX_PTR(pAdapter);
 
    if (NULL == pAdapter)
    {
@@ -3887,6 +3947,23 @@ VOS_STATUS  wlan_hdd_enter_bmps(hdd_adapter_t *pAdapter, int mode)
    }
    else if (DRIVER_POWER_MODE_AUTO == mode)
    {
+       /* If this is called by hdd_suspend_wlan or hdd_resume_wlan, driver
+        * was already in BMPS state and thus either STA or P2P-CLI is in
+        * associated state and authenticated, so even if STA connState is
+        * not associated it can be assumed that P2P-CLI is associated and
+        * authenticated. Thus driver can enter BMPS. And even if we try to enter
+        * BMPS with no adaptor in associated state, pmcRequestBmps will check
+        * if all condition are satisfied for entering BMPS.
+        */
+       if ((eConnectionState_Associated  == pHddStaCtx->conn_info.connState) &&
+           (VOS_FALSE == pHddStaCtx->conn_info.uIsAuthenticated))
+       {
+           hddLog(LOGE,
+              FL("Station is associated but, still not Authenticated ignore "
+               "power save mode"));
+           return VOS_STATUS_E_AGAIN;
+       }
+
        if (pHddCtx->cfg_ini->fIsBmpsEnabled)
        {
            hddLog(VOS_TRACE_LEVEL_INFO_HIGH, "%s:Wlan driver Entering Bmps ",
@@ -4114,15 +4191,15 @@ static int __iw_set_priv(struct net_device *dev,
     }
     else if (strcasecmp(cmd, "scan-active") == 0)
     {
-        hddLog(VOS_TRACE_LEVEL_ERROR,
-                   FL("making default scan to active"));
+        hddLog(LOG1,
+                FL("making default scan to active"));
         pHddCtx->scan_info.scan_mode = eSIR_ACTIVE_SCAN;
         ret = snprintf(cmd, cmd_len, "OK");
     }
     else if (strcasecmp(cmd, "scan-passive") == 0)
     {
-        hddLog(VOS_TRACE_LEVEL_ERROR,
-                   FL("making default scan to passive"));
+        hddLog(LOG1,
+               FL("making default scan to passive"));
         pHddCtx->scan_info.scan_mode = eSIR_PASSIVE_SCAN;
         ret = snprintf(cmd, cmd_len, "OK");
     }
@@ -4133,41 +4210,6 @@ static int __iw_set_priv(struct net_device *dev,
     else if( strcasecmp(cmd, "linkspeed") == 0 )
     {
         ret = iw_get_linkspeed(dev, info, wrqu, cmd);
-    }
-    else if( strncasecmp(cmd, "COUNTRY", 7) == 0 ) {
-        char *country_code;
-        long lrc;
-        eHalStatus eHal_status;
-
-        country_code =  cmd + 8;
-
-        init_completion(&pAdapter->change_country_code);
-
-        eHal_status = sme_ChangeCountryCode(pHddCtx->hHal,
-                                            (void *)(tSmeChangeCountryCallback)wlan_hdd_change_country_code_callback,
-                                            country_code,
-                                            pAdapter,
-                                            pHddCtx->pvosContext,
-                                            eSIR_TRUE,
-                                            eSIR_TRUE);
-
-        /* Wait for completion */
-        lrc = wait_for_completion_interruptible_timeout(&pAdapter->change_country_code,
-                                    msecs_to_jiffies(WLAN_WAIT_TIME_STATS));
-
-        if (lrc <= 0)
-        {
-            hddLog(VOS_TRACE_LEVEL_ERROR,"%s: SME %s while setting country code ",
-                   __func__, "Timed out");
-        }
-
-        if (eHAL_STATUS_SUCCESS != eHal_status)
-        {
-            VOS_TRACE( VOS_MODULE_ID_VOSS, VOS_TRACE_LEVEL_ERROR,
-                       "%s: SME Change Country code fail", __func__);
-            kfree(cmd);
-            return -EIO;
-        }
     }
     else if( strncasecmp(cmd, "rssi", 4) == 0 )
     {
@@ -5330,13 +5372,15 @@ static int __iw_setint_getnone(struct net_device *dev,
     {
         return ret;
     }
+
     if ( VOS_MONITOR_MODE != hdd_get_conparam())
     {
+      /* In monitor mode hHal is NULL */
       hHal = WLAN_HDD_GET_HAL_CTX(pAdapter);
       if (NULL == hHal)
       {
           VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
-                    "%s: Hal Context is NULL",__func__);
+                 "%s: Hal Context is NULL",__func__);
           return -EINVAL;
       }
       pWextState = WLAN_HDD_GET_WEXT_STATE_PTR(pAdapter);
@@ -5611,10 +5655,13 @@ static int __iw_setint_getnone(struct net_device *dev,
         }
         case WE_SET_MAX_TX_POWER_2_4:
         {
+           if (NULL == hHal)
+               return -EINVAL;
+
            hddLog(VOS_TRACE_LEVEL_INFO,
                   "%s: Setting maximum tx power %d dBm for 2.4 GHz band",
                   __func__, set_value);
-           if (sme_SetMaxTxPowerPerBand(eCSR_BAND_24, set_value) !=
+           if (sme_SetMaxTxPowerPerBand(eCSR_BAND_24, set_value, hHal) !=
                                         eHAL_STATUS_SUCCESS)
            {
               hddLog(VOS_TRACE_LEVEL_ERROR,
@@ -5627,10 +5674,13 @@ static int __iw_setint_getnone(struct net_device *dev,
         }
         case WE_SET_MAX_TX_POWER_5_0:
         {
+           if (NULL == hHal)
+               return -EINVAL;
+
            hddLog(VOS_TRACE_LEVEL_INFO,
                   "%s: Setting maximum tx power %d dBm for 5.0 GHz band",
                   __func__, set_value);
-           if (sme_SetMaxTxPowerPerBand(eCSR_BAND_5G, set_value) !=
+           if (sme_SetMaxTxPowerPerBand(eCSR_BAND_5G, set_value, hHal) !=
                                         eHAL_STATUS_SUCCESS)
            {
               hddLog(VOS_TRACE_LEVEL_ERROR,
@@ -5841,22 +5891,121 @@ static int __iw_setint_getnone(struct net_device *dev,
         }
         case WE_SET_MONITOR_STATE:
         {
+           v_U32_t magic = 0;
+           struct completion cmpVar;
+           long waitRet = 0;
+           tVOS_CON_MODE mode = hdd_get_conparam();
+
+           if( VOS_MONITOR_MODE != mode)
+           {
+               hddLog(LOGE, "invalid mode %d", mode);
+               ret = -EIO;
+           }
 
            pMonCtx =  WLAN_HDD_GET_MONITOR_CTX_PTR(pAdapter);
            if( pMonCtx == NULL )
            {
              hddLog(LOGE, "Monitor Context NULL");
-             break;
+             ret = -EIO;
+           }
+           if (pMonCtx->state == set_value)
+           {
+               VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO,
+                         FL("already in same mode curr_mode:%d req_mode: %d"),
+                             pMonCtx->state, set_value);
+               break;
            }
            pMonCtx->state = set_value;
-           if( set_value )
-               wlan_hdd_mon_poststartmsg(pMonCtx);
-           else
-               wlan_hdd_mon_poststopmsg();
-
-          break;
+           magic = MON_MODE_MSG_MAGIC;
+           init_completion(&cmpVar);
+           if (VOS_STATUS_SUCCESS !=
+                         wlan_hdd_mon_postMsg(&magic, &cmpVar,
+                                               pMonCtx, hdd_monPostMsgCb)) {
+                VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                          FL("failed to post MON MODE REQ"));
+                pMonCtx->state = (pMonCtx->state==MON_MODE_START)?
+                                   MON_MODE_STOP : MON_MODE_START;
+                magic = 0;
+                ret = -EIO;
+                break;
+           }
+           waitRet = wait_for_completion_timeout(&cmpVar, MON_MODE_MSG_TIMEOUT);
+           magic = 0;
+           if (waitRet <= 0 ){
+               VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                    FL("failed to wait on monitor mode completion %ld"),
+                        waitRet);
+           }
+           break;
         }
+        case WE_SET_PROXIMITY_ENABLE:
+        {
+            sHwCalValues hwCalValues;
+            uint16 hwCalTxPower;
+            uint8 txPwr = TX_PWR_DEF;
 
+            hddLog(LOG1, FL("WE_SET_PROXIMITY_ENABLE: %d"), set_value);
+
+            if (TRUE == set_value) {
+                if(vos_nv_read( VNV_HW_CAL_VALUES, &hwCalValues,
+                                NULL, sizeof(sHwCalValues) )
+                                    != VOS_STATUS_SUCCESS) {
+                    ret = -EINVAL;
+                    break;
+                }
+                hwCalTxPower = (uint16)(hwCalValues.calData.hwParam7 >> 16);
+
+                hddLog(LOG1, FL("hwCalTxPower:%x nv_data:%x"),
+                        hwCalTxPower, hwCalValues.calData.hwParam7);
+
+                txPwr = (int8)(hwCalTxPower & 0x00FF);
+                txPwr = txPwr/10;
+                if (txPwr < TX_PWR_MIN)
+                    txPwr = TX_PWR_MIN;
+                if (txPwr > TX_PWR_MAX)
+                    txPwr = TX_PWR_MAX;
+
+                if (sme_SetMaxTxPowerPerBand(eCSR_BAND_24, txPwr, hHal) !=
+                                        eHAL_STATUS_SUCCESS) {
+                    hddLog(VOS_TRACE_LEVEL_ERROR,
+                      FL("Setting tx power failed for 2.4GHz band %d"), txPwr);
+                    ret = -EIO;
+                }
+
+                txPwr = (int8)((hwCalTxPower >> 8) & 0x00FF);
+                txPwr /= 10;
+                if (txPwr < TX_PWR_MIN)
+                    txPwr = TX_PWR_MIN;
+                if (txPwr > TX_PWR_MAX)
+                    txPwr = TX_PWR_MAX;
+
+                if (sme_SetMaxTxPowerPerBand(eCSR_BAND_5G, txPwr, hHal) !=
+                                        eHAL_STATUS_SUCCESS) {
+                    hddLog(VOS_TRACE_LEVEL_ERROR,
+                      FL("setting tx power failed for 5GHz band %d"), txPwr);
+                    ret = -EIO;
+                }
+            }
+            else if(FALSE == set_value) {
+                if (sme_SetMaxTxPowerPerBand(eCSR_BAND_24, txPwr, hHal) !=
+                                        eHAL_STATUS_SUCCESS) {
+                    hddLog(VOS_TRACE_LEVEL_ERROR,
+                      FL("Setting tx power failed for 2.4GHz band %d"), txPwr);
+                    ret = -EIO;
+                }
+
+                if (sme_SetMaxTxPowerPerBand(eCSR_BAND_5G, txPwr, hHal) !=
+                                        eHAL_STATUS_SUCCESS) {
+                    hddLog(VOS_TRACE_LEVEL_ERROR,
+                      FL("setting tx power failed for 5GHz band %d"), txPwr);
+                    ret = -EIO;
+                }
+            }
+            else {
+                ret = -EINVAL;
+            }
+            break;
+        }
         default:
         {
             hddLog(LOGE, "Invalid IOCTL setvalue command %d value %d",
@@ -5898,6 +6047,14 @@ static int __iw_setchar_getnone(struct net_device *dev,
     tSirpkt80211 *pkt;
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
+
     pAdapter = (netdev_priv(dev));
     if (NULL == pAdapter)
     {
@@ -6000,7 +6157,8 @@ static int __iw_setchar_getnone(struct net_device *dev,
           {
               hddLog(VOS_TRACE_LEVEL_ERROR,
                       "%s: vos_mem_alloc failed", __func__);
-              return -ENOMEM;
+              ret = -ENOMEM;
+              break;
           }
 
           memset(pkt, 0, sizeof(tSirpkt80211));
@@ -6223,6 +6381,14 @@ int __iw_set_three_ints_getnone(struct net_device *dev,
     int ret = 0;
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
+
     pAdapter = WLAN_HDD_GET_PRIV_PTR(dev);
     if (NULL == pAdapter)
     {
@@ -6606,6 +6772,7 @@ static int __iw_get_char_setnone(struct net_device *dev,
         case WE_GET_RSSI:
         {
             v_S7_t s7Rssi = 0;
+            wlan_hdd_get_station_stats(pAdapter);
             wlan_hdd_get_rssi(pAdapter, &s7Rssi);
             snprintf(extra, WE_MAX_STR_LEN, "rssi=%d",s7Rssi);
             wrqu->data.length = strlen(extra)+1;
@@ -7036,16 +7203,22 @@ void hdd_wmm_tx_snapshot(hdd_adapter_t *pAdapter)
     ptSapContext pSapCtx = VOS_GET_SAP_CB(pVosContext);
     hdd_station_ctx_t *pHddStaCtx = WLAN_HDD_GET_STATION_CTX_PTR(pAdapter);
     hdd_ibss_peer_info_t *pPeerInfo;
+    v_SIZE_t tx_queue_count[NUM_TX_QUEUES];
 
     for ( i=0; i< NUM_TX_QUEUES; i++)
     {
         spin_lock_bh(&pAdapter->wmm_tx_queue[i].lock);
-
-        hddLog(LOGE, "HDD WMM TxQueue Info For AC: %d Count: %d PrevAdress:%p, NextAddress:%p",
-               i, pAdapter->wmm_tx_queue[i].count,
-               pAdapter->wmm_tx_queue[i].anchor.prev, pAdapter->wmm_tx_queue[i].anchor.next);
+        tx_queue_count[i] = pAdapter->wmm_tx_queue[i].count;
         spin_unlock_bh(&pAdapter->wmm_tx_queue[i].lock);
     }
+
+    for ( i=0; i< NUM_TX_QUEUES; i++) {
+        if (tx_queue_count[i]) {
+            hddLog(LOGE, "HDD WMM TxQueue Info For AC: %d Count: %d",
+               i, tx_queue_count[i]);
+        }
+    }
+
     if(pSapCtx == NULL){
         VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                   FL("psapCtx is NULL"));
@@ -7063,11 +7236,8 @@ void hdd_wmm_tx_snapshot(hdd_adapter_t *pAdapter)
                 if( pSapCtx->aStaInfo[i].wmm_tx_queue[j].count )
                 {
                    spin_lock_bh(&pSapCtx->aStaInfo[i].wmm_tx_queue[j].lock);
-                   hddLog(LOGE, "HDD TxQueue Info For AC: %d Count: %d"
-                         "PrevAdress:%p, NextAddress:%p",
-                         j, pSapCtx->aStaInfo[i].wmm_tx_queue[j].count,
-                         pSapCtx->aStaInfo[i].wmm_tx_queue[j].anchor.prev,
-                         pSapCtx->aStaInfo[i].wmm_tx_queue[j].anchor.next);
+                   hddLog(LOGE, "HDD TxQueue Info For AC: %d Count: %d",
+                         j, pSapCtx->aStaInfo[i].wmm_tx_queue[j].count);
                   spin_unlock_bh(&pSapCtx->aStaInfo[i].wmm_tx_queue[j].lock);
                 }
              }
@@ -7186,6 +7356,12 @@ static int __iw_set_var_ints_getnone(struct net_device *dev,
     {
         case WE_LOG_DUMP_CMD:
             {
+                if (apps_args[0] == 26) {
+                    if (!pHddCtx->cfg_ini->crash_inject_enabled) {
+                        hddLog(LOGE, "Crash Inject ini disabled, Ignore Crash Inject");
+                        return 0;
+                    }
+                }
                 hddLog(LOG1, "%s: LOG_DUMP %d arg1 %d arg2 %d arg3 %d arg4 %d",
                         __func__, apps_args[0], apps_args[1], apps_args[2],
                         apps_args[3], apps_args[4]);
@@ -7199,6 +7375,13 @@ static int __iw_set_var_ints_getnone(struct net_device *dev,
         case WE_P2P_NOA_CMD:
             {
                 p2p_app_setP2pPs_t p2pNoA;
+
+                if (pAdapter->device_mode != WLAN_HDD_P2P_GO) {
+                    hddLog(LOGE,
+                        FL("Setting NoA is not allowed in Device mode:%d"),
+                        pAdapter->device_mode);
+                    return -EINVAL;
+                }
 
                 p2pNoA.opp_ps = apps_args[0];
                 p2pNoA.ctWindow = apps_args[1];
@@ -7284,6 +7467,10 @@ static int __iw_set_var_ints_getnone(struct net_device *dev,
 #endif
         case WE_CONFIGURE_MONITOR_MODE:
            {
+               v_U32_t magic = 0;
+               struct completion cmpVar;
+               long waitRet = 0;
+
                pMonCtx =  WLAN_HDD_GET_MONITOR_CTX_PTR(pAdapter);
                if( pMonCtx == NULL )
                {
@@ -7310,13 +7497,36 @@ static int __iw_set_var_ints_getnone(struct net_device *dev,
                          " cannot be converted to 802.3 ",__func__);
                   pMonCtx->typeSubtypeBitmap = 0xFFFF00000000;
                }
-               if( pMonCtx->state )
-                    wlan_hdd_mon_poststartmsg(pMonCtx);
+               if (MON_MODE_START == pMonCtx->state) {
+                    magic = MON_MODE_MSG_MAGIC;
+                    init_completion(&cmpVar);
+                    if (VOS_STATUS_SUCCESS !=
+                            wlan_hdd_mon_postMsg(&magic, &cmpVar,
+                                                  pMonCtx, hdd_monPostMsgCb)) {
+                        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                                    FL("failed to post MON MODE REQ"));
+                        magic = 0;
+                        ret = -EIO;
+                        break;
+                    }
+                    waitRet = wait_for_completion_timeout(&cmpVar,
+                                                       MON_MODE_MSG_TIMEOUT);
+                    magic = 0;
+                    if (waitRet <= 0 ) {
+                        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                            FL("failed to wait on monitor mode completion %ld"),
+                                waitRet);
+                    }
+               }
            }
          break;
 
         case WE_SET_MONITOR_MODE_FILTER:
            {
+               v_U32_t magic = 0;
+               struct completion cmpVar;
+               long waitRet = 0;
+
                pMonCtx =  WLAN_HDD_GET_MONITOR_CTX_PTR(pAdapter);
                if( pMonCtx == NULL )
                {
@@ -7337,8 +7547,27 @@ static int __iw_set_var_ints_getnone(struct net_device *dev,
                hddLog(LOG1, "%s: Monitor Filter: %pM A1=%d A2=%d A3=%d ",
                         __func__, pMonCtx->mmFilters[0].macAddr.bytes,
                        apps_args[6], apps_args[7], apps_args[8]);
-               if( pMonCtx->state )
-                    wlan_hdd_mon_poststartmsg(pMonCtx);
+               if (MON_MODE_START == pMonCtx->state) {
+                    magic = MON_MODE_MSG_MAGIC;
+                    init_completion(&cmpVar);
+                    if (VOS_STATUS_SUCCESS !=
+                            wlan_hdd_mon_postMsg(&magic, &cmpVar,
+                                                  pMonCtx, hdd_monPostMsgCb)) {
+                        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                                    FL("failed to post MON MODE REQ"));
+                        magic = 0;
+                        ret = -EIO;
+                        break;
+                    }
+                    waitRet = wait_for_completion_timeout(&cmpVar,
+                                                       MON_MODE_MSG_TIMEOUT);
+                    magic = 0;
+                    if (waitRet <= 0 ) {
+                        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                            FL("failed to wait on monitor mode completion %ld"),
+                                waitRet);
+                    }
+               }
            }
          break;
 
@@ -7361,6 +7590,13 @@ static int iw_hdd_set_var_ints_getnone(struct net_device *dev,
     union iwreq_data u_priv_wrqu;
     int apps_args[MAX_VAR_ARGS] = {0};
     int num_args;
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
 
     /* helper function to get iwreq_data with compat handling. */
     if (hdd_priv_get_data(&u_priv_wrqu.data, wrqu))
@@ -7966,6 +8202,13 @@ static int __iw_clear_dynamic_mcbc_filter(struct net_device *dev,
     int ret = 0;
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
 
     pAdapter = WLAN_HDD_GET_PRIV_PTR(dev);
     if (NULL == pAdapter)
@@ -8600,6 +8843,14 @@ static int __iw_set_packet_filter_params(struct net_device *dev,
     struct iw_point s_priv_data;
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
+
     pAdapter = WLAN_HDD_GET_PRIV_PTR(dev);
     if (NULL == pAdapter)
     {
@@ -9034,7 +9285,7 @@ VOS_STATUS iw_set_pno(struct net_device *dev, struct iw_request_info *info,
     {
         VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                   "PNO ssid length input is not valid %s",ptr);
-        return VOS_STATUS_E_FAILURE;
+        goto error;
     }
 
     if (( 0 == pnoRequest.aNetworks[i].ssId.length ) ||
@@ -9090,7 +9341,7 @@ VOS_STATUS iw_set_pno(struct net_device *dev, struct iw_request_info *info,
     {
       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_WARN,
                 "Incorrect number of channels");
-      return VOS_STATUS_E_FAILURE;
+      goto error;
     }
 
     if ( 0 !=  pnoRequest.aNetworks[i].ucChannelCount)
@@ -9102,7 +9353,7 @@ VOS_STATUS iw_set_pno(struct net_device *dev, struct iw_request_info *info,
                            &nOffset))
             {    VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
                            "PNO network channel input is not valid %s",ptr);
-                  return VOS_STATUS_E_FAILURE;
+                  goto error;
             }
             /*Advance to next channel number*/
             ptr += nOffset;
@@ -9332,7 +9583,7 @@ int hdd_setBand(struct net_device *dev, u8 ui_band)
     eCsrBand currBand = eCSR_BAND_MAX;
     eCsrBand connectedBand;
     tpAniSirGlobal pMac;
-    int retval = 0;
+    int retval = SEND_CHANNEL_CHANGE_EVENT;
 
     ENTER();
     pAdapter = WLAN_HDD_GET_PRIV_PTR(dev);
@@ -9513,6 +9764,7 @@ int hdd_setBand(struct net_device *dev, u8 ui_band)
                            " in kernel db");
              }
 
+             retval = DO_NOT_SEND_CHANNEL_CHANGE_EVENT;
         }
         else
         {
@@ -9573,7 +9825,10 @@ int hdd_setBand(struct net_device *dev, u8 ui_band)
         }
     }
     EXIT();
-    return 0;
+    if (TRUE == pHddCtx->isSetBandByNL)
+        return 0;
+    else
+        return retval;
 }
 
 int hdd_setBand_helper(struct net_device *dev, const char *command)
@@ -9594,6 +9849,13 @@ static int __iw_set_band_config(struct net_device *dev,
     int *value = (int *)extra;
 
     VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO, "%s: ", __func__);
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
 
     return hdd_setBand(dev, value[0]);
 }
@@ -9617,8 +9879,17 @@ static int __iw_set_power_params_priv(struct net_device *dev,
 {
   int ret;
   char *ptr;
+
   VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_INFO,
                 "Set power params Private");
+
+  if (!capable(CAP_NET_ADMIN))
+  {
+      VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                FL("permission check failed"));
+      return -EPERM;
+  }
+
   /* ODD number is used for set, copy data using copy_from_user */
   ptr = mem_alloc_copy_from_user_helper(wrqu->data.pointer,
                                           wrqu->data.length);
@@ -9890,12 +10161,15 @@ int iw_set_tdlsoffchannelmode(hdd_adapter_t *pAdapter, int offchanmode)
         eTDLS_SUPPORT_EXPLICIT_TRIGGER_ONLY == pHddCtx->tdls_mode)
     {
        /* Send TDLS Channel Switch Request to connected peer */
+       mutex_lock(&pHddCtx->tdls_lock);
        connPeer = wlan_hdd_tdls_get_connected_peer(pAdapter);
        if (NULL == connPeer) {
+           mutex_unlock(&pHddCtx->tdls_lock);
            VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_FATAL,
                      "%s: No TDLS Connected Peer", __func__);
            return -1;
        }
+       mutex_unlock(&pHddCtx->tdls_lock);
     }
     else
     {
@@ -10195,6 +10469,9 @@ static const struct iw_priv_args we_private_args[] = {
         IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1,
         0, "setRtsCtsHtVht" },
 
+    {   WE_SET_PROXIMITY_ENABLE,
+        IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1,
+        0, "setProximity" },
     /* handlers for main ioctl */
     {   WLAN_PRIV_SET_NONE_GET_INT,
         0,
