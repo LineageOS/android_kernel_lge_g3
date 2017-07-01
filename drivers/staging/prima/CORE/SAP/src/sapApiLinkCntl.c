@@ -99,9 +99,6 @@
 /*----------------------------------------------------------------------------
  * Externalized Function Definitions
  * -------------------------------------------------------------------------*/
-#ifdef FEATURE_WLAN_CH_AVOID
-   extern safeChannelType safeChannels[];
-#endif /* FEATURE_WLAN_CH_AVOID */
 
 /*----------------------------------------------------------------------------
  * Function Declarations and Documentation
@@ -164,19 +161,6 @@ void sapSetOperatingChannel(ptSapContext psapContext, v_U8_t operChannel)
                    BAND(2.4GHz) as 2.4 channels are available in all the
                    countries*/
                    psapContext->channel = SAP_DEFAULT_CHANNEL;
-
-#ifdef FEATURE_WLAN_CH_AVOID
-                for( i = 0; i < NUM_20MHZ_RF_CHANNELS; i++ )
-                {
-                    if((NV_CHANNEL_ENABLE ==
-                        vos_nv_getChannelEnabledState(safeChannels[i].channelNumber))
-                            && (VOS_TRUE == safeChannels[i].isSafe))
-                    {
-                        psapContext->channel = safeChannels[i].channelNumber;
-                        break;
-                    }
-                }
-#endif
             }
         }
         else
@@ -814,7 +798,7 @@ eHalStatus sapCheck40Mhz24G(tHalHandle halHandle, ptSapContext psapCtx,
     if ( NULL == pBeaconStruct )
     {
         VOS_TRACE(VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_ERROR,
-                   FL("Unable to allocate memory \n"));
+                   FL("Unable to allocate memory "));
         return halStatus;
     }
 
@@ -1269,15 +1253,6 @@ WLANSAP_RoamCallback
                         FL("CSR roamStatus = %s (%d)"),
                         "eCSR_ROAM_WPS_PBC_PROBE_REQ_IND", roamStatus);
             break;        
-
-        case eCSR_ROAM_INDICATE_MGMT_FRAME:
-            VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
-                        FL("CSR roamStatus = %s (%d)"),
-                        "eCSR_ROAM_INDICATE_MGMT_FRAME", roamStatus);
-            sapSignalHDDevent(sapContext, pCsrRoamInfo, 
-                              eSAP_INDICATE_MGMT_FRAME, 
-                              (v_PVOID_t) eSAP_STATUS_SUCCESS);
-            break;
         case eCSR_ROAM_REMAIN_CHAN_READY:
             VOS_TRACE( VOS_MODULE_ID_SAP, VOS_TRACE_LEVEL_INFO_HIGH,
                         FL("CSR roamStatus = %s (%d)"),
