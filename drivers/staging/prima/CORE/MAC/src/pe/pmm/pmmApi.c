@@ -222,7 +222,7 @@ void pmmInitBmpsResponseHandler(tpAniSirGlobal pMac, tpSirMsgQ limMsg )
     if (NULL == limMsg->bodyptr)
     {
         PELOGE(pmmLog(pMac, LOGE, FL("pmmBmps: Received SIR_HAL_ENTER_BMPS_RSP with NULL "));)
-        nextState = ePMM_STATE_BMPS_WAKEUP;
+        nextState = ePMM_STATE_READY;
         retStatus = eSIR_SME_BMPS_REQ_FAILED;
         goto failure;
     }
@@ -261,7 +261,7 @@ void pmmInitBmpsResponseHandler(tpAniSirGlobal pMac, tpSirMsgQ limMsg )
             FL("pmmBmps: BMPS_INIT_PWR_SAVE_REQ failed, informing SME"));)
 
         pmmBmpsUpdateInitFailureCnt(pMac);
-        nextState = ePMM_STATE_BMPS_WAKEUP;
+        nextState = ePMM_STATE_READY;
         retStatus = eSIR_SME_BMPS_REQ_FAILED;
         goto failure;
     }
@@ -342,7 +342,9 @@ void pmmExitBmpsRequestHandler(tpAniSirGlobal pMac, tpExitBmpsInfo pExitBmpsInfo
 
     /* send wakeup request, only when in sleep state */
     PELOGW(pmmLog(pMac, LOGW, FL("pmmBmps: Sending eWNI_PMC_EXIT_BMPS_REQ to HAL"));)
-    if (pMac->pmm.gPmmState == ePMM_STATE_BMPS_SLEEP)
+
+    if ((pMac->pmm.gPmmState == ePMM_STATE_BMPS_SLEEP) ||
+         (pMac->pmm.gPmmState == ePMM_STATE_UAPSD_SLEEP))
     {
         /* Store the reason code for exiting BMPS. This value will be
          * checked when PMM receives SIR_HAL_EXIT_BMPS_RSP from HAL
@@ -887,6 +889,7 @@ void pmmExitBmpsResponseHandler(tpAniSirGlobal pMac,  tpSirMsgQ limMsg)
     {
         case eHAL_STATUS_SUCCESS:
             retStatus = eSIR_SME_SUCCESS;
+            pMac->pmm.gPmmState = ePMM_STATE_BMPS_WAKEUP;
             /* Update wakeup statistics */
             pmmUpdateWakeupStats(pMac);
             break;
@@ -898,13 +901,12 @@ void pmmExitBmpsResponseHandler(tpAniSirGlobal pMac,  tpSirMsgQ limMsg)
                  * But, PMC will be informed about the error.
                  */
                 retStatus = eSIR_SME_BMPS_REQ_FAILED;
+                pMac->pmm.gPmmState = ePMM_STATE_BMPS_SLEEP;
                 pmmBmpsUpdateWakeupReqFailureCnt(pMac);
             }
             break;
 
     }
-
-    pMac->pmm.gPmmState = ePMM_STATE_BMPS_WAKEUP;
 
     // turn on background scan
     pMac->sys.gSysEnableScanMode = true;
@@ -1578,7 +1580,7 @@ void pmmEnterImpsResponseHandler (tpAniSirGlobal pMac, eHalStatus rspStatus)
     else
     {
         // go back to previous state if request failed
-        nextState = ePMM_STATE_IMPS_WAKEUP;
+        nextState = ePMM_STATE_READY;
         resultCode = eSIR_SME_CANNOT_ENTER_IMPS;
         goto failure;
     }
@@ -2697,6 +2699,7 @@ tSirRetStatus pmmUapsdSendChangePwrSaveMsg (tpAniSirGlobal pMac, tANI_U8 mode)
         {
             limLog(pMac, LOGW, FL("No Need to enter UAPSD since Trigger "
                  "Enabled and Delivery Enabled Mask is zero for all ACs"));
+            vos_mem_free(pUapsdParams);
             retStatus = eSIR_PMM_INVALID_REQ;
             return retStatus;
         }
