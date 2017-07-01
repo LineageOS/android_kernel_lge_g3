@@ -155,7 +155,12 @@ eHalStatus csrTdlsSendMgmtReq(tHalHandle hHal, tANI_U8 sessionId, tCsrTdlsSendMg
 /*
  * TDLS request API, called from HDD to modify an existing TDLS peer
  */
-eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac,
+eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+                                const tSirMacAddr peerMac,
+#else
+                                tSirMacAddr peerMac,
+#endif
                                 tCsrStaParams *pstaParams)
 {
     tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
@@ -228,9 +233,13 @@ eHalStatus csrTdlsChangePeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr 
  * TDLS request API, called from HDD to Send Link Establishment Parameters
  */
 VOS_STATUS csrTdlsSendLinkEstablishParams(tHalHandle hHal,
-                                                 tANI_U8 sessionId,
-                                                 tSirMacAddr peerMac,
-                                                 tCsrTdlsLinkEstablishParams *tdlsLinkEstablishParams)
+                                          tANI_U8 sessionId,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+                                          const tSirMacAddr peerMac,
+#else
+                                          tSirMacAddr peerMac,
+#endif
+                                          tCsrTdlsLinkEstablishParams *tdlsLinkEstablishParams)
 {
     tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
     tSmeCmd *tdlsLinkEstablishCmd;
@@ -289,7 +298,13 @@ VOS_STATUS csrTdlsSendLinkEstablishParams(tHalHandle hHal,
 /*
  * TDLS request API, called from HDD to add a TDLS peer
  */
-eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac)
+eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+                             const tSirMacAddr peerMac
+#else
+                             tSirMacAddr peerMac
+#endif
+                             )
 {
     tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
     tSmeCmd *tdlsAddStaCmd ;
@@ -330,7 +345,13 @@ eHalStatus csrTdlsAddPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr pee
 /*
  * TDLS request API, called from HDD to delete a TDLS peer
  */
-eHalStatus csrTdlsDelPeerSta(tHalHandle hHal, tANI_U8 sessionId, tSirMacAddr peerMac)
+eHalStatus csrTdlsDelPeerSta(tHalHandle hHal, tANI_U8 sessionId,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,18,0))
+                             const tSirMacAddr peerMac
+#else
+                             tSirMacAddr peerMac
+#endif
+)
 {
     tpAniSirGlobal pMac = PMAC_STRUCT( hHal );
     tSmeCmd *tdlsDelStaCmd ;
@@ -643,61 +664,29 @@ eHalStatus csrTdlsProcessDelSta( tpAniSirGlobal pMac, tSmeCmd *cmd )
 eHalStatus csrTdlsProcessCmd(tpAniSirGlobal pMac, tSmeCmd *cmd)
 {
     eSmeCommandType  cmdType = cmd->command ;
-    tANI_BOOLEAN status = eANI_BOOLEAN_TRUE;
+    eHalStatus status = eHAL_STATUS_SUCCESS;
     switch(cmdType)
     {
         case eSmeCommandTdlsSendMgmt:
-        {
-            status = csrTdlsProcessSendMgmt( pMac, cmd );
-            if(HAL_STATUS_SUCCESS( status ) )
-            {
-               status = eANI_BOOLEAN_FALSE ;
-            }
-        }
+            status = csrTdlsProcessSendMgmt(pMac, cmd);
         break ;
         case eSmeCommandTdlsAddPeer:
-        {
-            status = csrTdlsProcessAddSta( pMac, cmd );
-            if(HAL_STATUS_SUCCESS( status ) )
-            {
-               status = eANI_BOOLEAN_FALSE ;
-            }
-        }
+            status = csrTdlsProcessAddSta(pMac, cmd);
         break;
         case eSmeCommandTdlsDelPeer: 
-        {
-            status = csrTdlsProcessDelSta( pMac, cmd );
-            if(HAL_STATUS_SUCCESS( status ) )
-            {
-               status = eANI_BOOLEAN_FALSE ;
-            }
-        }
+            status = csrTdlsProcessDelSta(pMac, cmd);
         break;
         case eSmeCommandTdlsLinkEstablish:
-        {
-            status = csrTdlsProcessLinkEstablish( pMac, cmd );
-            if(HAL_STATUS_SUCCESS( status ) )
-            {
-               status = eANI_BOOLEAN_FALSE ;
-            }
-        }
+            status = csrTdlsProcessLinkEstablish(pMac, cmd);
         break;
 // tdlsoffchan
         case eSmeCommandTdlsChannelSwitch:
-        {
-             status = csrTdlsProcessChanSwitchReq( pMac, cmd );
-             if(HAL_STATUS_SUCCESS( status ) )
-             {
-               status = eANI_BOOLEAN_FALSE ;
-             }
-        }
+            status = csrTdlsProcessChanSwitchReq(pMac, cmd);
         break;
        default:
-       {
+           status = eHAL_STATUS_FAILURE;
             /* TODO: Add defualt handling */  
            break ;
-       } 
-             
     }
     return status ; 
 }

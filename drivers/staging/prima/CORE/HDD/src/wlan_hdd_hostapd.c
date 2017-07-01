@@ -75,6 +75,7 @@
 #include "wlan_nlink_common.h"
 #include "wlan_btc_svc.h"
 #include <bap_hdd_main.h>
+#include "wlan_hdd_tdls.h"
 #include "wlan_hdd_p2p.h"
 #include "cfgApi.h"
 #include "wniCfg.h"
@@ -445,6 +446,10 @@ static int hdd_hostapd_driver_command(hdd_adapter_t *pAdapter,
        hdd_tx_rx_pkt_cnt_stat_timer_handler(pHddCtx);
        sme_SetMiracastMode(pHddCtx->hHal, pHddCtx->drvr_miracast);
    }
+   else if (strncasecmp(command, "DISABLE_CA_EVENT", 16) == 0)
+   {
+       ret = hdd_enable_disable_ca_event(pHddCtx, command, 16);
+   }
 
 exit:
    if (command)
@@ -806,6 +811,7 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
     struct iw_michaelmicfailure msg;
     v_CONTEXT_t pVosContext = NULL;
     ptSapContext pSapCtx = NULL;
+    hdd_config_t *cfg_param;
 
     dev = (struct net_device *)usrDataForCallback;
     pHostapdAdapter = netdev_priv(dev);
@@ -829,6 +835,8 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
     sapEvent = pSapEvent->sapHddEventCode;
     memset(&wrqu, '\0', sizeof(wrqu));
     pHddCtx = (hdd_context_t*)(pHostapdAdapter->pHddCtx);
+    cfg_param = pHddCtx->cfg_ini;
+
 
     switch(sapEvent)
     {
@@ -840,14 +848,27 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
 
             pHostapdState->vosStatus = pSapEvent->sapevt.sapStartBssCompleteEvent.status;
             vos_status = vos_event_set(&pHostapdState->vosEvent);
-   
+
             if (!VOS_IS_STATUS_SUCCESS(vos_status) || pHostapdState->vosStatus)
-            {     
+            {
                 VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR, ("ERROR: startbss event failed!!"));
                 goto stopbss;
             }
             else
-            {                
+            {
+                if (pHostapdAdapter->device_mode == WLAN_HDD_P2P_GO)
+                {
+                    if ((cfg_param->dynSplitscan) &&
+                            (!pHddCtx->issplitscan_enabled))
+                    {
+                        pHddCtx->issplitscan_enabled = TRUE;
+                        sme_enable_disable_split_scan(
+                                WLAN_HDD_GET_HAL_CTX(pHostapdAdapter),
+                                cfg_param->nNumStaChanCombinedConc,
+                                cfg_param->nNumP2PChanCombinedConc);
+                    }
+                }
+
                 pHddApCtx->uBCStaId = pSapEvent->sapevt.sapStartBssCompleteEvent.staId;
                 //@@@ need wep logic here to set privacy bit
                 vos_status = hdd_softap_Register_BC_STA(pHostapdAdapter, pHddApCtx->uPrivacy);
@@ -857,7 +878,7 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
                     hdd_stop_bss_link(pHostapdAdapter, usrDataForCallback);
                 }
             }
-            
+
             if (0 != (WLAN_HDD_GET_CTX(pHostapdAdapter))->cfg_ini->nAPAutoShutOff)
             {
                 // AP Inactivity timer init and start
@@ -924,21 +945,11 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
 
             pHddApCtx->operatingChannel = 0; //Invalidate the channel info.
 
-            if ((TRUE == pHddCtx->cfg_ini->fEnableTDLSSupport) &&
-                    (TRUE == sme_IsFeatureSupportedByFW(TDLS)) &&
-                    (eTDLS_SUPPORT_ENABLED == pHddCtx->tdls_mode_last ||
-                     eTDLS_SUPPORT_EXPLICIT_TRIGGER_ONLY ==
-                                                pHddCtx->tdls_mode_last))
+            if (pHostapdAdapter->device_mode == WLAN_HDD_P2P_GO)
             {
-                if (pHostapdAdapter->device_mode == WLAN_HDD_P2P_GO)
-                {
-                    /* Enable TDLS support Once P2P session ends since
-                     * upond detection of concurrency TDLS would be disabled
-                     */
-                    hddLog(LOG1, FL("Enable TDLS support"));
-                    wlan_hdd_tdls_set_mode(pHddCtx, pHddCtx->tdls_mode_last,
-                                           FALSE);
-                }
+                hddLog(LOG1,
+                       FL("P2P Go is getting removed and we are trying to re-enable TDLS"));
+                wlan_hdd_tdls_reenable(pHddCtx);
             }
 
             goto stopbss;
@@ -1045,28 +1056,28 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
 #endif
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38))
             {
+                struct station_info *staInfo;
                 v_U16_t iesLen =  pSapEvent->sapevt.sapStationAssocReassocCompleteEvent.iesLen;
 
+                staInfo = vos_mem_malloc(sizeof(*staInfo));
+                if (staInfo == NULL) {
+                    hddLog(LOGE, FL("alloc station_info failed"));
+                    return VOS_STATUS_E_NOMEM;
+                }
+
+                memset(staInfo, 0, sizeof(*staInfo));
                 if (iesLen <= MAX_ASSOC_IND_IE_LEN )
                 {
-                    struct station_info *stainfo;
-                    stainfo = vos_mem_malloc(sizeof(*stainfo));
-                    if (stainfo == NULL) {
-                        hddLog(LOGE, FL("alloc station_info failed"));
-                        return VOS_STATUS_E_NOMEM;
-                    }
-                    memset(stainfo, 0, sizeof(*stainfo));
-
-                    stainfo->assoc_req_ies =
+                    staInfo->assoc_req_ies =
                         (const u8 *)&pSapEvent->sapevt.sapStationAssocReassocCompleteEvent.ies[0];
-                    stainfo->assoc_req_ies_len = iesLen;
+                    staInfo->assoc_req_ies_len = iesLen;
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,0,31))
-                    stainfo->filled |= STATION_INFO_ASSOC_REQ_IES;
+                    staInfo->filled |= STATION_INFO_ASSOC_REQ_IES;
 #endif
                     cfg80211_new_sta(dev,
                                  (const u8 *)&pSapEvent->sapevt.sapStationAssocReassocCompleteEvent.staMac.bytes[0],
-                                 stainfo, GFP_KERNEL);
-                    vos_mem_free(stainfo);
+                                 staInfo, GFP_KERNEL);
+                    vos_mem_free(staInfo);
                 }
                 else
                 {
@@ -1175,13 +1186,6 @@ VOS_STATUS hdd_hostapd_SAPEventCB( tpSap_Event pSapEvent, v_PVOID_t usrDataForCa
             vos_mem_free(pSapEvent->sapevt.sapAssocStaListEvent.pAssocStas);// Release caller allocated memory here
             pSapEvent->sapevt.sapAssocStaListEvent.pAssocStas = NULL;
             return VOS_STATUS_SUCCESS;
-        case eSAP_INDICATE_MGMT_FRAME:
-           hdd_indicateMgmtFrame( pHostapdAdapter, 
-                                 pSapEvent->sapevt.sapManagementFrameInfo.nFrameLength,
-                                 pSapEvent->sapevt.sapManagementFrameInfo.pbFrames,
-                                 pSapEvent->sapevt.sapManagementFrameInfo.frameType, 
-                                 pSapEvent->sapevt.sapManagementFrameInfo.rxChan, 0);
-           return VOS_STATUS_SUCCESS;
         case eSAP_REMAIN_CHAN_READY:
            hdd_remainChanReadyHandler( pHostapdAdapter );
            return VOS_STATUS_SUCCESS;
@@ -1959,6 +1963,15 @@ static __iw_softap_setparam(struct net_device *dev,
                 }
                 break;
             }
+        case QCSAP_PARAM_GET_FRAME_LOGS:
+            {
+                if (wlan_hdd_get_frame_logs(pHostapdAdapter, set_value)
+                         != VOS_STATUS_SUCCESS)
+                {
+                    ret = -EINVAL;
+                }
+                break;
+            }
 
         default:
             hddLog(LOGE, FL("Invalid setparam command %d value %d"),
@@ -2681,6 +2694,13 @@ static __iw_softap_disassoc_sta(struct net_device *dev,
     int ret = 0;
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN)) {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
+
     pHostapdAdapter = (netdev_priv(dev));
     if (NULL == pHostapdAdapter)
     {
@@ -2811,6 +2831,13 @@ static int __iw_softap_set_channel_range(struct net_device *dev,
     int ret = 0; /* success */
 
     ENTER();
+
+    if (!capable(CAP_NET_ADMIN))
+    {
+        VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
+                  FL("permission check failed"));
+        return -EPERM;
+    }
 
     pHostapdAdapter = (netdev_priv(dev));
     if (NULL == pHostapdAdapter)
@@ -2994,7 +3021,7 @@ int __iw_get_genie(struct net_device *dev,
     hdd_adapter_t *pHostapdAdapter;
     hdd_context_t *pHddCtx;
     v_CONTEXT_t pVosContext;
-    eHalStatus status;
+    VOS_STATUS status;
     v_U32_t length = DOT11F_IE_RSN_MAX_LEN;
     v_U8_t genIeBytes[DOT11F_IE_RSN_MAX_LEN];
     int ret = 0;
@@ -3026,19 +3053,23 @@ int __iw_get_genie(struct net_device *dev,
     status = WLANSap_getstationIE_information(pVosContext, 
                                    &length,
                                    genIeBytes);
-    length = VOS_MIN((u_int16_t) length, DOT11F_IE_RSN_MAX_LEN);
-    if (wrqu->data.length < length ||
-        copy_to_user(wrqu->data.pointer,
-                      (v_VOID_t*)genIeBytes, length))
-    {
-        hddLog(LOG1, "%s: failed to copy data to user buffer", __func__);
+
+    if (VOS_STATUS_SUCCESS != status) {
+        hddLog(LOGE, FL("failed to get sta ies"));
         return -EFAULT;
     }
+
     wrqu->data.length = length;
-    
-    hddLog(LOG1,FL(" RSN IE of %d bytes returned"), wrqu->data.length );
-    
-   
+    if (length > DOT11F_IE_RSN_MAX_LEN) {
+        hddLog(LOGE,
+               FL("invalid buffer length length:%d"), length);
+        return -E2BIG;
+    }
+
+    vos_mem_copy(extra, genIeBytes, length);
+
+    hddLog(LOG1, FL("RSN IE of %d bytes returned"), wrqu->data.length);
+
     EXIT();
     return 0;
 }
@@ -3695,376 +3726,6 @@ static int iw_get_mode(struct net_device *dev,
     return ret;
 }
 
-static int __iw_softap_setwpsie(struct net_device *dev,
-                              struct iw_request_info *info,
-                              union iwreq_data *wrqu,
-                              char *extra)
-{
-   hdd_adapter_t *pHostapdAdapter;
-   hdd_context_t *pHddCtx;
-   v_CONTEXT_t pVosContext;
-   hdd_hostapd_state_t *pHostapdState;
-   eHalStatus halStatus= eHAL_STATUS_SUCCESS;
-   u_int8_t *wps_genie;
-   u_int8_t *fwps_genie;
-   u_int8_t *pos;
-   tpSap_WPSIE pSap_WPSIe;
-   u_int8_t WPSIeType;
-   u_int16_t length;
-   struct iw_point s_priv_data;
-   int ret = 0;
-
-   ENTER();
-
-   pHostapdAdapter = (netdev_priv(dev));
-   if (NULL == pHostapdAdapter)
-   {
-       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
-                 "%s: Adapter is NULL",__func__);
-       return -EINVAL;
-   }
-   pHddCtx = WLAN_HDD_GET_CTX(pHostapdAdapter);
-   ret = wlan_hdd_validate_context(pHddCtx);
-   if (0 != ret)
-   {
-       return ret;
-   }
-   pVosContext = pHddCtx->pvosContext;
-   if (NULL == pVosContext)
-   {
-       VOS_TRACE(VOS_MODULE_ID_HDD, VOS_TRACE_LEVEL_ERROR,
-                 "%s: HDD context is not valid ",__func__);
-       return -EINVAL;
-   }
-   /* helper function to get iwreq_data with compat handling. */
-   if (hdd_priv_get_data(&s_priv_data, wrqu))
-   {
-      return -EINVAL;
-   }
-
-   if ((NULL == s_priv_data.pointer) || (s_priv_data.length < QCSAP_MAX_WSC_IE))
-   {
-      return -EINVAL;
-   }
-
-   wps_genie = mem_alloc_copy_from_user_helper(s_priv_data.pointer,
-                                               s_priv_data.length);
-
-   if(NULL == wps_genie)
-   {
-       hddLog(LOG1, "%s: failed to alloc memory "
-                    "and copy data from user buffer", __func__);
-       return -EFAULT;
-   }
-
-   fwps_genie = wps_genie;
-
-   pSap_WPSIe = vos_mem_malloc(sizeof(tSap_WPSIE));
-   if (NULL == pSap_WPSIe) 
-   {
-      hddLog(LOGE, "VOS unable to allocate memory");
-      kfree(fwps_genie);
-      return -ENOMEM;
-   }
-   vos_mem_zero(pSap_WPSIe, sizeof(tSap_WPSIE));
- 
-   hddLog(LOG1,"%s WPS IE type[0x%X] IE[0x%X], LEN[%d]", __func__, wps_genie[0], wps_genie[1], wps_genie[2]);
-   WPSIeType = wps_genie[0];
-   if ( wps_genie[0] == eQC_WPS_BEACON_IE)
-   {
-      pSap_WPSIe->sapWPSIECode = eSAP_WPS_BEACON_IE; 
-      wps_genie = wps_genie + 1;
-      switch ( wps_genie[0] ) 
-      {
-         case DOT11F_EID_WPA: 
-            if (wps_genie[1] < 2 + 4)
-            {
-               vos_mem_free(pSap_WPSIe); 
-               kfree(fwps_genie);
-               return -EINVAL;
-            }
-            else if (memcmp(&wps_genie[2], "\x00\x50\xf2\x04", 4) == 0) 
-            {
-             hddLog (LOG1, "%s Set WPS BEACON IE(len %d)",__func__, wps_genie[1]+2);
-             pos = &wps_genie[6];
-             while (((size_t)pos - (size_t)&wps_genie[6])  < (wps_genie[1] - 4) )
-             {
-                switch((u_int16_t)(*pos<<8) | *(pos+1))
-                {
-                   case HDD_WPS_ELEM_VERSION:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.Version = *pos;   
-                      hddLog(LOG1, "WPS version %d", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.Version);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_VER_PRESENT;   
-                      pos += 1;
-                      break;
-                   
-                   case HDD_WPS_ELEM_WPS_STATE:
-                      pos +=4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.wpsState = *pos;
-                      hddLog(LOG1, "WPS State %d", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.wpsState);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_STATE_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_APSETUPLOCK:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.APSetupLocked = *pos;
-                      hddLog(LOG1, "AP setup lock %d", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.APSetupLocked);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_APSETUPLOCK_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_SELECTEDREGISTRA:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.SelectedRegistra = *pos;
-                      hddLog(LOG1, "Selected Registra %d", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.SelectedRegistra);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_SELECTEDREGISTRA_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_DEVICE_PASSWORD_ID:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.DevicePasswordID = (*pos<<8) | *(pos+1);
-                      hddLog(LOG1, "Password ID: %x", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.DevicePasswordID);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_DEVICEPASSWORDID_PRESENT;
-                      pos += 2; 
-                      break;
-                   case HDD_WPS_ELEM_REGISTRA_CONF_METHODS:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.SelectedRegistraCfgMethod = (*pos<<8) | *(pos+1);
-                      hddLog(LOG1, "Select Registra Config Methods: %x", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.SelectedRegistraCfgMethod);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_SELECTEDREGISTRACFGMETHOD_PRESENT;
-                      pos += 2; 
-                      break;
-                
-                   case HDD_WPS_ELEM_UUID_E:
-                      pos += 2; 
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSBeaconIE.UUID_E, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_UUIDE_PRESENT; 
-                      pos += length;
-                      break;
-                   case HDD_WPS_ELEM_RF_BANDS:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.RFBand = *pos;
-                      hddLog(LOG1, "RF band: %d", pSap_WPSIe->sapwpsie.sapWPSBeaconIE.RFBand);
-                      pSap_WPSIe->sapwpsie.sapWPSBeaconIE.FieldPresent |= WPS_BEACON_RF_BANDS_PRESENT;
-                      pos += 1;
-                      break;
-                   
-                   default:
-                      hddLog (LOGW, "UNKNOWN TLV in WPS IE(%x)", (*pos<<8 | *(pos+1)));
-                      vos_mem_free(pSap_WPSIe);
-                      kfree(fwps_genie);
-                      return -EINVAL; 
-                }
-              }  
-            }
-            else { 
-                 hddLog (LOGE, "%s WPS IE Mismatch %X",
-                         __func__, wps_genie[0]);
-            }     
-            break;
-                 
-         default:
-            hddLog (LOGE, "%s Set UNKNOWN IE %X",__func__, wps_genie[0]);
-            vos_mem_free(pSap_WPSIe);
-            kfree(fwps_genie);
-            return 0;
-      }
-    } 
-    else if( wps_genie[0] == eQC_WPS_PROBE_RSP_IE)
-    {
-      pSap_WPSIe->sapWPSIECode = eSAP_WPS_PROBE_RSP_IE; 
-      wps_genie = wps_genie + 1;
-      switch ( wps_genie[0] ) 
-      {
-         case DOT11F_EID_WPA: 
-            if (wps_genie[1] < 2 + 4)
-            {
-               vos_mem_free(pSap_WPSIe); 
-               kfree(fwps_genie);
-               return -EINVAL;
-            }
-            else if (memcmp(&wps_genie[2], "\x00\x50\xf2\x04", 4) == 0) 
-            {
-             hddLog (LOG1, "%s Set WPS PROBE RSP IE(len %d)",__func__, wps_genie[1]+2);
-             pos = &wps_genie[6];
-             while (((size_t)pos - (size_t)&wps_genie[6])  < (wps_genie[1] - 4) )
-             {
-              switch((u_int16_t)(*pos<<8) | *(pos+1))
-              {
-                   case HDD_WPS_ELEM_VERSION:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.Version = *pos;   
-                      hddLog(LOG1, "WPS version %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.Version);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_VER_PRESENT;   
-                      pos += 1;
-                      break;
-                   
-                   case HDD_WPS_ELEM_WPS_STATE:
-                      pos +=4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.wpsState = *pos;
-                      hddLog(LOG1, "WPS State %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.wpsState);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_STATE_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_APSETUPLOCK:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.APSetupLocked = *pos;
-                      hddLog(LOG1, "AP setup lock %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.APSetupLocked);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_APSETUPLOCK_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_SELECTEDREGISTRA:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SelectedRegistra = *pos;
-                      hddLog(LOG1, "Selected Registra %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SelectedRegistra);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_SELECTEDREGISTRA_PRESENT;                      
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_DEVICE_PASSWORD_ID:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DevicePasswordID = (*pos<<8) | *(pos+1);
-                      hddLog(LOG1, "Password ID: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DevicePasswordID);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_DEVICEPASSWORDID_PRESENT;
-                      pos += 2; 
-                      break;
-                   case HDD_WPS_ELEM_REGISTRA_CONF_METHODS:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SelectedRegistraCfgMethod = (*pos<<8) | *(pos+1);
-                      hddLog(LOG1, "Select Registra Config Methods: %x", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SelectedRegistraCfgMethod);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_SELECTEDREGISTRACFGMETHOD_PRESENT;
-                      pos += 2; 
-                      break;
-                  case HDD_WPS_ELEM_RSP_TYPE:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ResponseType = *pos;
-                      hddLog(LOG1, "Config Methods: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ResponseType);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_RESPONSETYPE_PRESENT;
-                      pos += 1;
-                      break;
-                   case HDD_WPS_ELEM_UUID_E:
-                      pos += 2; 
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.UUID_E, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_UUIDE_PRESENT;
-                      pos += length;
-                      break;
-                   
-                   case HDD_WPS_ELEM_MANUFACTURER:
-                      pos += 2;
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.Manufacture.num_name = length;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.Manufacture.name, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_MANUFACTURE_PRESENT;
-                      pos += length;
-                      break;
- 
-                   case HDD_WPS_ELEM_MODEL_NAME:
-                      pos += 2;
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ModelName.num_text = length;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ModelName.text, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_MODELNAME_PRESENT;
-                      pos += length;
-                      break;
-                   case HDD_WPS_ELEM_MODEL_NUM:
-                      pos += 2;
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ModelNumber.num_text = length;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ModelNumber.text, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_MODELNUMBER_PRESENT;
-                      pos += length;
-                      break;
-                   case HDD_WPS_ELEM_SERIAL_NUM:
-                      pos += 2;
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SerialNumber.num_text = length;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SerialNumber.text, pos, length);
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_SERIALNUMBER_PRESENT;
-                      pos += length;
-                      break;
-                   case HDD_WPS_ELEM_PRIMARY_DEVICE_TYPE:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.PrimaryDeviceCategory = (*pos<<8 | *(pos+1));
-                      hddLog(LOG1, "primary dev category: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.PrimaryDeviceCategory);
-                      pos += 2;
-                      
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.PrimaryDeviceOUI, pos, HDD_WPS_DEVICE_OUI_LEN);
-                      hddLog(LOG1, "primary dev oui: %02x, %02x, %02x, %02x", pos[0], pos[1], pos[2], pos[3]);
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DeviceSubCategory = (*pos<<8 | *(pos+1));
-                      hddLog(LOG1, "primary dev sub category: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DeviceSubCategory);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_PRIMARYDEVICETYPE_PRESENT;                      
-                      break;
-                   case HDD_WPS_ELEM_DEVICE_NAME:
-                      pos += 2;
-                      length = *pos<<8 | *(pos+1);
-                      pos += 2;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DeviceName.num_text = length;
-                      vos_mem_copy(pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.DeviceName.text, pos, length);
-                      pos += length;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_DEVICENAME_PRESENT;
-                      break;
-                   case HDD_WPS_ELEM_CONFIG_METHODS:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.ConfigMethod = (*pos<<8) | *(pos+1);
-                      hddLog(LOG1, "Config Methods: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.SelectedRegistraCfgMethod);
-                      pos += 2; 
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_CONFIGMETHODS_PRESENT;
-                      break;
- 
-                   case HDD_WPS_ELEM_RF_BANDS:
-                      pos += 4;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.RFBand = *pos;
-                      hddLog(LOG1, "RF band: %d", pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.RFBand);
-                      pos += 1;
-                      pSap_WPSIe->sapwpsie.sapWPSProbeRspIE.FieldPresent |= WPS_PROBRSP_RF_BANDS_PRESENT;
-                      break;
-              }  // switch
-            }
-         } 
-         else
-         {
-            hddLog (LOGE, "%s WPS IE Mismatch %X",__func__, wps_genie[0]);
-         }
-         
-      } // switch
-    }
-    halStatus = WLANSAP_Set_WpsIe(pVosContext, pSap_WPSIe);
-    pHostapdState = WLAN_HDD_GET_HOSTAP_STATE_PTR(pHostapdAdapter);
-    if( pHostapdState->bCommit && WPSIeType == eQC_WPS_PROBE_RSP_IE)
-    {
-        //hdd_adapter_t *pHostapdAdapter = (netdev_priv(dev));
-        //v_CONTEXT_t pVosContext = pHostapdAdapter->pvosContext;
-        WLANSAP_Update_WpsIe ( pVosContext );
-    }
- 
-    vos_mem_free(pSap_WPSIe);   
-    kfree(fwps_genie);
-    EXIT();
-    return halStatus;
-}
-
-static int iw_softap_setwpsie(struct net_device *dev,
-                              struct iw_request_info *info,
-                              union iwreq_data *wrqu,
-                              char *extra)
-{
-    int ret;
-
-    vos_ssr_protect(__func__);
-    ret = __iw_softap_setwpsie(dev, info, wrqu, extra);
-    vos_ssr_unprotect(__func__);
-
-    return ret;
-}
 
 static int __iw_softap_stopbss(struct net_device *dev,
                              struct iw_request_info *info,
@@ -4167,7 +3828,7 @@ static int iw_softap_version(struct net_device *dev,
     return ret;
 }
 
-VOS_STATUS hdd_softap_get_sta_info(hdd_adapter_t *pAdapter, v_U8_t *pBuf, int buf_len)
+int hdd_softap_get_sta_info(hdd_adapter_t *pAdapter, v_U8_t *pBuf, int buf_len)
 {
     v_U8_t i;
     int len = 0;
@@ -4204,7 +3865,11 @@ VOS_STATUS hdd_softap_get_sta_info(hdd_adapter_t *pAdapter, v_U8_t *pBuf, int bu
         return VOS_STATUS_E_FAULT;
     }
 
-    len = scnprintf(pBuf, buf_len, sta_info_header);
+    len = snprintf(pBuf, buf_len, sta_info_header);
+    if (len >= buf_len) {
+        hddLog(LOGE, FL("Insufficient buffer:%d, %d"), buf_len, len);
+        return -E2BIG;
+    }
     pBuf += len;
     buf_len -= len;
 
@@ -4220,6 +3885,10 @@ VOS_STATUS hdd_softap_get_sta_info(hdd_adapter_t *pAdapter, v_U8_t *pBuf, int bu
                                        pSapCtx->aStaInfo[i].macAddrSTA.bytes[3],
                                        pSapCtx->aStaInfo[i].macAddrSTA.bytes[4],
                                        pSapCtx->aStaInfo[i].macAddrSTA.bytes[5]);
+            if (len >= buf_len) {
+                hddLog(LOGE, FL("Insufficient buffer:%d, %d"), buf_len, len);
+                return -E2BIG;
+            }
             pBuf += len;
             buf_len -= len;
         }
@@ -4229,7 +3898,7 @@ VOS_STATUS hdd_softap_get_sta_info(hdd_adapter_t *pAdapter, v_U8_t *pBuf, int bu
         }
     }
     EXIT();
-    return VOS_STATUS_SUCCESS;
+    return 0;
 }
 
 static int __iw_softap_get_sta_info(struct net_device *dev,
@@ -4238,12 +3907,12 @@ static int __iw_softap_get_sta_info(struct net_device *dev,
                                     char *extra)
 {
     hdd_adapter_t *pHostapdAdapter = (netdev_priv(dev));
-    VOS_STATUS status;
+    int ret;
     ENTER();
-    status = hdd_softap_get_sta_info(pHostapdAdapter, extra, WE_SAP_MAX_STA_INFO);
-    if ( !VOS_IS_STATUS_SUCCESS( status ) ) {
+    ret = hdd_softap_get_sta_info(pHostapdAdapter, extra, WE_SAP_MAX_STA_INFO);
+    if (ret) {
        hddLog(VOS_TRACE_LEVEL_ERROR, "%s Failed!!!",__func__);
-       return -EINVAL;
+       return ret;
     }
     wrqu->data.length = strlen(extra);
     EXIT();
@@ -4446,7 +4115,7 @@ int __iw_get_softap_linkspeed(struct net_device *dev,
            kfree(pmacAddress);
            return -EFAULT;
        }
-       pmacAddress[MAC_ADDRESS_STR_LEN] = '\0';
+       pmacAddress[MAC_ADDRESS_STR_LEN-1] = '\0';
 
        status = hdd_string_to_hex (pmacAddress, MAC_ADDRESS_STR_LEN, macAddress );
        kfree(pmacAddress);
@@ -4600,6 +4269,8 @@ static const struct iw_priv_args hostapd_private_args[] = {
       IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 2, 0, "setparam" },
   { QCSAP_IOCTL_SETPARAM,
       IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "" },
+  { QCSAP_PARAM_GET_FRAME_LOGS,
+      IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "getFrameLogs" },
   { QCSAP_PARAM_MAX_ASSOC,
       IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "setMaxAssoc" },
    { QCSAP_PARAM_HIDE_SSID,
@@ -4624,9 +4295,7 @@ static const struct iw_priv_args hostapd_private_args[] = {
   { QCSAP_PARAM_ACL_MODE,
       IW_PRIV_TYPE_INT | IW_PRIV_SIZE_FIXED | 1, 0, "setAclMode" },
   { QCSAP_IOCTL_GET_STAWPAIE,
-      IW_PRIV_TYPE_BYTE | IW_PRIV_SIZE_FIXED | 1, 0, "get_staWPAIE" },
-  { QCSAP_IOCTL_SETWPAIE,
-      IW_PRIV_TYPE_BYTE | QCSAP_MAX_WSC_IE | IW_PRIV_SIZE_FIXED, 0, "setwpaie" },
+      0, IW_PRIV_TYPE_BYTE | DOT11F_IE_RSN_MAX_LEN, "get_staWPAIE" },
   { QCSAP_IOCTL_STOPBSS,
       IW_PRIV_TYPE_BYTE | IW_PRIV_SIZE_FIXED, 0, "stopbss" },
   { QCSAP_IOCTL_VERSION, 0,
@@ -4722,7 +4391,6 @@ static const iw_handler hostapd_private[] = {
    [QCSAP_IOCTL_SETPARAM - SIOCIWFIRSTPRIV] = iw_softap_setparam,  //set priv ioctl
    [QCSAP_IOCTL_GETPARAM - SIOCIWFIRSTPRIV] = iw_softap_getparam,  //get priv ioctl   
    [QCSAP_IOCTL_GET_STAWPAIE - SIOCIWFIRSTPRIV] = iw_get_genie, //get station genIE
-   [QCSAP_IOCTL_SETWPAIE - SIOCIWFIRSTPRIV] = iw_softap_setwpsie,
    [QCSAP_IOCTL_STOPBSS - SIOCIWFIRSTPRIV] = iw_softap_stopbss,       // stop bss
    [QCSAP_IOCTL_VERSION - SIOCIWFIRSTPRIV] = iw_softap_version,       // get driver version
    [QCSAP_IOCTL_GET_WPS_PBC_PROBE_REQ_IES - SIOCIWFIRSTPRIV] = iw_get_WPSPBCProbeReqIEs,
@@ -4844,8 +4512,6 @@ VOS_STATUS hdd_init_ap_mode( hdd_adapter_t *pAdapter )
          return status;
     }
     
-    init_completion(&pAdapter->session_close_comp_var);
-    init_completion(&pAdapter->session_open_comp_var);
 
     sema_init(&(WLAN_HDD_GET_AP_CTX_PTR(pAdapter))->semWpsPBCOverlapInd, 1);
  
@@ -4884,8 +4550,11 @@ hdd_adapter_t* hdd_wlan_create_ap_dev( hdd_context_t *pHddCtx, tSirMacAddr macAd
     hdd_adapter_t *pHostapdAdapter = NULL;
     v_CONTEXT_t pVosContext= NULL;
 
-   pWlanHostapdDev = alloc_netdev_mq(sizeof(hdd_adapter_t), iface_name, ether_setup, NUM_TX_QUEUES);
-
+    pWlanHostapdDev = alloc_netdev_mq(sizeof(hdd_adapter_t), iface_name,
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION(3,17,0))
+                                      NET_NAME_UNKNOWN,
+#endif
+                                      ether_setup, NUM_TX_QUEUES);
     if (pWlanHostapdDev != NULL)
     {
         pHostapdAdapter = netdev_priv(pWlanHostapdDev);
@@ -4919,13 +4588,6 @@ hdd_adapter_t* hdd_wlan_create_ap_dev( hdd_context_t *pHddCtx, tSirMacAddr macAd
         pWlanHostapdDev->ieee80211_ptr = &pHostapdAdapter->wdev ;
         pHostapdAdapter->wdev.wiphy = pHddCtx->wiphy;  
         pHostapdAdapter->wdev.netdev =  pWlanHostapdDev;
-        init_completion(&pHostapdAdapter->tx_action_cnf_event);
-        init_completion(&pHostapdAdapter->cancel_rem_on_chan_var);
-        init_completion(&pHostapdAdapter->rem_on_chan_ready_event);
-        init_completion(&pHostapdAdapter->ula_complete);
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION(2,6,38))
-        init_completion(&pHostapdAdapter->offchannel_tx_event);
-#endif
 
         SET_NETDEV_DEV(pWlanHostapdDev, pHddCtx->parent_dev);
     }
