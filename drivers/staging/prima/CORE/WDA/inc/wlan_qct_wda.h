@@ -431,6 +431,8 @@ typedef struct
    wpt_uint8            wdaAddSelfStaFailReason;
 } tWDA_AddSelfStaDebugParams;
 
+#define BMPS_IMPS_FAILURE_REPORT_THRESHOLD    10
+
 typedef struct
 {
    v_PVOID_t            pVosContext;             /* global VOSS context*/
@@ -499,6 +501,7 @@ typedef struct
    vos_event_t          ftmStopDoneEvent;
 
    tWDA_AddSelfStaDebugParams wdaAddSelfStaParams;
+   wpt_uint8  mgmtTxfailureCnt;
 
 } tWDA_CbContext ; 
 
@@ -1002,6 +1005,7 @@ tSirRetStatus uMacPostCtrlMsg(void* pSirGlobal, tSirMbMsg* pMb);
 #define WDA_DELBA_IND                  SIR_HAL_DELBA_IND
 #define WDA_DEL_BA_IND                 SIR_HAL_DEL_BA_IND
 #define WDA_MIC_FAILURE_IND            SIR_HAL_MIC_FAILURE_IND
+#define WDA_LOST_LINK_PARAMS_IND       SIR_HAL_LOST_LINK_PARAMS_IND
 
 //message from sme to initiate delete block ack session.
 #define WDA_DELBA_REQ                  SIR_HAL_DELBA_REQ
@@ -1282,8 +1286,11 @@ eHalStatus WDA_SetRegDomain(void * clientCtxt, v_REGDOMAIN_t regId,
 
 #define WDA_MGMT_LOGGING_INIT_REQ               SIR_HAL_MGMT_LOGGING_INIT_REQ
 #define WDA_GET_FRAME_LOG_REQ                   SIR_HAL_GET_FRAME_LOG_REQ
+#define WDA_SEND_LOG_DONE_IND                   SIR_HAL_SEND_LOG_DONE_IND
 
-#define WDA_FATAL_EVENT_LOGS_REQ                   SIR_HAL_FATAL_EVENT_LOGS_REQ
+#define WDA_FATAL_EVENT_LOGS_REQ                SIR_HAL_FATAL_EVENT_LOGS_REQ
+
+#define WDA_SEND_FREQ_RANGE_CONTROL_IND        SIR_HAL_SEND_FREQ_RANGE_CONTROL_IND
 
 
 #define HAL_USE_BD_RATE2_FOR_MANAGEMENT_FRAME 0x40 // Bit 6 will be used to control BD rate for Management frames
@@ -2054,6 +2061,22 @@ void WDA_TransportChannelDebug
   v_BOOL_t       displaySnapshot,
   v_U8_t         debugFlags
 );
+
+/*==========================================================================
+  FUNCTION   WDA_TransportKickDxe
+
+  DESCRIPTION
+    Request Kick DXE when first hdd TX time out
+    happens
+
+  PARAMETERS
+    NONE
+
+  RETURN VALUE
+    NONE
+
+===========================================================================*/
+void WDA_TransportKickDxe(void);
 
 /*==========================================================================
   FUNCTION   WDA_TrafficStatsTimerActivate
