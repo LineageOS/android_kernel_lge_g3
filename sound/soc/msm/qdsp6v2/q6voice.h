@@ -95,7 +95,7 @@ struct share_mem_buf {
 struct mem_map_table {
 	dma_addr_t		phys;
 	void			*data;
-	size_t			size; /* size of buffer */
+	uint32_t		size; /* size of buffer */
 	struct ion_handle	*handle;
 	struct ion_client	*client;
 };
@@ -493,6 +493,9 @@ struct vss_imemory_cmd_unmap_t {
 
 #define VSS_IPLAYBACK_PORT_ID_DEFAULT			0x0000FFFF
 /* Default AFE port ID. */
+
+#define VSS_IRECORD_PORT_ID_TX_RX			0x00008003
+/* Port explicitly identifying TX and RX streams */
 
 #define VSS_IPLAYBACK_PORT_ID_VOICE			0x00008005
 /* AFE port ID for VOICE 1. */

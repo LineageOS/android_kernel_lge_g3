@@ -225,11 +225,13 @@ $(patsubst %,$(obj)/%.gen.o, $(fw-external-y)): $(obj)/%.gen.o: $(fwdir)/%
 $(obj)/%: $(obj)/%.ihex | $(objtree)/$(obj)/$$(dir %)
 	$(call cmd,ihex)
 
+ifneq ($(objtree),$(srctree))
 $(obj)/%.img: $(objtree)/$(obj)/$$(dir %.img)
 	$(call cmd,copy)
 
 $(obj)/%.txt: $(objtree)/$(obj)/$$(dir %.txt)
 	$(call cmd,copy)
+endif
 
 # Don't depend on ihex2fw if we're installing and it already exists.
 # Putting it after | in the dependencies doesn't seem sufficient when

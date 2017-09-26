@@ -22,6 +22,7 @@
 #include <linux/pwm.h>
 #include <linux/regmap.h>
 #include <linux/slab.h>
+#include <linux/moduleparam.h>
 
 #include <mach/board_lge.h>
 
@@ -81,6 +82,15 @@ struct lm3697_bl_chip {
 static int backlight_status = BL_OFF;
 static struct backlight_device *lm3697_device;
 static int cur_main_lcd_level = LM3697_MAX_BRIGHTNESS;
+
+static bool lm3697_backlight_control = true;
+module_param(lm3697_backlight_control, bool, 0664);
+
+static int lm3697_min_backlight = 0;
+module_param(lm3697_min_backlight, int, 0664);
+
+static int lm3697_max_backlight = 1892;
+module_param(lm3697_max_backlight, int, 0664);
 
 static int current_setting = 20;
 /*
@@ -227,6 +237,24 @@ void lm3697_lcd_backlight_set_level(int level)
 		cal_level = pdata->blmap[level];
 	else
 		cal_level = level;
+
+	if (lm3697_backlight_control) {
+		if (lm3697_min_backlight < 2)
+			lm3697_min_backlight = 2;
+
+		if (lm3697_min_backlight > 2) {
+			if (cal_level < lm3697_min_backlight)
+				cal_level = lm3697_min_backlight;
+		}
+
+		if (lm3697_max_backlight > 1892)
+			lm3697_max_backlight = 1892;
+
+		if (lm3697_max_backlight < 1892) {
+			if (cal_level > lm3697_max_backlight)
+				cal_level = lm3697_max_backlight;
+		}
+	}
 
 	if (cal_level == cur_main_lcd_level)
 		return;

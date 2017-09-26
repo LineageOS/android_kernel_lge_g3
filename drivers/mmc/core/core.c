@@ -70,8 +70,8 @@ static struct workqueue_struct *workqueue;
  * performance cost, and for other reasons may not always be desired.
  * So we allow it it to be disabled.
  */
-bool use_spi_crc = 1;
-module_param(use_spi_crc, bool, 0);
+bool use_spi_crc = 0;
+module_param(use_spi_crc, bool, 0644);
 
 /*
  * We normally treat cards as removed during suspend if they are not
@@ -3804,7 +3804,7 @@ static int __init mmc_init(void)
 {
 	int ret;
 
-	workqueue = alloc_ordered_workqueue("kmmcd", 0);
+	workqueue = alloc_ordered_workqueue("kmmcd", WQ_FREEZABLE);
 	if (!workqueue)
 		return -ENOMEM;
 

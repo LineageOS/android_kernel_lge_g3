@@ -19,6 +19,7 @@
 #include <mach/msm_bus.h>
 #include <mach/msm_bus_board.h>
 #include <linux/ktime.h>
+#include <linux/cpufreq.h>
 #include <linux/delay.h>
 
 #include "kgsl.h"
@@ -35,6 +36,8 @@
 #define UPDATE_BUSY_VAL		1000000
 #define UPDATE_BUSY		50
 
+#define DEFAULT_MAX_PWRLEVEL	1
+
 /*
  * Expected delay for post-interrupt processing on A3xx.
  * The delay may be longer, gradually increase the delay
@@ -44,6 +47,14 @@
  */
 #define INIT_UDELAY		200
 #define MAX_UDELAY		2000
+
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+extern bool gpu_busy_state;
+#endif
+
+#ifdef CONFIG_CPU_FREQ_GOV_ELEMENTALX
+int graphics_boost = 6;
+#endif
 
 struct clk_pair {
 	const char *name;
@@ -210,6 +221,9 @@ void kgsl_pwrctrl_pwrlevel_change(struct kgsl_device *device,
 
 
 	trace_kgsl_pwrlevel(device, pwr->active_pwrlevel, pwrlevel->gpu_freq);
+#ifdef CONFIG_CPU_FREQ_GOV_ELEMENTALX
+	graphics_boost = pwr->active_pwrlevel;
+#endif
 }
 
 EXPORT_SYMBOL(kgsl_pwrctrl_pwrlevel_change);
@@ -943,6 +957,12 @@ static void kgsl_pwrctrl_busy_time(struct kgsl_device *device, bool on_time)
 	if ((clkstats->elapsed > UPDATE_BUSY_VAL) ||
 		!test_bit(KGSL_PWRFLAGS_AXI_ON, &device->pwrctrl.power_flags)) {
 		update_statistics(device);
+#ifdef CONFIG_CPU_FREQ_GOV_BADASS_GPU_CONTROL
+	if (on_time)
+		gpu_busy_state = true;
+	else
+		gpu_busy_state = false;
+#endif
 	}
 }
 
@@ -1136,16 +1156,16 @@ int kgsl_pwrctrl_init(struct kgsl_device *device)
 		result = -EINVAL;
 		goto done;
 	}
-	pwr->num_pwrlevels = pdata->num_levels;
+	pwr->num_pwrlevels = pdata->num_levels + 1;
 
 	/* Initialize the user and thermal clock constraints */
 
-	pwr->max_pwrlevel = 0;
-	pwr->min_pwrlevel = pdata->num_levels - 2;
+	pwr->max_pwrlevel = DEFAULT_MAX_PWRLEVEL; // AP: define default max power level to not start with OC;
+	pwr->min_pwrlevel = pdata->num_levels - 1;
 	pwr->thermal_pwrlevel = 0;
 
 	pwr->active_pwrlevel = pdata->init_level;
-	pwr->default_pwrlevel = pdata->init_level;
+	pwr->default_pwrlevel = pwr->min_pwrlevel;
 	pwr->init_pwrlevel = pdata->init_level;
 	for (i = 0; i < pdata->num_levels; i++) {
 		pwr->pwrlevels[i].gpu_freq =

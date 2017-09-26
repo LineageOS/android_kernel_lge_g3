@@ -1,4 +1,4 @@
-/* Copyright (c) 2012-2014, 2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2012-2014, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -69,7 +69,6 @@ struct spmi_trans {
 	u32 addr;	/* 20-bit address: SID + PID + Register offset */
 	u32 offset;	/* Offset of last read data */
 	bool raw_data;	/* Set to true for raw data dump */
-	struct mutex spmi_dfs_lock; /* Prevent thread concurrency */
 	struct spmi_controller *ctrl;
 	struct spmi_log_buffer *log; /* log buffer */
 };
@@ -169,7 +168,6 @@ static int spmi_dfs_open(struct spmi_ctrl_data *ctrl_data, struct file *file)
 	trans->addr = ctrl_data->addr;
 	trans->ctrl = ctrl_data->ctrl;
 	trans->offset = trans->addr;
-	mutex_init(&trans->spmi_dfs_lock);
 
 	file->private_data = trans;
 	return 0;
@@ -199,7 +197,6 @@ static int spmi_dfs_close(struct inode *inode, struct file *file)
 
 	if (trans && trans->log) {
 		file->private_data = NULL;
-		mutex_destroy(&trans->spmi_dfs_lock);
 		kfree(trans->log);
 		kfree(trans);
 	}
@@ -476,21 +473,14 @@ static ssize_t spmi_dfs_reg_write(struct file *file, const char __user *buf,
 	int cnt = 0;
 	u8  *values;
 	size_t ret = 0;
-	u32 offset;
-	char *kbuf;
+
 	struct spmi_trans *trans = file->private_data;
-
-	mutex_lock(&trans->spmi_dfs_lock);
-
-	trans = file->private_data;
-	offset = trans->offset;
+	u32 offset = trans->offset;
 
 	/* Make a copy of the user data */
-	kbuf = kmalloc(count + 1, GFP_KERNEL);
-	if (!kbuf) {
-		ret = -ENOMEM;
-		goto unlock_mutex;
-	}
+	char *kbuf = kmalloc(count + 1, GFP_KERNEL);
+	if (!kbuf)
+		return -ENOMEM;
 
 	ret = copy_from_user(kbuf, buf, count);
 	if (ret == count) {
@@ -527,8 +517,6 @@ static ssize_t spmi_dfs_reg_write(struct file *file, const char __user *buf,
 
 free_buf:
 	kfree(kbuf);
-unlock_mutex:
-	mutex_unlock(&trans->spmi_dfs_lock);
 	return ret;
 }
 
@@ -549,13 +537,10 @@ static ssize_t spmi_dfs_reg_read(struct file *file, char __user *buf,
 	size_t ret;
 	size_t len;
 
-	mutex_lock(&trans->spmi_dfs_lock);
 	/* Is the the log buffer empty */
 	if (log->rpos >= log->wpos) {
-		if (get_log_data(trans) <= 0) {
-			len = 0;
-			goto unlock_mutex;
-		}
+		if (get_log_data(trans) <= 0)
+			return 0;
 	}
 
 	len = min(count, log->wpos - log->rpos);
@@ -563,8 +548,7 @@ static ssize_t spmi_dfs_reg_read(struct file *file, char __user *buf,
 	ret = copy_to_user(buf, &log->data[log->rpos], len);
 	if (ret == len) {
 		pr_err("error copy SPMI register values to user\n");
-		len = -EFAULT;
-		goto unlock_mutex;
+		return -EFAULT;
 	}
 
 	/* 'ret' is the number of bytes not copied */
@@ -572,9 +556,6 @@ static ssize_t spmi_dfs_reg_read(struct file *file, char __user *buf,
 
 	*ppos += len;
 	log->rpos += len;
-
-unlock_mutex:
-	mutex_unlock(&trans->spmi_dfs_lock);
 	return len;
 }
 

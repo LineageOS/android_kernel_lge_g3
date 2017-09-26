@@ -43,6 +43,7 @@ typedef u64 __nocast cputime64_t;
 	jiffies_to_cputime(timespec_to_jiffies(__val))
 #define cputime_to_timespec(__ct,__val)	\
 	jiffies_to_timespec(cputime_to_jiffies(__ct),__val)
+#define cputime64_add(__a, __b) ((__a) + (__b))
 
 /*
  * Convert cputime to timeval and back.
@@ -51,6 +52,7 @@ typedef u64 __nocast cputime64_t;
 	jiffies_to_cputime(timeval_to_jiffies(__val))
 #define cputime_to_timeval(__ct,__val)	\
 	jiffies_to_timeval(cputime_to_jiffies(__ct),__val)
+#define cputime64_sub(__a, __b) ((__a) - (__b))
 
 /*
  * Convert cputime to clock and back.

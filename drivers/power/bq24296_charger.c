@@ -43,6 +43,9 @@
 #include <linux/kthread.h>
 #include <linux/timer.h>
 #endif
+#ifdef CONFIG_FORCE_FAST_CHARGE
+#include <linux/fastchg.h>
+#endif
 
 #define I2C_SUSPEND_WORKAROUND
 #ifdef CONFIG_CHARGER_UNIFIED_WLC
@@ -643,10 +646,25 @@ static int bq24296_set_input_i_limit(struct bq24296_chip *chip, int ma)
 	}
 #endif
 
+#ifdef CONFIG_FORCE_FAST_CHARGE
+	// Reapply current charge level if we have one
+	if (force_fast_charge    != FAST_CHARGE_DISABLED &&
+	    current_charge_level != NOT_FAST_CHARGING       )
+		ma = current_charge_level;
+
+	// Use the level below the requested current to stay safe
+	for (i = ARRAY_SIZE(icl_ma_table) - 1; i >= 0; i--) {
+		if (icl_ma_table[i].icl_ma <= ma)
+			break;
+	}
+#else
+
 	for (i = ARRAY_SIZE(icl_ma_table) - 1; i > 0; i--) {
 		if (ma >= icl_ma_table[i].icl_ma)
 			break;
 	}
+#endif // CONFIG_FORCE_FAST_CHARGE
+
 	temp = icl_ma_table[i].value;
 
 	pr_info("input current limit=%d setting 0x%02x\n", ma, temp);
@@ -2965,20 +2983,6 @@ static void pma_workaround_worker(struct work_struct *work)
 	if (wake_lock_active(&chip->pma_workaround_wake_lock)) {
 		wake_unlock(&chip->pma_workaround_wake_lock);
 		pr_err("[WLC] unset pma wake lock\n");
-	}
-}
-
-static void pma_workaround(struct bq24296_chip *chip, int temp)
-{
-	if (temp >= 55) {
-		gpio_set_value(chip->otg_en, 1);
-		bq24296_enable_otg(chip, true);
-		pr_err("[WLC] set pma workaround\n");
-
-		schedule_delayed_work(&chip->pma_workaround_work, 15 * HZ);
-		wake_lock(&chip->pma_workaround_wake_lock);
-		pr_err("[WLC] set pma wake lock\n");
-		pr_err("[WLC] after 15sec, unset pma workaround\n");
 	}
 }
 #endif

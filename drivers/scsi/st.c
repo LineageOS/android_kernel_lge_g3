@@ -488,7 +488,7 @@ static int st_scsi_execute(struct st_request *SRpnt, const unsigned char *cmd,
 	if (!req)
 		return DRIVER_ERROR << 24;
 
-	blk_rq_set_block_pc(req);
+	req->cmd_type = REQ_TYPE_BLOCK_PC;
 	req->cmd_flags |= REQ_QUIET;
 
 	mdata->null_mapped = 1;
