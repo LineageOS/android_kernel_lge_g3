@@ -87,3 +87,6 @@ obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_I2C_RMI4)		+= synaptics_i2c_rmi4.o
 endif
 obj-$(CONFIG_TOUCHSCREEN_GT9XX)		+= gt9xx/
 obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_G3) 	+= g3/
+obj-y		+= state_notifier.o
+obj-$(CONFIG_ALUCARD_TOUCHSCREEN_BOOST)	+= alu-t-boost.o
+

@@ -1034,4 +1034,10 @@ source "drivers/input/touchscreen/gt9xx/Kconfig"
 
 source "drivers/input/touchscreen/g3/Kconfig"
 
+config ALUCARD_TOUCHSCREEN_BOOST
+	tristate "Touchscreen boost"
+	default n
+	help
+	  Alucard touchscreen boost.
+
 endif

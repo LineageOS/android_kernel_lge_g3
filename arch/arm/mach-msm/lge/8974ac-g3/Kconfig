@@ -61,3 +61,43 @@ config MACH_MSM8974_G3_CA
 	bool "MSM8974 G3 CA"
 	help
 	  Support for the Qualcomm MSM8974 G3 Canada device.
+
+config MACH_MSM8974_G3_CN
+	depends on ARCH_MSM8974
+	select MACH_LGE
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 CN"
+	help
+	  Support for the Qualcomm MSM8974 G3 CHINA device.
+
+config MACH_MSM8974_G3_CMCC_CN
+	depends on ARCH_MSM8974
+	select MACH_LGE
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 CMCC CN"
+	help
+	  Support for the Qualcomm MSM8974 G3 CMCC device.
+
+config MACH_MSM8974_G3_CTC_CN
+	depends on ARCH_MSM8974
+	select MACH_LGE
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 CTC CN"
+	help
+	  Support for the Qualcomm MSM8974 G3 CTC device.
+
+config MACH_MSM8974_G3_CUCC_CN
+	depends on ARCH_MSM8974
+	select MACH_LGE
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 CUCC CN"
+	help
+	  Support for the Qualcomm MSM8974 G3 CUCC device.
+
+config MACH_MSM8974_G3_OPEN_HK
+	depends on ARCH_MSM8974
+	select MACH_LGE
+	select MACH_MSM8974_G3
+	bool "MSM8974 G3 OPEN HK"
+	help
+	  Support for the Qualcomm MSM8974 G3 OPEN_HK device.

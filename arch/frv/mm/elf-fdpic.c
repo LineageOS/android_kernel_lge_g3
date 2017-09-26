@@ -74,7 +74,7 @@ unsigned long arch_get_unmapped_area(struct file *filp, unsigned long addr, unsi
 		addr = PAGE_ALIGN(addr);
 		vma = find_vma(current->mm, addr);
 		if (TASK_SIZE - len >= addr &&
-		    (!vma || addr + len <= vm_start_gap(vma)))
+		    (!vma || addr + len <= vma->vm_start))
 			goto success;
 	}
 
@@ -89,7 +89,7 @@ unsigned long arch_get_unmapped_area(struct file *filp, unsigned long addr, unsi
 			for (; vma; vma = vma->vm_next) {
 				if (addr > limit)
 					break;
-				if (addr + len <= vm_start_gap(vma))
+				if (addr + len <= vma->vm_start)
 					goto success;
 				addr = vma->vm_end;
 			}
@@ -104,7 +104,7 @@ unsigned long arch_get_unmapped_area(struct file *filp, unsigned long addr, unsi
 		for (; vma; vma = vma->vm_next) {
 			if (addr > limit)
 				break;
-			if (addr + len <= vm_start_gap(vma))
+			if (addr + len <= vma->vm_start)
 				goto success;
 			addr = vma->vm_end;
 		}

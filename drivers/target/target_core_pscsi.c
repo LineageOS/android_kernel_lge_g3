@@ -1085,8 +1085,6 @@ static int pscsi_do_task(struct se_task *task)
 				TCM_LOGICAL_UNIT_COMMUNICATION_FAILURE;
 			return -ENODEV;
 		}
-
-		blk_rq_set_block_pc(req);
 	} else {
 		BUG_ON(!task->task_size);
 
@@ -1108,6 +1106,7 @@ static int pscsi_do_task(struct se_task *task)
 		}
 	}
 
+	req->cmd_type = REQ_TYPE_BLOCK_PC;
 	req->end_io = pscsi_req_done;
 	req->end_io_data = task;
 	req->cmd_len = scsi_command_size(pt->pscsi_cdb);

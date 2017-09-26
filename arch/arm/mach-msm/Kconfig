@@ -282,6 +282,7 @@ config ARCH_MSM8974
 	select MEMORY_HOLE_CARVEOUT
 	select MSM_RPM_STATS_LOG
 	select QMI_ENCDEC
+	select MSM_ULTRASOUND_B
 	select MSM_RPM_LOG
 	select ARCH_WANT_KMAP_ATOMIC_FLUSH
 	select KRAIT_REGULATOR
@@ -1886,6 +1887,12 @@ config MSM_DEVFREQ_CPUBW
 	  agnostic interface to so that some of the devfreq governors can be
 	  shared across SoCs.
 
+config CPU_VOLTAGE_TABLE
+	bool "Enable CPU Voltage Table via sysfs for adjustements"
+	default y
+	help
+	  DTS based kernel User Votlage Control
+
 config MSM_AVS_HW
 	bool "Enable Adaptive Voltage Scaling (AVS)"
 	default n
@@ -2869,6 +2876,8 @@ config MSM_DCVS
 	  algorithm and the algorithm returns a frequency for the core which is
 	  passed to the frequency change driver.
 
+
+
 config MSM_CPR
 	tristate "Use MSM CPR in S/W mode"
 	help
@@ -3037,6 +3046,13 @@ config WALL_CLK_SYSFS
 	 Support the wallclk directory in sysfs filesystem to enable the
 	 wall clock simulation and read the current SFN.
 
+config MSM_LIMITER
+	bool "MSM Frequency Limiter Driver"
+	default y
+	help
+	  The MSM Frequency Limiter Driver controls max frequency limit for each CPU
+	  to desired value on suspend/resume
+
 config KRAIT_REGULATOR
 	bool "Support Kraits powered via ganged regulators in the pmic"
 	help
@@ -3044,6 +3060,13 @@ config KRAIT_REGULATOR
 	 line from the PMIC. This supply line is powered by multiple
 	 regulators running in ganged mode inside the PMIC. Enable
 	 this option to support such configurations.
+
+config PVS_LEVEL_INTERFACE
+        default y
+	bool "Expose PVS level information in SYSFS"
+	help
+	 Allow PVS level to be shown
+
 endif
 
 config KERNEL_TEXT_MPU_PROT

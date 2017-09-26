@@ -68,6 +68,31 @@ struct cpufreq_work_struct {
 };
 
 static DEFINE_PER_CPU(struct cpufreq_work_struct, cpufreq_work);
+
+#ifdef CONFIG_ALUCARD_TOUCHSCREEN_BOOST
+static unsigned int lower_limit_freq[NR_CPUS] = {0, 0, 0, 0};
+
+unsigned int get_cpu_min_lock(unsigned int cpu)
+{
+	if (cpu >= 0 && cpu < NR_CPUS)
+		return lower_limit_freq[cpu];
+	else
+		return 0;
+}
+EXPORT_SYMBOL(get_cpu_min_lock);
+
+void set_cpu_min_lock(unsigned int cpu, int freq)
+{
+	if (cpu >= 0 && cpu < NR_CPUS) {
+		if (freq <= 300000 || freq > 2265600)
+			lower_limit_freq[cpu] = 0;
+		else
+			lower_limit_freq[cpu] = freq;
+	}
+}
+EXPORT_SYMBOL(set_cpu_min_lock);
+#endif
+
 static struct workqueue_struct *msm_cpufreq_wq;
 
 struct cpufreq_suspend_t {
@@ -120,6 +145,24 @@ static int set_cpu_freq(struct cpufreq_policy *policy, unsigned int new_freq,
 	int saved_sched_rt_prio = -EINVAL;
 	struct cpufreq_freqs freqs;
 	struct sched_param param = { .sched_priority = MAX_RT_PRIO-1 };
+
+#ifdef CONFIG_ALUCARD_TOUCHSCREEN_BOOST
+	unsigned int ll_freq = lower_limit_freq[policy->cpu];
+
+	if (ll_freq) {
+		unsigned int t_freq = new_freq;
+
+		if (ll_freq && new_freq < ll_freq)
+			t_freq = ll_freq;
+
+		new_freq = t_freq;
+
+		if (new_freq < policy->min)
+			new_freq = policy->min;
+		if (new_freq > policy->max)
+			new_freq = policy->max;
+	}
+#endif
 
 	freqs.old = policy->cur;
 	freqs.new = new_freq;
@@ -535,7 +578,6 @@ static int cpufreq_parse_dt(struct device *dev)
 
 	freq_table[i].index = i;
 	freq_table[i].frequency = CPUFREQ_TABLE_END;
-
 	devm_kfree(dev, data);
 
 	return 0;

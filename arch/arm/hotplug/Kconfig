@@ -1,0 +1,105 @@
+config MSM_HOTPLUG
+	bool "MSM hotplug driver"
+	depends on HOTPLUG_CPU
+	default y
+	help
+	  The MSM hotplug driver controls on-/offlining of additional cores based
+	  on current cpu load.
+
+config INTELLI_HOTPLUG
+	bool "Intelli hotplug driver"
+	depends on HOTPLUG_CPU
+	default y
+	help
+	  An intelligent cpu hotplug driver for
+	  Low Latency Frequency Transition capable processors.
+
+config BRICKED_HOTPLUG
+	bool "Enable kernel based mpdecision"
+	depends on MSM_RUN_QUEUE_STATS
+	default y
+	help
+	  This enables kernel based multi core control.
+	  (up/down hotplug based on load)
+
+config INTELLI_PLUG
+        bool "Enable intelli-plug cpu hotplug driver"
+        default n
+        help
+          Generic Intelli-plug cpu hotplug driver for ARM SOCs
+	  
+config ALUCARD_HOTPLUG
+	bool "Enable alucard-hotplug cpu hotplug driver"
+	default y
+	help
+	  Generic Alucard-hotplug cpu hotplug driver for ARM SOCs
+
+config ZEN_DECISION
+	bool "Zen Decision: MSM Userspace Handler"
+	depends on SMP && FB
+	default y
+	help
+	  MSM/Qcomm devices have multiple userspace applications that handle
+	  CPU hotplugging and frequency operations.
+
+	  ZenDecision is a partial resolution to handling behavior caused by
+	  disabling some of these services.
+
+	  For example, If MPDecision is disabled and MSM-Thermal_Engine is 
+	  enabled in the userspace. Situations where CPUs go offline but never
+	  come back online occur.
+  
+	  ZenDecision ensures all CPUs are online when they are supposed to be by:
+	  - Enable all CPUs when screen comes on after zen_wake_delay
+	  - Ignore all CPU_UP operations when battery level is <= 15% to respect
+	    the decision made by MSMThermal (which disables cores at <= 15% battery)
+
+	  Thresholds and driver enable/disable for above values can be found in:
+	  /sys/kernel/zen_decision
+
+	  ZenDecision is not a direct replacement for any of the MSM userspace
+	  services.
+
+	  If unsure, say N.
+	  
+config MAKO_HOTPLUG
+        bool "Enable mako-hotplug cpu hotplug driver"
+        default n
+        help
+          Generic Intelli-plug cpu hotplug driver for ARM SOCs	  
+
+config BLU_PLUG
+	bool "Dynamic hotplug driver"
+	depends on HOTPLUG_CPU
+	default n
+	help
+	  The Dynamic hotplug driver automatically online/offline CPUs proportional to system load.
+	  
+	  
+config FAST_HOTPLUG
+	bool "Enable fast hotplug"
+	default n
+	help
+	  Kernel based core control.
+	  
+config THUNDERPLUG_CONTROL
+      bool "Enable plugging down/up of cores using powersuspend"
+      default n
+      help
+       This driver uses powersuspend to take down the cpu cores
+       on a octa core device. Tuned to work on a quad core device.
+
+config MSM_SLEEPER
+	bool "Limit max frequency while screen is off"
+	default n
+	help
+	  Limit max frequency while screen is off 
+
+config ASMP
+ 	bool "Multi-core automatic hotplug support"
+ 	depends on SMP
+ 	default y
+ 	help
+ 	Automatically hotplugs the multiple cpu cores on and off
+ 	based on cpu load and suspend stat
+

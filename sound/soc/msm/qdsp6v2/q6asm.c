@@ -374,16 +374,6 @@ static int q6asm_session_alloc(struct audio_client *ac)
 	return -ENOMEM;
 }
 
-static bool q6asm_is_valid_audio_client(struct audio_client *ac)
-{
-	int n;
-	for (n = 1; n <= SESSION_MAX; n++) {
-		if (session[n] == ac)
-			return 1;
-	}
-	return 0;
-}
-
 static void q6asm_session_free(struct audio_client *ac)
 {
 	pr_debug("%s: sessionid[%d]\n", __func__, ac->session);
@@ -1290,12 +1280,6 @@ static int32_t q6asm_callback(struct apr_client_data *data, void *priv)
 		pr_err("ac or priv NULL\n");
 		return -EINVAL;
 	}
-	if (!q6asm_is_valid_audio_client(ac)) {
-		pr_err("%s: audio client pointer is invalid, ac = %p\n",
-				__func__, ac);
-		return -EINVAL;
-	}
-
 	if (ac->session <= 0 || ac->session > 8) {
 		pr_err("%s:Session ID is invalid, session = %d\n", __func__,
 			ac->session);
@@ -3303,7 +3287,7 @@ static int q6asm_memory_map_regions(struct audio_client *ac, int dir,
 	struct asm_buffer_node *buffer_node = NULL;
 	int	rc = 0;
 	int    i = 0;
-	uint32_t cmd_size = 0;
+	int	cmd_size = 0;
 	uint32_t bufcnt_t;
 	uint32_t bufsz_t;
 
@@ -3321,24 +3305,9 @@ static int q6asm_memory_map_regions(struct audio_client *ac, int dir,
 		bufsz_t = PAGE_ALIGN(bufsz_t);
 	}
 
-	if (bufcnt_t > (UINT_MAX
-			- sizeof(struct avs_cmd_shared_mem_map_regions))
-			/ sizeof(struct avs_shared_map_region_payload)) {
-		pr_err("%s: Unsigned Integer Overflow. bufcnt_t = %u\n",
-				__func__, bufcnt_t);
-		return -EINVAL;
-	}
-
 	cmd_size = sizeof(struct avs_cmd_shared_mem_map_regions)
 			+ (sizeof(struct avs_shared_map_region_payload)
 							* bufcnt_t);
-
-
-	if (bufcnt > (UINT_MAX / sizeof(struct asm_buffer_node))) {
-		pr_err("%s: Unsigned Integer Overflow. bufcnt = %u\n",
-				__func__, bufcnt);
-		return -EINVAL;
-	}
 
 	buffer_node = kzalloc(sizeof(struct asm_buffer_node) * bufcnt,
 				GFP_KERNEL);

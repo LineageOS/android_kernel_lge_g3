@@ -3951,7 +3951,7 @@ static int voice_cvs_start_record(struct voice_data *v, uint32_t rec_mode)
 		cvs_start_record.hdr.opcode = VSS_IRECORD_CMD_START;
 
 		cvs_start_record.rec_mode.port_id =
-					VSS_IRECORD_PORT_ID_DEFAULT;
+					VSS_IRECORD_PORT_ID_TX_RX;
 		if (rec_mode == VOC_REC_UPLINK) {
 			cvs_start_record.rec_mode.rx_tap_point =
 					VSS_IRECORD_TAP_POINT_NONE;
@@ -3974,6 +3974,8 @@ static int voice_cvs_start_record(struct voice_data *v, uint32_t rec_mode)
 			ret = -EINVAL;
 			goto fail;
 		}
+
+		cvs_start_record.rec_mode.mode = VSS_IRECORD_MODE_TX_RX_STEREO;
 
 		v->cvs_state = CMD_STATUS_FAIL;
 
@@ -5820,7 +5822,7 @@ static int voice_alloc_oob_shared_mem(void)
 {
 	int cnt = 0;
 	int rc = 0;
-	size_t len;
+	int len;
 	void *mem_addr;
 	dma_addr_t phys;
 	int bufsz = BUFFER_BLOCK_SIZE;
@@ -5839,7 +5841,7 @@ static int voice_alloc_oob_shared_mem(void)
 	rc = msm_audio_ion_alloc("voip_client", &(v->shmem_info.sh_buf.client),
 			&(v->shmem_info.sh_buf.handle),
 			bufsz*bufcnt,
-			(ion_phys_addr_t *)&phys, &len,
+			(ion_phys_addr_t *)&phys, (size_t *)&len,
 			&mem_addr);
 	if (rc < 0) {
 		pr_err("%s: audio ION alloc failed, rc = %d\n",
@@ -5876,7 +5878,7 @@ done:
 static int voice_alloc_oob_mem_table(void)
 {
 	int rc = 0;
-	size_t len;
+	int len;
 	struct voice_data *v = voice_get_session(
 				common.voice[VOC_PATH_FULL].session_id);
 
@@ -5892,7 +5894,7 @@ static int voice_alloc_oob_mem_table(void)
 				&(v->shmem_info.memtbl.handle),
 				sizeof(struct vss_imemory_table_t),
 				(ion_phys_addr_t *)&v->shmem_info.memtbl.phys,
-				&len,
+				(size_t *)&len,
 				&(v->shmem_info.memtbl.data));
 	if (rc < 0) {
 		pr_err("%s: audio ION alloc failed, rc = %d\n",
@@ -5915,14 +5917,14 @@ done:
 static int voice_alloc_cal_mem_map_table(void)
 {
 	int ret = 0;
-	size_t len;
+	int len;
 
 	ret = msm_audio_ion_alloc("voc_cal",
 				&(common.cal_mem_map_table.client),
 				&(common.cal_mem_map_table.handle),
 				sizeof(struct vss_imemory_table_t),
 			      (ion_phys_addr_t *)&common.cal_mem_map_table.phys,
-				&len,
+				(size_t *) &len,
 				&(common.cal_mem_map_table.data));
 	if (ret < 0) {
 		pr_err("%s: audio ION alloc failed, rc = %d\n",
@@ -5942,14 +5944,14 @@ done:
 static int voice_alloc_rtac_mem_map_table(void)
 {
 	int ret = 0;
-	size_t len;
+	int len;
 
 	ret = msm_audio_ion_alloc("voc_rtac_cal",
 			&(common.rtac_mem_map_table.client),
 			&(common.rtac_mem_map_table.handle),
 			sizeof(struct vss_imemory_table_t),
 			(ion_phys_addr_t *)&common.rtac_mem_map_table.phys,
-			&len,
+			(size_t *) &len,
 			&(common.rtac_mem_map_table.data));
 	if (ret < 0) {
 		pr_err("%s: audio ION alloc failed, rc = %d\n",
