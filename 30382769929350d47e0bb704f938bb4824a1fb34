@@ -34,6 +34,24 @@
       "revId": "30382769929350d47e0bb704f938bb4824a1fb34",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133891bc_95261c05",
+        "filename": "drivers/usb/dwc3/dwc3_otg.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 19837
+      },
+      "writtenOn": "2019-03-09T18:38:20Z",
+      "side": 1,
+      "message": "We\u0027ll keep it as it is I think, it\u0027s done the same way through the entire file.",
+      "parentUuid": "352b9f72_10931010",
+      "revId": "30382769929350d47e0bb704f938bb4824a1fb34",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
