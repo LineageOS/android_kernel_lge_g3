@@ -16,6 +16,24 @@
       "revId": "30382769929350d47e0bb704f938bb4824a1fb34",
       "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352b9f72_10931010",
+        "filename": "drivers/usb/dwc3/dwc3_otg.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 18205
+      },
+      "writtenOn": "2019-03-09T14:34:29Z",
+      "side": 1,
+      "message": "This is a kang of LG\u0027s implementation, but feel free to edit.\n\nMore on the change itself:\nMaybe this was left out intentionally, on LG sources it\u0027s guarded by\n`if !defined(CONFIG_USB_DWC3_LGE_SINGLE_PSY)`\nwhich LG\u0027s defconfigs are setting to `y`.\nBut that leads to exposing ac charging as usb charging to userspace, and healthd reports \"slow charging\". This change is aimed at solving that.\n\nI don\u0027t own a g3 so i can\u0027t verify",
+      "parentUuid": "24cedcdf_2432115a",
+      "revId": "30382769929350d47e0bb704f938bb4824a1fb34",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
     }
   ]
 }
