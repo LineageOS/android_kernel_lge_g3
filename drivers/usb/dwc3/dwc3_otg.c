@@ -552,6 +552,32 @@ static void dwc3_otg_notify_host_mode(struct usb_otg *otg, int host_mode)
 		power_supply_set_scope(dotg->psy, POWER_SUPPLY_SCOPE_DEVICE);
 }
 
+#if defined(CONFIG_LGE_PM)
+static int dwc3_otg_get_psy(struct usb_phy *phy)
+{
+	struct dwc3_otg *dotg = container_of(phy->otg, struct dwc3_otg, otg);
+
+	if (dotg->charger->chg_type == DWC3_DCP_CHARGER) {
+		pr_info("msm_otg_notify_power_supply: "
+				"power_supply_get_by_name(ac)\n");
+		dotg->psy = power_supply_get_by_name("ac");
+	} else {
+		pr_info("msm_otg_notify_power_supply: "
+				"power_supply_get_by_name(usb)\n");
+		dotg->psy = power_supply_get_by_name("usb");
+	}
+	if (!dotg->psy) {
+		goto psy_error;
+	}
+
+	return 0;
+
+psy_error:
+	dev_dbg(phy->dev, "power supply error when setting property\n");
+	return -ENXIO;
+}
+#endif
+
 static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 {
 	static int power_supply_type;
@@ -616,12 +642,8 @@ static int dwc3_otg_set_power(struct usb_phy *phy, unsigned mA)
 	dev_info(phy->dev, "Avail curr from USB = %u\n", mA);
 
 #ifdef CONFIG_LGE_PM
-	if (strcmp(dotg->psy->name, "usb")) {
-		pr_info("%s psy name is %s, so change psy to usb.\n", __func__, dotg->psy->name);
-		dotg->psy = power_supply_get_by_name("usb");
-		if (!dotg->psy)
-			goto psy_error;
-	}
+	if (dwc3_otg_get_psy(phy) < 0)
+		goto psy_error;
 	power_supply_set_supply_type(dotg->psy, power_supply_type);
 
 	if (mA > 2) {

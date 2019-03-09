@@ -1991,7 +1991,6 @@ static void dwc3_start_chg_det(struct dwc3_charger *charger, bool start)
 		dev_dbg(mdwc->dev, "canceling charging detection work\n");
 		cancel_delayed_work_sync(&mdwc->chg_work);
 		mdwc->chg_state = USB_CHG_STATE_UNDEFINED;
-		charger->chg_type = DWC3_INVALID_CHARGER;
 		return;
 	}
 
