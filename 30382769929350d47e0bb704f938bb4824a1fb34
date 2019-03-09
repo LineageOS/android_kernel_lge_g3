@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24cedcdf_2432115a",
+        "filename": "drivers/usb/dwc3/dwc3_otg.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 17232
+      },
+      "writtenOn": "2019-03-09T14:09:50Z",
+      "side": 1,
+      "message": "Just curious. Why don\u0027t you just move the contents of this label into line 570. Seems harder to follow like this.",
+      "revId": "30382769929350d47e0bb704f938bb4824a1fb34",
+      "serverId": "1ec6b3db-b2c1-4fa4-84a2-4c7efe89ba71",
+      "unresolved": true
+    }
+  ]
+}
