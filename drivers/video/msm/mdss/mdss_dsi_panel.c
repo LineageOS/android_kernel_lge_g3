@@ -1560,7 +1560,6 @@ static int mdss_panel_parse_dt(struct device_node *np,
 	mdss_dsi_parse_dcs_cmds(np, &lge_ief_off_cmds, "qcom,panel-ief-off-cmds", "qcom,ief-off-dsi-state");
 #endif
 	mdss_dsi_parse_dfps_config(np, ctrl_pdata);
-<<<<<<< HEAD
 #ifdef CONFIG_LGE_SHARPENING
 	mdss_dsi_parse_dcs_cmds(np, &ctrl_pdata->sharpening_on,
 		"qcom,mdss-dsi-sharpening-on", "qcom,mdss-dsi-sharpening-mode");
@@ -1570,9 +1569,7 @@ static int mdss_panel_parse_dt(struct device_node *np,
 	/* Change to 'false' if LG ever decides to disable by default */
 	ctrl_pdata->shared_pdata.sharpening_state = true;
 #endif
-=======
 	mdss_livedisplay_parse_dt(np, pinfo);
->>>>>>> 21be0ac31a1... video: mdss: LiveDisplay driver
 
 	return 0;
 
