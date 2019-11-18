@@ -57,14 +57,4 @@ config LGE_QFPROM_INTERFACE
 	help
 	  LGE QFPROM DRIVER.
 
-config SHITTY_VARIANT
-	bool "Whether or not this is a shitty variant"
-	default n
-	help
-	  Some variants are shitty. In this particular case, shitty means that no matter
-	  what you do, they simply won't boot when the kernel is built with gcc 4.9.
-	  This flag will allow these variants to opt out of the code tha causes the
-	  section mismatches and allow them to continue on with their presumably shitty
-	  existance and gcc 4.8.
-
 endmenu
